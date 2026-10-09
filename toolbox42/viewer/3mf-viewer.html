@@ -1,0 +1,312 @@
+<title>3MF Viewer</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: full-height workbench — left inspector column (plates, parts, checks), right viewport. Stacks to one column on phones. */
+:root{
+  --bg:#eef0ee; --panel:#f8f9f7; --fg:#1c211e; --muted:#5f6a63; --line:#d3d8d3;
+  --accent:#0f7b6c; --accent-fg:#ffffff; --warn:#b4541a; --ok:#2e7d4f; --bad:#b3261e;
+  --grid:#c9cfc9; --scene:#e4e7e3;
+  --display:"IBM Plex Sans KR",system-ui,-apple-system,"Malgun Gothic",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#171a18; --panel:#1f2321; --fg:#e6e9e6; --muted:#9aa49d; --line:#343a36;
+  --accent:#3fb59f; --accent-fg:#0f1512; --warn:#e08a4f; --ok:#5fc48a; --bad:#ef7a72;
+  --grid:#3a403c; --scene:#22272400; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#171a18; --panel:#1f2321; --fg:#e6e9e6; --muted:#9aa49d; --line:#343a36;
+  --accent:#3fb59f; --accent-fg:#0f1512; --warn:#e08a4f; --ok:#5fc48a; --bad:#ef7a72;
+  --grid:#3a403c; --scene:#22272400; color-scheme:dark}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.5 var(--display);display:flex;flex-direction:column}
+header{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--line);background:var(--panel);flex-wrap:wrap}
+header h1{font-size:15px;font-weight:600;margin:0;letter-spacing:.01em}
+header .file{font-family:var(--mono);font-size:12px;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1}
+.btn{border:1px solid var(--line);background:var(--panel);color:var(--fg);padding:6px 12px;border-radius:6px;cursor:pointer;font:inherit;font-size:13px}
+.btn.primary{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+.btn:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+main{flex:1;display:grid;grid-template-columns:320px minmax(0,1fr);min-height:0}
+aside{border-right:1px solid var(--line);background:var(--panel);overflow:auto;padding:12px 16px;display:flex;flex-direction:column;gap:16px;min-width:0}
+section h2{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 8px;font-weight:600}
+.plates{display:flex;flex-wrap:wrap;gap:6px}
+.plate{border:1px solid var(--line);border-radius:6px;padding:4px 10px;cursor:pointer;background:transparent;color:var(--fg);font:inherit;font-size:12.5px}
+.plate[aria-pressed="true"]{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+.parts{display:flex;flex-direction:column;gap:4px}
+.part{display:grid;grid-template-columns:auto 14px 1fr auto;gap:8px;align-items:center;padding:6px 8px;border-radius:6px;cursor:pointer}
+.part:hover{background:color-mix(in srgb,var(--accent) 10%,transparent)}
+.part.sel{background:color-mix(in srgb,var(--accent) 18%,transparent)}
+.part .sw{width:14px;height:14px;border-radius:3px;border:1px solid rgba(0,0,0,.2)}
+.part .nm{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.part .nm small{display:block;color:var(--muted);font-family:var(--mono);font-size:11px}
+.part .tri{font-family:var(--mono);font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:12.5px}
+.kv dt{color:var(--muted);margin:0}.kv dd{margin:0;font-family:var(--mono);font-variant-numeric:tabular-nums;min-width:0;overflow-wrap:anywhere}
+.checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:12.5px}
+.checks li{display:flex;gap:8px;align-items:flex-start}
+.dot{width:8px;height:8px;border-radius:50%;margin-top:7px;flex:none}
+.ok .dot{background:var(--ok)}.warn .dot{background:var(--warn)}.bad .dot{background:var(--bad)}
+.checks small{display:block;color:var(--muted)}
+#stage{position:relative;min-width:0;min-height:320px;background:var(--scene)}
+#stage canvas{display:block;width:100%;height:100%}
+#drop{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;border:2px dashed transparent;transition:border-color .15s}
+#drop.over{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 8%,transparent)}
+#hint{position:absolute;left:12px;bottom:10px;font-size:11.5px;color:var(--muted);font-family:var(--mono);background:color-mix(in srgb,var(--panel) 80%,transparent);padding:3px 8px;border-radius:4px}
+#status{position:absolute;left:50%;top:14px;transform:translateX(-50%);background:var(--panel);border:1px solid var(--line);padding:6px 14px;border-radius:6px;font-size:13px}
+.tools{position:absolute;right:12px;top:12px;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.tools label{display:flex;align-items:center;gap:4px;font-size:12px;background:var(--panel);border:1px solid var(--line);padding:4px 8px;border-radius:6px}
+@media (max-width:760px){main{grid-template-columns:1fr;grid-template-rows:minmax(300px,55vh) auto}aside{order:2;border-right:0;border-top:1px solid var(--line)}#stage{order:1}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header>
+  <h1>3MF Viewer</h1>
+  <span class="file" id="fname">파일을 끌어다 놓거나 열기 버튼을 누르세요</span>
+  <input type="file" id="fileIn" accept=".3mf" hidden>
+  <button class="btn primary" id="openBtn" type="button">3MF 열기</button>
+  <button class="btn" id="sampleBtn" type="button">샘플(Toolbox42)</button>
+</header>
+<main>
+  <aside>
+    <section id="plateSec" hidden><h2>플레이트</h2><div class="plates" id="plates"></div></section>
+    <section><h2>파트</h2><div class="parts" id="parts"><span style="color:var(--muted);font-size:12.5px">아직 불러온 파일이 없습니다.</span></div></section>
+    <section><h2>선택 정보</h2><dl class="kv" id="info"><dt>치수</dt><dd id="iDim">–</dd><dt>삼각형</dt><dd id="iTri">–</dd><dt>원점 위치</dt><dd id="iPos">–</dd></dl></section>
+    <section><h2>파일 검사</h2><ul class="checks" id="checks"><li><span class="dot" style="background:var(--line)"></span><span>파일을 열면 구조·메시 검사 결과가 여기 표시됩니다.</span></li></ul></section>
+  </aside>
+  <div id="stage">
+    <div id="drop"></div>
+    <div class="tools">
+      <label><input type="checkbox" id="wire"> 와이어프레임</label>
+      <label><input type="checkbox" id="bed" checked> 베드 256×256</label>
+      <button class="btn" id="fit" type="button">화면 맞춤</button>
+    </div>
+    <div id="hint">좌클릭 회전 · 우클릭 이동 · 휠 확대 · 파트 클릭 선택</div>
+    <div id="status" hidden></div>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/fflate@0.8.2/umd/index.js"></script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+const $=s=>document.querySelector(s);
+const CORE='http://schemas.microsoft.com/3dmanufacturing/core/2015/02';
+const PALETTE=['#2a9d8f','#e9a23b','#7b6cf6','#e76f51','#4f9ded','#8cb369','#d16ba5','#a0785a'];
+
+// ---------- three setup ----------
+const stage=$('#stage');
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+stage.prepend(renderer.domElement);
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(40,1,1,5000);
+camera.up.set(0,0,1); camera.position.set(250,-300,220);
+const controls=new OrbitControls(camera,renderer.domElement);
+controls.enableDamping=true;
+scene.add(new THREE.HemisphereLight(0xffffff,0x667766,1.1));
+const key=new THREE.DirectionalLight(0xffffff,1.4); key.position.set(200,-300,400); scene.add(key);
+const fill=new THREE.DirectionalLight(0xffffff,.5); fill.position.set(-300,200,100); scene.add(fill);
+
+const bedGroup=new THREE.Group(); scene.add(bedGroup);
+function buildBed(w=256,d=256,h=250){
+  bedGroup.clear();
+  const gcol=getComputedStyle(document.documentElement).getPropertyValue('--grid').trim();
+  const grid=new THREE.GridHelper(Math.max(w,d),Math.max(w,d)/16,gcol,gcol);
+  grid.rotation.x=Math.PI/2; grid.position.set(w/2,d/2,0); bedGroup.add(grid);
+  const box=new THREE.Box3(new THREE.Vector3(0,0,0),new THREE.Vector3(w,d,h));
+  const bh=new THREE.Box3Helper(box,new THREE.Color(gcol)); bedGroup.add(bh);
+}
+buildBed();
+const modelGroup=new THREE.Group(); scene.add(modelGroup);
+
+function resize(){const w=stage.clientWidth,h=stage.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();}
+new ResizeObserver(resize).observe(stage); resize();
+(function loop(){requestAnimationFrame(loop);controls.update();renderer.render(scene,camera);})();
+
+function fitTo(objs){
+  const box=new THREE.Box3(); let any=false;
+  objs.forEach(o=>{if(o.visible){box.expandByObject(o);any=true;}});
+  if(!any) box.set(new THREE.Vector3(0,0,0),new THREE.Vector3(256,256,100));
+  const c=box.getCenter(new THREE.Vector3()), s=box.getSize(new THREE.Vector3()).length();
+  const dir=new THREE.Vector3(0.6,-0.9,0.55).normalize();
+  camera.position.copy(c).addScaledVector(dir,s*1.25); controls.target.copy(c); camera.near=s/200; camera.far=s*20; camera.updateProjectionMatrix();
+}
+
+// ---------- 3MF parsing ----------
+function readZip(buf){
+  const files=fflate.unzipSync(new Uint8Array(buf));
+  const map={}; for(const k in files) map[k.replace(/\\/g,'/').replace(/^\//,'')]=files[k];
+  return map;
+}
+const td=new TextDecoder('utf-8');
+function parseXml(bytes){const d=new DOMParser().parseFromString(td.decode(bytes),'application/xml');const e=d.querySelector('parsererror');if(e)throw new Error('XML 파싱 실패: '+e.textContent.slice(0,120));return d;}
+function readTransform(str){
+  const m=new THREE.Matrix4(); if(!str) return m;
+  const v=str.trim().split(/\s+/).map(Number); if(v.length<12) return m;
+  m.set(v[0],v[3],v[6],v[9], v[1],v[4],v[7],v[10], v[2],v[5],v[8],v[11], 0,0,0,1); return m;
+}
+function resolvePath(base,p){ if(p.startsWith('/')) return p.slice(1); const d=base.split('/').slice(0,-1); return [...d,p].join('/'); }
+
+function load3mf(buf,name){
+  const zip=readZip(buf);
+  const checks=[]; const add=(lvl,t,s)=>checks.push({lvl,t,s});
+  const names=Object.keys(zip);
+  let modelPath=names.find(n=>n.toLowerCase()==='3d/3dmodel.model');
+  if(!modelPath){
+    const rels=names.find(n=>n.toLowerCase()==='_rels/.rels');
+    if(rels){const d=parseXml(zip[rels]);const r=[...d.getElementsByTagName('Relationship')].find(x=>/3dmodel$/.test(x.getAttribute('Type')||''));if(r)modelPath=r.getAttribute('Target').replace(/^\//,'');}
+  }
+  if(!modelPath||!zip[modelPath]) throw new Error('3D/3dmodel.model 을 찾을 수 없습니다. 3MF 파일이 아니거나 손상되었습니다.');
+  if(!names.some(n=>n==='[Content_Types].xml')) add('bad','[Content_Types].xml 없음','OPC 규격상 필수 파일입니다. 대부분의 프로그램이 열지 못합니다.');
+  if(!names.some(n=>n.toLowerCase()==='_rels/.rels')) add('bad','_rels/.rels 없음','패키지 관계 파일이 없습니다.');
+
+  const docs={}; const getDoc=p=>{ if(!docs[p]){ if(!zip[p]) throw new Error('하위 모델 파일 없음: '+p); docs[p]=parseXml(zip[p]); } return docs[p]; };
+  const root=getDoc(modelPath).documentElement;
+  const unit=root.getAttribute('unit')||'millimeter';
+  const app=[...root.getElementsByTagNameNS(CORE,'metadata')].find(m=>m.getAttribute('name')==='Application')?.textContent||'';
+  const bbl=[...root.getElementsByTagNameNS(CORE,'metadata')].some(m=>(m.getAttribute('name')||'').startsWith('BambuStudio:'));
+  const raw=td.decode(zip[modelPath].subarray(0,4000));
+  if(bbl&&!/xmlns:BambuStudio=/.test(raw)) add('bad','BambuStudio 네임스페이스 선언 누락','BambuStudio:3mfVersion 메타데이터를 쓰면서 xmlns:BambuStudio 선언이 없습니다. 규격 준수 리더는 여기서 거부합니다.');
+  if(/\bp:/.test(raw)&&!/xmlns:p=/.test(raw)) add('bad','production 확장(p:) 네임스페이스 누락','p:UUID / p:path 속성을 쓰는데 xmlns:p 선언이 없습니다.');
+  if(unit!=='millimeter') add('warn','단위가 '+unit,'슬라이서는 보통 mm 기준입니다. 크기가 다르게 보일 수 있습니다.');
+
+  // Bambu config
+  let partExtruder={}, objExtruder={}, partName={}, objName={}, plates=[], colours=null, printer=null, bedSize=null;
+  const msPath=names.find(n=>n.toLowerCase()==='metadata/model_settings.config');
+  if(msPath){ try{ const d=parseXml(zip[msPath]);
+    for(const o of d.getElementsByTagName('object')){ const oid=o.getAttribute('id'); const ex=[...o.children].find(c=>c.tagName==='metadata'&&c.getAttribute('key')==='extruder'); if(ex) objExtruder[oid]=+ex.getAttribute('value'); const on=[...o.children].find(c=>c.tagName==='metadata'&&c.getAttribute('key')==='name'); if(on) objName[oid]=on.getAttribute('value');
+      for(const p of o.getElementsByTagName('part')){ const pe=[...p.children].find(c=>c.tagName==='metadata'&&c.getAttribute('key')==='extruder'); partExtruder[p.getAttribute('id')]=pe?+pe.getAttribute('value'):(objExtruder[oid]||1); const pn=[...p.children].find(c=>c.tagName==='metadata'&&c.getAttribute('key')==='name'); if(pn) partName[p.getAttribute('id')]=pn.getAttribute('value'); } }
+    for(const pl of d.getElementsByTagName('plate')){ const md=k=>[...pl.children].find(c=>c.tagName==='metadata'&&c.getAttribute('key')===k)?.getAttribute('value');
+      const objs=[...pl.getElementsByTagName('model_instance')].map(mi=>[...mi.children].find(c=>c.getAttribute('key')==='object_id')?.getAttribute('value'));
+      plates.push({id:md('plater_id'),name:md('plater_name')||('플레이트 '+md('plater_id')),objs}); }
+  }catch(e){add('warn','model_settings.config 파싱 실패',e.message);} }
+  const psPath=names.find(n=>n.toLowerCase()==='metadata/project_settings.config');
+  if(psPath){ try{ const j=JSON.parse(td.decode(zip[psPath])); colours=j.filament_colour||null; printer=j.printer_model||j.printer_settings_id||null;
+    if(Array.isArray(j.printable_area)){const pts=j.printable_area.map(s=>s.split('x').map(Number));bedSize=[Math.max(...pts.map(p=>p[0])),Math.max(...pts.map(p=>p[1])),+j.printable_height||250];}
+    if(!j.version) add('warn','project_settings.config 에 version 키 없음','Bambu Studio가 저장한 파일에는 항상 있습니다. 수제 파일일 가능성이 큽니다.');
+  }catch(e){add('warn','project_settings.config 파싱 실패',e.message);} }
+
+  // objects
+  const meshCache={}; const parts=[]; let totalTri=0;
+  function getObject(path,id){ const d=getDoc(path); const o=[...d.documentElement.getElementsByTagNameNS(CORE,'object')].find(x=>x.getAttribute('id')===id); if(!o) throw new Error(`object id=${id} 를 ${path} 에서 찾을 수 없습니다`); return o; }
+  function meshOf(path,id,el){
+    const k=path+'#'+id; if(meshCache[k]) return meshCache[k];
+    const me=el.getElementsByTagNameNS(CORE,'mesh')[0]; if(!me) return null;
+    const vs=me.getElementsByTagNameNS(CORE,'vertex'), ts=me.getElementsByTagNameNS(CORE,'triangle');
+    const pos=new Float32Array(vs.length*3); for(let i=0;i<vs.length;i++){const v=vs[i];pos[i*3]=+v.getAttribute('x');pos[i*3+1]=+v.getAttribute('y');pos[i*3+2]=+v.getAttribute('z');}
+    const idx=new Uint32Array(ts.length*3); let bad=0,degen=0; const edges=new Map();
+    for(let i=0;i<ts.length;i++){const t=ts[i];const a=+t.getAttribute('v1'),b=+t.getAttribute('v2'),c=+t.getAttribute('v3');idx[i*3]=a;idx[i*3+1]=b;idx[i*3+2]=c;
+      if(a>=vs.length||b>=vs.length||c>=vs.length)bad++; if(a===b||b===c||a===c)degen++;
+      for(const [p,q] of [[a,b],[b,c],[c,a]]){const key=p<q?p*4294967296+q:q*4294967296+p; edges.set(key,(edges.get(key)||0)+(p<q?1:-1));} }
+    let openEdges=0; for(const v of edges.values()) if(v!==0) openEdges++;
+    const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.BufferAttribute(pos,3)); g.setIndex(new THREE.BufferAttribute(idx,1)); g.computeVertexNormals();
+    const r={geo:g,tri:ts.length,vert:vs.length,bad,degen,openEdges,name:partName[id]||el.getAttribute('name')||('object '+id)}; meshCache[k]=r; return r;
+  }
+  function walk(path,id,mat,topName,topId,depth){
+    if(depth>16) throw new Error('component 참조가 너무 깊습니다(순환 참조?)');
+    const el=getObject(path,id); const type=el.getAttribute('type')||'model';
+    if(type!=='model'&&type!=='solidsupport') return;
+    const comps=el.getElementsByTagNameNS(CORE,'components')[0];
+    if(comps){ for(const c of comps.getElementsByTagNameNS(CORE,'component')){ const p=c.getAttributeNS('http://schemas.microsoft.com/3dmanufacturing/production/2015/06','path')||c.getAttribute('p:path'); const np=p?resolvePath(path,p):path; const m=mat.clone().multiply(readTransform(c.getAttribute('transform'))); walk(np,c.getAttribute('objectid'),m,topName,topId,depth+1); } }
+    const mr=meshOf(path,id,el); if(!mr) return;
+    const ext=partExtruder[id]||objExtruder[topId]||null;
+    const col=(ext&&colours&&colours[ext-1])?colours[ext-1]:PALETTE[parts.length%PALETTE.length];
+    const m=new THREE.Mesh(mr.geo,new THREE.MeshStandardMaterial({color:col,roughness:.6,metalness:.05,side:THREE.DoubleSide}));
+    m.applyMatrix4(mat); m.userData={name:mr.name,top:topName,topId,ext,tri:mr.tri,col};
+    totalTri+=mr.tri; parts.push({mesh:m,info:mr,topId,ext,col});
+    if(mr.bad) add('bad',`${mr.name}: 잘못된 정점 인덱스 ${mr.bad}개`,'삼각형이 존재하지 않는 정점을 가리킵니다.');
+    if(mr.openEdges) add('warn',`${mr.name}: 열린 모서리 ${mr.openEdges}개`,'메시가 닫혀 있지 않습니다. 슬라이서가 자동 수리하거나 구멍이 생길 수 있습니다.');
+    if(mr.degen) add('warn',`${mr.name}: 퇴화 삼각형 ${mr.degen}개`,'면적 0인 삼각형입니다. 대개 무해합니다.');
+  }
+  const build=root.getElementsByTagNameNS(CORE,'build')[0];
+  const items=build?[...build.getElementsByTagNameNS(CORE,'item')]:[];
+  if(!items.length) add('bad','build item 없음','출력할 객체가 하나도 배치되어 있지 않습니다.');
+  for(const it of items){ const id=it.getAttribute('objectid'); const p=it.getAttributeNS('http://schemas.microsoft.com/3dmanufacturing/production/2015/06','path')||it.getAttribute('p:path'); const path=p?resolvePath(modelPath,p):modelPath; const el=getObject(path,id); walk(path,id,readTransform(it.getAttribute('transform')),objName[id]||el.getAttribute('name')||('object '+id),id,0); }
+  for(const p of parts){ if(p.info.openEdges===0&&p.info.bad===0) {} }
+  const cleanAll=parts.every(p=>p.info.openEdges===0&&p.info.bad===0);
+  if(cleanAll&&parts.length) add('ok',`메시 ${parts.length}개 모두 닫힌 형상`,`삼각형 합계 ${totalTri.toLocaleString()}개, 인덱스 오류 0`);
+  if(app) add('ok','생성 프로그램: '+app, bbl?'Bambu Studio 프로젝트 형식(3mfVersion 메타 포함)':'');
+  if(printer) add('ok','프린터 프로필: '+printer, colours?('필라멘트 '+colours.join(', ')):'');
+  return {parts,plates,checks,unit,bedSize,name,totalTri};
+}
+
+// ---------- UI ----------
+let cur=null, selected=null;
+const fmt=n=>n.toFixed(1);
+function setStatus(t){const s=$('#status');s.textContent=t;s.hidden=!t;}
+function showInfo(mesh){
+  if(!mesh){$('#iDim').textContent='–';$('#iTri').textContent='–';$('#iPos').textContent='–';return;}
+  const b=new THREE.Box3().setFromObject(mesh), s=b.getSize(new THREE.Vector3());
+  $('#iDim').textContent=`${fmt(s.x)} × ${fmt(s.y)} × ${fmt(s.z)} mm`;
+  $('#iTri').textContent=mesh.userData.tri.toLocaleString();
+  $('#iPos').textContent=`x ${fmt(b.min.x)}~${fmt(b.max.x)}  y ${fmt(b.min.y)}~${fmt(b.max.y)}  z ${fmt(b.min.z)}~${fmt(b.max.z)}`;
+}
+function select(mesh){
+  selected=mesh;
+  cur.parts.forEach(p=>{p.mesh.material.emissive.set(p.mesh===mesh?0x335544:0x000000);});
+  document.querySelectorAll('.part').forEach(el=>el.classList.toggle('sel',el.dataset.uuid===mesh?.uuid));
+  showInfo(mesh);
+}
+function render(res){
+  cur=res; selected=null; modelGroup.clear();
+  res.parts.forEach(p=>modelGroup.add(p.mesh));
+  if(res.bedSize) buildBed(...res.bedSize);
+  $('#fname').textContent=res.name;
+  // plates
+  const ps=$('#plates'); ps.innerHTML=''; $('#plateSec').hidden=res.plates.length<2;
+  if(res.plates.length>=2){
+    const all=document.createElement('button'); all.className='plate'; all.textContent='전체'; all.type='button'; all.setAttribute('aria-pressed','true'); all.onclick=()=>showPlate(null); ps.append(all);
+    res.plates.forEach(pl=>{const b=document.createElement('button');b.className='plate';b.type='button';b.textContent=pl.name;b.setAttribute('aria-pressed','false');b.onclick=()=>showPlate(pl);ps.append(b);});
+  }
+  // parts
+  const pp=$('#parts'); pp.innerHTML='';
+  res.parts.forEach(p=>{
+    const row=document.createElement('div'); row.className='part'; row.dataset.uuid=p.mesh.uuid; row.tabIndex=0;
+    const cb=document.createElement('input'); cb.type='checkbox'; cb.checked=true; cb.id='v_'+p.mesh.uuid; cb.setAttribute('aria-label',p.info.name+' 표시'); cb.onclick=e=>{e.stopPropagation();p.mesh.visible=cb.checked;};
+    const sw=document.createElement('span'); sw.className='sw'; sw.style.background=p.col;
+    const nm=document.createElement('span'); nm.className='nm'; nm.innerHTML=`${p.info.name}<small>${p.mesh.userData.top!==p.info.name?p.mesh.userData.top+' · ':''}${p.ext?'필라멘트 '+p.ext:'단색'}</small>`;
+    const tri=document.createElement('span'); tri.className='tri'; tri.textContent=p.info.tri.toLocaleString()+'△';
+    row.append(cb,sw,nm,tri); row.onclick=()=>select(p.mesh); row.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();select(p.mesh);}};
+    pp.append(row);
+  });
+  // checks
+  const ck=$('#checks'); ck.innerHTML='';
+  const order={bad:0,warn:1,ok:2};
+  res.checks.sort((a,b)=>order[a.lvl]-order[b.lvl]).forEach(c=>{const li=document.createElement('li');li.className=c.lvl;li.innerHTML=`<span class="dot"></span><span>${c.t}${c.s?'<small>'+c.s+'</small>':''}</span>`;ck.append(li);});
+  if(!res.checks.length) ck.innerHTML='<li class="ok"><span class="dot"></span><span>문제 없음</span></li>';
+  showInfo(null);
+  fitTo(res.parts.map(p=>p.mesh));
+}
+function showPlate(pl){
+  document.querySelectorAll('.plate').forEach(b=>b.setAttribute('aria-pressed',String((pl===null&&b.textContent==='전체')||(pl&&b.textContent===pl.name))));
+  cur.parts.forEach(p=>{p.mesh.visible=!pl||pl.objs.includes(String(p.topId));const cb=document.getElementById('v_'+p.mesh.uuid);if(cb)cb.checked=p.mesh.visible;});
+  fitTo(cur.parts.map(p=>p.mesh));
+}
+async function openFile(file){
+  setStatus('읽는 중… '+file.name);
+  try{ const buf=await file.arrayBuffer(); const res=load3mf(buf,file.name); render(res); setStatus(''); }
+  catch(e){ console.error(e); setStatus('열기 실패: '+e.message); $('#checks').innerHTML=`<li class="bad"><span class="dot"></span><span>${e.message}</span></li>`; }
+}
+$('#openBtn').onclick=()=>$('#fileIn').click();
+$('#fileIn').onchange=e=>{if(e.target.files[0])openFile(e.target.files[0]);};
+$('#sampleBtn').onclick=async()=>{setStatus('샘플 불러오는 중…');try{const r=await fetch('sample/toolbox42.b64.txt');if(!r.ok)throw new Error('HTTP '+r.status);const t=await r.text();const bin=Uint8Array.from(atob(t.trim()),c=>c.charCodeAt(0));openFile(new File([bin],'Toolbox42_P1S_v4.3mf'));}catch(e){setStatus('샘플을 불러오지 못했습니다: '+e.message);}};
+const drop=$('#drop');
+['dragenter','dragover'].forEach(ev=>stage.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('over');}));
+['dragleave','drop'].forEach(ev=>stage.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('over');}));
+stage.addEventListener('drop',e=>{const f=e.dataTransfer.files[0];if(f)openFile(f);});
+$('#wire').onchange=e=>{cur?.parts.forEach(p=>p.mesh.material.wireframe=e.target.checked);};
+$('#bed').onchange=e=>{bedGroup.visible=e.target.checked;};
+$('#fit').onclick=()=>fitTo(cur?cur.parts.map(p=>p.mesh):[]);
+// pick
+const ray=new THREE.Raycaster(), ptr=new THREE.Vector2(); let down=null;
+renderer.domElement.addEventListener('pointerdown',e=>{down=[e.clientX,e.clientY];});
+renderer.domElement.addEventListener('pointerup',e=>{
+  if(!cur||!down||Math.hypot(e.clientX-down[0],e.clientY-down[1])>4) return;
+  const r=renderer.domElement.getBoundingClientRect(); ptr.set(((e.clientX-r.left)/r.width)*2-1,-((e.clientY-r.top)/r.height)*2+1);
+  ray.setFromCamera(ptr,camera); const hit=ray.intersectObjects(cur.parts.map(p=>p.mesh).filter(m=>m.visible))[0];
+  select(hit?hit.object:null);
+});
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',()=>cur?.bedSize?buildBed(...cur.bedSize):buildBed());
+$('#sampleBtn').click();
+</script>

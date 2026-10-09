@@ -1,0 +1,8 @@
+numpy
+trimesh
+shapely
+rtree
+manifold3d
+mapbox_earcut
+lib3mf
+matplotlib
