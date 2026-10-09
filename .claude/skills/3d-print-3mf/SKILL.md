@@ -43,5 +43,8 @@ description: 이 저장소(3mf-maker)에서 3D 프린팅 모델을 설계·검�
 2. 선택: Bambu 프로젝트 3MF(`bbl_project.py`) — `project_settings`는 `sample/`의 사용자 내보내기 파일에서만 유도(`build_project_settings.py`). "열린다"고 단정하지 않는다.
 3. 파트 STL 동봉. 같은 색 = 같은 필라멘트 번호, 첫 색이 1번.
 
-## 7. 보고
+## 7. 스터디 기록 (계속)
+`references/studies/README.md`가 색인. 새 샘플·새 기구(기어·경첩·스냅·나사)·실패 사례는 실측·출처와 함께 거기에 기록하고 main에 병합한다. 설계 방법론 전반은 `references/studies/design-method.md`(치수 잡는 순서, 형상 규칙, 기구별 값, 상자·뚜껑 틀, 체크리스트)를 먼저 읽는다. 생성 도구: `tools/gear.py`, `tools/hinge.py`.
+
+## 8. 보고
 결론 한 줄 → QC 표 → 조립 검증(간섭·간격·휨·토크) → 렌더/GIF → 보낸 파일과 슬라이서에서 할 일 → 다음 한 걸음. 수치 없는 "됩니다"는 쓰지 않는다. 새로 배운 규칙은 이 스킬의 `references/`에 적고 main에 병합한다.
