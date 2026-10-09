@@ -1,0 +1,233 @@
+{
+ "files": [
+  "작업중/toolbox42/models/Toolbox42_v5_A_base_handle_latch.3mf"
+ ],
+ "parts": [
+  {
+   "name": "base",
+   "faces": 23016,
+   "vertices": 11486,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    171.0,
+    135.98,
+    29.9
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 130.55,
+   "weight_g_solid": 161.9,
+   "bed_contact_mm2": 17934.6,
+   "first_layer_mm2": 17994.9,
+   "footprint_hull_mm2": 18910.3,
+   "aspect_h_over_w": 0.22,
+   "thin_area_mm2": 126.5,
+   "thin_at_z": 8.29,
+   "thin_bounds": [
+    26.4,
+    115.5,
+    184.6,
+    235.9
+   ],
+   "overhang_mm2": 531.8,
+   "overhang_top": [
+    [
+     13.51,
+     162.5,
+     [
+      63.7,
+      101.4,
+      147.3,
+      112.7
+     ]
+    ],
+    [
+     14.31,
+     107.0,
+     [
+      63.7,
+      100.3,
+      147.3,
+      117.7
+     ]
+    ],
+    [
+     0.31,
+     34.6,
+     [
+      21.7,
+      119.0,
+      189.3,
+      232.3
+     ]
+    ],
+    [
+     3.91,
+     28.1,
+     [
+      78.5,
+      115.5,
+      132.5,
+      116.7
+     ]
+    ]
+   ],
+   "flags": [
+    "1.2 mm 보다 얇은 살 126.5 mm² (z=8.29, x/y (26.4, 115.5, 184.6, 235.9))",
+    "오버행 규칙 위반 532 mm² (서포트 또는 재설계)"
+   ]
+  },
+  {
+   "name": "handle",
+   "faces": 9286,
+   "vertices": 4637,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    78.16,
+    42.25,
+    9.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 11.08,
+   "weight_g_solid": 13.7,
+   "bed_contact_mm2": 1158.7,
+   "first_layer_mm2": 1192.7,
+   "footprint_hull_mm2": 2957.5,
+   "aspect_h_over_w": 0.21,
+   "thin_area_mm2": 2.7,
+   "thin_at_z": 5.65,
+   "thin_bounds": [
+    20.0,
+    40.1,
+    98.2,
+    82.1
+   ],
+   "overhang_mm2": 47.4,
+   "overhang_top": [
+    [
+     6.31,
+     9.0,
+     [
+      20.0,
+      77.3,
+      98.1,
+      78.2
+     ]
+    ],
+    [
+     6.11,
+     6.4,
+     [
+      20.0,
+      76.9,
+      98.1,
+      78.6
+     ]
+    ],
+    [
+     0.91,
+     6.2,
+     [
+      20.0,
+      76.5,
+      98.1,
+      80.5
+     ]
+    ],
+    [
+     8.71,
+     4.9,
+     [
+      24.0,
+      68.4,
+      94.2,
+      76.1
+     ]
+    ]
+   ],
+   "flags": [
+    "1.2 mm 보다 얇은 살 2.7 mm² (z=5.65, x/y (20.0, 40.1, 98.2, 82.1))"
+   ]
+  },
+  {
+   "name": "latch",
+   "faces": 7248,
+   "vertices": 3622,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    44.2,
+    31.43,
+    5.6
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 3.3,
+   "weight_g_solid": 4.1,
+   "bed_contact_mm2": 775.3,
+   "first_layer_mm2": 775.3,
+   "footprint_hull_mm2": 1321.9,
+   "aspect_h_over_w": 0.18,
+   "thin_area_mm2": 13.0,
+   "thin_at_z": 2.57,
+   "thin_bounds": [
+    120.6,
+    45.0,
+    163.6,
+    74.1
+   ],
+   "overhang_mm2": 19.5,
+   "overhang_top": [
+    [
+     4.51,
+     13.1,
+     [
+      120.6,
+      47.1,
+      163.6,
+      48.5
+     ]
+    ],
+    [
+     4.31,
+     3.8,
+     [
+      120.6,
+      46.8,
+      163.6,
+      48.8
+     ]
+    ],
+    [
+     4.11,
+     1.8,
+     [
+      120.6,
+      46.6,
+      163.6,
+      49.0
+     ]
+    ],
+    [
+     3.91,
+     0.7,
+     [
+      120.6,
+      46.5,
+      163.6,
+      49.1
+     ]
+    ]
+   ],
+   "flags": [
+    "1.2 mm 보다 얇은 살 13.0 mm² (z=2.57, x/y (120.6, 45.0, 163.6, 74.1))"
+   ]
+  }
+ ],
+ "collisions": [],
+ "total_faces": 39550,
+ "total_weight_g_solid": 179.7
+}

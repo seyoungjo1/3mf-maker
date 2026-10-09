@@ -23,6 +23,12 @@ Bambu Studio에서 A·B 파일을 열면 "not from Bambu Lab, load geometry data
 
 그림: `figures/v5_latch_handle.png`.
 
+### QC·조립 검증·렌더 (v5)
+- `qc/v5_A`, `qc/v5_B`: `tools/qc_model.py` 보고(report.md) + 열쇠고리 프로그램식 렌더 4뷰·회전 GIF(`turntable.gif`).
+- `qc/v5_assembly`: 조립 상태(닫힘 / 열림 90° / 분리) 렌더·GIF. 수치는 `docs/ASSEMBLY_v5.md` — 경첩 0~120° 간섭 0, 손잡이 −90~90° 간섭 0(간격 0.06), 뚜껑 끼움 0.1~0.2 mm, **걸쇠는 본체 귀와 치수가 맞지 않아 재설계 필요**(v6 안 포함), 휨·스냅 토크 표.
+- 재현: `scripts/assembly_v5.py v5parts.pkl`.
+
+
 ### 왜 v4 프로젝트 3MF가 안 열렸나 (추정 아님, 바뀐 방침)
 v4의 `project_settings.config`는 ChatGPT 원본에서 가져온 것이라 Bambu Studio 02.08에 없는 키 15개와 배열 길이 불일치가 섞여 있었습니다. 원인 특정 대신 **방침을 바꿨습니다**: 주 산출물은 검증된 일반 3MF(A·B), 프로젝트 3MF는 사용자 샘플에서만 유도(`scripts/build_project_settings.py`, 결과 `docs/project_settings_v5.json`).
 
