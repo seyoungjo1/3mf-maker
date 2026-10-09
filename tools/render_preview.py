@@ -8,7 +8,35 @@ import os, sys, json, argparse, threading, http.server, socketserver, functools,
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 from load3mf import load_parts
 import trimesh
-CHROME = '/opt/pw-browsers/chromium'
+def find_chrome():
+    """Chromium 실행 파일 찾기: CHROME_PATH 환경변수 → 클라우드 기본(/opt/pw-browsers) → playwright 설치본 → 시스템 Chrome/Chromium/Edge.
+    없으면 None (playwright 기본 브라우저 시도)."""
+    import shutil, glob, platform
+    cands = [os.environ.get('CHROME_PATH', ''), '/opt/pw-browsers/chromium']
+    cands += sorted(glob.glob('/opt/pw-browsers/chromium-*/chrome-linux/chrome'), reverse=True)
+    home = os.path.expanduser('~')
+    for base in (os.environ.get('PLAYWRIGHT_BROWSERS_PATH', ''), os.path.join(home, '.cache', 'ms-playwright'),
+                 os.path.join(home, 'AppData', 'Local', 'ms-playwright'), os.path.join(home, 'Library', 'Caches', 'ms-playwright')):
+        if base: cands += sorted(glob.glob(os.path.join(base, 'chromium-*', '*', 'chrome*')), reverse=True) + sorted(glob.glob(os.path.join(base, 'chromium-*', '*', '*.app', 'Contents', 'MacOS', '*')), reverse=True)
+    for n in ('chromium', 'chromium-browser', 'google-chrome', 'google-chrome-stable', 'chrome', 'msedge'):
+        w = shutil.which(n)
+        if w: cands.append(w)
+    cands += [r'C:\Program Files\Google\Chrome\Application\chrome.exe', r'C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe',
+              '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', '/Applications/Chromium.app/Contents/MacOS/Chromium']
+    for c in cands:
+        if c and os.path.isfile(c) and os.access(c, os.X_OK): return c
+    return None
+CHROME = find_chrome()
+def check():
+    """렌더러 점검: playwright·Chromium·three.js 뷰어 파일. 세션 시작 훅이 부른다."""
+    ok = True
+    try: import playwright  # noqa
+    except ImportError: print('⚠ 렌더러: playwright 미설치 — pip install playwright (브라우저는 기존 Chrome/Chromium 사용)'); ok = False
+    for f in ('three.module.js', 'OrbitControls.js'):
+        if not os.path.isfile(os.path.join(HERE, 'viewer', f)): print(f'⚠ 렌더러: tools/viewer/{f} 없음'); ok = False
+    print(f'렌더러: Chromium = {CHROME}' if CHROME else '⚠ 렌더러: Chromium 실행 파일을 못 찾음 — CHROME_PATH 환경변수로 지정하거나 python -m playwright install chromium')
+    if ok and CHROME: print('렌더러: 준비됨 (python tools/render_preview.py <파일> --out <dir>)')
+    return ok and CHROME is not None
 PALETTE = ['#37474f', '#ffb300', '#78909c', '#7ccb8b', '#e57373', '#ba68c8', '#4dd0e1', '#a1887f']
 
 HTML = r'''<!doctype html><html><head><meta charset="utf-8"><style>
@@ -78,7 +106,8 @@ def render(parts, out, colors=None, states=None, frames=36, size=(1200, 900), gi
     import io
     pngs = {}
     with sync_playwright() as p:
-        b = p.chromium.launch(executable_path=CHROME, args=['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'])
+        kw = dict(executable_path=CHROME) if CHROME else {}
+        b = p.chromium.launch(args=['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist'], **kw)
         pg = b.new_page(viewport={'width': size[0], 'height': size[1]}); pg.goto(f'http://127.0.0.1:{port}/index.html'); pg.wait_for_function('window.READY===true', timeout=120000)
         state_names = list(states) if states else ['']
         for st in state_names:
@@ -100,6 +129,7 @@ def render(parts, out, colors=None, states=None, frames=36, size=(1200, 900), gi
     return pngs
 
 if __name__ == '__main__':
+    if '--check' in sys.argv: sys.exit(0 if check() else 1)
     ap = argparse.ArgumentParser(); ap.add_argument('files', nargs='+'); ap.add_argument('--out', required=True); ap.add_argument('--colors', default='')
     ap.add_argument('--states'); ap.add_argument('--frames', type=int, default=36); ap.add_argument('--status', default=''); ap.add_argument('--bed', type=int, default=256)
     a = ap.parse_args(); parts = load(a.files)

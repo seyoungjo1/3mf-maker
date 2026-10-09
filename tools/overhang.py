@@ -9,12 +9,19 @@ from shapely.geometry import Polygon, LineString, MultiPolygon
 from shapely.ops import unary_union
 from shapely.affinity import affine_transform
 def layer_poly(mesh, z):
+    """z 높이 단면 폴리곤. 겹치는 조각(여러 바디가 겹친 오브젝트)도 닫힌 윤곽을 각각 합쳐 복구한다."""
     sec = mesh.section(plane_origin=[0, 0, z], plane_normal=[0, 0, 1])
     if sec is None: return Polygon()
-    p2, T = sec.to_2D(normal=[0, 0, 1]); polys = list(p2.polygons_full)
-    if not polys: return Polygon()
+    p2, T = sec.to_2D(normal=[0, 0, 1])
     a, b, c, d, xo, yo = T[0, 0], T[0, 1], T[1, 0], T[1, 1], T[0, 3], T[1, 3]
-    return unary_union([affine_transform(q, [a, b, c, d, xo, yo]) for q in polys]).buffer(0)
+    try:
+        polys = list(p2.polygons_full)
+        if not polys: return Polygon()
+        return unary_union([affine_transform(q, [a, b, c, d, xo, yo]) for q in polys]).buffer(0)
+    except Exception:
+        polys = [Polygon(q.exterior.coords) for q in p2.polygons_closed if q is not None and q.area > 1e-6]
+        if not polys: return Polygon()
+        return unary_union([affine_transform(q, [a, b, c, d, xo, yo]).buffer(0) for q in polys]).buffer(0)
 def check(mesh, layer=0.2, maxstep=0.115, min_area=0.5):
     """returns (total_area, [(z, area, bounds), ...] sorted by area desc)"""
     zmax = mesh.bounds[1, 2]; prev = None; bad = []; total = 0.0; z = layer / 2 + 0.0137
