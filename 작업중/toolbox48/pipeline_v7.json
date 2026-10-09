@@ -1,0 +1,80 @@
+{
+ "name": "Toolbox48 v7 (명판 48장)",
+ "out": "qc/v7",
+ "parts_pkl": "v7parts.pkl",
+ "plates": [
+  "models/Toolbox48_v7_A_base_handle_latch.3mf",
+  "models/Toolbox48_v7_B_lid_logo.3mf"
+ ],
+ "assembly": "scripts/assembly_v7.py",
+ "colors": {
+  "base": "#37474f",
+  "lid": "#37474f",
+  "handle": "#ffb300",
+  "latch": "#ffb300",
+  "logo": "#ffb300",
+  "nameplates": "#d7ccc8"
+ },
+ "qc": {
+  "efc": 0.15,
+  "max_bridge": 7,
+  "min_wall": 1.2,
+  "single_wall": []
+ },
+ "multi_body_ok": [
+  "logo"
+ ],
+ "support_zones": [
+  {
+   "part": "base",
+   "desc": "손잡이 귀쌍 밑면 z 13.5~14.3 (설계상 돌출, 서포트 '빌드 플레이트에만')",
+   "max_mm2": 320
+  },
+  {
+   "part": "lid",
+   "desc": "경첩 귀 돌기 밑면 z 8.3 (설계상 돌출, 서포트 '빌드 플레이트에만')",
+   "max_mm2": 150
+  }
+ ],
+ "min_gap": 0.3,
+ "frames": 36,
+ "assembly_parts_pkl": "v7parts_nominal.pkl",
+ "accepted": [
+  {
+   "part": "base",
+   "flag": "얇은 살",
+   "max": 220,
+   "desc": "U자 홈 칸막이 윗부분이 1.2→0.1 mm 로 가늘어지는 원본 형상(v5 126 mm², 출력 성공, 끝만 둥글게 나옴)"
+  },
+  {
+   "part": "base",
+   "flag": "브리지",
+   "max": 10,
+   "desc": "앞벽 z 3.9 소형 귀 사이 8.8 mm² 띠(v5 원본, 출력 성공)"
+  },
+  {
+   "part": "lid",
+   "flag": "얇은 살",
+   "max": 40,
+   "desc": "경첩 귀 끝 띠 33 mm²(v6 35.5, 출력 성공)"
+  },
+  {
+   "part": "lid",
+   "flag": "브리지",
+   "max": 15,
+   "desc": "걸쇠 탭 밑면 z 8.3 50 mm² — 서포트 '빌드 플레이트에만' 영역(v6 동일)"
+  },
+  {
+   "part": "logo",
+   "flag": "얇은 살",
+   "max": 45,
+   "desc": "로고 획 0.6~1.0 mm(사용자 로고, v5 출력 성공)"
+  },
+  {
+   "part": "latch",
+   "flag": "얇은 살",
+   "max": 15,
+   "desc": "쐐기 끝(v5 원본, 출력 성공)"
+  }
+ ]
+}

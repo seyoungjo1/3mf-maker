@@ -15,3 +15,9 @@
 3. **스킬 순서(설계 규칙 → 모델링 → QC → 조립 검증 → 보여주기 → 3MF → 보고)에 어긋나는 작업은 절대 금지.** 단계를 건너뛰거나 순서를 바꾸지 않는다. 한 단계라도 빠지면 그 결과물은 보내지 않는다.
 4. 금지 목록: 사용자가 올린 파일을 단면 그림 없이 설명하는 것 / 결합·끼움을 메시를 실제 좌표에 놓은 수치 없이 "맞다·안 맞다" 말하는 것 / QC 표·조립 수치·렌더 확인 없이 파일을 보내는 것 / 코끼리발 선반영(`tools/efc.py`)과 서포트 위치 명시 없이 3MF를 만드는 것 / 숫자 비교만으로 결합 가능성을 단정하는 것.
 5. 당연한 단계(문서 읽기·실측·QC·커밋·푸시·병합)는 허락을 묻지 않고 진행한다. 묻는 것은 결합 치수 변경과 설계 방향의 선택뿐이며, 그때도 실측 그림을 먼저 보여준다.
+
+## 파이프라인 규칙 (절대 규칙)
+- **모든 결과물은 `python tools/pipeline.py <프로젝트>/pipeline_*.json` 을 통과한 것만 낸다.** QC → 플레이트 3MF(충돌·베드·lib3mf strict) → 조립 검증(상태별 교집합·간격·영역 간격·각도 스윕) → 렌더(플레이트 5뷰+회전 GIF, 조립 상태 GIF, 작동 GIF) → `REPORT.md` → 종료 코드(⚠ 있으면 1). 종료 코드 1 이면 파일을 보내지 않고 설계로 돌아간다.
+- 프로젝트마다 `scripts/assembly_*.py` 의 `define(parts)` 로 상태·결합 쌍·스윕·추가 파트(명판 같은 내용물)를 정의한다. 결합 쌍은 접촉(`contact`)과 간격 요구(`min_gap`, `region`)를 명시한다.
+- **검사 항목은 계속 추가한다.** 새 실패·새 규칙이 나오면 `tools/pipeline.py`(또는 `qc_model.py`·`overhang.py`)에 검사를 넣고 `tools/selftest.py` 에 그 경우를 추가한 뒤 PASS 를 확인하고 main 에 병합한다. 도구를 고치면 반드시 `python tools/selftest.py` 를 돌린다.
+- 재사용 도구: `tools/generic3mf.py`(플레이트 3MF), `tools/check3mf.py`(strict), `tools/efc.py`(첫 층 선반영), `tools/render_preview.py`(렌더·GIF), `tools/qc_model.py`, `tools/snapfit.py`·`beam.py`.
