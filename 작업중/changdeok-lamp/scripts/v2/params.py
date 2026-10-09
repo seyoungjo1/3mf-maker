@@ -29,27 +29,14 @@ LOWER_ROOF_SLOPE_DEG = 24.0; UPPER_ROOF_SLOPE_DEG = 38.8
 SOFFIT_T = 2.2; LINE_T = 0.8; TOOTH = 1.0; TOOTH_PITCH = RAFTER_PITCH*K   # 처마: 서까래 끝 1.0 각, 피치 2.23
 RIB_W = 1.0; RIB_H = 0.6; RIB_PITCH_MM = RIB_PITCH*K    # 수키와 골 1.0×0.6, 피치 2.23
 MAKSAE_D = 1.6
-CORNER_RISE = 1.5; CORNER_FRAC = 0.28                   # 앙곡: 모서리 들림, 변 길이의 28 % 구간
+CORNER_RISE = 5.0; CORNER_FRAC = 0.28                   # 앙곡: 모서리 들림, 변 길이의 28 % 구간
 COL_D = 4.8                                             # 하층 기둥 지름(부조 반원), 실제 0.6 m×K=4.0 → 과장 1.2
 UCOL_D = 4.0
 WALL_BASE = 0.6                                         # 흰 바탕판(빛 통과)
 CLR = 0.3
 # 월대
 PLAT_UP = (SPAN_X + 2*1.47*K, SPAN_Y + 2*1.47*K, 3.5)   # 상단 월대 (183 × 122 × 3.5)
-PLAT_LO = (SPAN_X + 2*3.5*K, SPAN_Y + 2*3.5*K, 19.0)    # 하단 월대 (210 × 149 × 19) — 높이는 LED 퍽(18) 자리 때문에 과장
+PLAT_LO = (SPAN_X + 2*3.5*K, SPAN_Y + 2*3.5*K, 16.5)    # 하단 월대 (210 × 149 × 16.5) — 높이는 LED 퍽 자리 때문에 과장
 APRON_Y = 24.0                                          # 정면 하월대 앞치마(계단 자리)
 STEP_RISE = 1.4; STEP_TREAD = 2.0                       # 계단 한 단 (실제 0.17/0.3 m → 1.1/2.0, 층 7개)
 LED_D = 59; LED_H = 18; LED_CLR = 0.5; CABLE_W = 6; CABLE_H = 5
-
-# ---- 조립 높이 (mm, 월대 윗면 z=0). 측면 스캔(정합 일치: 5000×2422 원본 = 2000×969 사본) 기준 ----
-FLOOR_T = 3.0; FLOOR_Z0 = -1.0                         # 하층 바닥판 z -1~2 (월대 홈 1)
-LOWER_WALL_H = 33.4                                    # 벽 판 높이(창방 포함) → 윗면 35.4 (실측 평방 34.5)
-RING_W_OUT = 2.6; RING_W_IN = 2.5                      # 평방 링: 중심선 바깥 2.6, 안 2.5
-LIP_W = 1.6; LIP_H = 1.5                               # 벽 안쪽 위치 턱
-RIM_IN = 2.0; RIM_OUT = 0.4                            # 림: 중심선 안 2.0 ~ 바깥 0.4
-LOWER_BAND_H = 8.0; UPPER_BAND_H = 6.0
-LOWER_ROOF_RISE = 16.3                                 # 하층 지붕 처마(7.0 m)→상층 바닥(9.9 m) = 2.9 m
-UPPER_GABLE = (114.0, 17.5, 51.0)                      # 용마루 길이, 합각 밑 높이, 용마루 높이(기와 시작 기준)
-EAVE_RISE = 6.0                                        # 앙곡: 처마 모서리 들림(실측 측면 1.3 m ≈ 8.7, 바닥 평탄 유지 위해 6)
-SAG_LOWER = 1.5; SAG_UPPER = 3.0                       # 지붕면 오목 곡(가운데 처짐)
-WARP_EDGE = 3.0
