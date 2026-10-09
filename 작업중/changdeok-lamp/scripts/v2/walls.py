@@ -8,7 +8,7 @@ from shapely.affinity import rotate
 from geo import B, CYL, U, D, I, EXT
 import params as P
 BASE=P.WALL_BASE
-def _lattice_vertical(x0,y0,x1,y1,pitch=2.0,w=0.8,rails=(0.25,0.5,0.75),rail_w=0.8):
+def _lattice_vertical(x0,y0,x1,y1,pitch=3.2,w=1.0,rails=(0.5,),rail_w=1.0):
     """띠살: 세로살 + 가로살(비율 위치). 창 개구(x0,y0)-(x1,y1) 안."""
     shapes=[]
     xs=np.arange(x0+pitch, x1-w/2, pitch)
@@ -55,9 +55,9 @@ def wall(length, height, col_xs, col_d, beam_t, doors_per_bay=4, zone=None, kind
             if kind=='upper':
                 n=2; w=(hi-lo)/n
                 for k in range(n+1): rel_frames.append(sbox(lo+k*w-frame_w/2, t0, lo+k*w+frame_w/2, t1))
-                for k in range(n): rel_lat.append(_lattice_diag(lo+k*w+frame_w/2, t0+frame_w, lo+(k+1)*w-frame_w/2, t1-frame_w))
+                for k in range(n): rel_lat.append(_lattice_vertical(lo+k*w+frame_w/2, t0+frame_w, lo+(k+1)*w-frame_w/2, t1-frame_w, pitch=3.2, rails=()))
             else:
-                rel_lat.append(_lattice_diag(lo+frame_w, t0+frame_w, hi-frame_w, t1-frame_w))
+                rel_lat.append(_lattice_vertical(lo+frame_w, t0+frame_w, hi-frame_w, t1-frame_w, pitch=3.2, rails=()))
         if 'panel' in z:                                                                # 상층 판벽
             p0,p1=z['panel']; rel_panel.append(sbox(lo,p0,hi,p1))
             for k in range(1,4): xx=lo+(hi-lo)*k/4; rel_frames.append(sbox(xx-frame_w/2,p0,xx+frame_w/2,p1))
@@ -72,24 +72,24 @@ def lower_zone():
     H=P.Z_LOWER_WALL_TOP
     return dict(sill=(0.0,6.7), door=(6.7,24.0), transom=(24.0,29.3), lintel=(29.3,H), beam=(H,H+P.LOWER_BEAM))
 def upper_zone():
-    H=11.0
-    return dict(panel=(0.0,3.0), transom=(3.0,H), beam=(H,H+P.LOWER_BEAM))
+    H=8.1
+    return dict(panel=(0.0,1.5), transom=(1.5,H), beam=(H,H+P.LOWER_BEAM))
 def lower_walls():
     """4벽: 로컬 메시 + 월드 변환. 반환 dict name -> (white, brown, M4x4)"""
     K=P.K; bx=np.cumsum([0]+P.BAYS_X)*K; by=np.cumsum([0]+P.BAYS_Y)*K
     Lx=P.SPAN_X+P.COL_D; Ly=P.SPAN_Y-2*BASE
     zone=lower_zone(); H=P.Z_LOWER_WALL_TOP+P.LOWER_BEAM
     out={}
-    wf,bf=wall(Lx,H,[P.COL_D/2+x for x in bx],P.COL_D,P.LOWER_BEAM,4,zone,'lower')
-    wb,bb=wall(Lx,H,[P.COL_D/2+x for x in bx],P.COL_D,P.LOWER_BEAM,4,zone,'lower')
-    ws,bs=wall(Ly,H,[x-BASE for x in by[1:-1]],P.COL_D,P.LOWER_BEAM,3,zone,'lower')
-    ws2,bs2=wall(Ly,H,[x-BASE for x in by[1:-1]],P.COL_D,P.LOWER_BEAM,3,zone,'lower')
+    wf,bf=wall(Lx,H,[P.COL_D/2+x for x in bx],P.COL_D,P.LOWER_BEAM,3,zone,'lower')
+    wb,bb=wall(Lx,H,[P.COL_D/2+x for x in bx],P.COL_D,P.LOWER_BEAM,3,zone,'lower')
+    ws,bs=wall(Ly,H,[x-BASE for x in by[1:-1]],P.COL_D,P.LOWER_BEAM,2,zone,'lower')
+    ws2,bs2=wall(Ly,H,[x-BASE for x in by[1:-1]],P.COL_D,P.LOWER_BEAM,2,zone,'lower')
     out['wall_front']=(wf,bf,'front'); out['wall_back']=(wb,bb,'back'); out['wall_left']=(ws,bs,'left'); out['wall_right']=(ws2,bs2,'right')
     return out, Lx, Ly, H
 def upper_walls():
     K=P.K; ux0=-P.USPAN_X/2; n=5; ubays=np.linspace(0,P.USPAN_X,6)       # 상층 정면 5칸 균등(실측 없음, 추정)
     uby=np.linspace(0,P.USPAN_Y,4)                                        # 측면 3칸
-    Lx=P.USPAN_X+P.UCOL_D; Ly=P.USPAN_Y-2*BASE; zone=upper_zone(); H=11.0+P.LOWER_BEAM
+    Lx=P.USPAN_X+P.UCOL_D; Ly=P.USPAN_Y-2*BASE; zone=upper_zone(); H=8.1+P.LOWER_BEAM
     out={}
     wf,bf=wall(Lx,H,[P.UCOL_D/2+x for x in ubays],P.UCOL_D,P.LOWER_BEAM,2,zone,'upper')
     wb,bb=wall(Lx,H,[P.UCOL_D/2+x for x in ubays],P.UCOL_D,P.LOWER_BEAM,2,zone,'upper')
