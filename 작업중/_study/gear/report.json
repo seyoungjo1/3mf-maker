@@ -1,0 +1,84 @@
+{
+ "files": [
+  "작업중/_study/gear/gear_m1.5_z20_herringbone.stl",
+  "작업중/_study/gear/gear_m1.5_z20_spur.stl"
+ ],
+ "parts": [
+  {
+   "name": "gear_m1.5_z20_herringbone",
+   "faces": 33256,
+   "vertices": 16628,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    32.99,
+    32.99,
+    8.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 5.02,
+   "weight_g_solid": 6.2,
+   "bed_contact_mm2": 628.0,
+   "first_layer_mm2": 628.3,
+   "footprint_hull_mm2": 841.7,
+   "aspect_h_over_w": 0.24,
+   "thin_area_mm2": 4.8,
+   "thin_at_z": 3.66,
+   "thin_bounds": [
+    -16.3,
+    -16.3,
+    16.3,
+    16.3
+   ],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "flags": [
+    "1.2 mm 보다 얇은 살 4.8 mm² (z=3.66, x/y (-16.3, -16.3, 16.3, 16.3))"
+   ]
+  },
+  {
+   "name": "gear_m1.5_z20_spur",
+   "faces": 2896,
+   "vertices": 1448,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    32.99,
+    32.99,
+    8.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 5.02,
+   "weight_g_solid": 6.2,
+   "bed_contact_mm2": 628.0,
+   "first_layer_mm2": 628.0,
+   "footprint_hull_mm2": 841.3,
+   "aspect_h_over_w": 0.24,
+   "thin_area_mm2": 4.7,
+   "thin_at_z": 6.35,
+   "thin_bounds": [
+    -16.5,
+    -16.5,
+    16.5,
+    16.5
+   ],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "flags": [
+    "1.2 mm 보다 얇은 살 4.7 mm² (z=6.35, x/y (-16.5, -16.5, 16.5, 16.5))"
+   ]
+  }
+ ],
+ "collisions": [
+  {
+   "a": "gear_m1.5_z20_herringbone",
+   "b": "gear_m1.5_z20_spur",
+   "intersection_mm3": 4613.085,
+   "min_gap_mm": -1.064
+  }
+ ],
+ "total_faces": 36152,
+ "total_weight_g_solid": 12.4
+}
