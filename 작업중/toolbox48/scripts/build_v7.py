@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Toolbox48 v7 — 42장 → 48장. 칸 깊이(앞 50.0 / 뒤 51.8) → 58.0 (명판 8장 × 7.0 + 여유 2.0).
 본체·뚜껑을 각 칸 노치 중심에서 잘라 y 로 늘린다(앞 +8.0, 뒤 +6.2). 경첩·손잡이 귀·걸쇠 귀·탭·U자 홈 단면은 그대로.
-추가 수정: 본체 바닥 곡선 ≤0.115/층 + 첫 층 EFC +0.15 선반영, 뚜껑 립 0.2/면 깎아 끼움 0.3~0.4, 손잡이·걸쇠 첫 층 EFC.
+추가 수정: 본체 바닥 곡선 ≤0.115/층 + 첫 층 EFC +0.15 선반영, 본체 립 바깥면 0.1 깎아 끼움 0.2 → 0.3(립 1.6 → 1.5), 손잡이·걸쇠 첫 층 EFC.
 사용: python scripts/build_v7.py ../toolbox42/v5parts.pkl ../toolbox42/lid_v6.pkl"""
 import sys, os, pickle, json, numpy as np, trimesh
 from shapely.geometry import Polygon, MultiPolygon
@@ -22,7 +22,7 @@ FRONT_ROW0, REAR_ROW0 = 50.0, 51.8                                 # v5 실측
 D_FRONT, D_REAR = ROW - FRONT_ROW0, ROW - REAR_ROW0                # 8.0, 6.2
 CUT_FRONT, CUT_REAR = 106.75, 159.75                               # 본체 좌표: 칸막이 노치 중심(±1 mm 단면 동일 확인)
 C0 = 260.81                                                        # 닫힘 상태 대응: base_y = C0 - lid_y (v5)
-LIP_SHAVE = 0.2; ZC = 1.51; SLOPE = 0.115 / 0.2                    # 바닥 곡선: z<1.51 을 층당 0.115 로 제한
+LIP_SHAVE = 0.1; ZC = 1.51; SLOPE = 0.115 / 0.2                    # 바닥 곡선: z<1.51 을 층당 0.115 로 제한
 def polys(p): return [q for q in (p.geoms if isinstance(p, MultiPolygon) else [p]) if q.area > 1e-6]
 def ext(p, h):
     ms = [extrude_polygon(q, h) for q in polys(p)]
@@ -64,8 +64,9 @@ def fix_bottom(m):
     return trimesh.boolean.union([top] + slabs, engine='manifold')
 # ---------------- 뚜껑 립 깎기(본체 쪽) ----------------
 def shave_lip(m):
-    ring = unary_union([q for q in polys(layer_poly(m, 27.0)) if q.area > 50])      # 너클(≈8 mm²) 제외, 립 링(≈890 mm²)만
-    cutter = ring.buffer(0.6).difference(ring.buffer(-LIP_SHAVE)).buffer(0)
+    """립(1.6 mm) **바깥면만** LIP_SHAVE 깎는다. 닫힘 실측: 뚜껑 스커트 안쪽면 ↔ 립 바깥면 0.20 이 유일한 끼움면(립 안쪽면엔 뚜껑이 없음). 0.1 → 끼움 0.3, 립 1.5."""
+    ring = max(polys(layer_poly(m, 27.0)), key=lambda q: q.area)                  # 립 링(≈890 mm², 너클 ≈8 은 제외)
+    outer = Polygon(ring.exterior); cutter = outer.buffer(0.6).difference(outer.buffer(-LIP_SHAVE)).buffer(0)
     e = ext(cutter, 31 - 26.45); e.apply_translation([0, 0, 26.45])
     return trimesh.boolean.difference([m, e], engine='manifold'), ring
 if __name__ == '__main__':

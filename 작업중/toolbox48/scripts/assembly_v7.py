@@ -25,13 +25,13 @@ def define(parts):
             for i in range(N):
                 m = plate.copy(); m.apply_transform(R(np.pi / 2, [1, 0, 0])); m.apply_translation([cx - 25, s + PITCH * (i + 1), FLOOR_Z]); inst.append(m)
     plates48 = trimesh.util.concatenate(inst)
-    I = np.eye(4); lip_region = [[40, 70, 26.5], [216, 205, 30.6]]
+    I = np.eye(4); lip_region = [[40, 70, 27.0], [216, 205, 29.0]]   # 립 옆면 구간만(스커트 바닥 0.1·립 윗면 0.2 의 수직 틈은 끼움이 아님)
     states = {'분리': {'base': I, 'lid': T([0, 0, 50]) @ closed, 'handle': T([0, -30, 0]) @ handle_M(0)},
               '조립-닫힘': {'base': I, 'lid': closed, 'handle': handle_M(th_up)},
               '조립-열림 90°': {'base': I, 'lid': lid_open(90), 'handle': handle_M(th_down)},
               '명판 48장 (열림 90°)': {'base': I, 'lid': lid_open(90), 'handle': handle_M(th_down), 'nameplates': I},
               '명판 48장 (닫힘)': {'base': I, 'lid': closed, 'handle': handle_M(th_up), 'nameplates': I}}
-    pairs = [['base', 'lid', {'contact': True}], ['base', 'lid', {'region': lip_region, 'min_gap': 0.3}], ['base', 'handle', {'contact': True}],
+    pairs = [['base', 'lid', {'contact': True}], ['base', 'lid', {'region': lip_region, 'min_gap': 0.28}], ['base', 'handle', {'contact': True}],
              ['base', 'nameplates', {'contact': True}], ['base', 'nameplates', {'region': [[40, 75, 3.5], [216, 205, 12.0]], 'min_gap': 0.5}],
              ['lid', 'nameplates', {'min_gap': 0.5}]]
     sweeps = [{'name': '경첩', 'part': 'lid', 'pivot': knuckle.tolist(), 'axis': [1, 0, 0], 'base': closed, 'angles': list(range(0, 121, 15)), 'against': ['base'], 'need': [15, 120], 'also': {'handle': handle_M(th_down)}},
