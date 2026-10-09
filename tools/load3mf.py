@@ -30,10 +30,14 @@ def load_parts(path):
         T=M(it.get('transform')); top=objs[it.get('objectid')]
         comps=top.find('m:components',NS)
         if comps is None:
-            m=_mesh(top); m.apply_transform(T); out[top.get('name') or f'obj{top.get("id")}']=m; continue
+            m=_mesh(top); m.apply_transform(T); nm=top.get('name') or f'obj{top.get("id")}'; base=nm; k=2
+            while nm in out: nm=f'{base}#{k}'; k+=1
+            out[nm]=m; continue
         for c in comps:
             pp=c.get(PPATH); o=(sub(pp) if pp else objs)[c.get('objectid')]
             m=_mesh(o); m.apply_transform(M(c.get('transform'))); m.apply_transform(T)
             nm=names.get((it.get('objectid'),c.get('objectid'))) or o.get('name') or f'obj{c.get("objectid")}'
+            base=nm; k=2
+            while nm in out: nm=f'{base}#{k}'; k+=1      # 같은 이름의 오브젝트가 여러 개면 #2, #3 … 로 구분
             out[nm]=m
     return out
