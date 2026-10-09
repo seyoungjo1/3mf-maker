@@ -33,7 +33,7 @@ def define(parts):
               '조립-열림 90°': {'base': I, 'lid': lid_open(90), 'logo': lid_open(90), 'handle': handle_M(th_down)},
               '명판 48장 (열림 90°)': {'base': I, 'lid': lid_open(90), 'logo': lid_open(90), 'handle': handle_M(th_down), 'nameplates': I},
               '명판 48장 (닫힘)': {'base': I, 'lid': closed, 'logo': closed, 'handle': handle_M(th_up), 'nameplates': I}}
-    pairs = [['base', 'lid', {'contact': True}], ['base', 'lid', {'region': lip_region, 'min_gap': 0.28}], ['base', 'handle', {'contact': True}],
+    pairs = [['base', 'lid', {'contact': True}], ['base', 'lid', {'region': lip_region, 'min_gap': 0.28, 'states': ['조립-닫힘', '명판 48장 (닫힘)']}], ['base', 'handle', {'contact': True}],
              ['base', 'nameplates', {'contact': True}], ['base', 'nameplates', {'region': [[40, 75, 3.5], [216, 210, 12.0]], 'min_gap': 0.5}],
              ['lid', 'nameplates', {'min_gap': 0.5}]]
     sweeps = [{'name': '경첩', 'part': 'lid', 'pivot': knuckle.tolist(), 'axis': [-1, 0, 0], 'base': closed, 'angles': list(range(0, 121, 15)), 'against': ['base'], 'need': [15, 120], 'also': {'handle': handle_M(th_down)}, 'follow': ['logo']},

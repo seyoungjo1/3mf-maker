@@ -17,6 +17,7 @@ config.json (경로는 config 파일 위치 기준):
  "frames": 36
 }
 sweep: {"name":"경첩","part":"lid","pivot":[x,y,z],"axis":[1,0,0],"base":4x4,"angles":[0,15,...],"against":["base"],"fixed":{"base":4x4}}
+pairs 옵션의 "states": ["닫힘"] 은 해당 상태에만 영역 간격 검사를 적용한다. 측정 실패는 경고로 처리하며 스윕은 요구 구간의 모든 검사 각도를 통과해야 한다.
 """
 import os, sys, json, pickle, shutil, tempfile, importlib.util, argparse, numpy as np, trimesh
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
@@ -25,7 +26,9 @@ from render_preview import render as render3
 from check3mf import check as strict_check
 from trimesh.transformations import rotation_matrix as R, translation_matrix as T
 def log(*a): print('[pipeline]', *a, file=sys.stderr, flush=True)
-def _flush(out, L): open(os.path.join(out, 'REPORT.md'), 'w', encoding='utf-8').write('\n'.join(L) + '\n\n(진행 중…)\n')
+def _flush(out, L, render_only=False):
+    if not render_only:
+        open(os.path.join(out, 'REPORT.md'), 'w', encoding='utf-8').write('\n'.join(L) + '\n\n(진행 중…)\n')
 def tf(m, M): m = m.copy(); m.apply_transform(np.asarray(M, float)); return m
 def _bodies(m):
     if len(m.faces) < 20000: return [m]
@@ -97,7 +100,7 @@ def run(cfg_path, render_only=False):
         if nw: fl.append(f'strict 경고 {nw}: ' + '; '.join(ws[:3]))
         for f in fl: warn.append(f'{os.path.basename(pl)}: {f}')
         L.append(f"| {os.path.basename(pl)} | {', '.join(pp)} | {lo[0]:.0f}~{hi[0]:.0f} / {lo[1]:.0f}~{hi[1]:.0f} | {len(bad)} | {nw} | {'⚠ ' + '; '.join(fl) if fl else '✓'} |")
-    shutil.rmtree(tmp, ignore_errors=True); L.append(''); _flush(out, L)
+    shutil.rmtree(tmp, ignore_errors=True); L.append(''); _flush(out, L, render_only)
     # ---------- 3. 조립 검증 ----------
     asm = None
     if cfg.get('assembly'):
@@ -114,7 +117,13 @@ def run(cfg_path, render_only=False):
             log('state', st); placed = {n: tf(allparts[n], M) for n, M in mats.items()}
             for a, b, *opt in asm.get('pairs', []):
                 if a not in placed or b not in placed: continue
-                o = opt[0] if opt else {}; iv = inter(placed[a], placed[b]); g0, g1, g5 = gaps(placed[a], placed[b], region=o.get('region')); contact = bool(o.get('contact'))
+                o = opt[0] if opt else {}
+                if o.get('states') is not None and st not in o['states']: continue
+                iv = inter(placed[a], placed[b]); g0, g1, g5 = gaps(placed[a], placed[b], region=o.get('region')); contact = bool(o.get('contact'))
+                if iv < 0 or not np.isfinite([iv, g0, g1, g5]).all():
+                    warn.append(f'{st} {a}↔{b}: 교집합 또는 간격 측정 실패')
+                    L.append(f'| {st} | {a} | {b} | {iv:.2f} | {g0:.2f} / {g1:.2f} / {g5:.2f} | ⚠ 측정 실패 |')
+                    continue
                 need = o.get('min_gap', mg)
                 if o.get('region'): L.append(f"| {st} | {a} | {b} (영역 {o['region']}) | {iv:.2f} | {g0:.2f} / {g1:.2f} / {g5:.2f} | {'⚠ 간섭' if iv > 0.01 else ('⚠ 간격 %.2f < %s' % (g1, need) if g1 < need else '✓')} |")
                 if o.get('region'):
@@ -133,12 +142,18 @@ def run(cfg_path, render_only=False):
             for ang in sw['angles']:
                 log('sweep', sw['name'], ang); M = T(sw['pivot']) @ R(np.radians(ang), sw['axis']) @ T(-np.array(sw['pivot'])) @ np.asarray(sw['base'], float); mv = tf(allparts[sw['part']], M)
                 ivs = [inter(fixed[o], mv) for o in sw['against']]; g = min(gaps(fixed[o], mv, 3000)[0] for o in sw['against'])
-                if max(ivs) <= 0.01: ok.append(ang)
+                if not np.isfinite(ivs + [g]).all() or min(ivs) < 0:
+                    warn.append(f"스윕 {sw['name']} {ang}°: 교집합 또는 간격 측정 실패")
+                elif max(ivs) <= 0.01: ok.append(ang)
                 L.append(f'| {ang} | ' + ' | '.join(f'{v:.2f}' for v in ivs) + f' | {g:.2f} |')
-            rng = f"{min(ok)}~{max(ok)}°" if ok else '없음'; L += ['', f"간섭 0 범위: **{rng}** (요구: {sw.get('need', '')})", '']
-            if sw.get('need') and (not ok or min(ok) > sw['need'][0] or max(ok) < sw['need'][1]): warn.append(f"스윕 {sw['name']}: 간섭 0 범위 {rng} 가 요구 {sw['need']} 를 못 채움")
+            rng = (f"{min(ok)}~{max(ok)}°" if len(ok) == len(sw['angles']) else ', '.join(f'{a}°' for a in ok)) if ok else '없음'
+            L += ['', f"검사한 간섭 0 각도: **{rng}** (요구: {sw.get('need', '')})", '']
+            if sw.get('need'):
+                missing = [a for a in sw['angles'] if sw['need'][0] <= a <= sw['need'][1] and a not in ok]
+                if not ok or min(ok) > sw['need'][0] or max(ok) < sw['need'][1] or missing:
+                    warn.append(f"스윕 {sw['name']}: 간섭 0 각도 {rng} 가 요구 {sw['need']} 를 못 채움(실패 각도 {missing})")
         for n in asm.get('notes', []): L.append('- ' + n)
-        L.append(''); _flush(out, L)
+        L.append(''); _flush(out, L, render_only)
     # ---------- 4. 보여주기 ----------
     colors = cfg.get('colors', {}); L += ['## 4. 렌더 (three.js, 5뷰 + 회전 GIF + 작동 GIF)', '']
     def status_of(pp, extra=''):
@@ -150,7 +165,7 @@ def run(cfg_path, render_only=False):
         allparts = dict(nominal); allparts.update(asm.get('extra', {}))
         static = {k: v for k, v in asm['states'].items()}; shown = set(n for st in static.values() for n in st)
         sub = {n: m for n, m in allparts.items() if n in shown}
-        log('render assembly'); d = os.path.join(out, 'assembly'); render3(sub, d, colors, {k: {n: np.asarray(M).ravel().tolist() for n, M in v.items()} for k, v in static.items()}, cfg.get('frames', 36), status=status_of({n: tf(sub[n], M) for n, M in list(static.values())[1].items()} if len(static) > 1 else sub, cfg['name']))
+        log('render assembly'); d = os.path.join(out, 'assembly'); render3(sub, d, colors, {k: {n: np.asarray(M).ravel().tolist() for n, M in v.items()} for k, v in static.items()}, cfg.get('frames', 36), status=status_of({n: tf(sub[n], M) for n, M in list(static.values())[1].items()} if len(static) > 1 else sub, cfg['name']), show_bed=False)
         L.append(f'- 조립 상태(분리/닫힘/열림…): `{os.path.relpath(d, base)}/view_*_<상태>.png`, `turntable.gif`')
         motion = {}
         for sw in asm.get('sweeps', []):
@@ -162,7 +177,7 @@ def run(cfg_path, render_only=False):
                 motion[f"{sw['name']} {ang}°"] = st
         if motion:
             names = set(n for st in motion.values() for n in st); sub = {n: m for n, m in allparts.items() if n in names}
-            log('render motion', len(motion), 'frames'); d2 = os.path.join(out, 'motion'); render3(sub, d2, colors, motion, len(motion), status=cfg['name'] + ' · 작동(스윕)'); L.append(f'- 작동 GIF(스윕 각도별 프레임): `{os.path.relpath(d2, base)}/turntable.gif`')
+            log('render motion', len(motion), 'frames'); d2 = os.path.join(out, 'motion'); render3(sub, d2, colors, motion, len(motion), status=cfg['name'] + ' · 작동(스윕)', show_bed=False); L.append(f'- 작동 GIF(스윕 각도별 프레임): `{os.path.relpath(d2, base)}/turntable.gif`')
     L.append('')
     # ---------- 5. 판정 ----------
     L += ['## 5. 판정', '']
