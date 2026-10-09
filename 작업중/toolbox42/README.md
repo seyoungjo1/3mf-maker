@@ -52,7 +52,7 @@ Bambu Studio에서 A·B 파일을 열면 "not from Bambu Lab, load geometry data
 
 ### QC·조립 검증·렌더 (v5)
 - `qc/v5_A`, `qc/v5_B`: `tools/qc_model.py` 보고(report.md) + 열쇠고리 프로그램식 렌더 4뷰·회전 GIF(`turntable.gif`).
-- `qc/v5_assembly`: 조립 상태(닫힘 / 열림 90° / 분리) 렌더·GIF. 수치는 `docs/ASSEMBLY_v5.md` — 경첩 0~120° 간섭 0, 손잡이 −90~90° 간섭 0(간격 0.06), 뚜껑 끼움 0.1~0.2 mm, **걸쇠는 본체 귀와 치수가 맞지 않아 재설계 필요**(v6 안 포함), 휨·스냅 토크 표.
+- `qc/v5_assembly`: 조립 상태(닫힘 / 열림 90° / 분리) 렌더·GIF. 수치는 `docs/ASSEMBLY_v5.md` — 경첩 0~120° 간섭 0, 손잡이 −90~90° 간섭 0(간격 0.06), 뚜껑 끼움 0.1~0.2 mm, **클립은 사용자 실물 확인으로 정상 작동**. 기존 “결합 불가·재설계 필요” 결론은 조립 가정이 미확정이어서 철회(상세 문서 정정 참조), 휨·스냅 토크 표.
 - 재현: `scripts/assembly_v5.py v5parts.pkl`.
 
 
