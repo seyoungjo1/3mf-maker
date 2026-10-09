@@ -1,0 +1,126 @@
+{
+ "files": [
+  "작업중/toolbox42/models/Toolbox42_v6_B_lid_logo.3mf"
+ ],
+ "parts": [
+  {
+   "name": "lid",
+   "faces": 110432,
+   "vertices": 55198,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    171.0,
+    125.95,
+    18.01
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 70.41,
+   "weight_g_solid": 87.3,
+   "bed_contact_mm2": 18471.7,
+   "first_layer_mm2": 18471.8,
+   "footprint_hull_mm2": 20099.3,
+   "aspect_h_over_w": 0.14,
+   "thin_area_mm2": 35.5,
+   "thin_at_z": 11.38,
+   "thin_bounds": [
+    65.2,
+    60.3,
+    185.8,
+    185.5
+   ],
+   "overhang_mm2": 792.1,
+   "overhang_top": [
+    [
+     0.71,
+     552.9,
+     [
+      70.4,
+      65.6,
+      180.4,
+      180.1
+     ]
+    ],
+    [
+     8.31,
+     114.4,
+     [
+      114.6,
+      180.0,
+      136.4,
+      185.5
+     ]
+    ],
+    [
+     11.71,
+     16.2,
+     [
+      72.0,
+      62.7,
+      179.0,
+      64.1
+     ]
+    ],
+    [
+     2.31,
+     15.7,
+     [
+      67.5,
+      63.7,
+      183.5,
+      183.9
+     ]
+    ]
+   ],
+   "flags": [
+    "1.2 mm 보다 얇은 살 35.5 mm² (z=11.38, x/y (65.2, 60.3, 185.8, 185.5))",
+    "오버행 규칙 위반 792 mm² (서포트 또는 재설계)"
+   ]
+  },
+  {
+   "name": "logo",
+   "faces": 2912,
+   "vertices": 1482,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 18,
+   "size_mm": [
+    58.37,
+    39.52,
+    0.6
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 0.37,
+   "weight_g_solid": 0.5,
+   "bed_contact_mm2": 615.2,
+   "first_layer_mm2": 615.2,
+   "footprint_hull_mm2": 1584.7,
+   "aspect_h_over_w": 0.02,
+   "thin_area_mm2": 41.7,
+   "thin_at_z": 0.3,
+   "thin_bounds": [
+    96.3,
+    102.7,
+    154.7,
+    142.2
+   ],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "flags": [
+    "조각 18개로 분리됨",
+    "1.2 mm 보다 얇은 살 41.7 mm² (z=0.3, x/y (96.3, 102.7, 154.7, 142.2))"
+   ]
+  }
+ ],
+ "collisions": [
+  {
+   "a": "lid",
+   "b": "logo",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": -0.0
+  }
+ ],
+ "total_faces": 113344,
+ "total_weight_g_solid": 87.8
+}

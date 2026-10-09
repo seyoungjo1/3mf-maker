@@ -1,5 +1,7 @@
 # Toolbox42 v5 조립 검증 — 동작·휨·토크
 
+사용자 결정: 결합부는 **M3×14 볼트**. 사용자 보고: 기존 출력본은 잘 열리고 잘 잠김(걸쇠 결합 방식은 아래 1절의 측정과 맞지 않으므로 어느 구멍에 볼트를 넣었는지 확인 필요).
+
 재현: `python scripts/fix_parts_v5.py … v5parts.pkl` → `python scripts/assembly_v5.py v5parts.pkl` → `python ../../tools/render_preview.py … --states`. 모든 결합부는 ⌀3.4 구멍(M3 볼트/⌀3 핀)이다.
 
 ## 1. 결합부 측정 (단면에서 읽은 값)
