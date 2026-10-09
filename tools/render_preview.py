@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """3d-print 열쇠고리 프로그램의 미리보기(three.js, 어두운 배경, 격자 베드, flatShading)를 헤드리스로 재현해
-PNG 4장(기본 iso/상부 top/측면 side/밑면 bottom)과 회전 GIF 를 만든다.
+PNG 5장(기본 iso/상부 top/측면 side/밑면 bottom/정면 저각도 front)과 회전 GIF 를 만든다.
 사용: python tools/render_preview.py <file.3mf | a.stl b.stl ...> --out <dir> [--colors name=#hex,...] [--states states.json] [--frames 36]
   states.json: {"분리": {"lid": [0,0,30]}, "조립": {"lid": [16개 행우선 4x4 행렬]}}  (파트별 평행이동 [dx,dy,dz] 또는 4x4 행렬)  → 상태별 PNG + GIF 에 상태 순환(키캡의 분리/조립-폄/조립-누름과 같은 방식)
 """
@@ -39,6 +39,7 @@ window.setView=function(mode,azDeg){ fit(); controls.target.copy(c); grid.visibl
   if(mode==='top') camera.position.set(c.x,c.y-s*0.001,c.z+s*1.3);
   else if(mode==='side') camera.position.set(c.x,c.y-s*1.3,c.z+s*0.03);
   else if(mode==='bottom') camera.position.set(c.x,c.y-s*0.001,c.z-s*1.3);
+  else if(mode==='front') camera.position.set(c.x+s*0.25,c.y-s*1.15,c.z+s*0.22);
   else { const a=(azDeg===undefined?0:azDeg)*Math.PI/180; const r=s*0.9; camera.position.set(c.x+r*Math.sin(a),c.y-r*Math.cos(a),c.z+s*0.8); }
   camera.lookAt(c); controls.update(); renderer.render(scene,camera); };
 window.setState=function(name){ const st=(DATA.states||{})[name]||{}; for(const [n,m] of Object.entries(meshes)){ const d=st[n]; m.matrixAutoUpdate=false; if(Array.isArray(d)&&d.length===16){ m.matrix.set(...d); } else { const t=d||[0,0,0]; m.matrix.makeTranslation(t[0],t[1],t[2]); } } const lb=document.getElementById('label'); lb.textContent=name||''; lb.style.display=name?'block':'none'; };
@@ -82,7 +83,7 @@ def render(parts, out, colors=None, states=None, frames=36, size=(1200, 900), gi
         state_names = list(states) if states else ['']
         for st in state_names:
             pg.evaluate(f'window.setState({json.dumps(st)})')
-            for v in ('iso', 'top', 'side', 'bottom'):
+            for v in ('iso', 'top', 'side', 'bottom', 'front'):
                 pg.evaluate(f'window.setView({json.dumps(v)},0)'); fn = f'view_{v}' + (f'_{st}' if st else '') + '.png'
                 pg.screenshot(path=os.path.join(out, fn)); pngs[fn] = fn
         pg.close()

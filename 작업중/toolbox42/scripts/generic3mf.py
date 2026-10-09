@@ -31,10 +31,14 @@ def _hex(c):
 def _xml(s):
     return str(s).replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;').replace('"', '&quot;')
 
-def write_generic_3mf(path, objects, title='model'):
+def write_generic_3mf(path, objects, title='model', material_order=None):
     """objects: [{'name': str, 'parts': [(trimesh, color_hex, part_name), ...]}, ...]
-    메시는 베드(월드) 좌표 그대로 (0..256, z>=0). 같은 색은 같은 필라멘트(익스트루더) 번호."""
+    메시는 베드(월드) 좌표 그대로 (0..256, z>=0). 같은 색은 같은 필라멘트(익스트루더) 번호.
+    material_order: 색 hex 목록을 주면 그 순서대로 필라멘트 1..n 을 고정(플레이트가 여러 장이어도 같은 색 = 같은 번호)."""
     mat_order, mat_index = [], {}
+    for col in (material_order or []):
+        k = _hex(col)
+        if k not in mat_index: mat_index[k] = len(mat_order); mat_order.append(k)
     for ob in objects:
         for _, col, _ in ob['parts']:
             k = _hex(col)

@@ -26,22 +26,24 @@ description: 이 저장소(3mf-maker)에서 3D 프린팅 모델을 설계·검�
 - 3MF 정점은 XML 직접 파싱(`tools/load3mf.py`, p:path 지원) → `trimesh.Trimesh(process=False)`. STL 왕복·정점 병합 금지.
 - 스냅·경첩·손잡이 같은 기구는 설계 전에 `references/snapfit_beam.md`의 식으로 힘·변형률을 먼저 맞춘다(암 두께·길이 결정).
 
-## 3. QC (보내기 전 필수) — `python tools/qc_model.py <3mf|stl...> --out <qc dir>`
-닫힘·조각 수·삼각형·크기·부피·PLA 무게·바닥 접지/첫 층·얇은 살(<1.2)·오버행·파트 간 충돌/간격을 표로 낸다. ⚠가 하나라도 있으면 설계로 돌아가거나 이유를 적는다(설계상 돌출은 서포트 위치로 보고).
+## 3. QC (보내기 전 필수) — `python tools/qc_model.py <3mf|stl...> --out <qc dir> [--efc 0.15] [--max-bridge 7] [--single-wall 갓이름]`
+닫힘·조각 수·삼각형·크기·부피·PLA 무게·바닥 접지/첫 층·얇은 살(<1.2)·**오버행(한쪽 지지)과 브리지(양쪽 지지, 최대 폭)를 따로**·파트 간 충돌/간격(면접촉은 '접촉'으로 표시)을 표로 낸다. 오버행은 EFC 0.15 를 반영한 출력물 기준. ⚠가 하나라도 있으면 설계로 돌아가거나 이유를 적는다(설계상 돌출은 서포트 위치로 보고). 출력 방향 메시는 `tools/efc.py` 로 첫 층 +0.15 선반영. 조립 좌표 세트(충돌)와 출력 방향 세트(오버행·안착)를 **둘 다** 돌린다 — 출력 세트는 원점에 겹쳐 있으니 충돌 표는 플레이트 3MF 로 본다.
 
 ## 4. 조립 검증 — 결합 파트가 있으면 필수 (`작업중/toolbox42/scripts/assembly_v5.py` 가 본보기)
 - 결합부(구멍·핀·귀)를 단면으로 **측정**해 축을 맞추고 4×4 행렬로 조립한다. 닫힘·열림 등 상태마다 교집합 부피와 최소 간격(표면 샘플 거리 분포: 최소/1 %/5 %)을 낸다. 회전 부품은 각도 스윕(15° 간격)으로 간섭 0 범위를 보고한다.
+- 쌓는 조립(램프처럼 얹는 구조)은 층마다 얹힘 면적(위 파트 바닥 ∩ 아래 파트 윗면), 전체 무게중심 높이와 넘어지는 기울기(atan(반폭/무게중심 z))를 낸다. 모든 링·보·테두리는 아래 부재 윗면 안에 완전히 올라앉아야 한다(`design_rules.md` 쌓는 부재).
 - 휨: `tools/beam.py`(캔틸레버/단순지지/양단고정). 스냅·걸쇠: `tools/snapfit.py`(변형률, 팁 힘, 삽입력, 분리력, 토크 = 힘×피벗 거리). PLA E=3300 MPa, 허용 변형률 반복 사용 4 %(Z방향 적층이면 ×0.5), 손으로 잠그는 힘 10~30 N 목표.
 - 맞지 않는 결합(치수 불일치)은 숨기지 말고 수치로 보고하고 수정안을 제시한다.
 
 ## 5. 보여주기 — 열쇠고리 프로그램과 같은 방식 (`python tools/render_preview.py ...`) — 상세: `references/presentation.md`
-- three.js 헤드리스 렌더: 어두운 배경, 256 격자 베드, 각진 음영(flatShading), 색은 밑판 `#37474f`·글자/포인트 `#ffb300`. 뷰 4장(기본·상부·측면·밑면) + **회전 GIF**. 결합 파트가 있으면 상태(분리/조립-닫힘/조립-열림 …)를 GIF에 순환.
+- three.js 헤드리스 렌더: 어두운 배경, 256 격자 베드, 각진 음영(flatShading), 색은 밑판 `#37474f`·글자/포인트 `#ffb300`(여러 색 파트는 `--colors 이름=#hex`). 뷰 5장(기본·상부·측면·밑면·정면 저각도 front) + **회전 GIF**. 결합 파트가 있으면 상태(분리/조립-닫힘/조립-열림 …)를 GIF에 순환.
 - 하단 상태줄: `완료 — 모델 크기 W × D × H mm` + ⚠ 줄. 사용자에게는 GIF·기본 뷰 PNG를 파일로 보낸다(SendUserFile).
 
 ## 6. 3MF — 완성본은 Bambu Studio에서 열려야 한다 (상세: `references/bambu_3mf.md`)
 1. 플레이트마다 일반 3MF 한 장: `작업중/toolbox42/scripts/generic3mf.py`(열쇠고리 `mm3mf.py` 방식: basematerials + model_settings 파트별 extruder + Slic3r_PE). lib3mf strict 경고 0.
 2. 선택: Bambu 프로젝트 3MF(`bbl_project.py`) — `project_settings`는 `sample/`의 사용자 내보내기 파일에서만 유도(`build_project_settings.py`). "열린다"고 단정하지 않는다.
-3. 파트 STL 동봉. 같은 색 = 같은 필라멘트 번호, 첫 색이 1번.
+3. 파트 STL 동봉. 같은 색 = 같은 필라멘트 번호, 첫 색이 1번. 플레이트가 여러 장이면 `write_generic_3mf(..., material_order=[색 목록])` 로 번호를 전 플레이트 공통으로 고정. 한 오브젝트에 색 파트 여러 개(지붕+처마 띠)면 같은 오브젝트의 parts 로 넣는다(열쇠고리 글자 방식).
+4. 플레이트 3MF 자체를 `tools/qc_model.py` 로 다시 검사(충돌 0·베드 안)하고 lib3mf strict 경고 0 을 ASCII 경로에서 확인한다.
 
 ## 7. 스터디 기록 (계속)
 `references/studies/README.md`가 색인. 새 샘플·새 기구(기어·경첩·스냅·나사)·실패 사례는 실측·출처와 함께 거기에 기록하고 main에 병합한다. 설계 방법론 전반은 `references/studies/design-method.md`(치수 잡는 순서, 형상 규칙, 기구별 값, 상자·뚜껑 틀, 체크리스트)를 먼저 읽는다. 생성 도구: `tools/gear.py`, `tools/hinge.py`.
