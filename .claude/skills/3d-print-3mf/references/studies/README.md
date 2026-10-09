@@ -7,7 +7,7 @@
 | 2026-10-09 | [hinge.md](hinge.md) | 핀 경첩·프린트인플레이스 경첩 규칙, `tools/hinge.py` |
 | 2026-10-09 | [gear.md](gear.md) | 인벌류트 기어·헤링본 규칙, `tools/gear.py` |
 | 2026-10-09 | [lantern-sample.md](lantern-sample.md) | 일본 LED 랜턴 샘플 실측 — 정방향 지붕(오버행 0), 0.8 mm 발광 갓, 색별 파트/플레이트, 전용 서포트 파트 |
-| 2026-10-09 | [korean-palace-lamp-motif.md](korean-palace-lamp-motif.md) | 창덕궁 인정전 모티브 램프 — 한국답게 보이는 요소(팔작·합각·공포 띠·월대 계단·둥근 기둥·띠살 창호), 파트=색 구성 초안, 결정 사항 |
+| 2026-10-09 | [korean-palace-lamp-motif.md](korean-palace-lamp-motif.md) | 창덕궁 인정전 모티브 램프 — 한국답게 보이는 요소(팔작·합각·공포 띠·월대 계단·둥근 기둥·띠살 창호), 파트=색 구성, **v1 구현 치수·몸체 단면 규칙(o 체계)·실패→수정 기록** (`작업중/changdeok-lamp/`) |
 | 2026-10-09 | [toolbox42-lessons.md](toolbox42-lessons.md) | Toolbox42 v4~v6에서 배운 것(실패 포함) |
 
 추가 샘플(미실측, 다음 차례): Click_Pen(클릭 펜 기구), Clock_box(태엽 시계 상자), Desk Organizer(OpenSCAD), Little Trees Slider Vent(슬라이더), Mento_Dog, POJEMNICZEK1(트위스트 락 통), 所有部件集合(모듈형 책상 도구, P2S 9 플레이트).

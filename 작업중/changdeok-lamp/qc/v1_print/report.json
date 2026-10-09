@@ -1,0 +1,776 @@
+{
+ "files": [
+  "/home/user/3mf-maker/작업중/changdeok-lamp/models/print/lower_band.stl",
+  "/home/user/3mf-maker/작업중/changdeok-lamp/models/print/lower_body.stl",
+  "/home/user/3mf-maker/작업중/changdeok-lamp/models/print/lower_roof.stl",
+  "/home/user/3mf-maker/작업중/changdeok-lamp/models/print/lower_roof_trim.stl",
+  "/home/user/3mf-maker/작업중/changdeok-lamp/models/print/lower_screen.stl",
+  "/home/user/3mf-maker/작업중/changdeok-lamp/models/print/platform.stl",
+  "/home/user/3mf-maker/작업중/changdeok-lamp/models/print/upper_band.stl",
+  "/home/user/3mf-maker/작업중/changdeok-lamp/models/print/upper_body.stl",
+  "/home/user/3mf-maker/작업중/changdeok-lamp/models/print/upper_roof.stl",
+  "/home/user/3mf-maker/작업중/changdeok-lamp/models/print/upper_roof_trim.stl",
+  "/home/user/3mf-maker/작업중/changdeok-lamp/models/print/upper_screen.stl"
+ ],
+ "parts": [
+  {
+   "name": "lower_band",
+   "faces": 96,
+   "vertices": 48,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    113.3,
+    80.3,
+    5.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 9.08,
+   "weight_g_solid": 11.3,
+   "bed_contact_mm2": 2841.6,
+   "first_layer_mm2": 2841.6,
+   "footprint_hull_mm2": 9098.0,
+   "aspect_h_over_w": 0.06,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "flags": []
+  },
+  {
+   "name": "lower_body",
+   "faces": 9456,
+   "vertices": 4296,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    103.3,
+    70.3,
+    36.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 49.36,
+   "weight_g_solid": 61.2,
+   "bed_contact_mm2": 5323.4,
+   "first_layer_mm2": 5323.4,
+   "footprint_hull_mm2": 7262.0,
+   "aspect_h_over_w": 0.51,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 1131.3,
+   "bridge_max_span": 2.8,
+   "bridge_top": [
+    [
+     23.11,
+     382.7,
+     2.8
+    ],
+    [
+     10.71,
+     374.3,
+     2.8
+    ],
+    [
+     16.51,
+     374.3,
+     2.8
+    ]
+   ],
+   "flags": []
+  },
+  {
+   "name": "lower_roof",
+   "faces": 186,
+   "vertices": 93,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    136.0,
+    100.0,
+    19.79
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 108.26,
+   "weight_g_solid": 134.2,
+   "bed_contact_mm2": 8010.6,
+   "first_layer_mm2": 8010.6,
+   "footprint_hull_mm2": 13600.0,
+   "aspect_h_over_w": 0.2,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "overhang_mm2": 16.5,
+   "overhang_top": [
+    [
+     0.31,
+     16.5,
+     [
+      -68.0,
+      -50.0,
+      68.0,
+      50.0
+     ]
+    ]
+   ],
+   "bridge_mm2": 955.4,
+   "bridge_max_span": 4.3,
+   "bridge_top": [
+    [
+     2.31,
+     955.4,
+     4.3
+    ]
+   ],
+   "flags": []
+  },
+  {
+   "name": "lower_roof_trim",
+   "faces": 56,
+   "vertices": 28,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    140.3,
+    104.3,
+    4.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 3.85,
+   "weight_g_solid": 4.8,
+   "bed_contact_mm2": 1033.3,
+   "first_layer_mm2": 1033.3,
+   "footprint_hull_mm2": 14633.3,
+   "aspect_h_over_w": 0.04,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "overhang_mm2": 16.5,
+   "overhang_top": [
+    [
+     0.31,
+     16.5,
+     [
+      -68.0,
+      -50.0,
+      68.0,
+      50.0
+     ]
+    ]
+   ],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "flags": []
+  },
+  {
+   "name": "lower_screen",
+   "faces": 64,
+   "vertices": 32,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    90.7,
+    57.7,
+    19.7
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 4.63,
+   "weight_g_solid": 5.7,
+   "bed_contact_mm2": 321.6,
+   "first_layer_mm2": 321.6,
+   "footprint_hull_mm2": 5233.4,
+   "aspect_h_over_w": 0.34,
+   "thin_area_mm2": 233.9,
+   "thin_at_z": 12.45,
+   "thin_bounds": [
+    -45.2,
+    -28.7,
+    45.2,
+    28.7
+   ],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "note": "단일 벽(발광 갓) 234 mm² — 의도된 0.8 mm 두 줄 벽",
+   "flags": []
+  },
+  {
+   "name": "platform",
+   "faces": 592,
+   "vertices": 296,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    160.3,
+    138.7,
+    23.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 349.45,
+   "weight_g_solid": 433.3,
+   "bed_contact_mm2": 20448.0,
+   "first_layer_mm2": 20448.0,
+   "footprint_hull_mm2": 21340.8,
+   "aspect_h_over_w": 0.17,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 185.0,
+   "bridge_max_span": 6.0,
+   "bridge_top": [
+    [
+     8.51,
+     185.0,
+     6.0
+    ]
+   ],
+   "flags": []
+  },
+  {
+   "name": "upper_band",
+   "faces": 96,
+   "vertices": 48,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    105.3,
+    71.3,
+    5.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 8.19,
+   "weight_g_solid": 10.2,
+   "bed_contact_mm2": 2569.6,
+   "first_layer_mm2": 2569.6,
+   "footprint_hull_mm2": 7507.9,
+   "aspect_h_over_w": 0.07,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "flags": []
+  },
+  {
+   "name": "upper_body",
+   "faces": 7440,
+   "vertices": 3336,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    95.3,
+    61.3,
+    27.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 31.81,
+   "weight_g_solid": 39.5,
+   "bed_contact_mm2": 2195.4,
+   "first_layer_mm2": 2195.4,
+   "footprint_hull_mm2": 5841.9,
+   "aspect_h_over_w": 0.44,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 1021.7,
+   "bridge_max_span": 2.6,
+   "bridge_top": [
+    [
+     14.11,
+     345.6,
+     2.6
+    ],
+    [
+     8.31,
+     338.1,
+     2.6
+    ],
+    [
+     10.91,
+     338.1,
+     2.6
+    ]
+   ],
+   "flags": []
+  },
+  {
+   "name": "upper_roof",
+   "faces": 166,
+   "vertices": 85,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    124.0,
+    89.0,
+    42.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 201.44,
+   "weight_g_solid": 249.8,
+   "bed_contact_mm2": 10204.4,
+   "first_layer_mm2": 10204.4,
+   "footprint_hull_mm2": 11036.0,
+   "aspect_h_over_w": 0.47,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "overhang_mm2": 14.9,
+   "overhang_top": [
+    [
+     0.31,
+     14.9,
+     [
+      -62.0,
+      -44.5,
+      62.0,
+      44.5
+     ]
+    ]
+   ],
+   "bridge_mm2": 851.0,
+   "bridge_max_span": 4.3,
+   "bridge_top": [
+    [
+     2.31,
+     851.0,
+     4.3
+    ]
+   ],
+   "flags": []
+  },
+  {
+   "name": "upper_roof_trim",
+   "faces": 56,
+   "vertices": 28,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    128.3,
+    93.3,
+    4.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 3.49,
+   "weight_g_solid": 4.3,
+   "bed_contact_mm2": 934.4,
+   "first_layer_mm2": 934.4,
+   "footprint_hull_mm2": 11970.4,
+   "aspect_h_over_w": 0.04,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "overhang_mm2": 14.9,
+   "overhang_top": [
+    [
+     0.31,
+     14.9,
+     [
+      -62.0,
+      -44.5,
+      62.0,
+      44.5
+     ]
+    ]
+   ],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "flags": []
+  },
+  {
+   "name": "upper_screen",
+   "faces": 64,
+   "vertices": 32,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    82.7,
+    48.7,
+    9.7
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 2.02,
+   "weight_g_solid": 2.5,
+   "bed_contact_mm2": 284.2,
+   "first_layer_mm2": 284.2,
+   "footprint_hull_mm2": 4027.5,
+   "aspect_h_over_w": 0.2,
+   "thin_area_mm2": 206.7,
+   "thin_at_z": 7.75,
+   "thin_bounds": [
+    -41.2,
+    -24.2,
+    41.2,
+    24.2
+   ],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "note": "단일 벽(발광 갓) 207 mm² — 의도된 0.8 mm 두 줄 벽",
+   "flags": []
+  }
+ ],
+ "collisions": [
+  {
+   "a": "lower_band",
+   "b": "lower_body",
+   "intersection_mm3": 4545.313,
+   "min_gap_mm": -1.666
+  },
+  {
+   "a": "lower_band",
+   "b": "lower_roof",
+   "intersection_mm3": 9079.847,
+   "min_gap_mm": -0.0
+  },
+  {
+   "a": "lower_band",
+   "b": "lower_roof_trim",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 9.85
+  },
+  {
+   "a": "lower_band",
+   "b": "lower_screen",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 3.3
+  },
+  {
+   "a": "lower_band",
+   "b": "platform",
+   "intersection_mm3": 9055.547,
+   "min_gap_mm": -0.96
+  },
+  {
+   "a": "lower_band",
+   "b": "upper_band",
+   "intersection_mm3": 2428.758,
+   "min_gap_mm": -1.667
+  },
+  {
+   "a": "lower_band",
+   "b": "upper_body",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 1.0
+  },
+  {
+   "a": "lower_band",
+   "b": "upper_roof",
+   "intersection_mm3": 9079.847,
+   "min_gap_mm": -0.0
+  },
+  {
+   "a": "lower_band",
+   "b": "upper_roof_trim",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 4.35
+  },
+  {
+   "a": "lower_band",
+   "b": "upper_screen",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 7.3
+  },
+  {
+   "a": "lower_body",
+   "b": "lower_roof",
+   "intersection_mm3": 20263.687,
+   "min_gap_mm": -2.609
+  },
+  {
+   "a": "lower_body",
+   "b": "lower_roof_trim",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 14.85
+  },
+  {
+   "a": "lower_body",
+   "b": "lower_screen",
+   "intersection_mm3": 719.304,
+   "min_gap_mm": -1.5
+  },
+  {
+   "a": "lower_body",
+   "b": "platform",
+   "intersection_mm3": 33229.659,
+   "min_gap_mm": -2.864
+  },
+  {
+   "a": "lower_body",
+   "b": "upper_band",
+   "intersection_mm3": 6674.429,
+   "min_gap_mm": -2.898
+  },
+  {
+   "a": "lower_body",
+   "b": "upper_body",
+   "intersection_mm3": 7717.428,
+   "min_gap_mm": -1.99
+  },
+  {
+   "a": "lower_body",
+   "b": "upper_roof",
+   "intersection_mm3": 27640.526,
+   "min_gap_mm": -2.798
+  },
+  {
+   "a": "lower_body",
+   "b": "upper_roof_trim",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 9.35
+  },
+  {
+   "a": "lower_body",
+   "b": "upper_screen",
+   "intersection_mm3": 561.507,
+   "min_gap_mm": -1.499
+  },
+  {
+   "a": "lower_roof",
+   "b": "lower_roof_trim",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": -0.0
+  },
+  {
+   "a": "lower_roof",
+   "b": "lower_screen",
+   "intersection_mm3": 4228.106,
+   "min_gap_mm": -2.361
+  },
+  {
+   "a": "lower_roof",
+   "b": "platform",
+   "intersection_mm3": 106203.608,
+   "min_gap_mm": -6.387
+  },
+  {
+   "a": "lower_roof",
+   "b": "upper_band",
+   "intersection_mm3": 5850.472,
+   "min_gap_mm": -2.7
+  },
+  {
+   "a": "lower_roof",
+   "b": "upper_body",
+   "intersection_mm3": 12860.986,
+   "min_gap_mm": -4.112
+  },
+  {
+   "a": "lower_roof",
+   "b": "upper_roof",
+   "intersection_mm3": 69504.48,
+   "min_gap_mm": -4.806
+  },
+  {
+   "a": "lower_roof",
+   "b": "upper_roof_trim",
+   "intersection_mm3": 3485.278,
+   "min_gap_mm": -3.85
+  },
+  {
+   "a": "lower_roof",
+   "b": "upper_screen",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 2.0
+  },
+  {
+   "a": "lower_roof_trim",
+   "b": "lower_screen",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 21.15
+  },
+  {
+   "a": "lower_roof_trim",
+   "b": "platform",
+   "intersection_mm3": 3848.658,
+   "min_gap_mm": -0.361
+  },
+  {
+   "a": "lower_roof_trim",
+   "b": "upper_band",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 14.35
+  },
+  {
+   "a": "lower_roof_trim",
+   "b": "upper_body",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 19.35
+  },
+  {
+   "a": "lower_roof_trim",
+   "b": "upper_roof",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 5.5
+  },
+  {
+   "a": "lower_roof_trim",
+   "b": "upper_roof_trim",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 3.35
+  },
+  {
+   "a": "lower_roof_trim",
+   "b": "upper_screen",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 25.65
+  },
+  {
+   "a": "lower_screen",
+   "b": "platform",
+   "intersection_mm3": 4112.773,
+   "min_gap_mm": -0.391
+  },
+  {
+   "a": "lower_screen",
+   "b": "upper_band",
+   "intersection_mm3": 964.794,
+   "min_gap_mm": -0.4
+  },
+  {
+   "a": "lower_screen",
+   "b": "upper_body",
+   "intersection_mm3": 4029.449,
+   "min_gap_mm": -0.391
+  },
+  {
+   "a": "lower_screen",
+   "b": "upper_roof",
+   "intersection_mm3": 3905.873,
+   "min_gap_mm": -0.4
+  },
+  {
+   "a": "lower_screen",
+   "b": "upper_roof_trim",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 15.65
+  },
+  {
+   "a": "lower_screen",
+   "b": "upper_screen",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 2.9
+  },
+  {
+   "a": "platform",
+   "b": "upper_band",
+   "intersection_mm3": 8089.526,
+   "min_gap_mm": -5.0
+  },
+  {
+   "a": "platform",
+   "b": "upper_body",
+   "intersection_mm3": 24695.859,
+   "min_gap_mm": -10.992
+  },
+  {
+   "a": "platform",
+   "b": "upper_roof",
+   "intersection_mm3": 123245.902,
+   "min_gap_mm": -11.499
+  },
+  {
+   "a": "platform",
+   "b": "upper_roof_trim",
+   "intersection_mm3": 3479.278,
+   "min_gap_mm": -4.0
+  },
+  {
+   "a": "platform",
+   "b": "upper_screen",
+   "intersection_mm3": 1658.689,
+   "min_gap_mm": -9.7
+  },
+  {
+   "a": "upper_band",
+   "b": "upper_body",
+   "intersection_mm3": 4084.273,
+   "min_gap_mm": -1.654
+  },
+  {
+   "a": "upper_band",
+   "b": "upper_roof",
+   "intersection_mm3": 8193.806,
+   "min_gap_mm": -0.0
+  },
+  {
+   "a": "upper_band",
+   "b": "upper_roof_trim",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 8.85
+  },
+  {
+   "a": "upper_band",
+   "b": "upper_screen",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 3.3
+  },
+  {
+   "a": "upper_body",
+   "b": "upper_roof",
+   "intersection_mm3": 22162.046,
+   "min_gap_mm": -2.882
+  },
+  {
+   "a": "upper_body",
+   "b": "upper_roof_trim",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 13.85
+  },
+  {
+   "a": "upper_body",
+   "b": "upper_screen",
+   "intersection_mm3": 842.385,
+   "min_gap_mm": -1.737
+  },
+  {
+   "a": "upper_roof",
+   "b": "upper_roof_trim",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": -0.0
+  },
+  {
+   "a": "upper_roof",
+   "b": "upper_screen",
+   "intersection_mm3": 2020.689,
+   "min_gap_mm": -7.481
+  },
+  {
+   "a": "upper_roof_trim",
+   "b": "upper_screen",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 20.15
+  }
+ ],
+ "total_faces": 18272,
+ "total_weight_g_solid": 956.8
+}

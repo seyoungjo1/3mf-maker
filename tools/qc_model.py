@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """3D 출력 모델 품질검사 + 렌더링 — 보내기 전 항상 돌린다 (SKILL 3절).
-사용: python tools/qc_model.py <file.3mf | a.stl b.stl ...> --out <dir> [--nozzle 0.4] [--layer 0.2] [--min-wall 1.2] [--max-tri 200000]
+사용: python tools/qc_model.py <file.3mf | a.stl b.stl ...> --out <dir> [--layer 0.2] [--min-wall 1.2] [--max-tri 200000] [--max-bridge 7] [--efc 0.15] [--single-wall 이름,…] [--no-render]
 결과: <dir>/report.md, report.json, render_iso/top/side/bottom.png, assembly.png
 검사: 닫힘(watertight/is_volume/조각 수), 삼각형 예산, 크기·부피·PLA 무게, 바닥 접지 면적·비율, 얇은 살(<min-wall), 작은 부품,
-      오버행 규칙(0.2 층당 0.115), 파트 간 충돌(교집합 부피)·최소 간격.
+      오버행 규칙(0.2 층당 0.115)을 한쪽 지지(캔틸레버)와 양쪽 지지(브리지, 폭 ≤ --max-bridge 7 허용)로 나눠 보고, 파트 간 충돌(교집합 부피)·최소 간격.
 """
 import os, sys, json, argparse, numpy as np, trimesh
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 from load3mf import load_parts
-from overhang import check as overhang_check, layer_poly
+from overhang import classify as overhang_classify, layer_poly
 PLA_DENSITY = 1.24e-3   # g/mm³
 
 def load(paths):
@@ -26,10 +26,12 @@ def thin_regions(mesh, min_wall, zs):
     for z in zs:
         p = layer_poly(mesh, z)
         if p.is_empty: continue
-        thin = p.difference(p.buffer(-r).buffer(r + 0.01)); a = thin.area
+        thin = p.difference(p.buffer(-r).buffer(r + 0.01, join_style='mitre'))      # mitre: 직각 모서리 쐐기 오탐 방지
+        thin = unary_union([g for g in getattr(thin, 'geoms', [thin]) if g.area > 0.2]) if not thin.is_empty else thin; a = thin.area
         if a > worst[0]: worst = (a, round(z, 2), tuple(round(v, 1) for v in thin.bounds))
     return worst
 
+from shapely.ops import unary_union
 def qc_part(name, m, args):
     r = {'name': name, 'faces': int(len(m.faces)), 'vertices': int(len(m.vertices))}
     r['watertight'] = bool(m.is_watertight); r['is_volume'] = bool(m.is_volume)
@@ -43,7 +45,9 @@ def qc_part(name, m, args):
     h = r['size_mm'][2]; w = min(r['size_mm'][0], r['size_mm'][1]); r['aspect_h_over_w'] = round(h / w, 2) if w else None
     zs = np.linspace(b[0, 2] + 0.3, b[1, 2] - 0.3, 12) if h > 1 else [b[0, 2] + h / 2]
     ta, tz, tb = thin_regions(m, args.min_wall, zs); r['thin_area_mm2'] = round(ta, 1); r['thin_at_z'] = tz; r['thin_bounds'] = tb
-    tot, bad = overhang_check(m, args.layer, 0.115); r['overhang_mm2'] = round(tot, 1); r['overhang_top'] = bad[:4]
+    oc = overhang_classify(m, args.layer, 0.115, args.max_bridge, efc=args.efc); tot = oc['overhang_mm2']
+    r['overhang_mm2'] = round(tot, 1); r['overhang_top'] = oc['overhang_top'][:4]
+    r['bridge_mm2'] = round(oc['bridge_mm2'], 1); r['bridge_max_span'] = round(oc['bridge_max_span'], 1); r['bridge_top'] = oc['bridge_top'][:4]
     flags = []
     if not r['watertight'] or not r['is_volume']: flags.append('열린 메시(watertight 아님) — 출력 금지')
     if r['bodies'] > 1: flags.append(f'조각 {r["bodies"]}개로 분리됨')
@@ -52,8 +56,11 @@ def qc_part(name, m, args):
     if r['bed_contact_mm2'] < 0.3 * r['first_layer_mm2']: flags.append(f'안착 불량: 바닥 접지 {r["bed_contact_mm2"]} mm² < 첫 층 {r["first_layer_mm2"]} mm² 의 30 %')
     if r['bed_contact_mm2'] < 100: flags.append(f'바닥 접지 {r["bed_contact_mm2"]} mm² < 100 mm² — 브림 필수')
     if r['aspect_h_over_w'] and r['aspect_h_over_w'] > 3: flags.append(f'가늘고 높음(높이/폭 {r["aspect_h_over_w"]}) — 넘어질 위험, 브림')
-    if ta > 2.0: flags.append(f'{args.min_wall} mm 보다 얇은 살 {ta:.1f} mm² (z={tz}, x/y {tb})')
-    if tot > 50: flags.append(f'오버행 규칙 위반 {tot:.0f} mm² (서포트 또는 재설계)')
+    if ta > 2.0:
+        if name in args.single_wall: r['note'] = f'단일 벽(발광 갓) {ta:.0f} mm² — 의도된 0.8 mm 두 줄 벽'
+        else: flags.append(f'{args.min_wall} mm 보다 얇은 살 {ta:.1f} mm² (z={tz}, x/y {tb})')
+    if tot > 50: flags.append(f'오버행(한쪽 지지) 규칙 위반 {tot:.0f} mm² (서포트 또는 재설계)')
+    if r['bridge_max_span'] > args.max_bridge: flags.append(f'브리지 폭 {r["bridge_max_span"]} mm > {args.max_bridge} mm')
     r['flags'] = flags; return r
 
 def collisions(parts):
@@ -103,24 +110,29 @@ def main():
     ap = argparse.ArgumentParser(); ap.add_argument('files', nargs='+'); ap.add_argument('--out', required=True)
     ap.add_argument('--nozzle', type=float, default=0.4); ap.add_argument('--layer', type=float, default=0.2)
     ap.add_argument('--min-wall', type=float, default=1.2); ap.add_argument('--max-tri', type=int, default=200000); ap.add_argument('--no-render', action='store_true')
-    args = ap.parse_args(); os.makedirs(args.out, exist_ok=True)
+    ap.add_argument('--max-bridge', type=float, default=7.0); ap.add_argument('--efc', type=float, default=0.15, help='슬라이서 코끼리발 보정(첫 층 윤곽 깎임) — 출력물 기준으로 1→2층 단차를 센다'); ap.add_argument('--single-wall', default='', help='의도된 단일 벽(0.8) 파트 이름, 쉼표 구분')
+    args = ap.parse_args(); os.makedirs(args.out, exist_ok=True); args.single_wall = [t for t in args.single_wall.split(',') if t]
     parts = load(args.files); rep = {'files': args.files, 'parts': [qc_part(n, m, args) for n, m in parts.items()], 'collisions': collisions(parts)}
     rep['total_faces'] = sum(p['faces'] for p in rep['parts']); rep['total_weight_g_solid'] = round(sum(p['weight_g_solid'] for p in rep['parts'] if p['weight_g_solid'] == p['weight_g_solid']), 1)
     json.dump(rep, open(os.path.join(args.out, 'report.json'), 'w'), ensure_ascii=False, indent=1)
     L = ['# QC 보고 — ' + ', '.join(os.path.basename(f) for f in args.files), '',
-         '| 파트 | 삼각형 | 닫힘 | 조각 | 크기 (mm) | 부피 cm³ / PLA g(통짜) | 바닥 접지 / 첫 층 mm² | 얇은 살 mm² | 오버행 mm² | 판정 |', '|---|---|---|---|---|---|---|---|---|---|']
+         '| 파트 | 삼각형 | 닫힘 | 조각 | 크기 (mm) | 부피 cm³ / PLA g(통짜) | 바닥 접지 / 첫 층 mm² | 얇은 살 mm² | 오버행(한쪽) mm² | 브리지 mm² (최대 폭) | 판정 |', '|---|---|---|---|---|---|---|---|---|---|---|']
     for p in rep['parts']:
-        L.append(f"| {p['name']} | {p['faces']:,} | {'O' if p['watertight'] and p['is_volume'] else 'X'} | {p['bodies']} | {p['size_mm'][0]}×{p['size_mm'][1]}×{p['size_mm'][2]} | {p['volume_cm3']} / {p['weight_g_solid']} | {p['bed_contact_mm2']} / {p['first_layer_mm2']} | {p['thin_area_mm2']} | {p['overhang_mm2']} | {'⚠ ' + '; '.join(p['flags']) if p['flags'] else '✓'} |")
+        L.append(f"| {p['name']} | {p['faces']:,} | {'O' if p['watertight'] and p['is_volume'] else 'X'} | {p['bodies']} | {p['size_mm'][0]}×{p['size_mm'][1]}×{p['size_mm'][2]} | {p['volume_cm3']} / {p['weight_g_solid']} | {p['bed_contact_mm2']} / {p['first_layer_mm2']} | {p['thin_area_mm2']} | {p['overhang_mm2']} | {p['bridge_mm2']} ({p['bridge_max_span']}) | {'⚠ ' + '; '.join(p['flags']) if p['flags'] else '✓'}{(' (' + p['note'] + ')') if p.get('note') else ''} |")
     L += ['', f"합계: 삼각형 {rep['total_faces']:,}, PLA 통짜 무게 {rep['total_weight_g_solid']} g (실제는 인필 비율에 따라 30~50 %)", '', '## 파트 간 충돌·간격', '']
     if rep['collisions']:
         L += ['| A | B | 교집합 mm³ | 최소 간격 mm | 판정 |', '|---|---|---|---|---|']
         for c in rep['collisions']:
-            v = '⚠ 충돌' if c['intersection_mm3'] > 0.01 else ('⚠ 간격 <0.2' if c['min_gap_mm'] is not None and c['min_gap_mm'] < 0.2 else '✓')
+            g = c['min_gap_mm']
+            v = '⚠ 충돌' if c['intersection_mm3'] > 0.01 else ('접촉(얹힘·면접촉)' if g is not None and abs(g) < 0.02 else ('⚠ 간격 <0.2' if g is not None and g < 0.2 else '✓'))
             L.append(f"| {c['a']} | {c['b']} | {c['intersection_mm3']} | {c['min_gap_mm']} | {v} |")
     else: L.append('(겹치는 범위의 파트 쌍 없음)')
-    L += ['', '## 오버행 상위 위치 (z, mm², x/y 범위)', '']
+    L += ['', '## 오버행(한쪽 지지) 상위 위치 (z, mm², x/y 범위)', '']
     for p in rep['parts']:
         if p['overhang_top']: L.append(f"- {p['name']}: " + '; '.join(f"z={z} {a} mm² {b}" for z, a, b in p['overhang_top']))
+    L += ['', '## 브리지(양쪽 지지) 상위 위치 (z, mm², 폭)', '']
+    for p in rep['parts']:
+        if p.get('bridge_top'): L.append(f"- {p['name']}: " + '; '.join(f"z={z} {a} mm² 폭 {s}" for z, a, s in p['bridge_top']))
     if not args.no_render:
         render(parts, args.out); L += ['', '## 렌더링', '', '![iso](render_iso.png) ![top](render_top.png)', '', '![side](render_side.png) ![bottom](render_bottom.png)']
     open(os.path.join(args.out, 'report.md'), 'w', encoding='utf-8').write('\n'.join(L) + '\n'); print('\n'.join(L[:len(rep['parts']) + 4]))

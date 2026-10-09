@@ -1,0 +1,2 @@
+{"조립": {"platform": [0,0,0], "lower_body": [0,0,0], "lower_screen": [0,0,0], "lower_band": [0,0,0], "lower_roof": [0,0,0], "lower_roof_trim": [0,0,0], "upper_body": [0,0,0], "upper_screen": [0,0,0], "upper_band": [0,0,0], "upper_roof": [0,0,0], "upper_roof_trim": [0,0,0]},
+ "분리": {"platform": [0,0,0], "lower_body": [0,0,18], "lower_screen": [0,0,18], "lower_band": [0,0,36], "lower_roof": [0,0,54], "lower_roof_trim": [0,0,54], "upper_body": [0,0,80], "upper_screen": [0,0,80], "upper_band": [0,0,98], "upper_roof": [0,0,116], "upper_roof_trim": [0,0,116]}}

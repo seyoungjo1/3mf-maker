@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+qc/**/data.json
+qc/**/index.html
+qc/**/index_gif.html
