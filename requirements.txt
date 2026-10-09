@@ -1,0 +1,14 @@
+# 3mf-maker 파이썬 의존 (tools/ + 작업중/*/scripts/). 세션 시작 훅(.claude/hooks/session-start.sh)이 자동 설치.
+numpy
+scipy
+networkx
+trimesh
+shapely
+rtree
+manifold3d
+mapbox_earcut
+lib3mf
+matplotlib
+fast-simplification
+pillow
+playwright
