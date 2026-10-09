@@ -11,10 +11,15 @@
 └─ sample/      참고한 도면·참고 3MF (사용자가 올림, 작업의 기준 자료)
 ```
 
+## 도구와 스킬
+
+- 작업 지침(항상 적용): `.claude/skills/3d-print-3mf/SKILL.md` + `references/` (설계 규칙·스냅/휨 식·보여주기 규격·Bambu 3MF 규칙·출처)
+- 도구: `tools/` — QC(`qc_model.py`), 렌더·GIF(`render_preview.py`), 스냅/휨 계산(`snapfit.py`, `beam.py`). 사용법 `tools/README.md`
+
 ## 기본 환경
 
 - 프린터 Bambu Lab P1S, 필라멘트는 보통 **PLA**, Bambu Studio 02.08.x.
-- 완성본은 **Bambu Studio에서 열리는 3MF**여야 합니다. 작업 지침은 `작업중/toolbox42/skill/SKILL.md`에 있습니다.
+- 완성본은 **Bambu Studio에서 열리는 3MF**여야 합니다.
 - 참고 프로젝트: seyoungjo1/3d-print의 열쇠고리·키캡 (출력 방식·색 구성의 기준).
 
 ## 작업 흐름
