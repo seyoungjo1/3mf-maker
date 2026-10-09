@@ -27,16 +27,17 @@ def define(parts):
                 m = plate.copy(); m.apply_transform(R(np.pi / 2, [1, 0, 0])); m.apply_translation([cx - 25, s + PITCH * (i + 1), FLOOR_Z]); inst.append(m)
     plates48 = trimesh.util.concatenate(inst)
     I = np.eye(4); lip_region = [[40, 70, 27.0], [216, 210, 28.8]]   # 립 옆면 구간만(스커트 바닥 0.1·립 윗면 0.2·윗모서리 챔퍼(z>28.9)의 틈은 끼움이 아님)
-    states = {'분리': {'base': I, 'lid': T([0, 0, 50]) @ closed, 'handle': T([0, -30, 0]) @ handle_M(0)},
-              '조립-닫힘': {'base': I, 'lid': closed, 'handle': handle_M(th_up)},
-              '조립-열림 90°': {'base': I, 'lid': lid_open(90), 'handle': handle_M(th_down)},
-              '명판 48장 (열림 90°)': {'base': I, 'lid': lid_open(90), 'handle': handle_M(th_down), 'nameplates': I},
-              '명판 48장 (닫힘)': {'base': I, 'lid': closed, 'handle': handle_M(th_up), 'nameplates': I}}
+    lifted = T([0, 0, 50]) @ closed
+    states = {'분리': {'base': I, 'lid': lifted, 'logo': lifted, 'handle': T([0, -30, 0]) @ handle_M(0)},
+              '조립-닫힘': {'base': I, 'lid': closed, 'logo': closed, 'handle': handle_M(th_up)},
+              '조립-열림 90°': {'base': I, 'lid': lid_open(90), 'logo': lid_open(90), 'handle': handle_M(th_down)},
+              '명판 48장 (열림 90°)': {'base': I, 'lid': lid_open(90), 'logo': lid_open(90), 'handle': handle_M(th_down), 'nameplates': I},
+              '명판 48장 (닫힘)': {'base': I, 'lid': closed, 'logo': closed, 'handle': handle_M(th_up), 'nameplates': I}}
     pairs = [['base', 'lid', {'contact': True}], ['base', 'lid', {'region': lip_region, 'min_gap': 0.28}], ['base', 'handle', {'contact': True}],
              ['base', 'nameplates', {'contact': True}], ['base', 'nameplates', {'region': [[40, 75, 3.5], [216, 210, 12.0]], 'min_gap': 0.5}],
              ['lid', 'nameplates', {'min_gap': 0.5}]]
-    sweeps = [{'name': '경첩', 'part': 'lid', 'pivot': knuckle.tolist(), 'axis': [-1, 0, 0], 'base': closed, 'angles': list(range(0, 121, 15)), 'against': ['base'], 'need': [15, 120], 'also': {'handle': handle_M(th_down)}},
-              {'name': '손잡이', 'part': 'handle', 'pivot': ear.tolist(), 'axis': [1, 0, 0], 'base': handle_M(0), 'angles': list(range(-90, 91, 15)), 'against': ['base'], 'need': [-90, 90], 'also': {'lid': closed}}]
+    sweeps = [{'name': '경첩', 'part': 'lid', 'pivot': knuckle.tolist(), 'axis': [-1, 0, 0], 'base': closed, 'angles': list(range(0, 121, 15)), 'against': ['base'], 'need': [15, 120], 'also': {'handle': handle_M(th_down)}, 'follow': ['logo']},
+              {'name': '손잡이', 'part': 'handle', 'pivot': ear.tolist(), 'axis': [1, 0, 0], 'base': handle_M(0), 'angles': list(range(-90, 91, 15)), 'against': ['base'], 'need': [-90, 90], 'also': {'lid': closed, 'logo': closed}}]
     notes = [f'손잡이 올림 각도 {th_up}°(가로대 z {hm[th_up]:.1f}), 내림 {th_down}°(z {hm[th_down]:.1f}). 손잡이 다리 끝 ↔ 귀 슬롯 간격 0.06 은 v5 그대로(사용자: 문제 없음).',
              '걸쇠: 형상·결합부 v5 그대로. 실제 장착 위치를 확정하지 못해 조립 상태·GIF 에는 넣지 않음(플레이트 A 렌더에만).',
              f'명판: 칸 중심 x {BAY_CX}, 앞뒤 시작 y {ROW_START}, 피치 {PITCH}, 칸당 {N}장 = {3 * 2 * N}장.']
