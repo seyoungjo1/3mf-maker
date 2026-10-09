@@ -7,3 +7,5 @@
 - 2색: 밑판 #37474f, 글자 #ffb300, 하부 #ff8f00.
 - 헤드리스: `python tools/render_preview.py <파일> --out <dir> [--states states.json] [--colors a=#hex,...]` → view_{iso,top,side,bottom}[_상태].png + turntable.gif(36~54 프레임, 상태 순환). Chromium `/opt/pw-browsers/chromium` + swiftshader.
 - 사용자에게는 GIF와 iso PNG를 파일로 보낸다. 조립 상태가 있으면 닫힘/열림/분리 세 상태를 모두 담는다.
+- 정점 좌표는 float32 정밀도를 그대로 JSON으로 전달한다. 소수점 3자리 반올림은 얇은 불리언 삼각형을 퇴화·반전시켜 손잡이가 찌그러져 보이게 한다.
+- 출력 플레이트는 베드를 표시하지만 조립·작동 렌더는 `show_bed=False`: 조립 좌표의 z<0 부품을 출력판이 가리지 않게 한다. 상태에 없는 부품은 숨기고 카메라 범위에서도 제외한다.

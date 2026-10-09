@@ -62,22 +62,24 @@ const meshes={}; const box=new THREE.Box3();
 for(const p of DATA.parts){ const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(p.positions,3)); g.setIndex(p.indices); g.computeVertexNormals();
   const m=new THREE.Mesh(g,new THREE.MeshStandardMaterial({color:p.color,roughness:0.55,metalness:0.05,flatShading:true})); m.userData.base=new THREE.Vector3(0,0,0); scene.add(m); meshes[p.name]=m; box.expandByObject(m); }
 camera.up.set(0,0,1); let c=new THREE.Vector3(), s=100;
-function fit(){ const bb=new THREE.Box3(); for(const m of Object.values(meshes)){ m.updateMatrixWorld(true); bb.expandByObject(m); } c=bb.getCenter(new THREE.Vector3()); s=bb.getSize(new THREE.Vector3()).length(); }
-window.setView=function(mode,azDeg){ fit(); controls.target.copy(c); grid.visible=mode!=='bottom'; bed.visible=mode!=='bottom';
+function fit(){ const bb=new THREE.Box3(); for(const m of Object.values(meshes)){ if(!m.visible) continue; m.updateMatrixWorld(true); bb.expandByObject(m); } c=bb.getCenter(new THREE.Vector3()); s=bb.getSize(new THREE.Vector3()).length(); }
+window.setView=function(mode,azDeg){ fit(); controls.target.copy(c); grid.visible=DATA.showBed!==false&&mode!=='bottom'; bed.visible=grid.visible;
   if(mode==='top') camera.position.set(c.x,c.y-s*0.001,c.z+s*1.3);
   else if(mode==='side') camera.position.set(c.x,c.y-s*1.3,c.z+s*0.03);
   else if(mode==='bottom') camera.position.set(c.x,c.y-s*0.001,c.z-s*1.3);
   else if(mode==='front') camera.position.set(c.x+s*0.25,c.y-s*1.15,c.z+s*0.22);
   else { const a=(azDeg===undefined?0:azDeg)*Math.PI/180; const r=s*0.9; camera.position.set(c.x+r*Math.sin(a),c.y-r*Math.cos(a),c.z+s*0.8); }
   camera.lookAt(c); controls.update(); renderer.render(scene,camera); };
-window.setState=function(name){ const st=(DATA.states||{})[name]||{}; for(const [n,m] of Object.entries(meshes)){ const d=st[n]; m.matrixAutoUpdate=false; if(Array.isArray(d)&&d.length===16){ m.matrix.set(...d); } else { const t=d||[0,0,0]; m.matrix.makeTranslation(t[0],t[1],t[2]); } } const lb=document.getElementById('label'); lb.textContent=name||''; lb.style.display=name?'block':'none'; };
+window.setState=function(name){ const st=(DATA.states||{})[name]||{}; for(const [n,m] of Object.entries(meshes)){ const d=st[n]; m.visible=!DATA.states[name]||Object.hasOwn(st,n); m.matrixAutoUpdate=false; if(Array.isArray(d)&&d.length===16){ m.matrix.set(...d); } else { const t=d||[0,0,0]; m.matrix.makeTranslation(t[0],t[1],t[2]); } } const lb=document.getElementById('label'); lb.textContent=name||''; lb.style.display=name?'block':'none'; };
 document.getElementById('status').textContent=DATA.status||'';
 window.setState(DATA.firstState||''); window.setView('iso',0); window.READY=true;
 </script></body></html>'''
 
 def mesh_json(m, color, name):
     V = np.asarray(m.vertices, np.float32); F = np.asarray(m.faces, np.uint32)
-    return {'name': name, 'color': color, 'positions': [round(float(v), 3) for v in V.ravel()], 'indices': [int(i) for i in F.ravel()]}
+    # Three.js consumes float32. Decimal rounding can collapse narrow Boolean
+    # triangles and reverse their normals around handle ears and reinforced legs.
+    return {'name': name, 'color': color, 'positions': V.ravel().tolist(), 'indices': F.ravel().tolist()}
 
 def load(paths):
     parts = {}
@@ -87,10 +89,10 @@ def load(paths):
         else: parts[os.path.splitext(os.path.basename(p))[0]] = trimesh.load(p, force='mesh')
     return parts
 
-def render(parts, out, colors=None, states=None, frames=36, size=(1200, 900), gif_size=(640, 480), status=None, bed=256):
+def render(parts, out, colors=None, states=None, frames=36, size=(1200, 900), gif_size=(640, 480), status=None, bed=256, show_bed=True):
     os.makedirs(out, exist_ok=True); colors = colors or {}
     data = {'bed': bed, 'parts': [mesh_json(m, colors.get(n, PALETTE[i % len(PALETTE)]), n) for i, (n, m) in enumerate(parts.items())], 'states': states or {},
-            'firstState': next(iter(states)) if states else '', 'status': status or ''}
+            'firstState': next(iter(states)) if states else '', 'status': status or '', 'showBed': show_bed}
     json.dump(data, open(os.path.join(out, 'data.json'), 'w'))
     for suffix, (w, h) in (('', size), ('_gif', gif_size)):
         open(os.path.join(out, f'index{suffix}.html'), 'w', encoding='utf-8').write(HTML.replace('__W__', str(w)).replace('__H__', str(h)))
