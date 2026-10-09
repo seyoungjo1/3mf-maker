@@ -18,7 +18,7 @@ C1, C2 = '#30949D', '#F2AF38'
 # ---------------- 설계 매개변수 ----------------
 PLATE_T = 7.0          # 명판 피치(본체 6.0 + 테두리 띠 1.0, 샘플 실측)
 N_PER_BAY = 8; SLACK = 2.0; ROW = N_PER_BAY * PLATE_T + SLACK      # 58.0
-FRONT_ROW0, REAR_ROW0 = 50.0, 51.8                                 # v5 실측
+FRONT_ROW0, REAR_ROW0 = 50.0, 50.0                                 # v5 실측: 앞칸 81.79~131.79, 칸막이 131.79~134.79(3.0), 뒷칸 134.79~184.79
 D_FRONT, D_REAR = ROW - FRONT_ROW0, ROW - REAR_ROW0                # 8.0, 6.2
 CUT_FRONT, CUT_REAR = 106.75, 159.75                               # 본체 좌표: 칸막이 노치 중심(±1 mm 단면 동일 확인)
 C0 = 260.81                                                        # 닫힘 상태 대응: base_y = C0 - lid_y (v5)
@@ -88,6 +88,8 @@ if __name__ == '__main__':
     lid = stretch_y(lid6, [(C0 - CUT_FRONT, D_FRONT), (C0 - CUT_REAR, D_REAR)]); logo = logo0.copy(); logo.apply_translation([0, D_REAR, 0])
     print('lid stretched: is_volume', lid.is_volume, 'bounds', lid.bounds.round(2).tolist(), 'vol', round(lid6.volume), '->', round(vol(lid)), 'faces', len(lid.faces), 'lid∩logo', round(vol(trimesh.boolean.intersection([lid, logo], engine='manifold')), 3))
     parts = {'base': base_e, 'lid': lid, 'logo': logo, 'handle': handle, 'latch': latch}
+    # 조립 검사·렌더용 공칭 형상(EFC 선반영 전): 뚜껑 v6 는 이미 EFC 가 들어 있어 그대로(끼움면은 첫 층이 아님)
+    pickle.dump({'base': base, 'lid': lid, 'logo': logo, 'handle': handle0.copy(), 'latch': latch0.copy()}, open(os.path.join(HERE, '..', 'v7parts_nominal.pkl'), 'wb'))
     for n, m in parts.items():
         assert m.is_volume and len(m.faces) <= 200000, (n, m.is_volume, len(m.faces))
         print(f'  {n}: faces {len(m.faces)} bounds {m.bounds.round(2).tolist()} bodies {len(m.split(only_watertight=False))}')
@@ -104,5 +106,6 @@ if __name__ == '__main__':
     for n, m in [('base', base_e), ('lid', lid), ('handle', handle), ('latch', latch), ('logo', logo)]:
         mm = m.copy(); mm.export(os.path.join(MODELS, f'Toolbox48_{n}_v7.stl'))
     json.dump({'row_depth': ROW, 'd_front': D_FRONT, 'd_rear': D_REAR, 'cut_front': CUT_FRONT, 'cut_rear': CUT_REAR, 'C_closed': C0 + D_FRONT + D_REAR,
-               'knuckle': [0, 192.39 + D_FRONT + D_REAR, 26.5], 'lip_shave': LIP_SHAVE}, open(os.path.join(DOCS, 'v7_params.json'), 'w'), indent=1)
+               'knuckle': [0, 192.39 + D_FRONT + D_REAR, 26.5], 'lip_shave': LIP_SHAVE,
+               'front_row': [81.79, 131.79 + D_FRONT], 'divider': [131.79 + D_FRONT, 134.79 + D_FRONT], 'rear_row': [134.79 + D_FRONT, 184.79 + D_FRONT + D_REAR]}, open(os.path.join(DOCS, 'v7_params.json'), 'w'), indent=1)
     print('done')

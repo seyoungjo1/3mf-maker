@@ -6,7 +6,8 @@ config.json (경로는 config 파일 위치 기준):
 {
  "name": "Toolbox48 v7",
  "out": "qc/v7",
- "parts_pkl": "v7parts.pkl",                      # {이름: trimesh} 출력 방향 메시(바닥 z=0, EFC 선반영 완료)
+ "parts_pkl": "v7parts.pkl",                      # {이름: trimesh} 출력 방향 메시(바닥 z=0, EFC 선반영 완료) — QC 용
+ "assembly_parts_pkl": "v7parts_nominal.pkl",     # (선택) EFC 선반영 전 공칭 형상 — 조립 검사·렌더 용
  "plates": ["models/A.3mf", "models/B.3mf"],      # 플레이트별 일반 3MF (베드 좌표)
  "assembly": "scripts/assembly_v7.py",            # define(parts) -> {"states":{상태:{파트:4x4}}, "sweeps":[...], "extra":{이름:mesh}, "pairs":[[a,b],...], "notes":[...]}
  "colors": {"base": "#37474f", "logo": "#ffb300"},
@@ -99,7 +100,9 @@ def run(cfg_path):
     asm = None
     if cfg.get('assembly'):
         spec = importlib.util.spec_from_file_location('asm', P(cfg['assembly'])); mod = importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)
-        asm = mod.define(parts); allparts = dict(parts); allparts.update(asm.get('extra', {})); mg = cfg.get('min_gap', 0.3)
+        # 조립 검사는 EFC 선반영 전(공칭) 형상으로 — 첫 층 +0.15 스커트는 출력물에서 슬라이서가 깎아 없어지는 것이라 끼움 판정에 넣으면 안 된다
+        nominal = pickle.load(open(P(cfg['assembly_parts_pkl']), 'rb')) if cfg.get('assembly_parts_pkl') else parts
+        asm = mod.define(nominal); allparts = dict(nominal); allparts.update(asm.get('extra', {})); mg = cfg.get('min_gap', 0.3)
         for st, mats in asm['states'].items():
             for n in mats: assert n in allparts, f'상태 {st} 에 없는 파트 {n}'
         for sw in asm.get('sweeps', []):
@@ -139,7 +142,7 @@ def run(cfg_path):
     for pl in cfg['plates']:
         log('render plate', pl); pp = load_files([P(pl)]); d = os.path.join(out, 'plate_' + os.path.splitext(os.path.basename(pl))[0]); render3(pp, d, colors, None, cfg.get('frames', 36)); L.append(f'- 플레이트 `{os.path.basename(pl)}`: `{os.path.relpath(d, base)}/view_*.png`, `turntable.gif`')
     if asm:
-        allparts = dict(parts); allparts.update(asm.get('extra', {}))
+        allparts = dict(nominal); allparts.update(asm.get('extra', {}))
         static = {k: v for k, v in asm['states'].items()}; shown = set(n for st in static.values() for n in st)
         sub = {n: m for n, m in allparts.items() if n in shown}
         log('render assembly'); d = os.path.join(out, 'assembly'); render3(sub, d, colors, {k: {n: np.asarray(M).ravel().tolist() for n, M in v.items()} for k, v in static.items()}, cfg.get('frames', 36))
