@@ -1,0 +1,65 @@
+{
+ "front_dark_bands_m": [
+  [
+   17.92,
+   21.71
+  ],
+  [
+   10.98,
+   16.91
+  ],
+  [
+   7.31,
+   7.47
+  ],
+  [
+   -3.27,
+   -0.32
+  ]
+ ],
+ "front_green_bands_m": [
+  [
+   17.06,
+   17.68
+  ],
+  [
+   7.62,
+   7.75
+  ]
+ ],
+ "lower_eave_bottom_center_m": 6.87,
+ "lower_eave_corner_rise_m": -1.78,
+ "lower_eave_width_m": 28.56,
+ "upper_eave_bottom_center_m": 11.29,
+ "upper_eave_corner_rise_m": 1.19,
+ "upper_eave_width_m": 26.5,
+ "tile_rib_pitch_m": 0.335,
+ "rafter_end_pitch_m": 0.335,
+ "column_width_mm_samples": [],
+ "lower_window_zone_m": 4.65,
+ "side_upper_body_width_m": 27.4,
+ "side_lower_body_width_m": 18.94,
+ "side_lower_eave_width_m": 68.72,
+ "side_upper_eave_width_m": 68.72,
+ "plan_bright_extent_m": [
+  59.5,
+  51.8
+ ],
+ "plan_grid_px": {
+  "cols": [
+   781,
+   860,
+   939,
+   1044,
+   1123,
+   1202
+  ],
+  "rows": [
+   450,
+   393,
+   316,
+   237,
+   184
+  ]
+ }
+}
