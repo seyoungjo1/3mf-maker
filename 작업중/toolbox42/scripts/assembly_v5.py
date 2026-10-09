@@ -2,7 +2,10 @@
 출력: 조립 변환행렬(json), 각도별 간섭 부피, 간격, 걸쇠 걸림 깊이."""
 import pickle, json, numpy as np, trimesh
 from trimesh.transformations import rotation_matrix as R, translation_matrix as T
-import sys; P=pickle.load(open(sys.argv[1],'rb'))   # 사용: python assembly_v5.py v5parts.pkl (fix_parts_v5.py 결과); B=P['base']; D=P['lid']; G=P['logo']; H=P['handle']; L=P['latch']
+import sys
+# 사용: python assembly_v5.py v5parts.pkl (fix_parts_v5.py 결과)
+P=pickle.load(open(sys.argv[1],'rb'))
+B=P['base']; D=P['lid']; G=P['logo']; H=P['handle']; L=P['latch']
 def inter_vol(a,b):
     try: m=a.intersection(b,engine='manifold'); return float(abs(m.volume)) if m.is_volume else 0.0
     except Exception as e: return -1
@@ -23,7 +26,7 @@ print('  뚜껑 rim 최저 z =',round(lid_c.bounds[0,2],2),' 본체 rim 상단 z
 iv=inter_vol(B,lid_c); gap=min_gap(B,lid_c); print(f'  닫힘 간섭 부피 {iv:.2f} mm³, 최소 간격 {gap:.2f} mm')
 out['hinge']={'axis_y':192.39,'axis_z':26.5,'lid_matrix_closed':M_lid_closed.tolist(),'closed_intersection_mm3':iv,'closed_min_gap_mm':gap,'sweep':[]}
 for ang in [15,30,45,60,75,90,105,120]:
-    Mo=T(knuckle)@R(np.radians(ang),[1,0,0])@T(-knuckle)@M_lid_closed   # 경첩축 둘레 회전(뒤쪽으로 열림)
+    Mo=T(knuckle)@R(-np.radians(ang),[1,0,0])@T(-knuckle)@M_lid_closed   # 경첩축 둘레 회전(뒤쪽으로 열림)
     lo=D.copy(); lo.apply_transform(Mo); iv=inter_vol(B,lo); out['hinge']['sweep'].append({'deg':ang,'intersection_mm3':iv,'matrix':Mo.tolist()})
     print(f'  열림 {ang:3d}°: 간섭 {iv:8.2f} mm³')
 # ---------- 손잡이: 본체 앞 귀 구멍(y 65.45, z 18.25) ↔ 다리 끝 구멍(y -162.57, z 4.5) ----------
@@ -41,7 +44,8 @@ for th in [-90,-60,-30,0,30,60,90,120,150,180]:   # 0 = 출력 자세 그대로(
 # ---------- 걸쇠: 결합 상대 찾기 ----------
 print('걸쇠 암: 안쪽 간격 33.0, 바깥 43.0, 암 중심 간격 38.0, 링 구멍 ⌀3.4')
 print('본체 앞 귀(걸쇠용 추정): x 102.75~108.44 / 147.56~153.25 → 안쪽 간격 39.1, 바깥 50.5, 중심 간격 44.8, 구멍 ⌀2.27 (y 72.64, z 11.49)')
-print('→ 어느 쪽도 맞지 않음: 암이 귀 사이(39.1)에 들어가기엔 43 > 39.1, 귀를 감싸기엔 33 < 50.5. 구멍도 3.4 vs 2.27.')
+print('클립: 사용자 실물 작동 확인으로 정상. 위 치수 비교는 조립 방식 미확정 가정이며 결합 불가의 증거가 아님. 형상 유지.')
+out['clip']={'status':'user_verified_working','geometry':'unchanged','assumed_pivot_is_unverified':True}
 # 뚜껑 탭(닫힘) 실제 위치
 tab=lid_c.slice_plane([0,0,29.9],[0,0,1]); 
 tb=[(e) for e in [lid_c.bounds]]
