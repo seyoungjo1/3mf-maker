@@ -43,8 +43,12 @@ def gaps(a, b, n=8000, region=None):
     if region is not None:
         lo, hi = np.asarray(region[0], float), np.asarray(region[1], float); pts = pts[((pts >= lo) & (pts <= hi)).all(1)]
         if len(pts) < 50: return float('nan'), float('nan'), float('nan')
-    # 부호 없는 최근접 거리(간섭 여부는 manifold 교집합 부피로 따로 판정 — signed_distance 의 contains 레이 캐스팅은 메모리 폭주)
-    _, d, _ = trimesh.proximity.closest_point(a, pts); d = np.sort(d); n = len(d)
+    # 부호 없는 최근접 거리(간섭 여부는 manifold 교집합 부피로 따로 판정 — signed_distance 의 contains 레이 캐스팅은 메모리 폭주).
+    # 먼 점은 closest_point 후보 삼각형이 폭증하므로(2천만 배열) 정점 KD-트리 거리로 먼저 거르고 5 mm 이내 점만 정확히 잰다.
+    pq = trimesh.proximity.ProximityQuery(a); dv, _ = pq.vertex(pts); d = np.asarray(dv, float).copy(); near = d < 5.0
+    if near.any():
+        _, dn, _ = trimesh.proximity.closest_point(a, pts[near]); d[near] = dn
+    d = np.sort(d); n = len(d)
     return float(d[0]), float(d[int(0.01 * n)]), float(d[int(0.05 * n)])
 def run(cfg_path):
     cfg = json.load(open(cfg_path, encoding='utf-8')); base = os.path.dirname(os.path.abspath(cfg_path)); P = lambda p: os.path.join(base, p)
