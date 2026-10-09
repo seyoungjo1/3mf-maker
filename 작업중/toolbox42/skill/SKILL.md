@@ -1,47 +1,44 @@
 ---
 name: 3d-print-3mf
-description: 3D 프린팅 모델 설계·Bambu Studio 프로젝트 3MF 생성·검사·수리 전 과정 — Bambu 내보내기 코드에서 확인한 실제 파일 구조와 seyoungjo1/3d-print 파이프라인 기준
+description: 3D 프린팅 모델 설계·3MF 생성·검사 전 과정 — seyoungjo1/3mf-maker 저장소 기준. Bambu Lab P1S, PLA, Bambu Studio 02.08.x.
 ---
 
-# 3D 프린팅 · Bambu 3MF 워크플로
+# 3D 프린팅 · 3MF 워크플로 (3mf-maker)
 
-사용자는 3MF 프로젝트 파일을 선호하고 프린터는 Bambu Lab P1S(256×256×250, 노즐 0.4, 층 0.2)다. 답변은 한국어 존댓말, 결론부터. **이미 출력한 파트와 짝이 맞는 형상(경첩·끼움·손잡이)은 사용자 허락 없이 절대 바꾸지 않는다.** 바꾸고 싶으면 안을 설명하고 묻는다.
+사용자: Bambu Lab P1S(256×256×250, 노즐 0.4, 층 0.2), **필라멘트는 보통 PLA**(Bambu PLA Basic), Bambu Studio **02.08.02.61**(sample 파일 기준). 답변은 한국어 존댓말, 결론부터.
+**이미 출력한 파트와 짝이 맞는 형상(경첩·핀·구멍·끼움)은 치수를 바꾸지 않는다.** 두께를 더하거나 방향을 바꾸는 것은 되지만, 결합 치수(구멍 지름·간격·폭)는 수치로 전/후 비교해 같음을 보인다.
 
-## 1. 교훈
-- 손으로 짠 "Bambu 프로젝트 3MF"는 열리지 않았다. 반쪽만 흉내 내면 Bambu Studio가 프로젝트로 인식하지 않는다. 일반 3MF는 열리지만 "형상만 불러옴" 알림이 뜨고 플레이트·필라멘트 배정을 잃는다.
-- 해결: Bambu Studio 소스 `src/libslic3r/Format/bbs_3mf.cpp`의 `_BBS_3MF_Exporter`가 쓰는 구조를 그대로 따른다. 구현: `scripts/bbl_project.py`, 구조 설명: `docs/BAMBU_3MF_STRUCTURE.md` (저장소 seyoungjo1/3d-print, 브랜치 toolbox42, 폴더 toolbox42/).
-- 소스 확인: `git clone --depth 1 --filter=blob:none --sparse https://github.com/bambulab/bambustudio` 후 `git sparse-checkout set src/libslic3r/Format src/slic3r/GUI`.
+## 0. 저장소 구조와 규칙
+- `작업중/<프로젝트>/` 진행 중 → 완성되면 폴더째 `작업완료/<프로젝트>/`. `sample/`은 **참고한 도면·참고 3MF**(사용자가 올림, 기준 자료).
+- 완성본의 기준은 하나다: **Bambu Studio에서 열려야 한다.** 열리지 않는 파일은 완성본이 아니다. 아래 2절 방식 외의 "새로운 3MF 구조"를 지어내지 않는다.
+- 추측 금지. 파일 구조·설정값은 반드시 (a) `sample/`에 사용자가 올린 실제 Bambu Studio 내보내기 파일, (b) 검증된 기존 코드(3d-print 열쇠고리 프로젝트 `mm3mf.py`), (c) Bambu Studio 소스(`bbs_3mf.cpp`, `Preset.cpp`, `PrintConfig.cpp`, `resources/profiles/BBL/`) 중 하나에서 가져온다.
 
-## 2. Bambu 프로젝트 3MF 구조 요약 (SaveStrategy::SplitModel)
-- 파일: `[Content_Types].xml`, `_rels/.rels`(모델·썸네일·cover-thumbnail-middle/small), `3D/3dmodel.model`(메타+components+build), `3D/_rels/3dmodel.model.rels`, `3D/Objects/object_N.model`(메시), `Metadata/model_settings.config`, `project_settings.config`(전체 설정 JSON+version), `slice_info.config`, `cut_information.xml`, `plate_N.png`.
-- 메타: `Application=BambuStudio-XX.XX.XX.XX`(필수), `BambuStudio:3mfVersion=1`, 네임스페이스 `xmlns:BambuStudio`, `xmlns:p` + `requiredextensions="p"`.
-- ID: 볼륨 id 먼저, 다음 번호가 오브젝트 id. UUID 접미사: 오브젝트 `-61cb-4c03-9d28-80fed5dfa1dc`, 메시 `-81cb-…`, component `-b206-40ff-9872-83e8017abed1`, item `-b1ec-4553-aec9-835e5b724bb4`, build `2c7c17d8-22b5-4d84-8835-1976022ea369`.
-- 플레이트 배치: cols=round(√n)(√n>round면 +1), 원점 (col·W·1.2, −row·D·1.2). P1S 간격 307.2.
-- 프로젝트 인정 조건: Application 태그, `printer_model`이 BBL 벤더 모델명과 일치, 파일 버전 ≤ 앱 버전(기본 02.00.00.00). 알림 문구로 역추적: "not from Bambu Lab"(태그 없음) / "invalid config"(프린터 불일치) / 버전 대화상자.
+## 1. 기준 프로젝트 — 3d-print 열쇠고리·키캡 (잘 됐던 방식)
+seyoungjo1/3d-print 브랜치 `claude/keyring-groove-feature-t4xnmp`(배포 브랜치 `claude/beautiful-mendel-tpwclc`)의 **🔑 열쇠고리·키캡**만 기준이다. 카라비너·조명등·LP판은 결과가 좋지 않았으므로 참고하지 않는다.
+- 출력 파일: `mm3mf.py` `write_multicolor_3mf()` — **일반 3MF + basematerials 색 + `Metadata/model_settings.config` 파트별 extruder + `Slic3r_PE_model.config`**. Bambu Studio가 "형상만 불러옴" 알림을 띄워도 파트 이름·필라멘트 번호가 그대로 들어온다(소스 확인: `bbs_3mf.cpp`의 model_settings 파싱은 설정 로드 여부와 무관).
+- 색 쓰임: 2색이 기본. 밑판(Stroke) 어두운색 `#37474f`, 글자 `#ffb300`, 키캡 하부 `#ff8f00`(UI 기본값). 같은 색 = 같은 필라멘트 번호, 첫 등장 색이 1번.
+- 일괄 출력은 **상판/하판 파일을 따로** 만든다(한 파일에 한 플레이트). 파트는 베드 좌표(0~256, z≥0)에 배치된 채로 저장한다.
+- 키캡: 상판·하부 두 파트, 공차 0.3, 베드에 닿는 큰 면을 아래로.
 
-## 3. 작성기 사용
-```python
-from bbl_project import write_bbl_project
-plates=[{'name':'01 Base','objects':[{'name':'base','extruder':1,'parts':[(mesh,'base',1)]}]}]
-write_bbl_project('out.3mf', plates, project_settings_json, app_version='02.00.00.00', title='…')
-```
-메시는 플레이트 로컬 좌표(0~256, z≥0). project_settings는 실제 Bambu Studio가 내보낸 전체 설정 JSON(사용자 기존 3MF에서 꺼냄). 검증: lib3mf lenient(경고 'Unknown Model Metadata'/'Invalid Attribute'는 정상) + 3MF Viewer 아티팩트.
+## 2. 3MF 만드는 법 (완성본 규격)
+1. **플레이트마다 일반 3MF 한 장** — `작업중/toolbox42/scripts/generic3mf.py` `write_generic_3mf(path, objects)` (mm3mf 방식 + 오브젝트 여러 개 + 베드 배치). 이것이 **주 산출물**이다.
+2. 선택: Bambu 프로젝트 3MF(플레이트·필라멘트 색 포함) — `bbl_project.py`. 단, `project_settings.config`는 **반드시 `sample/`의 실제 내보내기 파일에서 유도**한다(`build_project_settings.py`: 키 집합 동일, 필라멘트별 키는 `Preset.cpp s_Preset_filament_options`, 노즐 변형별 키는 `PrintConfig.cpp filament_options_with_variant`, 값은 `resources/profiles/BBL/filament/` 공식 프로파일 체인). ChatGPT 등이 만든 설정 JSON은 쓰지 않는다. 사용자가 열어 보기 전까지는 "검증된 구조"라고만 하고 "열린다"고 단정하지 않는다.
+3. STL은 파트별로 함께 둔다(슬라이서에 직접 넣는 대안).
 
-## 4. 출력 가능성 검사 (보내기 전 필수)
-- 규칙: 0.2 mm 층당 수평 돌출 ≤ 0.115 mm, 바닥면 전부 베드 접지. `scripts/overhang_check.py`(0.2 간격 +0.0137 오프셋 슬라이스, `cur − prev.buffer(0.115)`; 단면은 `section().to_2D()`→`polygons_full`→to_3D 행렬로 복귀).
-- 같은 객체의 다른 파트가 받치는 면(로고 인레이 바닥)은 위반 아님. 배치는 형상 변경이 아니므로 회전으로 해결. 설계상 돌출(경첩 돌기 밑면)은 면적·높이를 명시해 서포트 위치로 보고.
-- 모서리 맞추기: 기준 파트 프로파일 g(z)를 여러 x 단면에서 재고(내부 형상 >3 mm 값 버림), 기울기 s 제한 포락 f(z)=min_{z'≥z}[g(z')+s(z'−z)]. 계단 유니온이 아니라 실루엣 링 로프트 단일 곡면 + manifold 불리언. 안쪽 끼움 벽은 원래 단면으로 마스크.
+## 3. 보내기 전 검사 (필수, 수치로 보고)
+- 메시: watertight, `is_volume`, 파트 간 교집합 부피 0.
+- 접지: 파트마다 **z=0 바닥 접촉 면적**과 첫 층 면적을 센다. 바닥이 들떠 있으면(링·돌기만 닿음) 출력물이 휜다 — 걸쇠가 그랬다(7 mm² → 775 mm²로 수정).
+- 오버행: `overhang_check.py`(0.2 mm 층당 수평 돌출 ≤ 0.115 mm). 같은 오브젝트의 다른 파트가 받치는 면(로고 인레이 천장)과 수평 구멍 천장(⌀3.4 핀 구멍)은 위반이 아니다. 설계상 돌출(경첩 돌기, 본체 앞 귀)은 면적·높이를 적고 서포트 위치로 보고.
+- 결합 치수: 수정 전/후 구멍 지름·중심·간격·단면적을 표로.
+- 파일: lib3mf strict(일반 3MF는 경고 0이어야 함) / lenient(프로젝트 3MF는 `Unknown Model Metadata`·`Invalid Attribute` 경고만 허용 — sample 파일과 같은 경고 집합). 구조는 sample 파일과 파일 목록·루트 속성·metadata 이름을 대조.
 
-## 5. 메시 취급
-- 3MF 정점은 XML 직접 파싱 → `trimesh.Trimesh(V,F,process=False)` (`scripts/load3mf.py`). STL 왕복·정점 병합 금지(watertight 깨짐).
+## 4. 설계·메시 취급
+- 3MF 정점은 XML 직접 파싱 → `trimesh.Trimesh(V,F,process=False)` (`load3mf.py`, p:path 하위 모델 지원). STL 왕복·정점 병합 금지.
 - transform 12개: `M[:3,:3]=v[:9].reshape(3,3).T, M[:3,3]=v[9:]`. 정점 높이와 같은 z 단면은 깨짐 → 오프셋.
-- 다색: 파트별 extruder는 model_settings part에. 파트 간 교집합 부피 0 확인.
+- 불리언은 manifold3d. 두께 보강은 "채움 솔리드 유니온"(기존 면을 깎지 않음). 바닥 접지는 z=1 윤곽을 z 0~1로 압출해 유니온(필렛 제거 → 접지 확보).
+- 도구: 필렛·글자·STEP build123d / 메시 trimesh+manifold3d / 유기적 형태 Meshy(결과는 3절 검사 후).
+- 벽 ≥1.2(실용 1.6), 끼움 공차 0.2~0.3, 관통 구멍 +0.3, 큰 면을 바닥으로. 다리·판처럼 휘는 부재는 2.7 mm는 얇다 → 5 mm 이상.
 
-## 6. 도구·설계 수치
-- 필렛·글자·STEP: build123d(3.10~3.12) / 파라미터 상자: OpenSCAD / 메시 가공: trimesh+manifold3d / 유기적 형태: Meshy(`meshy-3d-agent:*`, 결과는 4절 검사 후).
-- 저장소 기존 코드: `mm3mf.py`(일반 슬라이서용 다색 3MF), `tools3d.py`, `threemf_splitter/`, run.bat→venv→updater 구조. 새 도구도 같은 구조(.bat CP949+CRLF, ASCII 파일명, goto).
-- 벽 ≥1.2(실용 1.6), 끼움 공차 0.2~0.3, 관통 구멍 +0.3, 큰 면을 바닥으로.
-
-## 7. 보고·뷰어
-- 결론 한 줄 → 규칙 검사 수치 → 보낸 파일과 슬라이서에서 할 일(버전 대화상자, 브림, 로컬 서포트) → 다음 한 걸음. 여기서 Bambu Studio 실행은 불가.
-- 뷰어 `viewer/3mf-viewer.html`(아티팩트 "3MF Viewer"): p:path·model_settings 이름/익스트루더·플레이트·검사. fflate는 jsdelivr(`fflate@0.8.2/umd/index.js`). 헤드리스 캡처: Playwright `executablePath:'/opt/pw-browsers/chromium'`, `--headless=new --use-angle=swiftshader`.
+## 5. 보고
+- 결론 한 줄 → 검사 수치 → 보낸 파일과 슬라이서에서 할 일(알림 문구, 필라멘트 2 지정 확인, 브림, 서포트) → 다음 한 걸음. 여기서 Bambu Studio 실행은 불가하므로 사용자가 열어 본 결과(알림 문구)를 받아 다음 판단을 한다.
+- 뷰어 `viewer/3mf-viewer.html`로 파트·색 확인 가능.
