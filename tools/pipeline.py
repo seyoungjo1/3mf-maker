@@ -24,6 +24,7 @@ from render_preview import render as render3
 from check3mf import check as strict_check
 from trimesh.transformations import rotation_matrix as R, translation_matrix as T
 def log(*a): print('[pipeline]', *a, file=sys.stderr, flush=True)
+def _flush(out, L): open(os.path.join(out, 'REPORT.md'), 'w', encoding='utf-8').write('\n'.join(L) + '\n\n(진행 중…)\n')
 def tf(m, M): m = m.copy(); m.apply_transform(np.asarray(M, float)); return m
 def _bodies(m):
     if len(m.faces) < 20000: return [m]
@@ -93,7 +94,7 @@ def run(cfg_path):
         if nw: fl.append(f'strict 경고 {nw}: ' + '; '.join(ws[:3]))
         for f in fl: warn.append(f'{os.path.basename(pl)}: {f}')
         L.append(f"| {os.path.basename(pl)} | {', '.join(pp)} | {lo[0]:.0f}~{hi[0]:.0f} / {lo[1]:.0f}~{hi[1]:.0f} | {len(bad)} | {nw} | {'⚠ ' + '; '.join(fl) if fl else '✓'} |")
-    shutil.rmtree(tmp, ignore_errors=True); L.append('')
+    shutil.rmtree(tmp, ignore_errors=True); L.append(''); _flush(out, L)
     # ---------- 3. 조립 검증 ----------
     asm = None
     if cfg.get('assembly'):
@@ -132,7 +133,7 @@ def run(cfg_path):
             rng = f"{min(ok)}~{max(ok)}°" if ok else '없음'; L += ['', f"간섭 0 범위: **{rng}** (요구: {sw.get('need', '')})", '']
             if sw.get('need') and (not ok or min(ok) > sw['need'][0] or max(ok) < sw['need'][1]): warn.append(f"스윕 {sw['name']}: 간섭 0 범위 {rng} 가 요구 {sw['need']} 를 못 채움")
         for n in asm.get('notes', []): L.append('- ' + n)
-        L.append('')
+        L.append(''); _flush(out, L)
     # ---------- 4. 보여주기 ----------
     colors = cfg.get('colors', {}); L += ['## 4. 렌더 (three.js, 5뷰 + 회전 GIF + 작동 GIF)', '']
     for pl in cfg['plates']:
