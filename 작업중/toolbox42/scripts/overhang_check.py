@@ -30,6 +30,6 @@ def check(mesh,name,report_top=6):
     for z,a,b in bad[:report_top]: print(f'   z={z:5.2f} area={a:7.1f}  x[{b[0]:.1f},{b[2]:.1f}] y[{b[1]:.1f},{b[3]:.1f}]')
     return total
 if __name__=='__main__':
-    import sys; sys.path.insert(0,'/home/claude'); from load3mf import load_parts
-    p=load_parts('/tmp/claude-0/-home-claude/896aa1c8-8e29-58d9-8e4f-9137638ec972/scratchpad/3mf/in.3mf')
+    import sys; import os; sys.path.insert(0,os.path.dirname(os.path.abspath(__file__))); from load3mf import load_parts
+    p=load_parts(sys.argv[1] if len(sys.argv)>1 else 'models/Toolbox42_P1S_v5_project.3mf')
     for n in ['base','lid','logo','handle','latch']: check(p[n],n)

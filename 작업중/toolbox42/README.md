@@ -1,6 +1,34 @@
 # Toolbox42 — Bambu P1S 3MF 프로젝트
 
-42슬롯 소형 툴박스(본체 / 뚜껑+로고 / 손잡이 / 걸쇠)를 Bambu Lab P1S로 출력하기 위한 작업 기록입니다.
+42슬롯 소형 툴박스(본체 / 뚜껑+로고 / 손잡이 / 걸쇠)를 Bambu Lab P1S, PLA로 출력하기 위한 작업 기록입니다.
+
+## 0. v5 (현재) — 바로 쓸 파일
+
+| 파일 | 내용 |
+|---|---|
+| `models/Toolbox42_v5_A_base_handle_latch.3mf` | **플레이트 A**: 본체 + 손잡이(v5) + 걸쇠(v5). 일반 3MF — 3d-print 열쇠고리 프로젝트에서 실제 출력에 성공한 `mm3mf.py` 방식 그대로 |
+| `models/Toolbox42_v5_B_lid_logo.3mf` | **플레이트 B**: 뚜껑(뒤집어 출력) + 로고(필라멘트 2) |
+| `models/Toolbox42_P1S_v5_project.3mf` | Bambu 프로젝트 3MF(플레이트 2장, PLA 2색). 설정은 `sample/test+lunch+box(1).3mf`(사용자 Bambu Studio 02.08.02.61 내보내기)에서 유도 — 열리는지는 사용자 확인 전 |
+| `models/Toolbox42_latch_v5.stl`, `models/Toolbox42_handle_v5.stl` | 바뀐 두 파트의 STL |
+
+Bambu Studio에서 A·B 파일을 열면 "not from Bambu Lab, load geometry data only" 알림이 뜹니다. **정상입니다** — 파트 이름과 필라멘트 번호(로고 = 2번)는 그대로 들어옵니다(열쇠고리 프로젝트와 같은 동작). 필라멘트 1·2를 PLA로 지정하고, 뚜껑 플레이트는 브림, 서포트는 "빌드 플레이트에만"으로 켜면 됩니다.
+
+### v4 → v5 바뀐 것
+| 파트 | 문제 | 수정 | 수치 |
+|---|---|---|---|
+| 걸쇠(클립) | 눕히면 판 밑면이 z=0.55에 떠 있고 링 두 개만 바닥에 닿음(접지 7 mm²) → 출력물이 들떠 오그라듦. 세우면 접지 8 mm² | 바깥면 쪽을 z 0~1 채워 바닥 전면 접지. 링 구멍 ⌀3.4·중심·암 간격 38, 쐐기(안쪽 윗면) 변화 없음 | 접지 7 → **775 mm²**, 부피 2875 → 3296 mm³, z>2 상반부 부피 동일(1779.9) |
+| 손잡이 | 다리 2.7 mm로 너무 얇음 | 곧은 다리 구간(y −187.6~−172)을 다리 끝 폭 5.4 mm로 두껍게. 다리 끝(구멍 ⌀3.3, 폭 5.4, 간격 72.8 — 본체 앞 귀 쌍 간격 72.8과 일치)은 그대로 | y=−163·−168·−171 단면적 전/후 동일, y=−180 단면 43.7 → 97.2 mm² |
+| 뚜껑 | 원본은 윗면 테두리 1 mm 단차 → 뒤집어 출력하면 첫 층 15,196 mm²뿐, 띠 2,923 mm²가 공중 | v4의 `lid_flat` 그대로(확인만) | 첫 층 **17,593 mm²**(윗면 전체 접지). z<1 증가분 916 mm²는 로고 인레이 천장(615)과 모서리 로프트(층당 0.12) |
+| 본체·로고 | 변화 없음 | | 본체 앞 귀(손잡이 힌지) 밑면 z=13.5, 162 mm²는 설계상 돌출 → 서포트 |
+
+그림: `figures/v5_latch_handle.png`.
+
+### 왜 v4 프로젝트 3MF가 안 열렸나 (추정 아님, 바뀐 방침)
+v4의 `project_settings.config`는 ChatGPT 원본에서 가져온 것이라 Bambu Studio 02.08에 없는 키 15개와 배열 길이 불일치가 섞여 있었습니다. 원인 특정 대신 **방침을 바꿨습니다**: 주 산출물은 검증된 일반 3MF(A·B), 프로젝트 3MF는 사용자 샘플에서만 유도(`scripts/build_project_settings.py`, 결과 `docs/project_settings_v5.json`).
+
+---
+
+## 1. 이전 기록 (v4까지)
 ChatGPT가 만든 원본 3MF가 열리지 않던 문제에서 시작해, **Bambu Studio가 실제로 저장하는 3MF 구조를 소스 코드에서 확인하고 그대로 생성하는 작성기**, 출력 가능성 검사기, 브라우저 뷰어, 작업 지침(스킬)까지 한곳에 모았습니다.
 
 ```
@@ -14,7 +42,7 @@ toolbox42/
 └─ viewer/3mf-viewer.html    브라우저 3MF 뷰어
 ```
 
-## 1. 최종 파일
+### 1-1. v4 파일
 
 | 파일 | 내용 |
 |---|---|
@@ -31,7 +59,7 @@ toolbox42/
 - 걸쇠(클립) 베드 안착 불량, 손잡이 두께 부족, 클립 스냅 토크(열리지 않을 위험) — `figures/parts_geom.png`에 현재 단면 치수가 있음. 손잡이 바 단면 12.7 × 9 mm, 다리 2 mm 두께; 걸쇠 두께 5.6 mm 쐐기형.
 - 뚜껑 뒤 경첩 돌기 밑면 114 mm²(8.3 mm 높이, 5.5 mm 돌출)는 설계상 오버행 → 그 부위만 슬라이서 서포트.
 
-## 2. 왜 원본이 안 열렸나
+### 1-2. 왜 원본이 안 열렸나
 
 원본(`models/00_original_chatgpt_…3mf`)은 `BambuStudio:3mfVersion` 메타데이터와 `Application=BambuStudio-…` 태그로 "Bambu 프로젝트"인 척했지만 다음이 빠져 있었습니다.
 - `xmlns:BambuStudio`, `xmlns:p` 네임스페이스 선언 (규격 리더는 여기서 즉시 거부: lib3mf `Could not get XML Namespace for a metadatum`)
@@ -41,7 +69,7 @@ toolbox42/
 
 Bambu Studio 로더(`bbs_3mf.cpp`)는 네임스페이스는 안 보지만, GUI(`Plater.cpp`)가 `Application` 태그·`printer_model`·버전으로 프로젝트 여부를 판정하고, 실패하면 "형상만 불러옴" 알림을 띄웁니다. 자세한 구조는 `docs/BAMBU_3MF_STRUCTURE.md`.
 
-## 3. 스크립트
+### 1-3. 스크립트
 
 | 파일 | 역할 |
 |---|---|
@@ -51,7 +79,10 @@ Bambu Studio 로더(`bbs_3mf.cpp`)는 네임스페이스는 안 보지만, GUI(`
 | `scripts/build_parts.py` | 뚜껑 테두리 로프트 + 걸쇠 세우기 → `parts_v3.pkl` |
 | `scripts/lid_loft.py` | 본체 바닥 프로파일 그대로 로프트하는 변형 (규칙 미적용 버전) |
 | `scripts/inspect_3mf.py` / `repair_3mf.py` | 구조·메시 검사, generic/fixed 수리본 생성 |
-| `scripts/mm3mf.py` | 일반 슬라이서용 멀티컬러 3MF 작성기 (저장소 기존 코드) |
+| `scripts/mm3mf.py` | 열쇠고리 프로젝트의 멀티컬러 3MF 작성기 (검증된 원본) |
+| `scripts/generic3mf.py` | **v5 주 작성기** — mm3mf 방식 + 오브젝트 여러 개 + 베드 배치 |
+| `scripts/build_project_settings.py` | 샘플 3MF의 project_settings → PLA n색 설정 유도·검사 |
+| `scripts/build_v5.py` | v5 파일 일괄 생성 (`python scripts/build_v5.py v5parts.pkl`) |
 
 ```bash
 pip install trimesh shapely rtree manifold3d mapbox_earcut lib3mf numpy matplotlib
@@ -67,11 +98,11 @@ write_bbl_project('out.3mf', plates, ps, title='Toolbox42')
 EOF
 ```
 
-## 4. 뷰어
+### 1-4. 뷰어
 
 `viewer/3mf-viewer.html`을 브라우저에서 열고 3MF를 끌어다 놓으면 파트별 치수·플레이트·필라멘트 색·구조/메시 검사 결과가 보입니다. three.js·fflate를 CDN(jsdelivr)에서 받으므로 인터넷이 필요합니다. 하위 모델 파일(`p:path`)과 `model_settings.config`의 파트 이름/익스트루더를 읽습니다.
 
-## 5. 그림
+### 1-5. 그림
 
 - `figures/lid_flat_check.png` — 뚜껑 모서리 프로파일 전/후 vs 본체 바닥, 서포트 자리 맵
 - `figures/lid_edge_profile.png` — 로프트 전 계단 버전과 비교
