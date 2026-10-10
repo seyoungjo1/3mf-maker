@@ -3,3 +3,6 @@ __pycache__/
 qc/**/data.json
 qc/**/index.html
 qc/**/index_gif.html
+# 파이프라인 중간 산출물(data.json·index.html 은 재생성, PNG/GIF/REPORT 는 커밋)
+작업중/*/qc/*/*/data.json
+작업중/*/qc/*/*/index*.html

@@ -1,0 +1,274 @@
+{
+ "files": [
+  "작업중/toolbox48/models/Toolbox48_A_base_handle_clip.3mf"
+ ],
+ "parts": [
+  {
+   "name": "base",
+   "faces": 22974,
+   "vertices": 11465,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    171.3,
+    149.98,
+    29.9
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 143.53,
+   "weight_g_solid": 178.0,
+   "bed_contact_mm2": 21472.0,
+   "first_layer_mm2": 21472.0,
+   "footprint_hull_mm2": 22039.7,
+   "aspect_h_over_w": 0.2,
+   "thin_area_mm2": 115.6,
+   "thin_at_z": 8.29,
+   "thin_bounds": [
+    27.5,
+    141.3,
+    183.5,
+    212.3
+   ],
+   "overhang_mm2": 210.6,
+   "overhang_top": [
+    [
+     13.51,
+     162.5,
+     [
+      63.7,
+      101.4,
+      147.3,
+      112.7
+     ]
+    ],
+    [
+     3.91,
+     19.3,
+     [
+      78.5,
+      115.5,
+      132.5,
+      116.7
+     ]
+    ],
+    [
+     13.71,
+     2.1,
+     [
+      63.7,
+      101.1,
+      147.3,
+      101.5
+     ]
+    ],
+    [
+     13.91,
+     2.1,
+     [
+      63.7,
+      100.8,
+      147.3,
+      101.2
+     ]
+    ]
+   ],
+   "bridge_mm2": 206.0,
+   "bridge_max_span": 9.4,
+   "bridge_top": [
+    [
+     14.31,
+     105.7,
+     5.1
+    ],
+    [
+     4.51,
+     21.2,
+     1.1
+    ],
+    [
+     2.71,
+     13.8,
+     0.4
+    ],
+    [
+     3.91,
+     8.8,
+     9.4
+    ]
+   ],
+   "flags": [
+    "1.2 mm 보다 얇은 살 115.6 mm² (z=8.29, x/y (27.5, 141.3, 183.5, 212.3))",
+    "오버행(한쪽 지지) 규칙 위반 211 mm² (서포트 또는 재설계)",
+    "브리지 폭 9.4 mm > 7.0 mm"
+   ]
+  },
+  {
+   "name": "handle",
+   "faces": 9286,
+   "vertices": 4637,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    78.16,
+    42.25,
+    9.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 11.08,
+   "weight_g_solid": 13.7,
+   "bed_contact_mm2": 1158.7,
+   "first_layer_mm2": 1192.7,
+   "footprint_hull_mm2": 2957.5,
+   "aspect_h_over_w": 0.21,
+   "thin_area_mm2": 0.5,
+   "thin_at_z": 5.65,
+   "thin_bounds": [
+    21.4,
+    81.4,
+    96.7,
+    82.1
+   ],
+   "overhang_mm2": 23.8,
+   "overhang_top": [
+    [
+     0.31,
+     16.2,
+     [
+      20.0,
+      40.0,
+      98.2,
+      79.4
+     ]
+    ],
+    [
+     0.71,
+     3.0,
+     [
+      20.0,
+      77.4,
+      98.1,
+      80.2
+     ]
+    ],
+    [
+     0.51,
+     1.8,
+     [
+      20.9,
+      79.5,
+      97.2,
+      79.8
+     ]
+    ],
+    [
+     1.11,
+     1.0,
+     [
+      20.0,
+      76.0,
+      98.1,
+      80.7
+     ]
+    ]
+   ],
+   "bridge_mm2": 52.9,
+   "bridge_max_span": 7.0,
+   "bridge_top": [
+    [
+     0.31,
+     16.4,
+     7.0
+    ],
+    [
+     6.31,
+     9.0,
+     1.1
+    ],
+    [
+     6.11,
+     6.4,
+     1.9
+    ],
+    [
+     0.91,
+     5.4,
+     1.8
+    ]
+   ],
+   "flags": []
+  },
+  {
+   "name": "latch",
+   "faces": 7248,
+   "vertices": 3622,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    44.2,
+    31.43,
+    5.6
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 3.3,
+   "weight_g_solid": 4.1,
+   "bed_contact_mm2": 775.3,
+   "first_layer_mm2": 775.3,
+   "footprint_hull_mm2": 1321.9,
+   "aspect_h_over_w": 0.18,
+   "thin_area_mm2": 11.6,
+   "thin_at_z": 2.57,
+   "thin_bounds": [
+    120.6,
+    45.0,
+    163.6,
+    74.1
+   ],
+   "overhang_mm2": 6.9,
+   "overhang_top": [
+    [
+     0.31,
+     6.9,
+     [
+      120.6,
+      45.7,
+      163.6,
+      76.4
+     ]
+    ]
+   ],
+   "bridge_mm2": 20.3,
+   "bridge_max_span": 2.9,
+   "bridge_top": [
+    [
+     4.51,
+     13.1,
+     1.5
+    ],
+    [
+     4.31,
+     3.8,
+     2.2
+    ],
+    [
+     4.11,
+     1.8,
+     2.6
+    ],
+    [
+     0.31,
+     0.8,
+     2.5
+    ]
+   ],
+   "flags": [
+    "1.2 mm 보다 얇은 살 11.6 mm² (z=2.57, x/y (120.6, 45.0, 163.6, 74.1))"
+   ]
+  }
+ ],
+ "collisions": [],
+ "total_faces": 39508,
+ "total_weight_g_solid": 195.8
+}

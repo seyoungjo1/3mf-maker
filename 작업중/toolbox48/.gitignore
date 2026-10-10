@@ -1,0 +1,8 @@
+*.pkl
+Toolbox48_print_files.zip
+__pycache__/
+qc/**/data.json
+qc/**/index.html
+qc/**/index_gif.html
+qc/assembly48.3mf
+qc/upright48.3mf
