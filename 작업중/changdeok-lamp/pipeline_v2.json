@@ -271,6 +271,33 @@
    "models/v2/plates/P12_white_upper_ring_hips_desc.3mf": [
     "#f5f5f5"
    ]
+  },
+  "combined": {
+   "out": "models/injeongjeon_lamp_v2_bambu.3mf",
+   "filaments": [
+    "#6d4c41",
+    "#f5f5f5",
+    "#263238"
+   ],
+   "slot_of": {
+    "#9e9e9e": 2,
+    "#2e7d32": 1
+   },
+   "names": {
+    "models/v2/plates/P01_gray_platform.3mf": "P01 월대 · 회색 PLA",
+    "models/v2/plates/P02_tile_lower.3mf": "P02 하층 기와 · 기와색(진회색) PLA · 서포트",
+    "models/v2/plates/P03_tile_upper.3mf": "P03 상층 기와 · 기와색(진회색) PLA · 서포트",
+    "models/v2/plates/P04_brown_soffit_lower.3mf": "P04 하층 처마밑 · 갈색 PLA · 서포트",
+    "models/v2/plates/P05_brown_soffit_upper.3mf": "P05 상층 처마밑 · 갈색 PLA · 서포트",
+    "models/v2/plates/P06_brown_floor_walls.3mf": "P06 하층 바닥·앞뒤 벽 · 갈색 PLA",
+    "models/v2/plates/P07_brown_rings_sidewalls.3mf": "P07 평방 링·옆 벽 · 갈색 PLA",
+    "models/v2/plates/P08_brown_upperfloor_gables.3mf": "P08 상층 바닥·합각·벽 · 갈색 PLA",
+    "models/v2/plates/P09_green_band_lower.3mf": "P09 하층 공포 띠 · 초록 PLA",
+    "models/v2/plates/P10_green_band_upper.3mf": "P10 상층 공포 띠 · 초록 PLA",
+    "models/v2/plates/P11_white_lower_ring_diffusers_ridge.3mf": "P11 하층 흰 테·갓·용마루 · 흰색 PLA",
+    "models/v2/plates/P12_white_upper_ring_hips_desc.3mf": "P12 상층 흰 테·마루 · 흰색 PLA"
+   },
+   "note": "틀(sample/nameplate) 필라멘트 3개 → 1 갈색·2 흰색·3 기와색. 회색(P01)·초록(P09·P10) 플레이트는 미리보기 색만 다르고 이름에 실제 색을 적는다(단색 출력이라 넣는 롤만 바꾸면 됨)"
   }
  }
 }

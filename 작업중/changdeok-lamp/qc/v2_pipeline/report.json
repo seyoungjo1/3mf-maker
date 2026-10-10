@@ -2228,6 +2228,11 @@
   "models/v2/plates/P12_white_upper_ring_hips_desc_bambu.3mf": {
    "ok": true,
    "errors": []
+  },
+  "models/injeongjeon_lamp_v2_bambu.3mf": {
+   "ok": true,
+   "errors": [],
+   "plates": 12
   }
  }
 }

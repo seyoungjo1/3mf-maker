@@ -140,6 +140,34 @@ def bambu(plate, out, template=None, colors=None, settings=None, plate_name='', 
     tpl = _abs(template) if template else BP.DEFAULT_TEMPLATE; obs = BP.read_plate(_abs(plate))
     BP.write_bambu_project(_abs(out), obs, tpl, plate_name, colors, settings, title)
     r = BP.verify_bambu_project(_abs(out), tpl, obs); r['template'] = tpl; return r
+@command('bambu_multi', 'Bambu 프로젝트 3MF 한 파일에 플레이트 여러 장(sample/所有部件集合.3mf 구조: 3열·간격 307.2). 단색 플레이트를 틀 필라멘트 번호로 다시 매김',
+         {'plates': {'type': 'array', 'items': {'type': 'string'}, 'description': '플레이트 3MF 목록(generic)'}, 'out': {'type': 'string'},
+          'filaments': {'type': 'array', 'items': {'type': 'string'}, 'description': '틀 필라멘트 색(≤ 틀 필라멘트 수), 예 ["#6d4c41","#f5f5f5","#263238"]'},
+          'plate_colors': {'type': 'object', 'default': None, 'description': '{플레이트: [그 플레이트의 extruder 1,2… 색]} — 없으면 extruder 번호 그대로'},
+          'slot_of': {'type': 'object', 'default': None, 'description': 'filaments 에 없는 색 → 필라멘트 번호 {"#9e9e9e": 2} (그 플레이트는 미리보기 색만 다름 — 이름에 실제 색을 적는다)'},
+          'names': {'type': 'object', 'default': None, 'description': '{플레이트: 플레이트 이름}'}, 'template': {'type': 'string', 'default': None},
+          'settings': {'type': 'object', 'default': None}, 'title': {'type': 'string', 'default': ''}})
+def bambu_multi(plates, out, filaments, plate_colors=None, slot_of=None, names=None, template=None, settings=None, title=''):
+    import bambu_project as BP
+    tpl = _abs(template) if template else BP.DEFAULT_TEMPLATE; fl = [c.lower() for c in filaments]; so = {k.lower(): int(v) for k, v in (slot_of or {}).items()}
+    P, remap = [], {}
+    for pl in plates:
+        pc = [c.lower() for c in (plate_colors or {}).get(pl, [])]; obs = BP.read_plate(_abs(pl)); m = {}
+        for ob in obs:
+            parts = []
+            for mesh, pn, e in ob['parts']:
+                c = pc[e - 1] if e - 1 < len(pc) else None
+                k = (fl.index(c) + 1) if c in fl else so.get(c, e) if c else e; m[c or e] = k; parts.append((mesh, pn, k))
+            ob['parts'] = parts
+        P.append({'name': (names or {}).get(pl) or os.path.splitext(os.path.basename(pl))[0], 'objects': obs}); remap[pl] = m
+    BP.write_bambu_project(_abs(out), None, tpl, filament_colours=filaments, settings=settings, title=title, plates=P)
+    flat = BP.layout_plates(P, tpl); r = BP.verify_bambu_project(_abs(out), tpl, [ob for _, ob in flat])
+    import zipfile, xml.etree.ElementTree as ET
+    ms = ET.fromstring(zipfile.ZipFile(_abs(out)).read('Metadata/model_settings.config')); pls = ms.findall('plate')
+    r['plates'] = [{'id': q.find("metadata[@key='plater_id']").get('value'), 'name': q.find("metadata[@key='plater_name']").get('value'), 'objects': len(q.findall('model_instance'))} for q in pls]
+    if len(pls) != len(plates): r['errors'].append(f'<plate> {len(pls)}개 ≠ 플레이트 {len(plates)}장'); r['ok'] = False
+    if [p['objects'] for p in r['plates']] != [sum(1 for _ in p['objects']) for p in P]: r['errors'].append('플레이트별 오브젝트 수 불일치'); r['ok'] = False
+    r['remap'] = remap; r['template'] = tpl; return r
 @command('make', '표준 일괄 실행: build 스크립트 → pipeline(QC·3MF·조립·렌더/GIF·REPORT) → Bambu 프로젝트 3MF → 체크리스트. ok=false 면 결과물을 보내지 않는다',
          {'config': {'type': 'string'}, 'skill_read': {'type': 'boolean', 'default': False}})
 def make(config, skill_read=False):
@@ -159,6 +187,13 @@ def make(config, skill_read=False):
             try: v = bambu(os.path.join(base, pl), os.path.join(base, dst), colors=pc, settings=bs or None, plate_name=os.path.basename(pl), title=cfg['name'])
             except Exception as e: v = {'ok': False, 'errors': [f'{type(e).__name__}: {e}']}
             rep['bambu'][dst] = {'ok': v.get('ok'), 'errors': v.get('errors', [])}
+        cb = cfg.get('bambu', {}).get('combined')                                      # 플레이트 전부를 Bambu 프로젝트 한 파일로(플레이트 여러 장)
+        if cb:
+            try: v = bambu_multi([os.path.join(base, pl) for pl in cfg['plates']], os.path.join(base, cb['out']), cb['filaments'],
+                                 {os.path.join(base, k): c for k, c in cfg.get('bambu', {}).get('plate_colors', {}).items()}, cb.get('slot_of'),
+                                 {os.path.join(base, k): n for k, n in cb.get('names', {}).items()}, settings=bs or None, title=cfg['name'])
+            except Exception as e: v = {'ok': False, 'errors': [f'{type(e).__name__}: {e}']}
+            rep['bambu'][cb['out']] = {'ok': v.get('ok'), 'errors': v.get('errors', []), 'plates': len(v.get('plates', []))}
         json.dump(rep, open(rp, 'w', encoding='utf-8'), ensure_ascii=False, indent=1, default=str); r['bambu'] = rep['bambu']
     r['checklist'] = checklist(config, skill_read); r['ok'] = r['ok'] and r['checklist']['ok']; r['seconds'] = round(time.time() - t); return r
 @command('new', '새 도면 시작: 작업중/<이름>/ 에 README(체크리스트·설계 치수표), scripts/build.py·assembly.py, pipeline.json 틀을 만든다. 바로 mm make 가 통과하는 상자+경첩 뚜껑 예시',

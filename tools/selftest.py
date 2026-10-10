@@ -86,6 +86,21 @@ def mm_api_case():
     b = json.loads(urllib.request.build_opener(urllib.request.ProxyHandler({})).open(req, timeout=60).read())
     ok = lf.is_volume and a == b and a['loft']['slit_z'] == []
     print(f'[표준 프로그램] 로프트 닫힘 {lf.is_volume}, 파이썬=HTTP {a == b}, 틈 {a["loft"]["slit_z"]}'); return ok
+def bambu_multi_case():
+    """플레이트 2장 → Bambu 프로젝트 한 파일: <plate> 2개, 둘째 플레이트 x +307.2(sample 간격), 색 다시 매김(2번째 플레이트 흰색 → 2번), 왕복 검증 ok."""
+    import mm, trimesh, zipfile, xml.etree.ElementTree as ET
+    from generic3mf import write_generic_3mf
+    d = tempfile.mkdtemp(); a, b = os.path.join(d, 'A.3mf'), os.path.join(d, 'B.3mf')
+    m1 = trimesh.creation.box([30, 20, 5]); m1.apply_translation([128, 128, 2.5]); m2 = trimesh.creation.box([20, 20, 8]); m2.apply_translation([100, 140, 4])
+    write_generic_3mf(a, [{'name': 'a', 'parts': [(m1, '#6d4c41', 'a')]}], material_order=['#6d4c41'])
+    write_generic_3mf(b, [{'name': 'b', 'parts': [(m2, '#f5f5f5', 'b')]}], material_order=['#f5f5f5'])
+    out = os.path.join(d, 'AB_bambu.3mf')
+    r = mm.run('bambu_multi', plates=[a, b], out=out, filaments=['#6d4c41', '#f5f5f5', '#263238'], plate_colors={a: ['#6d4c41'], b: ['#f5f5f5']}, names={b: 'B 흰색'})
+    import bambu_project as BP
+    back = BP.read_plate(out); xb = [ob['parts'][0][0].bounds[:, 0].mean() for ob in back]; ex = [ob['parts'][0][2] for ob in back]
+    ok = r['ok'] and len(r['plates']) == 2 and r['plates'][1]['name'] == 'B 흰색' and abs(xb[1] - 100 - 307.2) < 1e-3 and abs(xb[0] - 128) < 1e-3 and ex == [1, 2]
+    print(f"[Bambu 여러 플레이트] ok {r['ok']} · 플레이트 {[(p['id'], p['name']) for p in r['plates']]} · x {[round(x, 1) for x in xb]} · 필라멘트 {ex} · 오류 {r['errors']}")
+    shutil.rmtree(d, ignore_errors=True); return ok
 def scaffold_case():
     """mm new 틀 → mm make(빌드·파이프라인·Bambu 프로젝트·체크리스트)가 처음부터 통과해야 한다. 끝나면 지운다."""
     import mm
@@ -133,7 +148,7 @@ def agent_case():
         return ok1 and ok2
     finally: shutil.rmtree(proj, ignore_errors=True)
 if __name__ == '__main__':
-    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = efc_group_case() and efc_stl_roundtrip_case() and slit_case() and wall_step_case() and mm_api_case()
+    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = efc_group_case() and efc_stl_roundtrip_case() and slit_case() and wall_step_case() and mm_api_case() and bambu_multi_case()
     cfg = fixture(os.path.join(tmp, 'good'), 0.3); rc = pipeline.run(cfg); rep = json.load(open(os.path.join(tmp, 'good', 'qc', 'report.json')))
     files = [os.path.join(tmp, 'good', 'qc', f) for f in ('REPORT.md', 'assembly/turntable.gif', 'motion/turntable.gif', 'plate_A/view_iso.png')]
     print('\n[정상 설계] 종료코드', rc, '| 경고', rep['warn'], '| 산출물', [os.path.exists(f) for f in files])
