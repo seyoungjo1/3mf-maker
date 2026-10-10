@@ -67,7 +67,10 @@ def shave_lip(m):
     """립(1.6 mm) **바깥면만** LIP_SHAVE 깎는다. 닫힘 실측: 뚜껑 스커트 안쪽면 ↔ 립 바깥면 0.20 이 유일한 끼움면(립 안쪽면엔 뚜껑이 없음). 0.1 → 끼움 0.3, 립 1.5."""
     ring = max(polys(layer_poly(m, 27.0)), key=lambda q: q.area)                  # 립 링(≈890 mm², 너클 ≈8 은 제외)
     outer = Polygon(ring.exterior); cutter = outer.buffer(0.6).difference(outer.buffer(-LIP_SHAVE)).buffer(0)
-    e = ext(cutter, 31 - 26.45); e.apply_translation([0, 0, 26.45])
+    # 어깨 윗면(립 뿌리) 높이에서 바로 시작 — 26.45 로 띄우면 0.1×0.05 옛 립 조각이 둘레에 남는다(v10 wallscan z 26.45 에서 잡힘)
+    c = ring.representative_point(); xs = outer.bounds[0] - 1.0
+    h = m.ray.intersects_location(np.array([[outer.bounds[0] - 0.8, c.y, 40.0]]), [[0, 0, -1.0]])[0]; z_sh = float(h[:, 2].max()) if len(h) else 26.40
+    e = ext(cutter, 31 - z_sh); e.apply_translation([0, 0, z_sh])
     return trimesh.boolean.difference([m, e], engine='manifold'), ring
 if __name__ == '__main__':
     P = pickle.load(open(sys.argv[1], 'rb')); lid6 = pickle.load(open(sys.argv[2], 'rb')); TAG = sys.argv[3] if len(sys.argv) > 3 else 'v7'

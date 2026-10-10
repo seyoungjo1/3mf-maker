@@ -32,6 +32,41 @@ def thin_regions(mesh, min_wall, zs):
     return worst
 
 from shapely.ops import unary_union
+def internal_gaps(mesh, n=1500, max_gap=0.4, seed=0):
+    """벽 속 얇은 틈(슬릿) 검사: x·y·z 방향 레이를 쏴서, 파트를 빠져나왔다가 max_gap 안에 다시 들어가는 구간을 센다.
+    슬라이서는 틈의 위아래(또는 양옆)를 각각 윗면/아랫면·벽으로 처리해 출력물 옆면에 줄이 생긴다(Toolbox48 v6/v8 뚜껑 z 7.81~7.91 0.1 mm 틈).
+    반환: [(축, 틈 길이, 틈 시작 좌표 xyz), ...]"""
+    rng = np.random.default_rng(seed); b = mesh.bounds; out = []
+    for ax in range(3):
+        o = np.column_stack([rng.uniform(b[0, i] + 0.05, b[1, i] - 0.05, n) for i in range(3)]); o[:, ax] = b[0, ax] - 1.0
+        d = np.zeros((n, 3)); d[:, ax] = 1.0
+        loc, ri, _ = mesh.ray.intersects_location(o, d, multiple_hits=True)
+        if not len(loc): continue
+        order = np.lexsort((loc[:, ax], ri)); loc, ri = loc[order], ri[order]
+        for r in np.unique(ri):
+            t = loc[ri == r, ax]; t = t[np.r_[True, np.diff(t) > 1e-4]]          # 같은 점 중복 교점 제거
+            for k in range(1, len(t) - 1, 2):                                    # 0 들어감, 1 나감, 2 들어감 … → 나감~들어감 = 바깥 구간
+                g = t[k + 1] - t[k]
+                if 0.01 < g < max_gap: p = o[r].copy(); p[ax] = t[k]; out.append((ax, round(float(g), 3), tuple(np.round(p, 2))))
+    return out
+def wall_steps(mesh, z_range=None, n_dir=48, step=0.02, max_step=0.3, dz=0.02, min_dirs=3):
+    """바깥 벽 단차(출력물 가로줄) 검사: 파트 중심에서 n_dir 방향으로 바깥 벽 거리를 z dz 간격으로 재서,
+    이웃 높이 사이 벽이 step~max_step mm 갑자기 튀는 곳(이웃 높이의 변화보다 2.5배 이상)을 높이별로 센다.
+    0.3 mm 넘는 건 귀·받침 같은 형상 경계로 본다. 원인 예: 판 쌓기 계단(v7 바닥 0.1 판), 원본 벽과 새 곡면의 어긋남(각진 모서리 vs 원호)."""
+    import collections
+    b = mesh.bounds; c = (b[0] + b[1]) / 2; R = float(np.linalg.norm(b[1, :2] - b[0, :2]))
+    z0, z1 = z_range if z_range else (b[0, 2] + dz, b[1, 2] - dz); zs = np.arange(z0, z1, dz)
+    jumps = collections.Counter(); worst = collections.defaultdict(float); where = collections.defaultdict(list)
+    for a in np.linspace(0, 2 * np.pi, n_dir, endpoint=False):
+        d = np.array([-np.cos(a), -np.sin(a), 0.0]); o = np.column_stack([np.full(len(zs), c[0] + R * np.cos(a)), np.full(len(zs), c[1] + R * np.sin(a)), zs])
+        loc, ri, _ = mesh.ray.intersects_location(o, np.tile(d, (len(zs), 1)), multiple_hits=False)
+        r = np.full(len(zs), np.nan); hit = np.full((len(zs), 2), np.nan); r[ri] = np.linalg.norm(loc[:, :2] - c[:2], axis=1); hit[ri] = loc[:, :2]
+        dr = np.abs(np.diff(r)); prev = np.r_[np.nan, dr[:-1]]; nxt = np.r_[dr[1:], np.nan]
+        for i in np.where((dr > step) & (dr < max_step))[0]:
+            if not (dr[i] > 2.5 * np.nanmax([prev[i], nxt[i], 1e-9])): continue
+            zk = round(float(zs[i]), 2); jumps[zk] += 1; worst[zk] = max(worst[zk], float(dr[i])); where[zk].append([round(float(np.degrees(a))), round(float(hit[i, 0]), 1), round(float(hit[i, 1]), 1)])
+    rows = sorted(((z, n, round(worst[z], 3), where[z][:6]) for z, n in jumps.items() if n >= min_dirs), key=lambda t: -t[1])
+    return {'steps': rows[:20], 'n_heights': len(rows)}
 def qc_part(name, m, args):
     r = {'name': name, 'faces': int(len(m.faces)), 'vertices': int(len(m.vertices))}
     r['watertight'] = bool(m.is_watertight); r['is_volume'] = bool(m.is_volume)
@@ -45,12 +80,21 @@ def qc_part(name, m, args):
     h = r['size_mm'][2]; w = min(r['size_mm'][0], r['size_mm'][1]); r['aspect_h_over_w'] = round(h / w, 2) if w else None
     zs = np.linspace(b[0, 2] + 0.3, b[1, 2] - 0.3, 12) if h > 1 else [b[0, 2] + h / 2]
     ta, tz, tb = thin_regions(m, args.min_wall, zs); r['thin_area_mm2'] = round(ta, 1); r['thin_at_z'] = tz; r['thin_bounds'] = tb
+    gaps = [g for g in internal_gaps(m) if g[0] == 2]          # 수평 틈(z 방향)만 — x·y 방향 좁은 틈은 경첩 여유 같은 설계 틈이 많다
+    import collections; cl = collections.Counter(round(g[2][2], 1) for g in gaps)
+    slit_z = sorted(z for z, c in cl.items() if c >= 10)          # 같은 높이에 10개 이상 = 벽을 가로지르는 틈(곡면 스침 잡음은 1~10개)
+    r['internal_gaps'] = len(gaps); r['slit_z'] = slit_z
     oc = overhang_classify(m, args.layer, 0.115, args.max_bridge, efc=args.efc); tot = oc['overhang_mm2']
     r['overhang_mm2'] = round(tot, 1); r['overhang_top'] = oc['overhang_top'][:4]
     r['bridge_mm2'] = round(oc['bridge_mm2'], 1); r['bridge_max_span'] = round(oc['bridge_max_span'], 1); r['bridge_top'] = oc['bridge_top'][:4]
     flags = []
     if not r['watertight'] or not r['is_volume']: flags.append('열린 메시(watertight 아님) — 출력 금지')
     if r['bodies'] > 1: flags.append(f'조각 {r["bodies"]}개로 분리됨')
+    ws = wall_steps(m, z_range=(b[0, 2] + 0.25, b[1, 2] - 0.02)); r['wall_steps'] = ws['steps'][:6]     # 첫 층(EFC +0.15 선반영 턱, 슬라이서가 깎음)은 제외
+    if ws['n_heights']:
+        flags.append(f"바깥 벽 단차 0.02~0.3 mm {ws['n_heights']}개 높이 (z, 방향 수, 최대 mm): {[t[:3] for t in ws['steps'][:4]]} — 출력물에 가로줄")
+    if slit_z:
+        flags.append(f'벽 속 수평 틈(<0.4 mm) z={slit_z} (레이 {sum(cl[z] for z in slit_z)}개) — 출력물 옆면에 줄이 생김')
     if r['faces'] > args.max_tri: flags.append(f'삼각형 {r["faces"]:,} > 예산 {args.max_tri:,} — 단순화 필요')
     if max(r['size_mm']) < 5 or (vol == vol and vol < 50): flags.append('너무 작은 부품(최대 치수 <5 mm 또는 부피 <50 mm³)')
     if r['bed_contact_mm2'] < 0.3 * r['first_layer_mm2']: flags.append(f'안착 불량: 바닥 접지 {r["bed_contact_mm2"]} mm² < 첫 층 {r["first_layer_mm2"]} mm² 의 30 %')

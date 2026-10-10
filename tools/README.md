@@ -1,3 +1,26 @@
+# tools — 표준 프로그램 `mm.py` 와 부품 도구
+
+**입구는 하나: `python tools/mm.py <명령>`** (명령줄 · `import mm; mm.run(...)` · HTTP `serve` · Claude API `schema`)
+
+| 명령 | 하는 일 |
+|---|---|
+| `doctor` | 의존 라이브러리·Chromium·git 상태 |
+| `qc <메시…>` | 출력 방향 QC(닫힘·조각·접지·얇은 살·**벽 속 수평 틈**·오버행/브리지, EFC 0.15 반영) |
+| `slits <메시…>` | 벽 속 수평 틈만 — 출력물 옆면 줄의 원인 |
+| `section <메시…> --plane y=130 --out a.png [--xlim a b --ylim a b]` | 단면 겹침 그림(실측 근거) |
+| `render <메시…> --out dir [--colors '{"lid":"#37474f"}' --states '{…}']` | three.js 5뷰 + 회전 GIF |
+| `check3mf <3mf…>` | lib3mf strict 경고 수 |
+| `pipeline <config>` / `make <config>` | 게이트 파이프라인 / 빌드→파이프라인 일괄 |
+| `selftest` | 도구 자가검사 |
+
+메시 지정: `a.3mf` · `a.3mf:lid` · `a.stl` · `parts.pkl:lid`.
+HTTP: `python tools/mm.py serve --port 8765` → `curl -X POST localhost:8765/run -d '{"cmd":"slits","args":{"files":["a.3mf"]}}'`.
+Claude API: `python tools/mm.py schema` 의 `tools` 를 Messages API `tools=` 에 넣고, `tool_use` 의 `name`(mm_ 접두어 제거)/`input` 을 `mm.run(name, **input)` 으로 실행해 결과를 `tool_result` 로 돌려준다.
+
+부품 도구(mm.py 가 부름): `qc_model.py`, `overhang.py`, `efc.py`(첫 층 선반영), `loft.py`(링 로프트 — 판 쌓기 금지), `meshops.py`(계산 찌꺼기 제거), `render_preview.py`, `check3mf.py`, `generic3mf.py`, `pipeline.py`, `selftest.py`, `snapfit.py`·`beam.py`, `gear.py`·`hinge.py`, `load3mf.py`.
+
+---
+
 # tools — 모델 검사·렌더·계산 도구
 
 | 도구 | 용도 | 예 |
