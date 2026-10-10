@@ -129,6 +129,15 @@ def assemble(config, override=None, out=None):
     PL.check_assembly(asm, allparts, cfg.get('min_gap', 0.3), L, warn)
     if out: os.makedirs(os.path.dirname(_abs(out)) or '.', exist_ok=True); open(_abs(out), 'w', encoding='utf-8').write('\n'.join(L) + '\n\n' + ('\n'.join('- ⚠ ' + w for w in warn) or '- ✓ 경고 없음') + '\n')
     return {'ok': not warn, 'override': used, 'warn': warn, 'report': _abs(out) if out else None, 'table': [l for l in L if l.startswith('|') or '간섭 0 범위' in l]}
+@command('bambu', 'Bambu Studio 프로젝트 3MF 로 변환(사용자 내보내기 3MF 를 틀로, 설정은 틀 그대로 + 허용된 키만 변경) 후 구조 검증. "형상만 불러옴" 해결용',
+         {'plate': {'type': 'string', 'description': '우리 플레이트 3MF(generic)'}, 'out': {'type': 'string'}, 'template': {'type': 'string', 'default': None},
+          'colors': {'type': 'array', 'items': {'type': 'string'}, 'default': None}, 'settings': {'type': 'object', 'default': None, 'description': '틀에 있는 키만, 같은 형식으로 예 {"enable_support":"1","support_on_build_plate_only":"1"}'},
+          'plate_name': {'type': 'string', 'default': ''}, 'title': {'type': 'string', 'default': ''}})
+def bambu(plate, out, template=None, colors=None, settings=None, plate_name='', title=''):
+    import bambu_project as BP
+    tpl = _abs(template) if template else BP.DEFAULT_TEMPLATE; obs = BP.read_plate(_abs(plate))
+    BP.write_bambu_project(_abs(out), obs, tpl, plate_name, colors, settings, title)
+    r = BP.verify_bambu_project(_abs(out), tpl, obs); r['template'] = tpl; return r
 @command('make', '빌드 → 파이프라인 일괄: config 의 "build": [스크립트, 인자…] 를 config 폴더에서 실행한 뒤 pipeline',
          {'config': {'type': 'string'}})
 def make(config):

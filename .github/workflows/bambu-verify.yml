@@ -1,0 +1,44 @@
+name: bambu-verify
+# 실제 Bambu Studio(리눅스 AppImage)로 프로젝트 3MF 를 열고 슬라이스해 '프로젝트로 열리는지'(설정이 3MF 에서 읽히는지) 검증 + 도구 자가검사.
+# 이 세션 컨테이너는 GitHub 다운로드가 막혀 있어 Actions 러너에서 돈다. 결과는 Summary 와 artifact(bambu_out: 로그·G-code·결과 json).
+on:
+  push:
+    paths:
+      - '작업중/**/models/*_bambu.3mf'
+      - 'tools/**'
+      - '.github/workflows/bambu-verify.yml'
+  workflow_dispatch:
+    inputs:
+      files:
+        description: '검증할 3MF glob(공백 구분)'
+        default: '작업중/*/models/*_bambu.3mf'
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.pw
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - name: 시스템 의존(헤드리스 GUI·AppImage)
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q xvfb libfuse2t64 libgl1 libegl1 libglu1-mesa libosmesa6 libgtk-3-0t64 libwebkit2gtk-4.1-0 \
+            libgstreamer1.0-0 libgstreamer-plugins-base1.0-0 libsecret-1-0 fonts-noto-cjk locales || true
+      - name: 파이썬 의존
+        run: |
+          pip install -q -r requirements.txt
+          python -m playwright install --with-deps chromium
+      - name: 도구 자가검사
+        run: python tools/mm.py selftest
+      - name: Bambu Studio 로 열기·슬라이스
+        run: |
+          FILES="${{ github.event.inputs.files || '작업중/*/models/*_bambu.3mf' }}"
+          GEN=$(ls 작업중/*/models/*_v10_B_lid_logo.3mf 2>/dev/null | head -1)   # 비교용 일반 3MF(형상만)
+          python tools/bambu_cli.py --download --files $FILES $GEN --out bambu_out --summary "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: bambu_out, path: bambu_out, retention-days: 14 }
