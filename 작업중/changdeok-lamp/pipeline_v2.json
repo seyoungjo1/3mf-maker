@@ -1,0 +1,276 @@
+{
+ "name": "인정전 램프 v2 (DWG 정면·측면 정합 · 창경궁 SKP 처마밑 · 처마밑 들림 · 취두 · AMS 없이 색별 플레이트 12장)",
+ "build": [
+  "scripts/v2/plates_v2.py"
+ ],
+ "out": "qc/v2_pipeline",
+ "parts_pkl": "models/v2/parts_print.pkl",
+ "assembly_parts_pkl": "models/v2/parts_nominal.pkl",
+ "plates": [
+  "models/v2/plates/P01_gray_platform.3mf",
+  "models/v2/plates/P02_tile_lower.3mf",
+  "models/v2/plates/P03_tile_upper.3mf",
+  "models/v2/plates/P04_brown_soffit_lower.3mf",
+  "models/v2/plates/P05_brown_soffit_upper.3mf",
+  "models/v2/plates/P06_brown_floor_walls.3mf",
+  "models/v2/plates/P07_brown_rings_sidewalls.3mf",
+  "models/v2/plates/P08_brown_upperfloor_gables.3mf",
+  "models/v2/plates/P09_green_band_lower.3mf",
+  "models/v2/plates/P10_green_band_upper.3mf",
+  "models/v2/plates/P11_white_lower_ring_diffusers_ridge.3mf",
+  "models/v2/plates/P12_white_upper_ring_hips_desc.3mf"
+ ],
+ "assembly": "scripts/v2/assembly_v2.py",
+ "colors": {
+  "platform": "#9e9e9e",
+  "L_floor": "#6d4c41",
+  "wall_front": "#6d4c41",
+  "wall_back": "#6d4c41",
+  "wall_left": "#6d4c41",
+  "wall_right": "#6d4c41",
+  "L_diffuser": "#f5f5f5",
+  "L_ring": "#6d4c41",
+  "L_band": "#2e7d32",
+  "L_roof_soffit": "#6d4c41",
+  "L_roof_eave_white": "#f5f5f5",
+  "L_roof_tile": "#263238",
+  "L_roof_hip1": "#f5f5f5",
+  "L_roof_hip2": "#f5f5f5",
+  "L_roof_hip3": "#f5f5f5",
+  "L_roof_hip4": "#f5f5f5",
+  "U_floor": "#6d4c41",
+  "uwall_front": "#6d4c41",
+  "uwall_back": "#6d4c41",
+  "uwall_left": "#6d4c41",
+  "uwall_right": "#6d4c41",
+  "U_diffuser": "#f5f5f5",
+  "U_ring": "#6d4c41",
+  "U_band": "#2e7d32",
+  "U_roof_soffit": "#6d4c41",
+  "U_roof_eave_white": "#f5f5f5",
+  "U_roof_tile": "#263238",
+  "U_roof_hip1": "#f5f5f5",
+  "U_roof_hip2": "#f5f5f5",
+  "U_roof_hip3": "#f5f5f5",
+  "U_roof_hip4": "#f5f5f5",
+  "U_roof_ridge": "#f5f5f5",
+  "U_roof_desc1": "#f5f5f5",
+  "U_roof_desc2": "#f5f5f5",
+  "U_roof_gableL": "#6d4c41",
+  "U_roof_desc3": "#f5f5f5",
+  "U_roof_desc4": "#f5f5f5",
+  "U_roof_gableR": "#6d4c41"
+ },
+ "qc": {
+  "efc": 0.15,
+  "max_bridge": 7,
+  "min_wall": 0.8,
+  "single_wall": [
+   "L_diffuser",
+   "U_diffuser"
+  ]
+ },
+ "inputs": [
+  {
+   "file": "sample/injeongjeon_225_A3.dwg",
+   "sections": [
+    "refs/dims/front_registered.png",
+    "refs/dims/side_registered.png"
+   ],
+   "study": ".claude/skills/3d-print-3mf/references/studies/korean-palace-lamp-motif.md"
+  },
+  {
+   "file": "sample/injeongjeon_225_A3_b.dwg",
+   "sections": [
+    "refs/dims/front_registered.png",
+    "refs/dims/side_registered.png"
+   ],
+   "study": ".claude/skills/3d-print-3mf/references/studies/korean-palace-lamp-motif.md"
+  },
+  {
+   "file": "sample/injeongjeon_225_A4.dwg",
+   "sections": [
+    "refs/dims/front_registered.png",
+    "refs/dims/side_registered.png"
+   ],
+   "study": ".claude/skills/3d-print-3mf/references/studies/korean-palace-lamp-motif.md"
+  },
+  {
+   "file": "sample/injeongjeon_225_A4_b.dwg",
+   "sections": [
+    "refs/dims/front_registered.png",
+    "refs/dims/side_registered.png"
+   ],
+   "study": ".claude/skills/3d-print-3mf/references/studies/korean-palace-lamp-motif.md"
+  },
+  {
+   "file": "sample/changgyeonggung_sketchup.skp",
+   "sections": [
+    "qc/v2/changgyeonggung_skp_corner.png"
+   ],
+   "study": ".claude/skills/3d-print-3mf/references/studies/korean-palace-lamp-motif.md"
+  },
+  {
+   "file": "sample/hanok_MAINBUILDING_sketchup.skp",
+   "sections": [
+    "refs/skp/mainbuilding_components.png"
+   ],
+   "study": ".claude/skills/3d-print-3mf/references/studies/korean-palace-lamp-motif.md"
+  }
+ ],
+ "support_zones": [
+  {
+   "part": "L_roof_soffit",
+   "desc": "처마밑 밑면 전체(경사 쐐기·서까래 홈·마구리·추녀) — 정방향 출력, 서포트 '빌드 플레이트에만'(사용자 승인)",
+   "max_mm2": 16000
+  },
+  {
+   "part": "U_roof_soffit",
+   "desc": "처마밑 밑면 전체(경사 쐐기·서까래 홈·마구리·추녀) — 정방향 출력, 서포트 '빌드 플레이트에만'(사용자 승인)",
+   "max_mm2": 23000
+  },
+  {
+   "part": "L_roof_tile",
+   "desc": "기와 밑면 네 모서리 처마 들림 띠(흰 테에 가려지는 면, 높이 ≤3) — 서포트 '빌드 플레이트에만'(사용자 승인)",
+   "max_mm2": 1800
+  },
+  {
+   "part": "U_roof_tile",
+   "desc": "기와 밑면 네 모서리 처마 들림 띠(흰 테에 가려지는 면, 높이 ≤3) — 서포트 '빌드 플레이트에만'(사용자 승인)",
+   "max_mm2": 1600
+  }
+ ],
+ "accepted": [
+  {
+   "part": "L_roof_soffit",
+   "flag": "얇은 살",
+   "max": 130,
+   "desc": "경사 쐐기 맨 아래 끝 1층 띠(서포트 위, 공포 띠에 가려짐)"
+  },
+  {
+   "part": "U_roof_soffit",
+   "flag": "얇은 살",
+   "max": 130,
+   "desc": "경사 쐐기 맨 아래 끝 1층 띠(서포트 위, 공포 띠에 가려짐)"
+  },
+  {
+   "part": "L_roof_soffit",
+   "flag": "브리지",
+   "max": 15,
+   "desc": "서포트 구역 안의 천장(서까래 홈 사이)"
+  },
+  {
+   "part": "U_roof_soffit",
+   "flag": "브리지",
+   "max": 15,
+   "desc": "서포트 구역 안의 천장(서까래 홈 사이)"
+  },
+  {
+   "part": "L_roof_soffit",
+   "flag": "바닥 접지",
+   "desc": "정방향 출력이라 서포트 위에 얹힘 — 서포트+브림"
+  },
+  {
+   "part": "U_roof_soffit",
+   "flag": "바닥 접지",
+   "desc": "정방향 출력이라 서포트 위에 얹힘 — 서포트+브림"
+  },
+  {
+   "part": "U_roof_soffit",
+   "flag": "안착",
+   "desc": "정방향 출력이라 서포트 위에 얹힘 — 서포트+브림"
+  },
+  {
+   "part": "L_roof_soffit",
+   "flag": "안착",
+   "desc": "정방향 출력이라 서포트 위에 얹힘 — 서포트+브림"
+  },
+  {
+   "part": "L_roof_soffit",
+   "flag": "바깥 벽 단차",
+   "desc": "추녀 끝 각재 밑(서포트 면) — mm.py wallscan 확인"
+  },
+  {
+   "part": "U_roof_soffit",
+   "flag": "바깥 벽 단차",
+   "desc": "추녀 끝 각재 밑(서포트 면) — mm.py wallscan 확인"
+  },
+  {
+   "part": "L_roof_tile",
+   "flag": "얇은 살",
+   "max": 8,
+   "desc": "수키와 골 꼭대기 마지막 층"
+  },
+  {
+   "part": "U_roof_tile",
+   "flag": "얇은 살",
+   "max": 8,
+   "desc": "수키와 골 꼭대기 마지막 층"
+  },
+  {
+   "part": "L_roof_tile",
+   "flag": "브리지",
+   "max": 15,
+   "desc": "모서리 들림 띠 천장(서포트 구역 안)"
+  },
+  {
+   "part": "U_roof_tile",
+   "flag": "브리지",
+   "max": 15,
+   "desc": "모서리 들림 띠 천장(서포트 구역 안)"
+  },
+  {
+   "part": "L_roof_tile",
+   "flag": "바깥 벽 단차",
+   "desc": "z 0.2 EFC 첫 층 띠 · z 0.7~1.2 막새·모서리 들림 띠 시작 — mm.py wallscan 확인"
+  },
+  {
+   "part": "U_roof_tile",
+   "flag": "바깥 벽 단차",
+   "desc": "z 0.2 EFC 첫 층 띠 · z 0.76 막새 끝 · z 13.14 합각 널 포켓 가장자리(널로 가려짐) — mm.py wallscan 확인"
+  }
+ ],
+ "min_gap": 0.3,
+ "frames": 36,
+ "bambu": {
+  "enabled": true,
+  "plate_colors": {
+   "models/v2/plates/P01_gray_platform.3mf": [
+    "#9e9e9e"
+   ],
+   "models/v2/plates/P02_tile_lower.3mf": [
+    "#263238"
+   ],
+   "models/v2/plates/P03_tile_upper.3mf": [
+    "#263238"
+   ],
+   "models/v2/plates/P04_brown_soffit_lower.3mf": [
+    "#6d4c41"
+   ],
+   "models/v2/plates/P05_brown_soffit_upper.3mf": [
+    "#6d4c41"
+   ],
+   "models/v2/plates/P06_brown_floor_walls.3mf": [
+    "#6d4c41"
+   ],
+   "models/v2/plates/P07_brown_rings_sidewalls.3mf": [
+    "#6d4c41"
+   ],
+   "models/v2/plates/P08_brown_upperfloor_gables.3mf": [
+    "#6d4c41"
+   ],
+   "models/v2/plates/P09_green_band_lower.3mf": [
+    "#2e7d32"
+   ],
+   "models/v2/plates/P10_green_band_upper.3mf": [
+    "#2e7d32"
+   ],
+   "models/v2/plates/P11_white_lower_ring_diffusers_ridge.3mf": [
+    "#f5f5f5"
+   ],
+   "models/v2/plates/P12_white_upper_ring_hips_desc.3mf": [
+    "#f5f5f5"
+   ]
+  }
+ }
+}

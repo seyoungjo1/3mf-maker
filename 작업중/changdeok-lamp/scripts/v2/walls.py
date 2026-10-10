@@ -8,7 +8,7 @@ from shapely.affinity import rotate
 from geo import B, CYL, U, D, I, EXT
 import params as P
 BASE=P.WALL_BASE
-def _lattice_vertical(x0,y0,x1,y1,pitch=2.0,w=0.8,rails=(0.25,0.5,0.75),rail_w=0.8):
+def _lattice_vertical(x0,y0,x1,y1,pitch=4.2,w=1.0,rails=(0.5,),rail_w=1.0):
     """띠살: 세로살 + 가로살(비율 위치). 창 개구(x0,y0)-(x1,y1) 안."""
     shapes=[]
     xs=np.arange(x0+pitch, x1-w/2, pitch)
@@ -24,10 +24,9 @@ def _lattice_diag(x0,y0,x1,y1,pitch=2.4,w=0.8):
         for k in np.arange(-L, L, pitch):
             seg=sbox(cx-L, cy+k-w/2, cx+L, cy+k+w/2); shapes.append(rotate(seg, ang, origin=(cx,cy)))
     return unary_union(shapes).intersection(win)
-def wall(length, height, col_xs, col_d, beam_t, doors_per_bay=4, zone=None, kind='lower'):
+def wall(length, height, col_xs, col_d, beam_t, doors_per_bay=4, zone=None, kind='lower', bay_xs=None):
     """zone: dict(sill=(y0,y1), door=(y0,y1), transom=(y0,y1), beam=(y0,y1)) — 높이 구간. 반환 (white_mesh, brown_mesh) 로컬 좌표."""
-    z=zone; white=B(length, height, BASE, length/2, height/2, 0)
-    brown=[]
+    z=zone; brown=[]; rel_glass=[]
     frame_w=1.0
     # 기둥: 반원(지름 col_d) — 바탕 바깥쪽(z ≥ BASE)만
     for x in col_xs:
@@ -36,7 +35,8 @@ def wall(length, height, col_xs, col_d, beam_t, doors_per_bay=4, zone=None, kind
     # 창방(위 가로대)
     y0,y1=z['beam']; brown.append(B(length, y1-y0, 2.0, length/2, (y0+y1)/2, BASE))
     # 칸마다: 머름(궁판) / 문(띠살) / 교창(빗살) / 인방
-    bays=list(zip(col_xs[:-1], col_xs[1:]))
+    bx_=bay_xs if bay_xs is not None else col_xs                 # 측면 벽: 모서리 기둥(정면·배면 벽 소속)도 칸 경계
+    bays=list(zip(bx_[:-1], bx_[1:]))
     rel_frames=[]; rel_lat=[]; rel_panel=[]
     for a,b in bays:
         lo,hi=a+col_d/2-0.3, b-col_d/2+0.3                      # 기둥 안으로 0.3 겹침
@@ -49,15 +49,17 @@ def wall(length, height, col_xs, col_d, beam_t, doors_per_bay=4, zone=None, kind
             d0,d1=z['door']; n=doors_per_bay; w=(hi-lo)/n
             rel_frames.append(sbox(lo,d0,hi,d0+frame_w)); rel_frames.append(sbox(lo,d1-frame_w,hi,d1))
             for k in range(n+1): rel_frames.append(sbox(lo+k*w-frame_w/2, d0, lo+k*w+frame_w/2, d1))
-            for k in range(n): rel_lat.append(_lattice_vertical(lo+k*w+frame_w/2, d0+frame_w, lo+(k+1)*w-frame_w/2, d1-frame_w))
+            for k in range(n):
+                r=(lo+k*w+frame_w/2, d0+frame_w, lo+(k+1)*w-frame_w/2, d1-frame_w); rel_glass.append(sbox(*r)); rel_lat.append(_lattice_vertical(*r))
         if 'transom' in z:
             t0,t1=z['transom']; rel_frames.append(sbox(lo,t0,hi,t0+frame_w)); rel_frames.append(sbox(lo,t1-frame_w,hi,t1))
             if kind=='upper':
                 n=2; w=(hi-lo)/n
                 for k in range(n+1): rel_frames.append(sbox(lo+k*w-frame_w/2, t0, lo+k*w+frame_w/2, t1))
-                for k in range(n): rel_lat.append(_lattice_diag(lo+k*w+frame_w/2, t0+frame_w, lo+(k+1)*w-frame_w/2, t1-frame_w))
+                for k in range(n):
+                    r=(lo+k*w+frame_w/2, t0+frame_w, lo+(k+1)*w-frame_w/2, t1-frame_w); rel_glass.append(sbox(*r)); rel_lat.append(_lattice_vertical(*r, pitch=4.6, rails=()))
             else:
-                rel_lat.append(_lattice_diag(lo+frame_w, t0+frame_w, hi-frame_w, t1-frame_w))
+                r=(lo+frame_w, t0+frame_w, hi-frame_w, t1-frame_w); rel_glass.append(sbox(*r)); rel_lat.append(_lattice_vertical(*r, pitch=4.6, rails=()))
         if 'panel' in z:                                                                # 상층 판벽
             p0,p1=z['panel']; rel_panel.append(sbox(lo,p0,hi,p1))
             for k in range(1,4): xx=lo+(hi-lo)*k/4; rel_frames.append(sbox(xx-frame_w/2,p0,xx+frame_w/2,p1))
@@ -67,34 +69,43 @@ def wall(length, height, col_xs, col_d, beam_t, doors_per_bay=4, zone=None, kind
     # 인방(창 위~창방 아래 띠)
     if 'lintel' in z:
         l0,l1=z['lintel']; brown.append(B(length, l1-l0, 1.0, length/2, (l0+l1)/2, BASE))
-    return white, U(brown)
+    # 창호틀 판: 두께 BASE, 유리 자리(살 사이)만 뚫림 → 빛은 안쪽 흰 통에서
+    plate=B(length, height, BASE, length/2, height/2, 0)
+    if rel_glass:
+        glass=unary_union(rel_glass).difference(unary_union(rel_lat)) if rel_lat else unary_union(rel_glass)
+        plate=D(plate, EXT(glass, BASE+2, -1))
+    out=U([plate]+brown)
+    bs=[b for b in out.split(only_watertight=False) if abs(b.volume)>1.0]          # 불리언이 남긴 부피 0 퇴화 조각 제거
+    return None, (bs[0] if len(bs)==1 else out)
 def lower_zone():
     H=P.Z_LOWER_WALL_TOP
     return dict(sill=(0.0,6.7), door=(6.7,24.0), transom=(24.0,29.3), lintel=(29.3,H), beam=(H,H+P.LOWER_BEAM))
 def upper_zone():
-    H=11.0
-    return dict(panel=(0.0,3.0), transom=(3.0,H), beam=(H,H+P.LOWER_BEAM))
+    H=5.6
+    return dict(panel=(0.0,1.2), transom=(1.2,H), beam=(H,H+P.LOWER_BEAM))
 def lower_walls():
     """4벽: 로컬 메시 + 월드 변환. 반환 dict name -> (white, brown, M4x4)"""
     K=P.K; bx=np.cumsum([0]+P.BAYS_X)*K; by=np.cumsum([0]+P.BAYS_Y)*K
     Lx=P.SPAN_X+P.COL_D; Ly=P.SPAN_Y-2*BASE
     zone=lower_zone(); H=P.Z_LOWER_WALL_TOP+P.LOWER_BEAM
     out={}
-    wf,bf=wall(Lx,H,[P.COL_D/2+x for x in bx],P.COL_D,P.LOWER_BEAM,4,zone,'lower')
-    wb,bb=wall(Lx,H,[P.COL_D/2+x for x in bx],P.COL_D,P.LOWER_BEAM,4,zone,'lower')
-    ws,bs=wall(Ly,H,[x-BASE for x in by[1:-1]],P.COL_D,P.LOWER_BEAM,3,zone,'lower')
-    ws2,bs2=wall(Ly,H,[x-BASE for x in by[1:-1]],P.COL_D,P.LOWER_BEAM,3,zone,'lower')
+    wf,bf=wall(Lx,H,[P.COL_D/2+x for x in bx],P.COL_D,P.LOWER_BEAM,2,zone,'lower')
+    wb,bb=wall(Lx,H,[P.COL_D/2+x for x in bx],P.COL_D,P.LOWER_BEAM,2,zone,'lower')
+    bxs=[x-BASE for x in by]
+    ws,bs=wall(Ly,H,bxs[1:-1],P.COL_D,P.LOWER_BEAM,2,zone,'lower',bay_xs=bxs)
+    ws2,bs2=wall(Ly,H,bxs[1:-1],P.COL_D,P.LOWER_BEAM,2,zone,'lower',bay_xs=bxs)
     out['wall_front']=(wf,bf,'front'); out['wall_back']=(wb,bb,'back'); out['wall_left']=(ws,bs,'left'); out['wall_right']=(ws2,bs2,'right')
     return out, Lx, Ly, H
 def upper_walls():
-    K=P.K; ux0=-P.USPAN_X/2; n=5; ubays=np.linspace(0,P.USPAN_X,6)       # 상층 정면 5칸 균등(실측 없음, 추정)
-    uby=np.linspace(0,P.USPAN_Y,4)                                        # 측면 3칸
-    Lx=P.USPAN_X+P.UCOL_D; Ly=P.USPAN_Y-2*BASE; zone=upper_zone(); H=11.0+P.LOWER_BEAM
+    K=P.K; ubays=np.cumsum([0]+P.UBAYS_X)*K                               # 상층 정면 5칸 (DWG 정면도 위 치수 줄)
+    uby=np.cumsum([0]+P.UBAYS_Y)*K                                        # 상층 측면 4칸 (DWG 측면도 위 치수 줄)
+    Lx=P.USPAN_X+P.UCOL_D; Ly=P.USPAN_Y-2*BASE; zone=upper_zone(); H=5.6+P.LOWER_BEAM
     out={}
     wf,bf=wall(Lx,H,[P.UCOL_D/2+x for x in ubays],P.UCOL_D,P.LOWER_BEAM,2,zone,'upper')
     wb,bb=wall(Lx,H,[P.UCOL_D/2+x for x in ubays],P.UCOL_D,P.LOWER_BEAM,2,zone,'upper')
-    ws,bs=wall(Ly,H,[x-BASE for x in uby[1:-1]],P.UCOL_D,P.LOWER_BEAM,2,zone,'upper')
-    ws2,bs2=wall(Ly,H,[x-BASE for x in uby[1:-1]],P.UCOL_D,P.LOWER_BEAM,2,zone,'upper')
+    ubxs=[x-BASE for x in uby]
+    ws,bs=wall(Ly,H,ubxs[1:-1],P.UCOL_D,P.LOWER_BEAM,2,zone,'upper',bay_xs=ubxs)
+    ws2,bs2=wall(Ly,H,ubxs[1:-1],P.UCOL_D,P.LOWER_BEAM,2,zone,'upper',bay_xs=ubxs)
     out['uwall_front']=(wf,bf,'front'); out['uwall_back']=(wb,bb,'back'); out['uwall_left']=(ws,bs,'left'); out['uwall_right']=(ws2,bs2,'right')
     return out, Lx, Ly, H
 def stand_matrix(side, L, span_x, span_y, z_bottom):
