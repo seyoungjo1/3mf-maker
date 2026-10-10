@@ -44,7 +44,7 @@ def slice_one(exe, path, outdir, timeout=1200):
     r['gcode_settings'] = gcode_settings(gc) if gc else {}
     want = project_settings(path); r['project_settings'] = want
     if want and r['gcode_settings']:
-        norm = lambda v: re.sub(r'[\s,;]+', ';', str(v)).strip(';').lower()
+        norm = lambda v: re.sub(r'[\s,;]+', ';', str(v).replace('"', '')).strip(';').lower()   # G-code 머리말은 문자열 항목에 따옴표를 붙인다
         r['settings_match'] = {k: norm(want[k]) == norm(r['gcode_settings'].get(k, '')) for k in want if k in r['gcode_settings']}
     r['warn_lines'] = [l for l in log.splitlines() if re.search(r'not from bambu|load geometry|error|failed', l, re.I)][:12]
     r['ok'] = p.returncode == 0 and bool(gc) and (not want or all(r.get('settings_match', {}).values()))
@@ -66,7 +66,7 @@ def main():
         need = r['file'] in must; verdict = '✓ 프로젝트로 슬라이스' if r['ok'] else ('⚠ 실패' if need else 'ℹ (비교용) ' + ('슬라이스됨' if r.get('gcode_files') else '실패'))
         if need and not r['ok']: bad.append(r['file'])
         L.append(f"| {os.path.basename(r['file'])} | {'예' if need else '아니오'} | {r['exit']} | {'있음' if r.get('gcode_files') else '없음'} | {mm} | {verdict} |")
-    L += [''] + [f"- {os.path.basename(r['file'])}: G-code 설정 {r['gcode_settings']} / 경고 줄 {r['warn_lines'][:4]}" for r in res]
+    L += [''] + [f"- {os.path.basename(r['file'])}: 불일치 키 {[k for k, v in r.get('settings_match', {}).items() if not v]} · G-code 설정 {r['gcode_settings']} / 경고 줄 {r['warn_lines'][:4]}" for r in res]
     txt = '\n'.join(L); print(txt); json.dump(res, open(os.path.join(a.out, 'result.json'), 'w'), ensure_ascii=False, indent=1)
     if a.summary: open(a.summary, 'a').write(txt + '\n')
     sys.exit(1 if bad else 0)

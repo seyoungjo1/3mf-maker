@@ -78,15 +78,29 @@ def check_assembly(asm, allparts, mg, L, warn, render_only=False):
         for ang in sw['angles']:
             log('sweep', sw['name'], ang); M = T(sw['pivot']) @ R(np.radians(ang), sw['axis']) @ T(-np.array(sw['pivot'])) @ np.asarray(sw['base'], float); mv = tf(allparts[sw['part']], M)
             ivs = [inter(fixed[o], mv) for o in sw['against']]; g = min(gaps(fixed[o], mv, 3000)[0] for o in sw['against'])
-            if max(ivs) <= 0.01: ok.append(ang)
+            if min(ivs) < 0: warn.append(f"스윕 {sw['name']} {ang}°: 교집합 계산 실패(불리언) — 판정 불가")
+            if 0 <= max(ivs) <= 0.01 and min(ivs) >= 0: ok.append(ang)
             L.append(f'| {ang} | ' + ' | '.join(f'{v:.2f}' for v in ivs) + f' | {g:.2f} |')
-        rng = f"{min(ok)}~{max(ok)}°" if ok else '없음'; L += ['', f"간섭 0 범위: **{rng}** (요구: {sw.get('need', '')})", '']
-        if sw.get('need') and (not ok or min(ok) > sw['need'][0] or max(ok) < sw['need'][1]): warn.append(f"스윕 {sw['name']}: 간섭 0 범위 {rng} 가 요구 {sw['need']} 를 못 채움")
+        # 간섭 0 범위는 '연속' 구간으로만 말한다(예전: 간섭 0 각도의 최소~최대 → 0·90·120 만 깨끗하고 30·60 이 간섭이어도 0~120 으로 통과하던 구멍)
+        angs = list(sw['angles']); runs, cur = [], []
+        for x in angs:
+            if x in ok: cur.append(x)
+            elif cur: runs.append(cur); cur = []
+        if cur: runs.append(cur)
+        rng = ', '.join(f'{r[0]}~{r[-1]}°' for r in runs) if runs else '없음'; badang = [x for x in angs if x not in ok]
+        L += ['', f"간섭 0 범위: **{rng}** (요구: {sw.get('need', '')})" + (f' · 간섭 각도 {badang}' if badang else ''), '']
+        if sw.get('need'):
+            lo, hi = sw['need']; inside = [x for x in angs if lo <= x <= hi]; bad_in = [x for x in inside if x not in ok]
+            if not inside or min(inside) > lo or max(inside) < hi: warn.append(f"스윕 {sw['name']}: 각도 목록 {angs} 이 요구 {sw['need']} 를 덮지 못함")
+            elif bad_in: warn.append(f"스윕 {sw['name']}: 요구 {sw['need']} 안 간섭 각도 {bad_in} (간섭 0 범위 {rng})")
 
 
 def run(cfg_path, render_only=False):
     cfg = json.load(open(cfg_path, encoding='utf-8')); base = os.path.dirname(os.path.abspath(cfg_path)); P = lambda p: os.path.join(base, p)
     out = P(cfg['out']); os.makedirs(out, exist_ok=True); warn = []; info = []; L = [f"# {cfg['name']} — 파이프라인 보고", '']
+    # 단계별 기록(report.json 'stages') — mm checklist 가 이것으로 체크리스트를 자동으로 채운다
+    stages = {'qc': {}, 'plates': [], 'assembly': None, 'renders': {}, 'efc': {'qc_efc': cfg.get('qc', {}).get('efc', 0.15), 'nominal_pkl': cfg.get('assembly_parts_pkl')},
+              'support_zones': cfg.get('support_zones', [])}
     qa = argparse.Namespace(layer=0.2, min_wall=cfg.get('qc', {}).get('min_wall', 1.2), max_tri=200000, max_bridge=cfg.get('qc', {}).get('max_bridge', 7.0),
                             efc=cfg.get('qc', {}).get('efc', 0.15), single_wall=cfg.get('qc', {}).get('single_wall', []))
     zones = {z['part']: z for z in cfg.get('support_zones', [])}
@@ -111,6 +125,7 @@ def run(cfg_path, render_only=False):
             elif f.startswith('조각') and n in cfg.get('multi_body_ok', []): flags.append('ℹ 의도된 다중 조각')
             elif accept(n, f, r): a = accept(n, f, r); info.append(f"{n}: {f} → 허용({a['desc']})"); flags.append(f"ℹ {a['flag']} 허용: {a['desc']}")
             else: warn.append(f'{n}: {f}'); flags.append('⚠ ' + f)
+        stages['qc'][n] = {'flags': flags, 'overhang_mm2': r['overhang_mm2'], 'is_volume': r['is_volume'], 'bodies': r['bodies']}
         L.append(f"| {n} | {r['faces']:,} | {'O' if r['is_volume'] else 'X'} | {r['bodies']} | {'×'.join(map(str, r['size_mm']))} | {r['weight_g_solid']} | {r['bed_contact_mm2']} / {r['first_layer_mm2']} | {r['thin_area_mm2']} | {r['overhang_mm2']} | {r['bridge_mm2']} ({r['bridge_max_span']}) | {'; '.join(flags) if flags else '✓'} |")
     L += ['', '오버행 상위 위치: ' + ' / '.join(f"{n}: " + '; '.join(f'z={z} {a} mm² {b}' for z, a, b in r['overhang_top']) for n, r in qc.items() if r['overhang_top']),
           '', '브리지 상위 위치(z, mm², 폭): ' + ' / '.join(f"{n}: " + '; '.join(f'z={z} {a} mm² 폭 {w}' for z, a, w in r['bridge_top']) for n, r in qc.items() if r.get('bridge_top')),
@@ -128,6 +143,7 @@ def run(cfg_path, render_only=False):
         ascii_copy = os.path.join(tmp, f'plate{len(os.listdir(tmp))}.3mf'); shutil.copy(P(pl), ascii_copy); nw, ws, _ = strict_check(ascii_copy)
         if nw: fl.append(f'strict 경고 {nw}: ' + '; '.join(ws[:3]))
         for f in fl: warn.append(f'{os.path.basename(pl)}: {f}')
+        stages['plates'].append({'file': pl, 'strict_warnings': nw, 'collisions': len(bad), 'in_bed': '베드 밖' not in fl, 'triangles': tri})
         L.append(f"| {os.path.basename(pl)} | {', '.join(pp)} | {lo[0]:.0f}~{hi[0]:.0f} / {lo[1]:.0f}~{hi[1]:.0f} | {len(bad)} | {nw} | {'⚠ ' + '; '.join(fl) if fl else '✓'} |")
     shutil.rmtree(tmp, ignore_errors=True); L.append(''); _flush(out, L)
     # ---------- 3. 조립 검증 ----------
@@ -141,7 +157,8 @@ def run(cfg_path, render_only=False):
             for n in mats: assert n in allparts, f'상태 {st} 에 없는 파트 {n}'
         for sw in asm.get('sweeps', []):
             for n in [sw['part']] + list(sw['against']): assert n in allparts, f"스윕 {sw['name']} 에 없는 파트 {n}"
-        check_assembly(asm, allparts, mg, L, warn, render_only)
+        nw0 = len(warn); check_assembly(asm, allparts, mg, L, warn, render_only)
+        stages['assembly'] = {'states': list(asm['states']), 'pairs': len(asm.get('pairs', [])), 'sweeps': [sw['name'] for sw in asm.get('sweeps', [])], 'warnings': len(warn) - nw0}
         for n in asm.get('notes', []): L.append('- ' + n)
         L.append(''); _flush(out, L)
     # ---------- 4. 보여주기 ----------
@@ -150,12 +167,13 @@ def run(cfg_path, render_only=False):
         allb = np.array([m.bounds for m in pp.values()]); lo, hi = allb[:, 0].min(0), allb[:, 1].max(0)
         return f'완료 — 모델 크기 {hi[0]-lo[0]:.1f} × {hi[1]-lo[1]:.1f} × {hi[2]-lo[2]:.1f} mm · 파트 {len(pp)}개: ' + ', '.join(pp) + (' · ' + extra if extra else '')
     for pl in cfg['plates']:
-        log('render plate', pl); pp = load_files([P(pl)]); d = os.path.join(out, 'plate_' + os.path.splitext(os.path.basename(pl))[0]); render3(pp, d, colors, None, cfg.get('frames', 36), status=status_of(pp)); L.append(f'- 플레이트 `{os.path.basename(pl)}`: `{os.path.relpath(d, base)}/view_*.png`, `turntable.gif`')
+        log('render plate', pl); pp = load_files([P(pl)]); d = os.path.join(out, 'plate_' + os.path.splitext(os.path.basename(pl))[0]); render3(pp, d, colors, None, cfg.get('frames', 36), status=status_of(pp)); stages['renders'][os.path.relpath(d, base)] = 'plate'; L.append(f'- 플레이트 `{os.path.basename(pl)}`: `{os.path.relpath(d, base)}/view_*.png`, `turntable.gif`')
     if asm:
         allparts = dict(nominal); allparts.update(asm.get('extra', {}))
         static = {k: v for k, v in asm['states'].items()}; shown = set(n for st in static.values() for n in st)
         sub = {n: m for n, m in allparts.items() if n in shown}
         log('render assembly'); d = os.path.join(out, 'assembly'); render3(sub, d, colors, {k: {n: np.asarray(M).ravel().tolist() for n, M in v.items()} for k, v in static.items()}, cfg.get('frames', 36), status=status_of({n: tf(sub[n], M) for n, M in list(static.values())[1].items()} if len(static) > 1 else sub, cfg['name']))
+        stages['renders'][os.path.relpath(d, base)] = 'assembly'
         L.append(f'- 조립 상태(분리/닫힘/열림…): `{os.path.relpath(d, base)}/view_*_<상태>.png`, `turntable.gif`')
         motion = {}
         for sw in asm.get('sweeps', []):
@@ -167,7 +185,7 @@ def run(cfg_path, render_only=False):
                 motion[f"{sw['name']} {ang}°"] = st
         if motion:
             names = set(n for st in motion.values() for n in st); sub = {n: m for n, m in allparts.items() if n in names}
-            log('render motion', len(motion), 'frames'); d2 = os.path.join(out, 'motion'); render3(sub, d2, colors, motion, len(motion), status=cfg['name'] + ' · 작동(스윕)'); L.append(f'- 작동 GIF(스윕 각도별 프레임): `{os.path.relpath(d2, base)}/turntable.gif`')
+            log('render motion', len(motion), 'frames'); d2 = os.path.join(out, 'motion'); render3(sub, d2, colors, motion, len(motion), status=cfg['name'] + ' · 작동(스윕)'); stages['renders'][os.path.relpath(d2, base)] = 'motion'; L.append(f'- 작동 GIF(스윕 각도별 프레임): `{os.path.relpath(d2, base)}/turntable.gif`')
     L.append('')
     # ---------- 5. 판정 ----------
     L += ['## 5. 판정', '']
@@ -175,6 +193,6 @@ def run(cfg_path, render_only=False):
     for w in warn: L.append('- ⚠ ' + w)
     L.append('' if warn else '- ✓ 경고 없음 — 보낼 수 있음'); L.append('')
     if render_only: print('\n'.join(L)); print('\n렌더만 다시 함 — REPORT.md 유지'); return 0
-    open(os.path.join(out, 'REPORT.md'), 'w', encoding='utf-8').write('\n'.join(L)); json.dump({'warn': warn, 'info': info, 'qc': qc}, open(os.path.join(out, 'report.json'), 'w'), ensure_ascii=False, indent=1, default=str)
+    open(os.path.join(out, 'REPORT.md'), 'w', encoding='utf-8').write('\n'.join(L)); json.dump({'warn': warn, 'info': info, 'qc': qc, 'stages': stages}, open(os.path.join(out, 'report.json'), 'w'), ensure_ascii=False, indent=1, default=str)
     print('\n'.join(L)); print('\nREPORT:', os.path.join(out, 'REPORT.md')); return 1 if warn else 0
 if __name__ == '__main__': sys.exit(run(sys.argv[1], render_only='--render-only' in sys.argv))
