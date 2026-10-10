@@ -1,6 +1,6 @@
 """뚜껑 v8: 윗면 모서리 = v5 의 연속 곡선(층당 ≤0.115, inset 1.69 → 0) 을 LAND 만큼 올리고, z<LAND 는 **곡선 시작 inset 자리에서** 수직.
 v6 은 이 띠를 전체 윤곽으로 깔아 1.58 mm 턱(접시 테두리)이 생겼다 — 그 턱을 없앤다. 로고 포켓·경첩 귀·걸쇠 탭은 건드리지 않는다.
-사용: python scripts/lid_v8.py ../toolbox42/v5parts.pkl [LAND=0.6] → lid_v8.pkl"""
+사용: python scripts/lid_v8.py ../../작업중/toolbox42/v5parts.pkl [LAND=0.6] → lid_v8.pkl"""
 import pickle, sys, os, numpy as np, trimesh
 from shapely.geometry import Polygon, Point, box
 from trimesh.creation import triangulate_polygon, extrude_polygon

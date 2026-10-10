@@ -11,4 +11,4 @@
 - 로고 인레이의 불필요한 공극을 뚜껑 색으로 메우면 인레이와 본체의 공유면을 보존할 수 있다. 여러 색을 분리해 검사한 브리지와 합친 출력물의 받침을 구별한다.
 - 불리언 과정의 미세 수치 잔여물을 크기·부피로 진단한다. 제거는 총 <0.001 mm³의 계산 찌꺼기에 한정하고 의미 있는 분리 파트를 숨기지 않는다.
 
-산출물·검증·남은 서포트/얇은 살 경고: `작업중/toolbox48/README.md`, `qc/validation.json`, `qc/plate_A/report.md`, `qc/plate_B/report.md`. 새 케이스의 실물 출력은 아직 확인하지 않았다.
+산출물·검증·남은 서포트/얇은 살 경고: `작업완료/toolbox48/README.md`, `qc/validation.json`, `qc/plate_A/report.md`, `qc/plate_B/report.md`. 새 케이스의 실물 출력은 아직 확인하지 않았다.

@@ -1,5 +1,10 @@
 # Toolbox48 — 명판 48장 케이스
 
+> **완료 (2026-10-10, 사용자 확인: "맘에 들었어")** — 최종판 **v10**.
+> 보내는 파일: `models/Toolbox48_v10_A_base_handle_latch_bambu.3mf`, `models/Toolbox48_v10_B_lid_logo_bambu.3mf` (Bambu 프로젝트 — 실제 Bambu Studio 02.08.02.61 슬라이스, 설정 10/10 일치).
+> 검증: `qc/v10/REPORT.md` 경고 0 · 체크리스트 전 항목 통과 · 이미 출력한 v8 하판 + v10 뚜껑 호환 `qc/compat_v8base_v10lid.md`.
+> 재현: `python tools/mm.py make 작업완료/toolbox48/pipeline_v10.json` (원본 v5 파트는 `작업중/toolbox42/v5parts.pkl`).
+
 ## v8 (최신) — 뚜껑 윗면 모서리를 연속 곡선으로
 v7 까지의 뚜껑(v6 모서리)은 바닥 0.8 mm 를 전체 윤곽으로 수직으로 깔아 윗면 둘레에 1.58 mm 턱(접시 테두리)이 있었다. v8 은 **v5 의 연속 곡선(층당 ≤0.115, inset 1.69 → 0, 6 mm)** 을 되살리고, 로고 인레이가 있는 첫 3층(0.6 mm)만 곡선 시작 inset 자리에서 수직(턱 없음), 첫 층은 뚜껑+로고 그룹 EFC +0.15 선반영. 본체·손잡이·걸쇠·칸 치수는 v7 과 같다. 단면 비교: `figures/lid_edge_v8_profile.png`, `figures/lid_edge_section_v7_v8.png`, 클로즈업 렌더 `figures/lid_corner_compare/`.
 
@@ -134,7 +139,7 @@ python 작업중/toolbox48/scripts/preview_toolbox48.py
 ## 파일
 - `models/Toolbox48_v7_A_base_handle_latch.3mf` 플레이트 A(본체·손잡이·걸쇠), `models/Toolbox48_v7_B_lid_logo.3mf` 플레이트 B(뚜껑+로고, 필라멘트 2), 파트 STL.
 - `scripts/build_v7.py` 생성, `scripts/assembly_v7.py` 조립 정의, `pipeline_v7.json` 파이프라인 설정, 결과 `qc/v7/REPORT.md`.
-- 재현: `python scripts/build_v7.py ../toolbox42/v5parts.pkl ../toolbox42/lid_v6.pkl && python ../../tools/pipeline.py pipeline_v7.json`
+- 재현: `python scripts/build_v7.py ../../작업중/toolbox42/v5parts.pkl ../../작업중/toolbox42/lid_v6.pkl && python ../../tools/pipeline.py pipeline_v7.json`
 
 ## 검증 결과 (qc/v7/REPORT.md, `tools/pipeline.py` 통과 — 경고 0)
 | 항목 | 결과 |

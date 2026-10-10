@@ -2,7 +2,7 @@
 """Toolbox48 v7 — 42장 → 48장. 칸 깊이(앞 50.0 / 뒤 51.8) → 58.0 (명판 8장 × 7.0 + 여유 2.0).
 본체·뚜껑을 각 칸 노치 중심에서 잘라 y 로 늘린다(앞 +8.0, 뒤 +6.2). 경첩·손잡이 귀·걸쇠 귀·탭·U자 홈 단면은 그대로.
 추가 수정: 본체 바닥 곡선 ≤0.115/층 + 첫 층 EFC +0.15 선반영, 본체 립 바깥면 0.1 깎아 끼움 0.2 → 0.3(립 1.6 → 1.5), 손잡이·걸쇠 첫 층 EFC.
-사용: python scripts/build_v7.py ../toolbox42/v5parts.pkl <lid.pkl> [태그=v7]   (v8: lid_v8.pkl v8 — 뚜껑 모서리 연속 곡선)"""
+사용: python scripts/build_v7.py ../../작업중/toolbox42/v5parts.pkl <lid.pkl> [태그=v7]   (v8: lid_v8.pkl v8 — 뚜껑 모서리 연속 곡선)"""
 import sys, os, pickle, json, numpy as np, trimesh
 from shapely.geometry import Polygon, MultiPolygon
 from shapely.ops import unary_union
