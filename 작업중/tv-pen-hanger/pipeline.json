@@ -1,0 +1,38 @@
+{
+ "name": "tv-pen-hanger v1",
+ "build": [
+  "scripts/build.py"
+ ],
+ "out": "qc/current",
+ "parts_pkl": "parts.pkl",
+ "assembly_parts_pkl": "parts_nominal.pkl",
+ "plates": [
+  "models/tv-pen-hanger_A.3mf"
+ ],
+ "assembly": "scripts/assembly.py",
+ "colors": {
+  "hanger": "#37474f",
+  "holder": "#9e9e9e",
+  "magnet1": "#cfd8dc",
+  "magnet2": "#cfd8dc",
+  "magnet3": "#cfd8dc",
+  "pen1": "#eceff1",
+  "pen2": "#eceff1",
+  "mouse": "#263238"
+ },
+ "qc": {
+  "efc": 0.15,
+  "max_bridge": 7,
+  "min_wall": 1.2,
+  "single_wall": []
+ },
+ "support_zones": [],
+ "accepted": [],
+ "min_gap": 0.3,
+ "frames": 24,
+ "bambu": {
+  "enabled": true,
+  "settings": {}
+ },
+ "inputs": []
+}

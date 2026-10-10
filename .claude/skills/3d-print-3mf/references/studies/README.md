@@ -12,6 +12,7 @@
 | 2026-10-09 | [nameplate-sample.md](nameplate-sample.md) | 사용자 명판(50×30×7) 실측 — 긴 변 아래로 세워 U자 홈에 얹고 앞뒤로 피치 7.0 으로 7장; 형상 안 보고 추측한 실패 기록 |
 | 2026-10-09 | [detail-design-method.md](detail-design-method.md) | **디테일한 도면을 짜는 법** — 요소 목록(BOM)·LOD 예산·부재 라이브러리+배열·프로파일/스윕·색=파트·표준 조인트·오버레이 검사·요소 달성률, 방법 비교(코드/CAD/Blender/실측 메시/AI). 램프 v1 이 10 % 였던 이유와 처방 |
 | 2026-10-09 | [toolbox48-nameplate.md](toolbox48-nameplate.md) | 실제 상판 48개 세워 수납, U자 단면 보존과 클립 판단 정정 |
+| 2026-10-10 | [magnet-hanger.md](magnet-hanger.md) | Ø20×1 자석 걸이 — 흡착력 계산(`mm magnet`), 미끄러짐이 먼저, 포켓은 뒷면 열고 접착, 옆으로 눕혀 출력·눈물방울 포켓, 긴 압출 메모리·듬성한 메시 간격 버그 |
 
 추가 샘플(미실측, 다음 차례): Click_Pen(클릭 펜 기구), Clock_box(태엽 시계 상자), Desk Organizer(OpenSCAD), Little Trees Slider Vent(슬라이더), Mento_Dog, POJEMNICZEK1(트위스트 락 통), 所有部件集合(모듈형 책상 도구, P2S 9 플레이트).
 

@@ -64,6 +64,7 @@ def slits(files):
           'xlim': {'type': 'array', 'items': {'type': 'number'}}, 'ylim': {'type': 'array', 'items': {'type': 'number'}}, 'title': {'type': 'string'}})
 def section(files, plane, out, xlim=None, ylim=None, title=''):
     import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
+    matplotlib.rcParams['font.family'] = ['DejaVu Sans', 'WenQuanYi Zen Hei', 'Noto Sans CJK KR', 'NanumGothic']   # 한글 제목·범례(없으면 □)
     ax_name, _, v = plane.partition('='); ai = 'xyz'.index(ax_name.strip()); v = float(v); keep = [i for i in range(3) if i != ai]
     n = np.zeros(3); n[ai] = 1; o = np.zeros(3); o[ai] = v
     fig, ax = plt.subplots(figsize=(8, 6)); cols = ['k', 'r', 'g', 'b', 'm', 'c']; segs = {}
@@ -164,6 +165,13 @@ def make(config, skill_read=False):
          {'name': {'type': 'string', 'description': '프로젝트 폴더 이름(글자·숫자·_·-)'}, 'desc': {'type': 'string', 'default': ''}})
 def new(name, desc=''):
     import scaffold; return scaffold.new_project(ROOT, name, desc)
+@command('magnet', '원판 자석 흡착력(거울상·링 적분, 이상 철판 상한 × derate)과 자석 걸이 고정력 판정(미끄러짐 μ·N·F, 떼어짐 모멘트)',
+         {'d': {'type': 'number', 'default': 20.0}, 't': {'type': 'number', 'default': 1.0}, 'br': {'type': 'number', 'default': 1.17, 'description': 'Br [T]: N35 1.17, N42 1.29, N52 1.43'},
+          'gaps': {'type': 'array', 'items': {'type': 'number'}, 'default': [0.0, 0.1, 0.5, 1.0]}, 'n': {'type': 'integer', 'default': 3},
+          'load_g': {'type': 'number', 'default': 150.0}, 'lever': {'type': 'number', 'default': 30.0, 'description': '하중 무게중심의 앞 돌출 mm'},
+          'arm': {'type': 'number', 'default': 45.0, 'description': '아래 피벗 모서리 → 자석 중심 높이 mm'}, 'mu': {'type': 'number', 'default': 0.3}, 'derate': {'type': 'number', 'default': 0.5}})
+def magnet(d=20.0, t=1.0, br=1.17, gaps=(0.0, 0.1, 0.5, 1.0), n=3, load_g=150.0, lever=30.0, arm=45.0, mu=0.3, derate=0.5):
+    import magnet as mg; return mg.hanger(d, t, br, tuple(gaps), n, load_g, lever, arm, mu, derate)
 @command('checklist', '체크리스트 자동 판정: pipeline 결과(report.json)·산출물·README 치수표로 10개 항목을 채운다(ok=false 면 보내지 않는다)',
          {'config': {'type': 'string'}, 'skill_read': {'type': 'boolean', 'default': False, 'description': 'SKILL.md+references 를 읽었음을 호출자가 보증(mm_agent 는 자동 true)'}})
 def checklist(config, skill_read=False):

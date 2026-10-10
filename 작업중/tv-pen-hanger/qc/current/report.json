@@ -1,0 +1,81 @@
+{
+ "warn": [],
+ "info": [],
+ "qc": {
+  "hanger": {
+   "name": "hanger",
+   "faces": 20774,
+   "vertices": 10389,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    61.1,
+    60.3,
+    110.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 59.65,
+   "weight_g_solid": 74.0,
+   "bed_contact_mm2": 602.0,
+   "first_layer_mm2": 602.0,
+   "footprint_hull_mm2": 2292.5,
+   "aspect_h_over_w": 1.82,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  }
+ },
+ "stages": {
+  "qc": {
+   "hanger": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   }
+  },
+  "plates": [
+   {
+    "file": "models/tv-pen-hanger_A.3mf",
+    "strict_warnings": 0,
+    "collisions": 0,
+    "in_bed": true,
+    "triangles": 20774
+   }
+  ],
+  "assembly": {
+   "states": [
+    "분리",
+    "걸림"
+   ],
+   "pairs": 16,
+   "sweeps": [],
+   "warnings": 0
+  },
+  "renders": {
+   "qc/current/plate_tv-pen-hanger_A": "plate",
+   "qc/current/assembly": "assembly"
+  },
+  "efc": {
+   "qc_efc": 0.15,
+   "nominal_pkl": "parts_nominal.pkl"
+  },
+  "support_zones": []
+ },
+ "bambu": {
+  "models/tv-pen-hanger_A_bambu.3mf": {
+   "ok": true,
+   "errors": []
+  }
+ }
+}

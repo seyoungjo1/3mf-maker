@@ -47,7 +47,9 @@ def gaps(a, b, n=8000, region=None):
         if len(pts) < 50: return float('nan'), float('nan'), float('nan')
     # 부호 없는 최근접 거리(간섭 여부는 manifold 교집합 부피로 따로 판정 — signed_distance 의 contains 레이 캐스팅은 메모리 폭주).
     # 먼 점은 closest_point 후보 삼각형이 폭증하므로(2천만 배열) 정점 KD-트리 거리로 먼저 거르고 5 mm 이내 점만 정확히 잰다.
-    pq = trimesh.proximity.ProximityQuery(a); dv, _ = pq.vertex(pts); d = np.asarray(dv, float).copy(); near = d < 5.0
+    # 단, 정점이 듬성한 메시(상자 12면 같은 큰 삼각형)는 정점 거리가 실제 거리보다 훨씬 커서 거르기가 틀린다(거치대 판↔자석 0.1 이 12.75 로 나옴)
+    # → 면이 적은 메시는 전부 정확히 잰다(후보 삼각형이 적어 메모리 문제 없음).
+    pq = trimesh.proximity.ProximityQuery(a); dv, _ = pq.vertex(pts); d = np.asarray(dv, float).copy(); near = d < 5.0 if len(a.faces) > 5000 else np.ones(len(d), bool)
     if near.any():
         _, dn, _ = trimesh.proximity.closest_point(a, pts[near]); d[near] = dn
     d = np.sort(d); n = len(d)

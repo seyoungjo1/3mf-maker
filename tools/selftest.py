@@ -123,8 +123,25 @@ def agent_case():
         print(f"[API 에이전트] 입력 검증 {invalid} · 게이트 {gated} · 턴 {r['turns']} · 최종 ok {r['ok']} · API 인자 {api_ok} · 거절 턴 도구 미실행 {ok2} (프로젝트 생성됐었음 {before})")
         return ok1 and ok2
     finally: shutil.rmtree(proj, ignore_errors=True)
+def coarse_gap_case():
+    """정점이 듬성한 상자(12면)와 0.1 떨어진 원판: 간격이 정점 거리(수십 mm)가 아니라 0.1 로 나와야 한다(걸이대 거치대 판↔자석 오측 재현)."""
+    plate = box(120, 10, 25, (-60, -10, -12.5)); disk = trimesh.creation.cylinder(radius=10, height=1, sections=128)
+    disk.apply_transform(trimesh.transformations.rotation_matrix(np.pi / 2, [1, 0, 0])); disk.apply_translation([0, 0.6, 0])
+    g0 = pipeline.gaps(plate, disk)[0]; ok = abs(g0 - 0.1) < 0.02
+    print(f'[듬성한 메시 간격] 상자 12면 ↔ 원판 최소 간격 {g0:.3f} (기대 0.100)'); return ok
+def magnet_case():
+    """자석 흡착력 계산: 먼 거리는 쌍극자-거울상 식과 2 % 안, 간격이 늘면 단조 감소, 적분 점수 2배에도 같은 값(수렴)."""
+    import magnet as mg
+    far = mg.pull_force(20, 1, 1.17, 100) / mg.dipole_force(20, 1, 1.17, 100)
+    seq = [mg.pull_force(20, 1, 1.17, g) for g in (0.0, 0.1, 0.5, 1.0, 2.0)]
+    R = 0.01; f = lambda n: mg.disk_pair_force(R, 0.0002, n) - 2 * mg.disk_pair_force(R, 0.0012, n) + mg.disk_pair_force(R, 0.0022, n)
+    conv = abs(f(600) / f(2400) - 1)
+    h = mg.hanger(gaps=(0.1,), n=3, load_g=150, lever=30, arm=45)['rows'][0]
+    ok = abs(far - 1) < 0.02 and all(a > b for a, b in zip(seq, seq[1:])) and conv < 1e-6 and h['slip_safety'] > 1
+    print(f"[자석] 먼 거리/쌍극자 {far:.3f} · 간격별 {[round(x, 2) for x in seq]} N · 수렴 {conv:.1e} · 걸이 미끄럼 안전율 {h['slip_safety']}")
+    return ok
 if __name__ == '__main__':
-    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = efc_group_case() and slit_case() and wall_step_case() and mm_api_case()
+    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = coarse_gap_case() and magnet_case() and efc_group_case() and slit_case() and wall_step_case() and mm_api_case()
     cfg = fixture(os.path.join(tmp, 'good'), 0.3); rc = pipeline.run(cfg); rep = json.load(open(os.path.join(tmp, 'good', 'qc', 'report.json')))
     files = [os.path.join(tmp, 'good', 'qc', f) for f in ('REPORT.md', 'assembly/turntable.gif', 'motion/turntable.gif', 'plate_A/view_iso.png')]
     print('\n[정상 설계] 종료코드', rc, '| 경고', rep['warn'], '| 산출물', [os.path.exists(f) for f in files])
