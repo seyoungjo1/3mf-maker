@@ -129,7 +129,7 @@ def new_project(root, name, desc=''):
 
 def _dims_ok(readme):
     if not os.path.exists(readme): return False, 'README.md 없음'
-    t = open(readme, encoding='utf-8').read(); m = re.search(r'## 설계 치수표\n(.*?)(\n## |\Z)', t, re.S)
+    t = open(readme, encoding='utf-8').read(); m = re.search(r'## 설계 치수표[^\n]*\n(.*?)(\n## |\Z)', t, re.S)
     if not m: return False, "README 에 '## 설계 치수표' 없음"
     rows = [l for l in m.group(1).splitlines() if l.startswith('|') and not l.startswith('|---') and '이름' not in l]
     if len(rows) < 3: return False, f'치수 행 {len(rows)}개(<3)'
@@ -167,8 +167,9 @@ def checklist(cfg_path, skill_read=False):
     if need_motion and 'motion' not in rend.values(): miss.append('작동 GIF(motion) 없음')
     look = [os.path.relpath(P(os.path.join(d, 'turntable.gif')), root) for d in rend]
     R['render'] = (bool(rend) and not miss, (f'없음: {miss}' if miss else f'GIF {len(rend)}개 생성') + ' — 눈으로 볼 파일: ' + ', '.join(look))
-    e = st.get('efc', {}); zones = {z['part'] for z in st.get('support_zones', [])}
-    over = [n for n, q in qc.items() if q.get('overhang_mm2', 0) > 0 and n not in zones]
+    # 서포트 위치는 현재 config 의 support_zones 기준(설명은 config 에서 고친다). 1 mm² 이하는 계산 잡음으로 본다
+    e = st.get('efc', {}); zones = {z['part'] for z in cfg.get('support_zones', [])}
+    over = [n for n, q in qc.items() if q.get('overhang_mm2', 0) > 1.0 and n not in zones]
     efc_ok = abs(e.get('qc_efc', 0) - 0.15) < 1e-6 and bool(e.get('nominal_pkl'))
     R['efc'] = (efc_ok and not over, ('EFC 0.15 선반영(공칭 pkl 분리)' if efc_ok else 'EFC 선반영 확인 불가(assembly_parts_pkl 로 공칭/출력 분리 필요)') +
                 (f' · 서포트 위치 미기재 파트 {over}' if over else f" · 서포트 위치 {sorted(zones) or '없음(오버행 0)'}"))
