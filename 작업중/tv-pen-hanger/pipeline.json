@@ -1,5 +1,5 @@
 {
- "name": "tv-pen-hanger v3",
+ "name": "tv-pen-hanger v4",
  "build": [
   "scripts/build.py"
  ],
@@ -12,13 +12,22 @@
  "assembly": "scripts/assembly.py",
  "colors": {
   "hanger": "#37474f",
+  "penholder": "#546e7a",
   "holder": "#9e9e9e",
+  "pen1": "#eceff1",
+  "pen2": "#eceff1",
+  "mouse": "#263238",
   "magnet1": "#cfd8dc",
   "magnet2": "#cfd8dc",
   "magnet3": "#cfd8dc",
-  "pen1": "#eceff1",
-  "pen2": "#eceff1",
-  "mouse": "#263238"
+  "magnet4": "#cfd8dc",
+  "magnet5": "#cfd8dc",
+  "jm_up1": "#ffb300",
+  "jm_dn1": "#ffb300",
+  "jm_up2": "#ffb300",
+  "jm_dn2": "#ffb300",
+  "jm_up3": "#ffb300",
+  "jm_dn3": "#ffb300"
  },
  "qc": {
   "efc": 0.15,
@@ -27,7 +36,18 @@
   "single_wall": []
  },
  "support_zones": [],
- "accepted": [],
+ "accepted": [
+  {
+   "part": "hanger",
+   "flag": "가늘고",
+   "desc": "옆으로 눕혀 출력(폭 167 이 높이) — 브림 5 mm 사용, README 출력 조건"
+  },
+  {
+   "part": "penholder",
+   "flag": "가늘고",
+   "desc": "옆으로 눕혀 출력(폭 167 이 높이) — 브림 5 mm 사용, README 출력 조건"
+  }
+ ],
  "min_gap": 0.3,
  "frames": 24,
  "bambu": {

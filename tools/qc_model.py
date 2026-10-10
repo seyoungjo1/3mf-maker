@@ -60,6 +60,7 @@ def wall_steps(mesh, z_range=None, n_dir=48, step=0.02, max_step=0.3, dz=0.02, m
     for a in np.linspace(0, 2 * np.pi, n_dir, endpoint=False):
         d = np.array([-np.cos(a), -np.sin(a), 0.0]); o = np.column_stack([np.full(len(zs), c[0] + R * np.cos(a)), np.full(len(zs), c[1] + R * np.sin(a)), zs])
         loc, ri, _ = mesh.ray.intersects_location(o, np.tile(d, (len(zs), 1)), multiple_hits=False)
+        if len(ri) == 0: continue                                    # 이 방향은 빈 곳(떨어진 두 조각 사이)
         r = np.full(len(zs), np.nan); hit = np.full((len(zs), 2), np.nan); r[ri] = np.linalg.norm(loc[:, :2] - c[:2], axis=1); hit[ri] = loc[:, :2]
         dr = np.abs(np.diff(r)); prev = np.r_[np.nan, dr[:-1]]; nxt = np.r_[dr[1:], np.nan]
         for i in np.where((dr > step) & (dr < max_step))[0]:
@@ -70,7 +71,9 @@ def wall_steps(mesh, z_range=None, n_dir=48, step=0.02, max_step=0.3, dz=0.02, m
 def qc_part(name, m, args):
     r = {'name': name, 'faces': int(len(m.faces)), 'vertices': int(len(m.vertices))}
     r['watertight'] = bool(m.is_watertight); r['is_volume'] = bool(m.is_volume)
-    r['bodies'] = int(len(m.split(only_watertight=False)))
+    sh = m.split(only_watertight=False)
+    # 안쪽을 향한 닫힌 껍질(부피 < 0) = 속이 빈 공간(묻는 자석·너트 자리) — 따로 떨어진 조각이 아니다
+    r['voids'] = int(sum(1 for s in sh if s.is_watertight and s.volume < 0)); r['bodies'] = int(len(sh)) - r['voids']
     b = m.bounds; r['size_mm'] = [round(float(v), 2) for v in (b[1] - b[0])]; r['min_z'] = round(float(b[0, 2]), 3)
     vol = float(abs(m.volume)) if m.is_volume else float('nan'); r['volume_cm3'] = round(vol / 1000, 2); r['weight_g_solid'] = round(vol * PLA_DENSITY, 1)
     sel = (m.face_normals[:, 2] < -0.99) & (m.triangles_center[:, 2] < b[0, 2] + 0.05)
@@ -90,6 +93,7 @@ def qc_part(name, m, args):
     flags = []
     if not r['watertight'] or not r['is_volume']: flags.append('열린 메시(watertight 아님) — 출력 금지')
     if r['bodies'] > 1: flags.append(f'조각 {r["bodies"]}개로 분리됨')
+    if r['voids']: r['note'] = (r.get('note', '') + ' ' if r.get('note') else '') + f'속 빈 공간 {r["voids"]}개(묻는 부품 자리 — 출력 중 일시정지 높이 확인)'
     ws = wall_steps(m, z_range=(b[0, 2] + 0.25, b[1, 2] - 0.02)); r['wall_steps'] = ws['steps'][:6]     # 첫 층(EFC +0.15 선반영 턱, 슬라이서가 깎음)은 제외
     if ws['n_heights']:
         flags.append(f"바깥 벽 단차 0.02~0.3 mm {ws['n_heights']}개 높이 (z, 방향 수, 최대 mm): {[t[:3] for t in ws['steps'][:4]]} — 출력물에 가로줄")

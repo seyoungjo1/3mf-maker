@@ -127,7 +127,8 @@ def run(cfg_path, render_only=False):
             elif f.startswith('조각') and n in cfg.get('multi_body_ok', []): flags.append('ℹ 의도된 다중 조각')
             elif accept(n, f, r): a = accept(n, f, r); info.append(f"{n}: {f} → 허용({a['desc']})"); flags.append(f"ℹ {a['flag']} 허용: {a['desc']}")
             else: warn.append(f'{n}: {f}'); flags.append('⚠ ' + f)
-        stages['qc'][n] = {'flags': flags, 'overhang_mm2': r['overhang_mm2'], 'is_volume': r['is_volume'], 'bodies': r['bodies']}
+        if r.get('voids'): flags.append(f"ℹ 속 빈 공간 {r['voids']}개(묻는 부품 자리 — 일시정지 높이 확인)"); info.append(f"{n}: 속 빈 공간 {r['voids']}개")
+        stages['qc'][n] = {'flags': flags, 'overhang_mm2': r['overhang_mm2'], 'is_volume': r['is_volume'], 'bodies': r['bodies'], 'voids': r.get('voids', 0)}
         L.append(f"| {n} | {r['faces']:,} | {'O' if r['is_volume'] else 'X'} | {r['bodies']} | {'×'.join(map(str, r['size_mm']))} | {r['weight_g_solid']} | {r['bed_contact_mm2']} / {r['first_layer_mm2']} | {r['thin_area_mm2']} | {r['overhang_mm2']} | {r['bridge_mm2']} ({r['bridge_max_span']}) | {'; '.join(flags) if flags else '✓'} |")
     L += ['', '오버행 상위 위치: ' + ' / '.join(f"{n}: " + '; '.join(f'z={z} {a} mm² {b}' for z, a, b in r['overhang_top']) for n, r in qc.items() if r['overhang_top']),
           '', '브리지 상위 위치(z, mm², 폭): ' + ' / '.join(f"{n}: " + '; '.join(f'z={z} {a} mm² 폭 {w}' for z, a, w in r['bridge_top']) for n, r in qc.items() if r.get('bridge_top')),

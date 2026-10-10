@@ -1,26 +1,32 @@
 {
  "warn": [],
- "info": [],
+ "info": [
+  "hanger: 가늘고 높음(높이/폭 6.73) — 넘어질 위험, 브림 → 허용(옆으로 눕혀 출력(폭 167 이 높이) — 브림 5 mm 사용, README 출력 조건)",
+  "hanger: 속 빈 공간 3개",
+  "penholder: 가늘고 높음(높이/폭 6.73) — 넘어질 위험, 브림 → 허용(옆으로 눕혀 출력(폭 167 이 높이) — 브림 5 mm 사용, README 출력 조건)",
+  "penholder: 속 빈 공간 3개"
+ ],
  "qc": {
   "hanger": {
    "name": "hanger",
-   "faces": 22852,
-   "vertices": 11428,
+   "faces": 17984,
+   "vertices": 9000,
    "watertight": true,
    "is_volume": true,
+   "voids": 3,
    "bodies": 1,
    "size_mm": [
-    49.3,
+    24.8,
     60.3,
-    110.0
+    167.0
    ],
    "min_z": 0.0,
-   "volume_cm3": 55.97,
-   "weight_g_solid": 69.4,
-   "bed_contact_mm2": 642.5,
-   "first_layer_mm2": 642.5,
-   "footprint_hull_mm2": 1845.9,
-   "aspect_h_over_w": 2.23,
+   "volume_cm3": 52.5,
+   "weight_g_solid": 65.1,
+   "bed_contact_mm2": 365.7,
+   "first_layer_mm2": 365.7,
+   "footprint_hull_mm2": 885.0,
+   "aspect_h_over_w": 6.73,
    "thin_area_mm2": 0.0,
    "thin_at_z": null,
    "thin_bounds": null,
@@ -28,20 +34,105 @@
    "slit_z": [],
    "overhang_mm2": 0.0,
    "overhang_top": [],
-   "bridge_mm2": 0.0,
-   "bridge_max_span": 0.0,
-   "bridge_top": [],
+   "bridge_mm2": 52.1,
+   "bridge_max_span": 1.1,
+   "bridge_top": [
+    [
+     60.91,
+     17.4,
+     1.1
+    ],
+    [
+     93.91,
+     17.4,
+     1.1
+    ],
+    [
+     126.91,
+     17.4,
+     1.1
+    ]
+   ],
+   "note": "속 빈 공간 3개(묻는 부품 자리 — 출력 중 일시정지 높이 확인)",
    "wall_steps": [],
-   "flags": []
+   "flags": [
+    "가늘고 높음(높이/폭 6.73) — 넘어질 위험, 브림"
+   ]
+  },
+  "penholder": {
+   "name": "penholder",
+   "faces": 80094,
+   "vertices": 40055,
+   "watertight": true,
+   "is_volume": true,
+   "voids": 3,
+   "bodies": 1,
+   "size_mm": [
+    24.8,
+    55.7,
+    167.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 57.74,
+   "weight_g_solid": 71.6,
+   "bed_contact_mm2": 458.1,
+   "first_layer_mm2": 458.1,
+   "footprint_hull_mm2": 1153.5,
+   "aspect_h_over_w": 6.73,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 52.1,
+   "bridge_max_span": 1.1,
+   "bridge_top": [
+    [
+     60.91,
+     17.4,
+     1.1
+    ],
+    [
+     93.91,
+     17.4,
+     1.1
+    ],
+    [
+     126.91,
+     17.4,
+     1.1
+    ]
+   ],
+   "note": "속 빈 공간 3개(묻는 부품 자리 — 출력 중 일시정지 높이 확인)",
+   "wall_steps": [],
+   "flags": [
+    "가늘고 높음(높이/폭 6.73) — 넘어질 위험, 브림"
+   ]
   }
  },
  "stages": {
   "qc": {
    "hanger": {
-    "flags": [],
+    "flags": [
+     "ℹ 가늘고 허용: 옆으로 눕혀 출력(폭 167 이 높이) — 브림 5 mm 사용, README 출력 조건",
+     "ℹ 속 빈 공간 3개(묻는 부품 자리 — 일시정지 높이 확인)"
+    ],
     "overhang_mm2": 0.0,
     "is_volume": true,
-    "bodies": 1
+    "bodies": 1,
+    "voids": 3
+   },
+   "penholder": {
+    "flags": [
+     "ℹ 가늘고 허용: 옆으로 눕혀 출력(폭 167 이 높이) — 브림 5 mm 사용, README 출력 조건",
+     "ℹ 속 빈 공간 3개(묻는 부품 자리 — 일시정지 높이 확인)"
+    ],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1,
+    "voids": 3
    }
   },
   "plates": [
@@ -50,7 +141,7 @@
     "strict_warnings": 0,
     "collisions": 0,
     "in_bed": true,
-    "triangles": 22852
+    "triangles": 98078
    }
   ],
   "assembly": {
@@ -58,7 +149,7 @@
     "분리",
     "걸림"
    ],
-   "pairs": 16,
+   "pairs": 31,
    "sweeps": [],
    "warnings": 0
   },

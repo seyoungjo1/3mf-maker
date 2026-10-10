@@ -20,111 +20,135 @@ from loft import loft_rings
 
 # 설계 치수표 (README.md 와 같게). '가정' 표시 값은 치수 조사·실측 후 바꾼다.
 P = {
-    'W': 110.0,          # 폭(x) — 자석 3개 + 눈물방울 + 옆 살
-    'T_BACK': 4.0,       # 뒷판 두께(y) — 포켓 1.1 뒤로 2.9 남음
-    'H_BACK': 60.0,      # 뒷판 높이(z)
-    'MAG_D': 20.0, 'MAG_T': 1.0, 'MAG_N': 3,          # 사용자 자석 Ø20×1, 3개
+    # ── 공통
+    'W': 167.0,          # 폭(x) — 리모컨 155 + TV 쪽 자석 5개(간격 33, 눈물방울 끝 +21.5 가 윗면 안 1.5)
+    'MAG_D': 20.0, 'MAG_T': 1.0,                       # 사용자 자석 Ø20×1
     'MAG_CLR_D': 0.2, 'MAG_CLR_T': 0.1,                # 포켓 = 지름 +0.2, 깊이 +0.1 (design-method 자석 규칙)
-    'MAG_PITCH': 36.0,   # 자석 중심 간격(x)
-    'MAG_X0': 14.0,      # 첫 자석 중심 x — 눈물방울 끝(+21.5)이 윗면(W) 안에 남도록 아래로 치우침
-    'MAG_Z': 46.0,       # 자석 중심 높이(z) — 뒷판 위쪽(거치대에 닿는 부분)
-    'TEAR_DEG': 28.0,    # 포켓 눈물방울 반각(출력 수직 기준) — tan28° × 0.2 = 0.106/층
-    'MOUSE_T': 9.0,      # MRSVI M5 두께 (조사: 155×45×9, 다른 설명서 8 → 큰 값)
-    'MOUSE_W': 45.0,     # MRSVI M5 폭(세워 꽂음 → 높이 방향)
-    'MOUSE_L': 155.0,    # MRSVI M5 길이(x 방향으로 눕힘)
-    'MOUSE_CLR': 1.0,    # 마우스 홈 여유(한쪽) — 두께 8~9 오차 + 꺼내기 쉽게
-    'PEN_S': 12.5,       # 펜 굵은 쪽 정사각 단면 한 변 (사용자 실측)
-    'PEN_R': 4.0,        # 펜 굵은 쪽 모서리 R (사용자 실측, 추정)
-    'PEN_THIN_D': 10.0,  # 펜 가는 쪽 지름 (사용자 실측)
-    'PEN_L': 176.0,      # 펜 길이 (사용자 실측 17.6 cm)
-    'PEN_CLR': 0.3,      # 펜 홈 = 펜 윤곽 + 한쪽 0.3 ('딱 들어가게', 치수 스레드 권장)
-    'PEN_S0': 14.0,      # 걸이대 x=0 에 오는 펜 위치(캡 끝에서 mm) — 어깨(11~22)가 홈 안에 들어와 펜이 좌우로 밀리지 않음
-    'PEN_LIP_H': 9.0,    # 펜 홈 벽 높이(가장 깊은 홈 바닥 위)
-    'WALL': 3.0,         # 마우스 홈 바닥·앞벽
-    'PEN_WALL': 2.4,     # 펜 홈 벽(≥1.2, 휘는 부재 ≥ 3 은 앞벽·바닥 3 으로)
-    'H_MWALL': 28.0,     # 마우스 홈 앞벽 높이
-    'FILLET': 1.0,       # 바깥 모서리 둥글기(2D)
+    'TEAR_DEG': 28.0,    # 열린 포켓 눈물방울 반각(출력 수직 기준) — tan28° × 0.2 = 0.106/층
+    # ── 리모컨 걸이(hanger) — TV 거치대에 Ø20 5개
+    'MAG_N': 5, 'MAG_PITCH': 33.0, 'MAG_X0': 12.0,     # TV 쪽 자석 수·간격·첫 중심 x
+    'MAG_Z': 47.0,       # TV 쪽 자석 중심 높이(z)
+    'T_BACK': 3.5,       # 뒷판 두께(y) — 열린 포켓 1.1 뒤로 2.4
+    'H_BACK': 60.0,      # 뒷판 높이(z)
+    'FLOOR': 3.7,        # 리모컨 홈 바닥 두께 = 펜 홀더와 붙는 받침(살 1.3 + 묻힌 자석 1.1 + 1.3)
+    'PAD_D': 24.5,       # 바닥 받침 깊이(y) — 묻힌 Ø20 자석 + 앞뒤 살 2.15
+    'MOUSE_T': 9.0, 'MOUSE_W': 45.0, 'MOUSE_L': 155.0, # MRSVI M5 두께·폭·길이(설명서)
+    'MOUSE_CLR': 1.0,    # 리모컨 홈 여유(한쪽)
+    'WALL': 2.4,         # 리모컨 홈 앞벽 두께
+    'H_MWALL': 20.0,     # 리모컨 홈 앞벽 높이(바닥 위) — 45 중 20 을 잡음
+    # ── 걸이 ↔ 펜 홀더 결합: 묻힌 자석(안 보임) Ø20 3개씩
+    'JM_N': 3, 'JM_PITCH': 33.0,                       # 결합 자석 수·간격(가운데 기준)
+    'SKIN': 1.3,         # 묻힌 자석 앞 살(결합면 쪽) — 벽 최소 1.2(3줄) + 측정 여유 0.1
+    # ── 펜 홀더(penholder) — J 고리 2개를 위아래로
+    'PEN_S': 13.1, 'PEN_L': 176.0,                     # 펜 최대 지름·길이 (사용자 실측)
+    'PEN_CLR': 0.3,      # 펜 홈 = 펜 윤곽 + 한쪽 0.3
+    'PEN_S0': 4.5,       # 홀더 x=0 에 오는 펜 위치(캡 끝에서) — 어깨(11~23)·펜촉 원뿔(148~167)이 둘 다 홈 안 → 좌우로 안 밀림
+    'SPINE': 2.4,        # 펜 홀더 세로 기둥 두께(y)
+    'PEN_WALL': 2.0,     # J 고리 둘레 살
+    'LIP': 2.0,          # J 앞 입술 끝 = 펜 축보다 2 위 (펜이 굴러 나오지 않음)
+    'OPEN': 15.0,        # J 입구 높이(입술 끝 → 위 부재) — 펜 13.1 이 수평으로 들어갈 틈
+    'FILLET': 0.9, 'FILLET_IN': 0.8,                   # 바깥·안쪽 모서리 둥글기(2D) — 바깥은 가장 얇은 살 2.0 의 절반 미만(살이 깎여 사라지지 않게)
 }
-COLORS = {'hanger': '#37474f'}
+COLORS = {'hanger': '#37474f', 'penholder': '#546e7a'}
+LAYER = 0.2
 
 def derived():
-    p = dict(P); p['MS'] = p['MOUSE_T'] + 2 * p['MOUSE_CLR']            # 마우스 홈 안쪽 폭(y)
-    p['GW'] = p['PEN_S'] / 2 + p['PEN_CLR']                              # 펜 홈 최대 반폭(가장 굵은 곳)
-    p['Y_MW'] = p['T_BACK'] + p['MS']                                     # 마우스 앞벽 시작 y
-    p['Y_P1'] = p['Y_MW'] + p['WALL'] + p['GW']                            # 펜 홈 1 중심 y (마우스 앞벽 = 펜 홈 뒷벽)
-    p['Y_P2'] = p['Y_P1'] + 2 * p['GW'] + p['PEN_WALL']                    # 펜 홈 2 중심 y
-    p['Y_END'] = p['Y_P2'] + p['GW'] + p['PEN_WALL']                       # 앞 끝
-    p['Z_G'] = p['PEN_WALL']                                              # 펜 홈 가장 깊은 바닥 z (바닥 살 = PEN_WALL)
-    p['ZC'] = p['Z_G'] + p['GW']                                          # 펜 홈 축 높이(가장 굵은 곳 바닥이 Z_G)
+    p = dict(P); p['MS'] = p['MOUSE_T'] + 2 * p['MOUSE_CLR']            # 리모컨 홈 안쪽 폭(y)
+    p['Y_MW'] = p['T_BACK'] + p['MS']                                     # 리모컨 앞벽 시작 y
     p['MAG_X'] = [p['MAG_X0'] + i * p['MAG_PITCH'] for i in range(p['MAG_N'])]
+    p['JM_X'] = [p['W'] / 2 + (i - (p['JM_N'] - 1) / 2) * p['JM_PITCH'] for i in range(p['JM_N'])]
+    p['JM_Y'] = p['PAD_D'] / 2                                            # 결합 자석 중심 y
+    p['GW'] = p['PEN_S'] / 2 + p['PEN_CLR']                              # 펜 홈 최대 반지름
+    p['RO'] = p['GW'] + p['PEN_WALL']                                     # J 바깥 반지름
+    p['YC'] = p['SPINE'] + p['GW']                                        # J 홈 축 y (기둥 앞면에 펜이 닿음)
+    p['Z1'] = -p['FLOOR'] - p['OPEN'] - p['LIP']                          # 위 J 축 z (받침 아래)
+    p['Z2'] = p['Z1'] - p['RO'] - p['OPEN'] - p['LIP']                    # 아래 J 축 z (위 J 바닥 아래로 입구 15)
+    p['Z_BOT'] = p['Z2'] - p['RO']                                        # 펜 홀더 아래 끝
+    # 묻힌 자석 일시정지 높이(출력 z' = 설치 x): 슬롯 윗면(자석 위 끝 +0.1)을 층 격자로 올림 → 그 위 층 시작 전에 멈춤
+    r = (p['MAG_D'] + p['MAG_CLR_D']) / 2
+    p['PAUSE_Z'] = [round(math.ceil((x + r + 0.1) / LAYER - 1e-6) * LAYER, 2) for x in p['JM_X']]   # 슬롯 윗면 ≥ 포켓 원 위 끝 + 0.1
     return p
 
-# 펜 윤곽(캡 끝에서 s mm → 폭 w). 사진 실측(부품치수조사.md 7절, 0.396 mm/px, ±0.5)의 위쪽 포락선 + 사용자 실측 고정점
-# (가장 굵은 곳 12.5 각 R4 / 펜촉 끝에서 28 = 148 mm 에서 Ø10 / 길이 176). 사진 표는 px 반올림으로 0.25~0.4 작게 나와 큰 쪽을 쓴다.
-PEN_W = [(0, 4.0), (2, 6.8), (11, 6.8), (22, 12.5), (32, 12.5), (148, 10.0), (167, 3.0), (176, 2.4)]
+# 펜 윤곽(캡 끝에서 s mm → 지름 w). 사용자 실측: 캡 7, 위에서 23 에 최대 13.1, 148(펜촉 끝에서 28)에 Ø10, 펜촉 3, 길이 176.
+PEN_W = [(0, 4.0), (2, 7.0), (11, 7.0), (23, 13.1), (30, 13.1), (148, 10.0), (167, 3.0), (176, 3.0)]
 def pen_w(s): return float(np.interp(s, *zip(*PEN_W)))
-def pen_r(s):
-    """모서리 R: 굵은 쪽 4(사각) → 148 에서 5(= Ø10 원). 폭의 절반을 넘지 않음."""
-    return min(pen_w(s) / 2, float(np.interp(s, [32, 148], [P['PEN_R'], P['PEN_THIN_D'] / 2])))
 def pen_section(s, grow=0.0):
-    w, r = pen_w(s) + 2 * grow, pen_r(s) + grow
-    if r >= w / 2 - 1e-6: return Point(0, 0).buffer(w / 2, 16)
-    return sbox(-w / 2, -w / 2, w / 2, w / 2).buffer(-r, 4).buffer(r, 16)
+    """펜 단면(원 포락선) + grow."""
+    return Point(0, 0).buffer(pen_w(s) / 2 + grow, 32)
 
-def groove_cutter(p, yc):
-    """펜 홈(출력 좌표): z' = 설치 x 마다 펜 단면 + 0.3 을 축 (yc, ZC) 에 두고 위로 열어(축 위는 폭 그대로 직선) 로프트.
-    펜은 0.3 내려앉아 홈 바닥 전체에 닿고 옆은 0.3 — 축 방향으로는 어깨·테이퍼가 걸려 안 밀린다."""
-    xs = np.r_[-1.0, np.arange(0.0, p['W'] + 0.01, 2.0), p['W'] + 1.0]; rings = []
+def groove_cutter(p, yc, zc, up):
+    """펜 홈(출력 좌표): z' = 설치 x 마다 펜 단면 + 0.3 을 축 (yc, zc) 에 두고 위로 up 만큼 열어 로프트."""
+    kinks = [s_ - p['PEN_S0'] for s_, _ in PEN_W if 0 < s_ - p['PEN_S0'] < p['W']]                 # 윤곽 꺾이는 곳은 반드시 단면(현이 펜을 파고들지 않게)
+    xs = np.unique(np.round(np.r_[-1.0, np.arange(0.0, p['W'] + 0.01, 2.0), kinks, p['W'] + 1.0], 4)); rings = []
     for x in xs:
         sec = pen_section(x + p['PEN_S0'], p['PEN_CLR']); hw = (sec.bounds[2] - sec.bounds[0]) / 2
-        g = unary_union([sec, sbox(-hw, 0, hw, 40.0)])
-        rings.append((x, Polygon(np.asarray(g.exterior.coords) + [yc, p['ZC']])))
+        g = unary_union([sec, sbox(-hw, 0, hw, up)])
+        rings.append((x, Polygon(np.asarray(g.exterior.coords) + [yc, zc])))
     return loft_rings(rings, M=240)
 
-def rounded_slot(yc, half, r, z0, top=200.0):
-    """위가 열린 홈: 폭 2·half, 바닥 z0, 바닥 두 모서리 R r (펜 12.5 각 R4 가 눕는 모양)."""
-    return unary_union([sbox(yc - half, z0 + r, yc + half, top), sbox(yc - half + r, z0, yc + half - r, top),
-                        Point(yc - half + r, z0 + r).buffer(r, 16), Point(yc + half - r, z0 + r).buffer(r, 16)])
+def _round(out, p):
+    f, fi = p['FILLET'], p['FILLET_IN']
+    out = out.buffer(-f, 8).buffer(f, 8).buffer(fi, 8).buffer(-fi, 8)
+    if out.geom_type != 'Polygon': raise SystemExit(f'단면이 한 덩어리가 아님: {out.geom_type}')
+    return out
 
-def profile(p):
-    """옆 단면(y, z) 폴리곤 — 뒷판 + 마우스 홈 + 펜 홈 2개."""
-    lip = p['Z_G'] + p['PEN_LIP_H']
-    solid = [sbox(0, 0, p['T_BACK'], p['H_BACK']),                                      # 뒷판
-             sbox(p['T_BACK'] - 0.5, 0, p['Y_MW'] + p['WALL'], p['WALL']),               # 마우스 홈 바닥
-             sbox(p['Y_MW'], 0, p['Y_MW'] + p['WALL'], p['H_MWALL']),                    # 마우스 홈 앞벽
-             sbox(p['Y_MW'], 0, p['Y_END'], lip)]                                         # 펜 받침 덩어리
-    out = unary_union(solid)
-    f = p['FILLET']
-    out = out.buffer(-f, 4).buffer(f, 4)                 # 바깥(볼록) 모서리 둥글게
-    out = out.buffer(f * 0.6, 4).buffer(-f * 0.6, 4)     # 안쪽(오목) 모서리 둥글게 — 응력 집중 완화
-    # 뒷면(y=0)은 거치대에 붙는 평면이어야 하므로 다시 곧게 자른다
-    out = out.intersection(sbox(0, 0, 500, 500))
-    return out.buffer(0)
+def profile_hanger(p):
+    """리모컨 걸이 옆 단면(y, z): 뒷판(TV 자석) + 바닥 받침(묻힌 결합 자석) + 앞벽."""
+    tb, w = p['T_BACK'], p['WALL']
+    out = unary_union([sbox(0, 0, tb, p['H_BACK']), sbox(0, 0, p['PAD_D'], p['FLOOR']),
+                       sbox(p['Y_MW'], 0, p['Y_MW'] + w, p['FLOOR'] + p['H_MWALL'])])
+    return _round(out, p).intersection(sbox(0, 0, 500, 500))      # 뒷면 y=0·밑면 z=0 평면 유지
+
+def profile_pen(p):
+    """펜 홀더 옆 단면(y, z ≤ 0): 위 받침(묻힌 결합 자석) + 세로 기둥 + J 고리 2개(위·아래)."""
+    yc, ro, sp = p['YC'], p['RO'], p['SPINE']; parts = [sbox(0, -p['FLOOR'], p['PAD_D'], 0), sbox(0, p['Z_BOT'] + ro, sp, 0)]
+    for zc in (p['Z1'], p['Z2']):
+        cup = Point(yc, zc).buffer(ro, 64).intersection(sbox(-50, zc - 50, 100, zc + p['LIP']))   # 입술 끝 = 축 + LIP
+        parts += [cup, sbox(0, zc - ro * 0.6, yc, zc + p['LIP'])]                                     # 기둥과 J 바닥을 잇는 살
+    out = unary_union(parts)
+    out = _round(out, p).intersection(sbox(0, -500, 500, 0))     # 뒷면 y=0·윗면 z=0 평면 유지
+    return out
+
+def _sweep(prof, W):
+    nz = int(math.ceil(W / 2.0)) + 1; path = np.column_stack([np.zeros(nz), np.zeros(nz), np.linspace(0, W, nz)])
+    body = trimesh.creation.sweep_polygon(prof.simplify(0.01), path)
+    body.apply_transform(np.array([[0, -1, 0, 0], [1, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]], float))   # (py, -px) → (px, py)
+    return body                                                                # 출력 좌표 (x', y', z') = (y, z, x)
 
 def teardrop(p):
-    """자석 포켓 단면(x, z): 원 + 출력 위쪽(+x)으로 뾰족한 눈물방울."""
+    """열린 포켓 단면(u=x, v): 원 + 출력 위쪽(+x)으로 뾰족한 눈물방울."""
     r = (p['MAG_D'] + p['MAG_CLR_D']) / 2; a = math.radians(p['TEAR_DEG'])
-    apex = r / math.sin(a); tx = r * math.sin(a); tz = r * math.cos(a)          # 접점: 중심에서 (r sin a, ±r cos a)
-    tri = Polygon([(tx, tz), (apex, 0), (tx, -tz), (0, 0)])
-    return unary_union([Point(0, 0).buffer(r, 32), tri])
+    apex = r / math.sin(a); tx = r * math.sin(a); tz = r * math.cos(a)
+    return unary_union([Point(0, 0).buffer(r, 32), Polygon([(tx, tz), (apex, 0), (tx, -tz), (0, 0)])])
+
+def slot(p, top):
+    """묻힌 자석 슬롯 단면(u=x, v): 아래 반원 + 위로 곧은 홈(윗면 = top, 층 격자). 일시정지 때 위에서 자석을 떨어뜨려 넣고,
+    다음 층부터 1.1 폭 브리지로 덮인다."""
+    r = (p['MAG_D'] + p['MAG_CLR_D']) / 2
+    return unary_union([Point(0, 0).buffer(r, 32), sbox(0, -r, top, r)])
+
+INV = np.array([[0, 1, 0, 0], [0, 0, 1, 0], [1, 0, 0, 0], [0, 0, 0, 1]], float)    # 설치 → 출력 (MOUNT 의 역)
+def _place(poly, h0, h1, L):
+    """(u, v) 폴리곤을 h0~h1 로 압출 → 지역 (u, v, h) 를 설치 좌표로 보내는 4×4 L → 출력 좌표."""
+    m = trimesh.creation.extrude_polygon(poly, h1 - h0); m.apply_translation([0, 0, h0]); m.apply_transform(INV @ L); return m
 
 def make_parts():
-    """출력 방향 공칭 파트 {이름: trimesh}. 출력 좌표 (x', y', z') = (y, z, x) — 단면이 베드에, 폭이 출력 높이."""
-    p = derived(); prof = profile(p)
-    # 단면을 z' 방향 2 mm 마디로 스윕(옆면 삼각형이 110 mm 통짜로 길면 QC 레이 검사의 후보가 폭증해 메모리 초과 — 마디로 끊는다)
-    nz = int(math.ceil(p['W'] / 2.0)) + 1; path = np.column_stack([np.zeros(nz), np.zeros(nz), np.linspace(0, p['W'], nz)])
-    body = trimesh.creation.sweep_polygon(prof.simplify(0.01), path)
-    body.apply_transform(np.array([[0, -1, 0, 0], [1, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]], float))   # 스윕 틀 (py, -px) → (px, py)
-    depth = p['MAG_T'] + p['MAG_CLR_T']; pockets = []
-    for xm in p['MAG_X']:
-        td = teardrop(p)                                                       # (u=x 방향, v=z 방향)
-        pk = trimesh.creation.extrude_polygon(td, depth + 1.0)                # 뒷면 밖 1.0 부터 depth 까지
-        # 지역 (u, v, w) → 출력 (x'=y = w-1, y'=z = v + MAG_Z, z'=x = u + xm)
-        M = np.array([[0, 0, 1, -1.0], [0, 1, 0, p['MAG_Z']], [1, 0, 0, xm], [0, 0, 0, 1]], float)
-        pk.apply_transform(M); pockets.append(pk)
-    grooves = [groove_cutter(p, yc) for yc in (p['Y_P1'], p['Y_P2'])]           # 펜 윤곽을 따르는 홈(폭이 x 따라 변함 — 출력 층마다 0.01 이하로 변해 오버행 없음)
-    hanger = trimesh.boolean.difference([body] + pockets + grooves, engine='manifold')
-    return {'hanger': hanger}
+    """출력 방향 공칭 파트 {이름: trimesh}."""
+    p = derived(); dep = p['MAG_T'] + p['MAG_CLR_T']; sk = p['SKIN']; r = (p['MAG_D'] + p['MAG_CLR_D']) / 2
+    # 리모컨 걸이: 뒷면 열린 포켓 5(TV 쪽, 접착) + 바닥 묻힌 슬롯 3
+    cut = []
+    for xm in p['MAG_X']:   # 설치 (x, y, z) = (u + xm, h, MAG_Z − v)  (det +1)
+        cut.append(_place(teardrop(p), -1.0, dep, np.array([[1, 0, 0, xm], [0, 0, 1, 0], [0, -1, 0, p['MAG_Z']], [0, 0, 0, 1]], float)))
+    for xm, pz in zip(p['JM_X'], p['PAUSE_Z']):   # 설치 (x, y, z) = (u + xm, v + JM_Y, h)
+        cut.append(_place(slot(p, pz - xm), sk, sk + dep, np.array([[1, 0, 0, xm], [0, 1, 0, p['JM_Y']], [0, 0, 1, 0], [0, 0, 0, 1]], float)))
+    hanger = trimesh.boolean.difference([_sweep(profile_hanger(p), p['W'])] + cut, engine='manifold')
+    # 펜 홀더: 윗면 묻힌 슬롯 3 + J 홈 2(펜 윤곽 로프트, 입술 위로 열림)
+    cut = []
+    for xm, pz in zip(p['JM_X'], p['PAUSE_Z']):   # 설치 (x, y, z) = (u + xm, JM_Y − v, −h)  (det +1)
+        cut.append(_place(slot(p, pz - xm), sk, sk + dep, np.array([[1, 0, 0, xm], [0, -1, 0, p['JM_Y']], [0, 0, -1, 0], [0, 0, 0, 1]], float)))
+    cut += [groove_cutter(p, p['YC'], zc, p['LIP'] + 3.0) for zc in (p['Z1'], p['Z2'])]
+    pen = trimesh.boolean.difference([_sweep(profile_pen(p), p['W'])] + cut, engine='manifold')
+    return {'hanger': hanger, 'penholder': pen}
 
 def plate(parts, gap=10.0):
     """플레이트 배치: 베드 가운데쯤(원점 90, 90)."""
@@ -142,4 +166,4 @@ if __name__ == '__main__':
     for n, m in printed.items(): m.export(f'models/tv-pen-hanger_{n}.stl')          # 파트 STL 동봉(출력 방향, 첫 층 선반영)
     d = derived()
     print('build ok', {n: [round(v, 2) for v in m.extents] for n, m in nominal.items()},
-          {k: (round(v, 2) if isinstance(v, float) else v) for k, v in d.items() if k in ('MS', 'GW', 'ZC', 'Y_MW', 'Y_P1', 'Y_P2', 'Y_END', 'Z_G', 'MAG_X')})
+          {k: (round(v, 2) if isinstance(v, float) else v) for k, v in d.items() if k in ('MS', 'GW', 'RO', 'YC', 'Z1', 'Z2', 'Z_BOT', 'Y_MW', 'MAG_X', 'JM_X', 'PAUSE_Z')})

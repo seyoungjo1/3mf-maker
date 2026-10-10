@@ -129,6 +129,17 @@ def coarse_gap_case():
     disk.apply_transform(trimesh.transformations.rotation_matrix(np.pi / 2, [1, 0, 0])); disk.apply_translation([0, 0.6, 0])
     g0 = pipeline.gaps(plate, disk)[0]; ok = abs(g0 - 0.1) < 0.02
     print(f'[듬성한 메시 간격] 상자 12면 ↔ 원판 최소 간격 {g0:.3f} (기대 0.100)'); return ok
+def void_case():
+    """속 빈 공간(묻는 자석 자리)은 조각으로 세지 않고 voids 로 센다: 상자 − 속 원판 → bodies 1, voids 1. 떨어진 상자 둘 → bodies 2."""
+    import argparse, trimesh; from qc_model import qc_part
+    a = argparse.Namespace(layer=0.2, min_wall=1.2, max_tri=200000, max_bridge=7.0, efc=0.15, single_wall=[])
+    outer = trimesh.creation.box(extents=[30, 30, 10]); outer.apply_translation([0, 0, 5])
+    cav = trimesh.creation.cylinder(radius=8, height=1.2); cav.apply_translation([0, 0, 5])
+    r1 = qc_part('void', trimesh.boolean.difference([outer, cav], engine='manifold'), a)
+    two = trimesh.util.concatenate([outer, outer.copy().apply_translation([50, 0, 0])]); r2 = qc_part('two', two, a)
+    ok = r1['bodies'] == 1 and r1['voids'] == 1 and not any('조각' in f for f in r1['flags']) and r2['bodies'] == 2 and r2['voids'] == 0
+    print('void_case', 'OK' if ok else 'FAIL', r1['bodies'], r1['voids'], r2['bodies'], r2['voids']); return ok
+
 def magnet_case():
     """자석 흡착력 계산: 먼 거리는 쌍극자-거울상 식과 2 % 안, 간격이 늘면 단조 감소, 적분 점수 2배에도 같은 값(수렴)."""
     import magnet as mg
@@ -141,7 +152,7 @@ def magnet_case():
     print(f"[자석] 먼 거리/쌍극자 {far:.3f} · 간격별 {[round(x, 2) for x in seq]} N · 수렴 {conv:.1e} · 걸이 미끄럼 안전율 {h['slip_safety']}")
     return ok
 if __name__ == '__main__':
-    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = coarse_gap_case() and magnet_case() and efc_group_case() and slit_case() and wall_step_case() and mm_api_case()
+    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = coarse_gap_case() and void_case() and magnet_case() and efc_group_case() and slit_case() and wall_step_case() and mm_api_case()
     cfg = fixture(os.path.join(tmp, 'good'), 0.3); rc = pipeline.run(cfg); rep = json.load(open(os.path.join(tmp, 'good', 'qc', 'report.json')))
     files = [os.path.join(tmp, 'good', 'qc', f) for f in ('REPORT.md', 'assembly/turntable.gif', 'motion/turntable.gif', 'plate_A/view_iso.png')]
     print('\n[정상 설계] 종료코드', rc, '| 경고', rep['warn'], '| 산출물', [os.path.exists(f) for f in files])
