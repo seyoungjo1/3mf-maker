@@ -52,6 +52,38 @@ def gaps(a, b, n=8000, region=None):
         _, dn, _ = trimesh.proximity.closest_point(a, pts[near]); d[near] = dn
     d = np.sort(d); n = len(d)
     return float(d[0]), float(d[int(0.01 * n)]), float(d[int(0.05 * n)])
+def check_assembly(asm, allparts, mg, L, warn, render_only=False):
+    """조립 검증(상태별 교집합·간격·영역 간격, 각도 스윕). pipeline.run 과 mm.py assemble 이 같은 코드를 쓴다."""
+    L += ['## 3. 조립 검증 — 상태별 교집합·간격 (표면 샘플 거리: 최소 / 1 % / 5 %)', '', '| 상태 | A | B | 교집합 mm³ | 최소 / 1 % / 5 % mm | 판정 |', '|---|---|---|---|---|---|']
+    for st, mats in ([] if render_only else asm['states'].items()):
+        log('state', st); placed = {n: tf(allparts[n], M) for n, M in mats.items()}
+        for a, b, *opt in asm.get('pairs', []):
+            if a not in placed or b not in placed: continue
+            o = opt[0] if opt else {}; iv = inter(placed[a], placed[b]); g0, g1, g5 = gaps(placed[a], placed[b], region=o.get('region')); contact = bool(o.get('contact'))
+            need = o.get('min_gap', mg)
+            if o.get('region'): L.append(f"| {st} | {a} | {b} (영역 {o['region']}) | {iv:.2f} | {g0:.2f} / {g1:.2f} / {g5:.2f} | {'⚠ 간섭' if iv > 0.01 else ('⚠ 간격 %.2f < %s' % (g1, need) if g1 < need else '✓')} |")
+            if o.get('region'):
+                if iv > 0.01: warn.append(f'{st} {a}∩{b} = {iv:.2f} mm³')
+                elif g1 < need: warn.append(f'{st} {a}↔{b} 영역 간격 1 % {g1:.2f} < {need}')
+                continue
+            if iv > 0.01: v = '⚠ 간섭'; warn.append(f'{st} {a}∩{b} = {iv:.2f} mm³')
+            elif contact: v = '접촉(의도)' if g0 > -0.02 else '⚠'
+            elif g1 < need: v = f'⚠ 간격 {g1:.2f} < {need}'; warn.append(f'{st} {a}↔{b} 간격 1 % {g1:.2f} < {need}')
+            else: v = '✓'
+            L.append(f'| {st} | {a} | {b} | {iv:.2f} | {g0:.2f} / {g1:.2f} / {g5:.2f} | {v} |')
+    L.append('')
+    for sw in ([] if render_only else asm.get('sweeps', [])):
+        L += [f"### 스윕 — {sw['name']} ({sw['part']})", '', '| 각도 | ' + ' | '.join(f'∩{o} mm³' for o in sw['against']) + ' | 최소 간격 mm |', '|---|' + '---|' * (len(sw['against']) + 1)]
+        fixed = {o: tf(allparts[o], sw.get('fixed', {}).get(o, np.eye(4))) for o in sw['against']}; ok = []
+        for ang in sw['angles']:
+            log('sweep', sw['name'], ang); M = T(sw['pivot']) @ R(np.radians(ang), sw['axis']) @ T(-np.array(sw['pivot'])) @ np.asarray(sw['base'], float); mv = tf(allparts[sw['part']], M)
+            ivs = [inter(fixed[o], mv) for o in sw['against']]; g = min(gaps(fixed[o], mv, 3000)[0] for o in sw['against'])
+            if max(ivs) <= 0.01: ok.append(ang)
+            L.append(f'| {ang} | ' + ' | '.join(f'{v:.2f}' for v in ivs) + f' | {g:.2f} |')
+        rng = f"{min(ok)}~{max(ok)}°" if ok else '없음'; L += ['', f"간섭 0 범위: **{rng}** (요구: {sw.get('need', '')})", '']
+        if sw.get('need') and (not ok or min(ok) > sw['need'][0] or max(ok) < sw['need'][1]): warn.append(f"스윕 {sw['name']}: 간섭 0 범위 {rng} 가 요구 {sw['need']} 를 못 채움")
+
+
 def run(cfg_path, render_only=False):
     cfg = json.load(open(cfg_path, encoding='utf-8')); base = os.path.dirname(os.path.abspath(cfg_path)); P = lambda p: os.path.join(base, p)
     out = P(cfg['out']); os.makedirs(out, exist_ok=True); warn = []; info = []; L = [f"# {cfg['name']} — 파이프라인 보고", '']
@@ -109,34 +141,7 @@ def run(cfg_path, render_only=False):
             for n in mats: assert n in allparts, f'상태 {st} 에 없는 파트 {n}'
         for sw in asm.get('sweeps', []):
             for n in [sw['part']] + list(sw['against']): assert n in allparts, f"스윕 {sw['name']} 에 없는 파트 {n}"
-        L += ['## 3. 조립 검증 — 상태별 교집합·간격 (표면 샘플 거리: 최소 / 1 % / 5 %)', '', '| 상태 | A | B | 교집합 mm³ | 최소 / 1 % / 5 % mm | 판정 |', '|---|---|---|---|---|---|']
-        for st, mats in ([] if render_only else asm['states'].items()):
-            log('state', st); placed = {n: tf(allparts[n], M) for n, M in mats.items()}
-            for a, b, *opt in asm.get('pairs', []):
-                if a not in placed or b not in placed: continue
-                o = opt[0] if opt else {}; iv = inter(placed[a], placed[b]); g0, g1, g5 = gaps(placed[a], placed[b], region=o.get('region')); contact = bool(o.get('contact'))
-                need = o.get('min_gap', mg)
-                if o.get('region'): L.append(f"| {st} | {a} | {b} (영역 {o['region']}) | {iv:.2f} | {g0:.2f} / {g1:.2f} / {g5:.2f} | {'⚠ 간섭' if iv > 0.01 else ('⚠ 간격 %.2f < %s' % (g1, need) if g1 < need else '✓')} |")
-                if o.get('region'):
-                    if iv > 0.01: warn.append(f'{st} {a}∩{b} = {iv:.2f} mm³')
-                    elif g1 < need: warn.append(f'{st} {a}↔{b} 영역 간격 1 % {g1:.2f} < {need}')
-                    continue
-                if iv > 0.01: v = '⚠ 간섭'; warn.append(f'{st} {a}∩{b} = {iv:.2f} mm³')
-                elif contact: v = '접촉(의도)' if g0 > -0.02 else '⚠'
-                elif g1 < need: v = f'⚠ 간격 {g1:.2f} < {need}'; warn.append(f'{st} {a}↔{b} 간격 1 % {g1:.2f} < {need}')
-                else: v = '✓'
-                L.append(f'| {st} | {a} | {b} | {iv:.2f} | {g0:.2f} / {g1:.2f} / {g5:.2f} | {v} |')
-        L.append('')
-        for sw in ([] if render_only else asm.get('sweeps', [])):
-            L += [f"### 스윕 — {sw['name']} ({sw['part']})", '', '| 각도 | ' + ' | '.join(f'∩{o} mm³' for o in sw['against']) + ' | 최소 간격 mm |', '|---|' + '---|' * (len(sw['against']) + 1)]
-            fixed = {o: tf(allparts[o], sw.get('fixed', {}).get(o, np.eye(4))) for o in sw['against']}; ok = []
-            for ang in sw['angles']:
-                log('sweep', sw['name'], ang); M = T(sw['pivot']) @ R(np.radians(ang), sw['axis']) @ T(-np.array(sw['pivot'])) @ np.asarray(sw['base'], float); mv = tf(allparts[sw['part']], M)
-                ivs = [inter(fixed[o], mv) for o in sw['against']]; g = min(gaps(fixed[o], mv, 3000)[0] for o in sw['against'])
-                if max(ivs) <= 0.01: ok.append(ang)
-                L.append(f'| {ang} | ' + ' | '.join(f'{v:.2f}' for v in ivs) + f' | {g:.2f} |')
-            rng = f"{min(ok)}~{max(ok)}°" if ok else '없음'; L += ['', f"간섭 0 범위: **{rng}** (요구: {sw.get('need', '')})", '']
-            if sw.get('need') and (not ok or min(ok) > sw['need'][0] or max(ok) < sw['need'][1]): warn.append(f"스윕 {sw['name']}: 간섭 0 범위 {rng} 가 요구 {sw['need']} 를 못 채움")
+        check_assembly(asm, allparts, mg, L, warn, render_only)
         for n in asm.get('notes', []): L.append('- ' + n)
         L.append(''); _flush(out, L)
     # ---------- 4. 보여주기 ----------

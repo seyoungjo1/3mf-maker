@@ -115,6 +115,20 @@ def pipeline(config, render_only=False):
     rc = PL.run(_abs(config), render_only=render_only); cfg = json.load(open(_abs(config), encoding='utf-8'))
     out = os.path.join(os.path.dirname(_abs(config)), cfg['out']); rep = json.load(open(os.path.join(out, 'report.json'))) if os.path.exists(os.path.join(out, 'report.json')) else {}
     return {'ok': rc == 0, 'report': os.path.join(out, 'REPORT.md'), 'warn': rep.get('warn', []), 'info': rep.get('info', [])}
+@command('assemble', '조립 검증만(파이프라인과 같은 코드): config 의 조립 정의로 상태별 교집합·간격·스윕. override 로 파트를 다른 버전으로 바꿔 끼워 호환성 확인(예: 이미 출력한 v8 하판 + 새 뚜껑)',
+         {'config': {'type': 'string'}, 'override': {'type': 'object', 'default': None, 'description': '{"파트이름": "메시 지정"} 예 {"base": "v8parts_nominal.pkl:base"} (config 폴더 기준 경로)'}, 'out': {'type': 'string', 'default': None}})
+def assemble(config, override=None, out=None):
+    import importlib.util, pipeline as PL
+    cfg = json.load(open(_abs(config), encoding='utf-8')); base = os.path.dirname(_abs(config)); P = lambda p: os.path.join(base, p)
+    nominal = pickle.load(open(P(cfg.get('assembly_parts_pkl') or cfg['parts_pkl']), 'rb')); used = {}
+    for n, spec in (override or {}).items():
+        path, _, key = spec.partition(':'); m = load_any(P(path) + (':' + key if key else '')); nominal[n] = m[key or n] if (key or n) in m else next(iter(m.values())); used[n] = spec
+    spec_ = importlib.util.spec_from_file_location('asm', P(cfg['assembly'])); mod = importlib.util.module_from_spec(spec_); spec_.loader.exec_module(mod)
+    asm = mod.define(nominal); allparts = dict(nominal); allparts.update(asm.get('extra', {}))
+    L, warn = [f"# 조립 검증 — {cfg['name']}" + (f" · 바꿔 끼움 {used}" if used else ''), ''], []
+    PL.check_assembly(asm, allparts, cfg.get('min_gap', 0.3), L, warn)
+    if out: os.makedirs(os.path.dirname(_abs(out)) or '.', exist_ok=True); open(_abs(out), 'w', encoding='utf-8').write('\n'.join(L) + '\n\n' + ('\n'.join('- ⚠ ' + w for w in warn) or '- ✓ 경고 없음') + '\n')
+    return {'ok': not warn, 'override': used, 'warn': warn, 'report': _abs(out) if out else None, 'table': [l for l in L if l.startswith('|') or '간섭 0 범위' in l]}
 @command('make', '빌드 → 파이프라인 일괄: config 의 "build": [스크립트, 인자…] 를 config 폴더에서 실행한 뒤 pipeline',
          {'config': {'type': 'string'}})
 def make(config):

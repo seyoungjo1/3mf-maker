@@ -44,7 +44,7 @@ def lid_edge(lid):
 # v5 하판 곡선은 첫 층 0.18/층(규칙 0.115 초과) — 사용자 승인 예외(하판 출력 성공 실적), EFC +0.15 선반영은 유지.
 def lid_edge_v10(lid5, base5):
     rect, info = fit_rounded_rect(lid5, 9.0, x_probe=395); zp, ip = measure_profile(base5)
-    out, r = apply_edge(lid5, rect, zp, ip, dz=0.1, M=1000); print(f'  lid_edge_v10: 몸통 {info}, 곡선 끝 z {r["z_end"]:.2f}, 링 {r["rings"]}, 찌꺼기 {r["slivers_removed"]}조각 {r["sliver_mm3"]:.2e} mm³')
+    out, r = apply_edge(lid5, rect, zp, ip, dz=0.1, M=1000); print(f'  lid_edge_v10: 몸통 {info}, 곡선 끝 z {r["z_end"]:.2f}, 링 {r["rings"]}, 찌꺼기 {r["slivers_removed"]}조각 {r["sliver_mm3"]:.2e} mm³, 돌출부 원형 구역 {r["lump_zones"]}개 {r["zones"]}')
     return out
 # ---------- 2) 본체 바닥: 링 로프트 ----------
 def base_bottom(m, ZC=1.51, SLOPE=0.115 / 0.2):
