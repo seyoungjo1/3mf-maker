@@ -39,7 +39,9 @@ def system_prompt(project=None):
             '스스로 정하지 말고 최종 답변에 안(실측 그림 경로 포함)과 질문으로 남긴다.\n'
             '렌더 PNG 를 read_file 로 볼 수는 없으니 REPORT.md 의 수치와 체크리스트로 판단하고, 사용자가 눈으로 볼 GIF·PNG 경로를 보고에 적는다.\n'
             '끝낼 때는 결론 한 줄 → QC 표 → 조립 검증 수치 → 렌더/GIF 경로 → 만든 파일(특히 *_bambu.3mf)과 슬라이서에서 할 일 → 다음 한 걸음 순서로 보고한다.')
-    if project: head += f'\n이번 작업 프로젝트: 작업중/{project}/ (config: 작업중/{project}/pipeline.json)'
+    if project:
+        pd = project if '/' in project else f'작업중/{project}'
+        head += f'\n이번 작업 프로젝트: {pd}/ (config: {pd}/pipeline.json, 없으면 가장 최근 pipeline_*.json)'
     docs = '\n\n'.join(f'===== {os.path.relpath(f, ROOT)} =====\n' + open(f, encoding='utf-8').read() for f in guidance_files())
     return [{'type': 'text', 'text': head}, {'type': 'text', 'text': docs, 'cache_control': {'type': 'ephemeral'}}]
 
@@ -119,19 +121,26 @@ def run_tool_block(block, schemas):
 
 # ---------------------------------------------------------------- 게이트
 def projects_touched(messages, project):
-    ps = {project} if project else set()
+    ps = {project if '/' in project else '작업중/' + project} if project else set()
     for m in messages:
         if m['role'] != 'assistant': continue
         for b in m['content']:
             if getattr(b, 'type', None) == 'tool_use' and isinstance(b.input, dict):
-                if b.name == 'mm_new' and isinstance(b.input.get('name'), str): ps.add(b.input['name'])
+                if b.name == 'mm_new' and isinstance(b.input.get('name'), str): ps.add('작업중/' + b.input['name'])
                 for v in b.input.values():
-                    if isinstance(v, str) and v.startswith('작업중/'): ps.add(v.split('/')[1])
-    return sorted(p for p in ps if p and os.path.exists(os.path.join(ROOT, '작업중', p, 'pipeline.json')))
+                    if isinstance(v, str) and v.startswith(('작업중/', '작업완료/')): ps.add('/'.join(v.split('/')[:2]))
+    return sorted(p for p in ps if p and _configs(p))
+
+
+def _configs(p):
+    """프로젝트 폴더(작업중/x 또는 작업완료/x)의 게이트 config: pipeline.json, 없으면 가장 최근 pipeline_*.json"""
+    d = os.path.join(ROOT, p)
+    if os.path.exists(os.path.join(d, 'pipeline.json')): return [os.path.join(d, 'pipeline.json')]
+    c = sorted(glob.glob(os.path.join(d, 'pipeline_*.json')), key=os.path.getmtime); return c[-1:]
 
 
 def gate(projects):
-    res = {p: mm.run('checklist', config=os.path.join(ROOT, '작업중', p, 'pipeline.json'), skill_read=True) for p in projects}
+    res = {p: mm.run('checklist', config=_configs(p)[0], skill_read=True) for p in projects}
     return all(r['ok'] for r in res.values()), res
 
 

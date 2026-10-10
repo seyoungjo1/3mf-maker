@@ -3,7 +3,7 @@
  1) 뚜껑 벽 속 0.1 mm 수평 틈 제거(v6/v8: 곡선 로프트가 z 7.8 까지, 잘라낼 띠는 7.9 까지 → 벽이 0.1 mm 파임 → 출력물 옆면 줄). 로프트를 z 8.3 까지 만들고 띠는 7.8 에서 멈춘다.
  2) 본체 바닥 곡선: 0.1 mm 판 쌓기(계단) → 링 로프트(tools/loft.py)로 매끈하게.
  3) 로고 1.5배: 옛 포켓을 메우고 → 뚜껑을 늘린 뒤 → 1.5배 로고 모양 그대로 포켓(면 접촉 인레이). 절단면이 큰 로고를 가로지르지 않게 순서를 바꿈.
-사용: python scripts/build_v9.py ../toolbox42/v5parts.pkl"""
+사용: python scripts/build_v9.py ../../작업중/toolbox42/v5parts.pkl"""
 import sys, os, pickle, json, numpy as np, trimesh
 from shapely.geometry import Polygon, box as sbox, Point
 from shapely.ops import unary_union

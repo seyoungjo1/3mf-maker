@@ -1,12 +1,12 @@
 {
- "name": "Toolbox48 v10 (명판 48장 · 뚜껑 모서리 = v5 하판 곡선 한 도형 · 로고 1.5배 · 벽 속 틈/단차 0)",
- "out": "qc/v10",
- "parts_pkl": "v10parts.pkl",
+ "name": "Toolbox48 v9 (명판 48장, 뚜껑 벽 속 틈 제거·본체 바닥 로프트·로고 1.5배)",
+ "out": "qc/v9",
+ "parts_pkl": "v9parts.pkl",
  "plates": [
-  "models/Toolbox48_v10_A_base_handle_latch.3mf",
-  "models/Toolbox48_v10_B_lid_logo.3mf"
+  "models/Toolbox48_v9_A_base_handle_latch.3mf",
+  "models/Toolbox48_v9_B_lid_logo.3mf"
  ],
- "assembly": "scripts/assembly_v10.py",
+ "assembly": "scripts/assembly_v9.py",
  "colors": {
   "base": "#37474f",
   "lid": "#37474f",
@@ -27,23 +27,18 @@
  "support_zones": [
   {
    "part": "base",
-   "desc": "손잡이 귀쌍 밑면 z 13.5~14.3 (서포트 '빌드 플레이트에만') + 바닥 곡선 첫 층 0.18/층 z 0.3~0.9 약 37 mm² (v5 하판 곡선, 사용자 승인)",
+   "desc": "손잡이 귀쌍 밑면 z 13.5~14.3 (설계상 돌출, 서포트 '빌드 플레이트에만')",
    "max_mm2": 320
   },
   {
    "part": "lid",
-   "desc": "경첩 귀 돌기·걸쇠 탭 밑면 z 8.3 + 탭 기둥 z 2.3 (서포트 '빌드 플레이트에만') + 모서리 곡선 첫 층 0.18/층 z 0.5~0.9 약 37 mm² (v5 하판 곡선, 사용자 승인)",
-   "max_mm2": 180
-  },
-  {
-   "part": "handle",
-   "desc": "서포트 없음 — 손잡이 다리 첫 층 곡선 z 0.3~1.1, y≈−161, 약 11 mm²(층당 ≤0.115 규칙 안, v5 원형 그대로 출력 성공)",
-   "max_mm2": 15
+   "desc": "경첩 귀 돌기 밑면 z 8.3 (설계상 돌출, 서포트 '빌드 플레이트에만')",
+   "max_mm2": 150
   }
  ],
  "min_gap": 0.3,
  "frames": 36,
- "assembly_parts_pkl": "v10parts_nominal.pkl",
+ "assembly_parts_pkl": "v9parts_nominal.pkl",
  "accepted": [
   {
    "part": "base",
@@ -84,7 +79,6 @@
  ],
  "build": [
   "scripts/build_v9.py",
-  "../toolbox42/v5parts.pkl",
-  "v10"
+  "../../작업중/toolbox42/v5parts.pkl"
  ]
 }
