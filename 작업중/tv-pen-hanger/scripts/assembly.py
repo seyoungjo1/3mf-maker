@@ -30,37 +30,38 @@ def _pen(p, yc, zc):
 
 def define(parts):
     p = derived(); W = p['W']; mt = p['MAG_T']; rec = p['MAG_CLR_T']
-    extra = {'holder': _box([0, -10, p['MAG_Z'] - 12.5], [W, 0, p['MAG_Z'] + 12.5])}       # 거치대 면(가정 W×25)
+    extra = {'tv': _box([-20, -p['TV_D'], 0], [W + 20, 0, 80])}                            # TV 아래쪽(가정: 앞면 평면·밑면 평평, 자석 거치대는 앞면)
     for i, xm in enumerate(p['MAG_X']):
         extra[f'magnet{i + 1}'] = _cyl(p['MAG_D'] / 2, mt, 'y', [xm, rec + mt / 2, p['MAG_Z']])  # TV 쪽 열린 포켓 바닥에 닿음
     for i, (j, xm, ztop) in enumerate(p['PM']):                                               # 펜 자석: 펜에 끌려 슬롯 윗면(살 쪽)에 붙음
         extra[f'pm{i + 1}'] = _cyl(p['PM_D'] / 2, p['PM_T'], 'z', [xm, p['YC'], ztop - p['PM_T'] / 2])
     extra['pen1'] = _pen(p, p['YC'], p['Z1']); extra['pen2'] = _pen(p, p['YC'], p['Z2'])
-    y0 = p['T_BACK'] + p['MOUSE_CLR']
-    extra['mouse'] = _box([W / 2 - p['MOUSE_L'] / 2, y0, p['FLOOR']], [W / 2 + p['MOUSE_L'] / 2, y0 + p['MOUSE_T'], p['FLOOR'] + p['MOUSE_W']])
+    y0 = p['Y_BI'] + p['MOUSE_CLR']                                                             # 리모컨 세움, 칸 가운데
+    extra['mouse'] = _box([W / 2 - p['MOUSE_L'] / 2, y0, p['Z_RF']], [W / 2 + p['MOUSE_L'] / 2, y0 + p['MOUSE_T'], p['Z_RF'] + p['MOUSE_W']])
     mags = [f'magnet{i + 1}' for i in range(len(p['MAG_X']))]; pms = [f'pm{i + 1}' for i in range(len(p['PM']))]
-    hung = {'hanger': MOUNT, 'holder': np.eye(4), 'pen1': np.eye(4), 'pen2': np.eye(4), 'mouse': np.eye(4), **{m: np.eye(4) for m in mags + pms}}
-    apart = {'hanger': T([0, 40, 0]) @ MOUNT, 'holder': np.eye(4), 'pen1': T([0, 80, 0]), 'pen2': T([0, 80, 0]), 'mouse': T([0, 40, 120]),
+    hung = {'hanger': MOUNT, 'tv': np.eye(4), 'pen1': np.eye(4), 'pen2': np.eye(4), 'mouse': np.eye(4), **{m: np.eye(4) for m in mags + pms}}
+    apart = {'hanger': T([0, 40, 0]) @ MOUNT, 'tv': np.eye(4), 'pen1': T([0, 80, 0]), 'pen2': T([0, 80, 0]), 'mouse': T([0, 40, 120]),
              **{m: T([0, 20, 0]) for m in mags}, **{m: T([0, 40, 0]) for m in pms}}
-    ymid = (p['T_BACK'] + p['Y_MW']) / 2
+    ymid = p['Y_BI'] + p['MS'] / 2; zr = p['Z_RF']
     pen_side = lambda zc: {'region': [[0, 0, zc - 1], [W, 100, zc + 12]], 'min_gap': 0.2}
     pen_of = {1: 'pen1', 2: 'pen2'}
     return {
         'extra': extra,
         'states': {'분리': apart, '걸림': hung},
-        'pairs': [['hanger', 'holder', {'contact': True}]]
-                 + [['hanger', m, {'contact': True}] for m in mags] + [['holder', m, {'contact': True}] for m in mags]
+        'pairs': [['hanger', 'tv', {'contact': True}]]                                            # 앞판 뒷면·선반 윗면이 TV 에 닿음
+                 + [['hanger', m, {'contact': True}] for m in mags] + [['tv', m, {'min_gap': p['MAG_CLR_T'] - 0.01}] for m in mags]
                  + [['hanger', m, {'contact': True}] for m in pms]
                  + [[pen_of[j], f'pm{i + 1}', {'min_gap': p['SKIN']}] for i, (j, _, _) in enumerate(p['PM'])]
                  + [['hanger', 'pen1', {'contact': True}], ['hanger', 'pen2', {'contact': True}], ['hanger', 'mouse', {'contact': True}],
-                    ['pen1', 'pen2', {'min_gap': 1.0}], ['pen1', 'mouse', {'min_gap': 1.0}],
+                    ['pen1', 'pen2', {'min_gap': 1.0}], ['pen1', 'mouse', {'min_gap': 1.0}], ['tv', 'mouse', {'min_gap': p['LIP_R'] + p['LIFT'] + p['SHELF'] - 0.1}],
                     # 마우스 옆면 ↔ 홈 벽 여유(바닥 접촉 제외)
-                    ['hanger', 'mouse', {'region': [[0, -1, p['FLOOR'] + 3], [W, ymid, 80]], 'min_gap': 0.75}],
-                    ['hanger', 'mouse', {'region': [[0, ymid, p['FLOOR'] + 3], [W, p['Y_MW'] + 1, 80]], 'min_gap': 0.75}],
+                    ['hanger', 'mouse', {'region': [[0, -100, zr + 3], [W, ymid, zr + 40]], 'min_gap': 0.75}],
+                    ['hanger', 'mouse', {'region': [[0, ymid, zr + 3], [W, 10, zr + 40]], 'min_gap': 0.75}],
                     # 펜 ↔ J 홈 옆벽(바닥 접촉 제외: 축 아래 1 mm 위쪽 — 펜이 0.25 내려앉아 캡(Ø7)처럼 가는 곳은 축 −2 에서 옆 간격 0.17)
                     ['hanger', 'pen1', pen_side(p['Z1'])], ['hanger', 'pen2', pen_side(p['Z2'])]],
         'sweeps': [],
-        'notes': [f"TV 쪽 자석 {len(mags)}개: 앞면이 걸이대 뒷면에서 {rec} mm 들어감 → 거치대 면과 간격 {rec} mm",
+        'notes': [f"TV 쪽 자석 {len(mags)}개: 앞면이 앞판 뒷면에서 {rec} mm 들어감 → TV 거치대 면과 간격 {rec} mm. 무게는 선반이 TV 밑면에 걸려 받음",
+                  '리모컨·펜은 모두 앞판 앞면(y = T_BACK)보다 뒤 — 앞으로 안 튀어나옴',
                   f"펜 자석 Ø{p['PM_D']}×{p['PM_T']} {len(pms)}개: 펜 홈 바닥 아래 살 {p['SKIN']} mm 속에 숨김(펜 몸통 자리)",
-                  '거치대 면은 가정 치수 — 실측 후 build.py P 만 바꾸면 전부 다시 검사된다'],
+                  'TV 밑면 모양·자석 거치대 높이(MAG_Z)는 가정 — 실측 후 build.py P 만 바꾸면 전부 다시 검사된다'],
     }

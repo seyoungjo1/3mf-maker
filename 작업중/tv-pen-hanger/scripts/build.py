@@ -24,17 +24,21 @@ P = {
     'W': 167.0,          # 폭(x) — 펜 176 중 어깨~펜촉 원뿔을 홈 안에 + 리모컨 155
     'MAG_D': 20.0, 'MAG_T': 1.0,                       # 사용자 자석 Ø20×1
     'MAG_CLR_D': 0.2, 'MAG_CLR_T': 0.1,                # 포켓 = 지름 +0.2, 깊이 +0.1 (design-method 자석 규칙)
-    # ── TV 쪽: Ø20×1 5개(뒷면 열린 포켓, 접착)
+    # ── 설치 좌표: y = 앞뒤(0 = TV 앞면, − = TV 밑으로 들어감), z = 높이(0 = TV 밑면). 수납물은 앞판 앞면(y = T_BACK)보다 앞으로 안 나옴(사용자)
+    'TV_D': 99.7,        # TV 두께(외형 깊이, 판매처 자료) — 밑으로 들어가는 깊이 한계
+    # ── 앞판: TV 쪽 Ø20×1 5개(뒷면 원형 포켓, 접착)
     'MAG_N': 5, 'MAG_PITCH': 33.0, 'MAG_X0': 17.5,     # TV 쪽 자석 수·간격·첫 중심 x(가운데 정렬)
-    'MAG_Z': 47.0,       # TV 쪽 자석 중심 높이(z)
-    'T_BACK': 3.5,       # 뒷판 = 세로 기둥 두께(y) — 열린 포켓 1.1 뒤로 2.4
-    'H_BACK': 60.0,      # 뒷판 위 끝 높이(z, 리모컨 바닥 밑면 = 0)
-    # ── 리모컨 홈(MRSVI M5)
-    'FLOOR': 3.0,        # 리모컨 홈 바닥 두께
-    'MOUSE_T': 9.0, 'MOUSE_W': 45.0, 'MOUSE_L': 155.0, # MRSVI M5 두께·폭·길이(설명서)
-    'MOUSE_CLR': 1.0,    # 리모컨 홈 여유(한쪽)
-    'WALL': 2.4,         # 리모컨 홈 앞벽 두께
-    'H_MWALL': 20.0,     # 리모컨 홈 앞벽 높이(바닥 위) — 45 중 20 을 잡음
+    'MAG_Z': 20.0,       # TV 쪽 자석 중심 높이(TV 밑면 위) — **가정**: 펜 거치대가 아래 베젤(43.5) 안
+    'T_BACK': 3.5,       # 앞판 두께(y) — 포켓 1.1 앞으로 2.4
+    'H_TOP': 33.0,       # 앞판 위 끝(z) — 자석 위 끝 30.1 + 살
+    'SHELF': 3.0,        # TV 밑면을 받치는 선반 두께(z) — 무게는 TV 가 받고 자석은 앞으로 넘어짐만 막음
+    'BWALL': 2.4,        # 뒤 벽(기둥) 두께 — 리모컨 칸·J 고리가 매달림
+    # ── 리모컨 칸(MRSVI M5 세움, 사용자)
+    'MOUSE_T': 9.0, 'MOUSE_W': 45.0, 'MOUSE_L': 155.0, # MRSVI M5 두께·폭(세운 높이)·길이(설명서)
+    'MOUSE_CLR': 1.0,    # 리모컨 칸 여유(한쪽)
+    'LIP_R': 10.0,       # 리모컨 칸 앞 입술 높이 — 리모컨 아래를 잡음
+    'LIFT': 2.0,         # 리모컨을 입술 위로 들어 넣을 여유(리모컨 위 끝 ↔ 선반 밑면)
+    'WALL': 2.4,         # 리모컨 칸 바닥·입술 두께
     # ── 펜 J 고리 2개(리모컨 홈 아래, 위아래) + 펜이 착 붙는 숨은 자석 Ø10×2 3개
     'PEN_S': 13.1, 'PEN_L': 176.0,                     # 펜 최대 지름·길이 (사용자 실측)
     'PEN_CLR': 0.3,      # 펜 홈 = 펜 윤곽 + 한쪽 0.3
@@ -51,16 +55,18 @@ COLORS = {'hanger': '#37474f'}
 LAYER = 0.2
 
 def derived():
-    p = dict(P); p['MS'] = p['MOUSE_T'] + 2 * p['MOUSE_CLR']            # 리모컨 홈 안쪽 폭(y)
-    p['Y_MW'] = p['T_BACK'] + p['MS']                                     # 리모컨 앞벽 시작 y
+    p = dict(P); p['MS'] = p['MOUSE_T'] + 2 * p['MOUSE_CLR']            # 리모컨 칸 안쪽 폭(y)
     p['MAG_X'] = [p['MAG_X0'] + i * p['MAG_PITCH'] for i in range(p['MAG_N'])]
     p['GW'] = p['PEN_S'] / 2 + p['PEN_CLR']                              # 펜 홈 최대 반지름
     p['RO'] = p['GW'] + p['PEN_WALL']                                     # J 바깥 반지름
-    p['YC'] = p['T_BACK'] + p['GW']                                       # J 홈 축 y (기둥 앞면에 펜이 닿음)
+    p['Y_B'] = p['T_BACK'] - (p['BWALL'] + 2 * p['GW'] + p['PEN_WALL'])  # 뒤 벽 뒷면 y: J 앞 끝이 앞판 앞면과 같게
+    p['Y_BI'] = p['Y_B'] + p['BWALL']                                     # 뒤 벽 앞면 = 리모컨 칸·J 홈 뒤
+    p['YC'] = p['Y_BI'] + p['GW']                                         # J 홈 축 y
+    p['Z_RF'] = -p['SHELF'] - p['LIFT'] - p['LIP_R'] - p['MOUSE_W']        # 리모컨 칸 바닥 윗면 z
     p['PM_H'] = p['PM_T'] + p['MAG_CLR_T']                                # 펜 자석 슬롯 두께 2.1
     p['HEEL'] = p['GW'] + p['SKIN'] + p['PM_H'] + 1.2                     # 축 → J 바닥 밑면 (자석 아래 살 1.2)
-    p['Z1'] = -p['OPEN'] - p['LIP']                                       # 위 J 축 z (리모컨 바닥 밑면 = 0 아래 입구 15)
-    p['Z2'] = p['Z1'] - p['HEEL'] - p['OPEN'] - p['LIP']                  # 아래 J 축 z (위 J 바닥 밑으로 입구 15)
+    p['Z1'] = p['Z_RF'] - p['WALL'] - p['OPEN'] - p['LIP']                 # 위 J 축 z (리모컨 칸 바닥 아래 입구 15)
+    p['Z2'] = p['Z1'] - p['HEEL'] - p['OPEN'] - p['LIP']                  # 아래 J 축 z
     p['Z_BOT'] = p['Z2'] - p['HEEL']                                      # 아래 끝
     # (J, x, 슬롯 윗면 z): 그 x 의 펜 홈 바닥(펜 반지름 + 0.3) 바로 아래 살 SKIN — 펜이 가늘어지는 곳도 자석과의 거리가 같게
     p['PM'] = [(j, p['W'] / 2 + dx, (p['Z1'] if j == 1 else p['Z2']) - (pen_w(p['W'] / 2 + dx + p['PEN_S0']) / 2 + p['PEN_CLR']) - p['SKIN'])
@@ -94,19 +100,23 @@ def _round(out, p):
     return out
 
 def profile(p):
-    """옆 단면(y, z) 한 덩어리: 뒷판=기둥(위: TV 자석, 아래: J 를 받침) + 리모컨 홈(바닥·앞벽) + 그 아래 J 고리 2개.
-    J = 둥근 요람(입술 끝 = 축 + LIP) + 바닥 굽(숨은 자석 자리)."""
-    tb, w, yc, ro = p['T_BACK'], p['WALL'], p['YC'], p['RO']
-    parts = [sbox(0, p['Z_BOT'] + 2, tb, p['H_BACK']), sbox(0, 0, p['Y_MW'] + w, p['FLOOR']),
-             sbox(p['Y_MW'], 0, p['Y_MW'] + w, p['FLOOR'] + p['H_MWALL'])]
+    """옆 단면(y, z) 한 덩어리: 앞판(TV 자석) → TV 밑면 받침 선반 → 뒤 벽에 매달린 리모컨 칸(세움) → J 고리 2개(위아래).
+    전부 앞판 앞면(y = T_BACK)보다 뒤, TV 밑(y < 0) 쪽. J = 둥근 요람(입술 끝 = 축 + LIP) + 바닥 굽(숨은 자석 자리)."""
+    tb, w, yc, ro, yb, ybi = p['T_BACK'], p['WALL'], p['YC'], p['RO'], p['Y_B'], p['Y_BI']
+    zr = p['Z_RF']; ylip = ybi + p['MS']
+    parts = [sbox(0, -p['SHELF'], tb, p['H_TOP']),                                        # 앞판
+             sbox(yb, -p['SHELF'], tb, 0),                                                # TV 밑면 받침 선반
+             sbox(yb, p['Z_BOT'] + 2, ybi, 0),                                            # 뒤 벽
+             sbox(yb, zr - w, ylip + w, zr), sbox(ylip, zr, ylip + w, zr + p['LIP_R'])]   # 리모컨 칸 바닥·앞 입술
     hw = (p['PM_D'] + p['MAG_CLR_D']) / 2 + 1.5                                          # 굽 반폭: 자석 반지름 + 옆 살 (굽 모서리 R3.5)
     for zc in (p['Z1'], p['Z2']):
-        parts += [Point(yc, zc).buffer(ro, 64).intersection(sbox(-50, zc - 50, 100, zc + p['LIP'])),
-                  sbox(0, zc - p['HEEL'], yc + hw, zc).buffer(-3.5, 16).buffer(3.5, 16), sbox(0, zc - p['HEEL'] + 2, yc, zc + p['LIP'])]
+        parts += [Point(yc, zc).buffer(ro, 64).intersection(sbox(-200, zc - 50, 100, zc + p['LIP'])),
+                  sbox(yb, zc - p['HEEL'], yc + hw, zc).buffer(-3.5, 16).buffer(3.5, 16), sbox(yb, zc - p['HEEL'] + 2, yc, zc + p['LIP'])]
     f, fi = p['FILLET'], p['FILLET_IN']
     out = unary_union(parts).buffer(-f, 8).buffer(f, 8).buffer(fi, 8).buffer(-fi, 8)
+    out = out.difference(sbox(-500, 0, 0, 500)).intersection(sbox(-500, -500, tb, 500))   # TV 자리(앞면·밑면 모서리)는 비우고, 앞판 앞면 평면 유지
     if out.geom_type != 'Polygon': raise SystemExit(f'단면이 한 덩어리가 아님: {out.geom_type}')
-    return out.intersection(sbox(0, -500, 500, 500))                     # 뒷면 y=0 평면 유지
+    return out
 
 def _sweep(prof, W):
     nz = int(math.ceil(W / 2.0)) + 1; path = np.column_stack([np.zeros(nz), np.zeros(nz), np.linspace(0, W, nz)])
@@ -151,4 +161,4 @@ if __name__ == '__main__':
     for n, m in printed.items(): m.export(f'models/tv-pen-hanger_{n}.stl')          # 파트 STL 동봉(출력 방향, 첫 층 선반영)
     d = derived()
     print('build ok', {n: [round(v, 2) for v in m.extents] for n, m in nominal.items()},
-          {k: (round(v, 2) if isinstance(v, float) else v) for k, v in d.items() if k in ('MS', 'GW', 'RO', 'YC', 'HEEL', 'Z1', 'Z2', 'Z_BOT', 'Y_MW', 'MAG_X', 'PM', 'PAUSE_Z')})
+          {k: (round(v, 2) if isinstance(v, float) else v) for k, v in d.items() if k in ('MS', 'GW', 'RO', 'Y_B', 'YC', 'Z_RF', 'HEEL', 'Z1', 'Z2', 'Z_BOT', 'MAG_X', 'PM', 'PAUSE_Z')})
