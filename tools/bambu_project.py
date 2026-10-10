@@ -60,9 +60,25 @@ def _thumb(objects, colors, size, top=True):
     allb = np.array([m.bounds for ob in objects for m, _, _ in ob['parts']]); lo, hi = allb[:, 0].min(0), allb[:, 1].max(0); c = (lo + hi) / 2; s = (hi - lo)[:2].max() / 2 * 1.08
     ax.set_xlim(c[0] - s, c[0] + s); ax.set_ylim(c[1] - s, c[1] + s); ax.set_aspect('equal'); ax.axis('off')
     buf = io.BytesIO(); fig.savefig(buf, format='png', facecolor=fig.get_facecolor()); plt.close(fig); return buf.getvalue()
-def write_bambu_project(out, objects, template=DEFAULT_TEMPLATE, plate_name='', filament_colours=None, settings=None, title='', print_sequence='by layer'):
+def plate_offsets(n, ps):
+    """여러 플레이트의 가상 베드 위치(sample 실측): 열 수 = ceil(√n)(9장 3열·2장 2열), 간격 = 베드 × 1.2(256 → 307.2), 다음 줄은 −y."""
+    W = max(float(p.split('x')[0]) for p in ps['printable_area']); D = max(float(p.split('x')[1]) for p in ps['printable_area'])
+    cols = int(np.ceil(np.sqrt(n))); return [np.array([(i % cols) * W * 1.2, -(i // cols) * D * 1.2, 0.0]) for i in range(n)]
+def layout_plates(plates, template=DEFAULT_TEMPLATE):
+    """plates: [{'name', 'objects'}] → [(플레이트 번호, 오브젝트(메시를 그 플레이트 자리로 옮김))]"""
+    ps = json.loads(zipfile.ZipFile(template).read('Metadata/project_settings.config')); out = []
+    for pi, (pl, off) in enumerate(zip(plates, plate_offsets(len(plates), ps))):
+        for ob in pl['objects']:
+            parts = []
+            for m, pn, e in ob['parts']: mm = m.copy(); mm.apply_translation(off); parts.append((mm, pn, e))
+            out.append((pi, dict(ob, parts=parts)))
+    return out
+def write_bambu_project(out, objects, template=DEFAULT_TEMPLATE, plate_name='', filament_colours=None, settings=None, title='', print_sequence='by layer', plates=None):
+    """plates=[{'name','objects'}] 를 주면 한 파일에 플레이트 여러 장(sample/所有部件集合.3mf·test+lunch+box 구조)."""
     tz = zipfile.ZipFile(template); tn = set(tz.namelist())
     ps = json.loads(tz.read('Metadata/project_settings.config')); nfil = len(ps['filament_colour'])
+    if plates is None: plates = [{'name': plate_name, 'objects': objects}]
+    flat = layout_plates(plates, template); objects = [ob for _, ob in flat]; pidx = [pi for pi, _ in flat]
     used = sorted({e for ob in objects for _, _, e in ob['parts']}); assert max(used) <= nfil, f'필라멘트 {max(used)}번 > 틀의 필라멘트 수 {nfil}'
     if filament_colours:
         for i, c in enumerate(filament_colours[:nfil]): ps['filament_colour'][i] = c.upper()
@@ -77,7 +93,7 @@ def write_bambu_project(out, objects, template=DEFAULT_TEMPLATE, plate_name='', 
         if n in ('CreationDate', 'ModificationDate'): v = today
         if n == 'Title': v = title
         meta_xml.append(f' <metadata name="{n}">{v}</metadata>')
-    files = {}; res = []; build = []; ms_obj = []; assemble = []; cut = []; rels = []; plate_inst = []; bbox_objs = []; counter = 0
+    files = {}; res = []; build = []; ms_obj = []; assemble = []; cut = []; rels = []; plate_inst = {}; bbox_objs = []; counter = 0
     base_name = os.path.basename(out)
     for i, ob in enumerate(objects, start=1):
         allb = np.array([m.bounds for m, _, _ in ob['parts']]); lo, hi = allb[:, 0].min(0), allb[:, 1].max(0)
@@ -104,33 +120,45 @@ def write_bambu_project(out, objects, template=DEFAULT_TEMPLATE, plate_name='', 
             assemble.append(f'   <assemble_item object_id="{root}" volume_id="{k}" transform="1 0 0 0 1 0 0 0 1 {_f(t[0])} {_f(t[1])} {_f(t[2])}" />')
         P.append('  </object>'); ms_obj.append('\n'.join(P))
         assemble.insert(len(assemble) - len(ob['parts']), f'   <assemble_item object_id="{root}" instance_id="0" transform="1 0 0 0 1 0 0 0 1 {_f(O[0])} {_f(O[1])} {_f(O[2])}" offset="0 0 0" />')
-        ident = 100 + 37 * i; plate_inst.append(f'    <model_instance>\n      <metadata key="object_id" value="{root}"/>\n      <metadata key="instance_id" value="0"/>\n      <metadata key="identify_id" value="{ident}"/>\n    </model_instance>')
+        ident = 100 + 37 * i; plate_inst.setdefault(pidx[i - 1], []).append(f'    <model_instance>\n      <metadata key="object_id" value="{root}"/>\n      <metadata key="instance_id" value="0"/>\n      <metadata key="identify_id" value="{ident}"/>\n    </model_instance>')
         from overhang import layer_poly
         from shapely.ops import unary_union
         area = unary_union([layer_poly(m, m.bounds[0, 2] + 0.1) for m, _, _ in ob['parts']]).area
-        bbox_objs.append({'area': float(area), 'bbox': [float(lo[0]), float(lo[1]), float(hi[0]), float(hi[1])], 'id': ident, 'layer_height': 0.2, 'name': ob['name']})
+        if pidx[i - 1] == 0: bbox_objs.append({'area': float(area), 'bbox': [float(lo[0]), float(lo[1]), float(hi[0]), float(hi[1])], 'id': ident, 'layer_height': 0.2, 'name': ob['name']})
         cut.append(f' <object id="{i}">\n  <cut_id id="0" check_sum="1" connectors_cnt="0"/>\n </object>')
     root_xml = ['<?xml version="1.0" encoding="UTF-8"?>', '<model unit="millimeter" xml:lang="en-US" xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02" xmlns:BambuStudio="http://schemas.bambulab.com/package/2021" xmlns:p="http://schemas.microsoft.com/3dmanufacturing/production/2015/06" requiredextensions="p">'] + meta_xml
     root_xml += [' <resources>'] + res + [' </resources>', f' <build p:UUID="{uuid.uuid5(uuid.NAMESPACE_URL, base_name)}">'] + build + [' </build>', '</model>']
     files['3D/3dmodel.model'] = '\n'.join(root_xml)
     files['3D/_rels/3dmodel.model.rels'] = '<?xml version="1.0" encoding="UTF-8"?>\n<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">\n' + '\n'.join(rels) + '\n</Relationships>'
-    tms = ET.fromstring(tz.read('Metadata/model_settings.config')); tpl = tms.find('plate'); pmeta = []
-    for md in tpl.findall('metadata'):
-        k, v = md.get('key'), md.get('value')
-        if k == 'plater_name': v = plate_name
-        if k == 'print_sequence': v = print_sequence
-        pmeta.append(f'    <metadata key="{k}" value="{v}"/>')
-    files['Metadata/model_settings.config'] = '<?xml version="1.0" encoding="UTF-8"?>\n<config>\n' + '\n'.join(ms_obj) + '\n  <plate>\n' + '\n'.join(pmeta) + '\n' + '\n'.join(plate_inst) + '\n  </plate>\n  <assemble>\n' + '\n'.join(assemble) + '\n  </assemble>\n</config>\n'
+    tms = ET.fromstring(tz.read('Metadata/model_settings.config')); tpl = tms.find('plate'); pblocks = []
+    for pi, pl in enumerate(plates):
+        pmeta = []
+        for md in tpl.findall('metadata'):
+            k, v = md.get('key'), md.get('value')
+            if k == 'plater_id': v = str(pi + 1)
+            if k == 'plater_name': v = pl.get('name', '')
+            if k == 'print_sequence': v = print_sequence
+            if k.endswith('_file') and v: v = re.sub(r'_1(\.png)$', f'_{pi + 1}\\1', v)            # Metadata/plate_N.png · top_N · pick_N · plate_no_light_N
+            pmeta.append(f'    <metadata key="{k}" value="{v}"/>')
+        pblocks.append('  <plate>\n' + '\n'.join(pmeta) + '\n' + '\n'.join(plate_inst.get(pi, [])) + '\n  </plate>')
+    files['Metadata/model_settings.config'] = '<?xml version="1.0" encoding="UTF-8"?>\n<config>\n' + '\n'.join(ms_obj) + '\n' + '\n'.join(pblocks) + '\n  <assemble>\n' + '\n'.join(assemble) + '\n  </assemble>\n</config>\n'
     files['Metadata/project_settings.config'] = json.dumps(ps, indent=4, ensure_ascii=False)
     pj = json.loads(tz.read('Metadata/plate_1.json')); allb = np.array([b['bbox'] for b in bbox_objs])
     pj.update({'bbox_all': [float(allb[:, 0].min()), float(allb[:, 1].min()), float(allb[:, 2].max()), float(allb[:, 3].max())], 'bbox_objects': bbox_objs, 'is_seq_print': print_sequence == 'by object', 'first_layer_time': 0.0})
     files['Metadata/plate_1.json'] = json.dumps(pj, ensure_ascii=False)
     files['Metadata/cut_information.xml'] = '<?xml version="1.0" encoding="utf-8"?>\n<objects>\n' + '\n'.join(cut) + '\n</objects>\n'
     cols = [c for c in ps['filament_colour']]
-    big = _thumb(objects, cols, 512); files['Metadata/plate_1.png'] = big; files['Metadata/plate_no_light_1.png'] = big; files['Metadata/top_1.png'] = big; files['Metadata/pick_1.png'] = big
-    files['Metadata/plate_1_small.png'] = _thumb(objects, cols, 128)
-    for keep in ['[Content_Types].xml', '_rels/.rels', 'Metadata/slice_info.config', 'Metadata/filament_sequence.json']:
+    for pi in range(len(plates)):
+        obs_p = [ob for q, ob in flat if q == pi]
+        if not obs_p: continue
+        big = _thumb(obs_p, cols, 512); n1 = pi + 1
+        files[f'Metadata/plate_{n1}.png'] = big; files[f'Metadata/plate_no_light_{n1}.png'] = big; files[f'Metadata/top_{n1}.png'] = big; files[f'Metadata/pick_{n1}.png'] = big
+    files['Metadata/plate_1_small.png'] = _thumb([ob for q, ob in flat if q == 0], cols, 128)
+    for keep in ['[Content_Types].xml', '_rels/.rels', 'Metadata/slice_info.config']:
         if keep in tn: files[keep] = tz.read(keep)
+    if 'Metadata/filament_sequence.json' in tn:                                         # 플레이트마다 같은 틀 값(sample: plate_1 · plate_2 …)
+        fs = json.loads(tz.read('Metadata/filament_sequence.json')); v0 = fs.get('plate_1', next(iter(fs.values()), {}))
+        files['Metadata/filament_sequence.json'] = json.dumps({f'plate_{k + 1}': v0 for k in range(len(plates))})
     os.makedirs(os.path.dirname(os.path.abspath(out)), exist_ok=True)
     with zipfile.ZipFile(out, 'w', zipfile.ZIP_DEFLATED) as zo:
         for n in ['[Content_Types].xml', '_rels/.rels', '3D/3dmodel.model', '3D/_rels/3dmodel.model.rels'] + sorted(k for k in files if k.startswith('3D/Objects')) + sorted(k for k in files if k.startswith('Metadata')):
