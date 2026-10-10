@@ -1,12 +1,17 @@
-# Toolbox48 — 명판 48장 케이스: 두 판이 같은 폴더에 있습니다
+# Toolbox48 — 명판 48장 케이스
 
-| | 판 1 (아래 첫 절, 세션 A) | **v7 (파이프라인 검증판, 세션 B)** |
+## v8 (최신) — 뚜껑 윗면 모서리를 연속 곡선으로
+v7 까지의 뚜껑(v6 모서리)은 바닥 0.8 mm 를 전체 윤곽으로 수직으로 깔아 윗면 둘레에 1.58 mm 턱(접시 테두리)이 있었다. v8 은 **v5 의 연속 곡선(층당 ≤0.115, inset 1.69 → 0, 6 mm)** 을 되살리고, 로고 인레이가 있는 첫 3층(0.6 mm)만 곡선 시작 inset 자리에서 수직(턱 없음), 첫 층은 뚜껑+로고 그룹 EFC +0.15 선반영. 본체·손잡이·걸쇠·칸 치수는 v7 과 같다. 단면 비교: `figures/lid_edge_v8_profile.png`. 파일: `models/Toolbox48_v8_A_base_handle_latch.3mf`, `models/Toolbox48_v8_B_lid_logo.3mf`, 검증 `qc/v8/REPORT.md`.
+
+두 판이 같은 폴더에 있습니다
+
+| | 판 1 (아래 첫 절, 세션 A) | **v7→v8 (파이프라인 검증판, 세션 B)** |
 |---|---|---|
-| 파일 | `models/Toolbox48_A_base_handle_clip.3mf`, `Toolbox48_B_lid_logo.3mf` | `models/Toolbox48_v7_A_base_handle_latch.3mf`, `Toolbox48_v7_B_lid_logo.3mf` |
+| 파일 | `models/Toolbox48_A_base_handle_clip.3mf`, `Toolbox48_B_lid_logo.3mf` | `models/Toolbox48_v8_A_base_handle_latch.3mf`, `Toolbox48_v8_B_lid_logo.3mf` |
 | 칸 깊이 | 57 (8×7 + 1) | 58 (8×7 + 2, 장당 0.25 여유) |
 | 뚜껑 끼움 | 기존 0.10~0.20 유지 | **0.30**(립 바깥면 0.1 깎음 — 사용자 "열 때 뻑뻑" 반영) |
 | 본체 바닥 | 외곽 밑면 수직 받침 + EFC | 바닥 곡선 전체를 층당 ≤0.115 로 재로프트 + EFC |
-| 뚜껑 | 첫 1.2 mm 수직 받침, 로고 공극 채움 | v6 뚜껑(0.8 수직 띠) 그대로 늘림 |
+| 뚜껑 윗면 모서리 | 첫 1.2 mm 수직 받침(턱) | **v8: 연속 곡선**(v5 곡선 + 인레이 3층만 inset 자리 수직) |
 | 검증 | 수동 스크립트, 보고 `qc/plate_A·B`, `qc/assembly48` | `tools/pipeline.py` 게이트 통과(경고 0), `qc/v7/REPORT.md`, 명판 48장 끼움·스윕·작동 GIF |
 
 출력은 **한 판의 A·B를 세트로** 쓰세요(본체·뚜껑 혼용 금지). 뻑뻑한 뚜껑을 고치려면 v7 입니다.
