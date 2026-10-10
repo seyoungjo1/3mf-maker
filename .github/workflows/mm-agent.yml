@@ -1,0 +1,64 @@
+name: mm-agent
+# 어느 방에서든 같은 로직: Actions 에서 요청 한 줄로 mm_agent(Claude API 도구 루프 + 체크리스트 게이트)를 돌린다.
+# 필요: 저장소 Settings → Secrets and variables → Actions 에 ANTHROPIC_API_KEY.
+# 결과: 체크리스트 통과 여부와 무관하게 agent/run-<번호> 브랜치에 커밋(검토용), Summary 에 최종 보고·체크리스트, artifact 에 대화 기록.
+on:
+  workflow_dispatch:
+    inputs:
+      prompt:
+        description: '요청(예: "작업중/xxx 를 이렇게 바꿔줘", "새 도면: 50×30 명판 꽂이")'
+        required: true
+      project:
+        description: '프로젝트 폴더 이름(작업중/<이름>, 새 도면이면 새 이름)'
+        required: false
+      effort:
+        description: 'low | medium | high | xhigh | max'
+        default: 'medium'
+permissions:
+  contents: write
+jobs:
+  agent:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      PLAYWRIGHT_BROWSERS_PATH: ${{ github.workspace }}/.pw
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.12' }
+      - name: 의존
+        run: |
+          pip install -q -r requirements.txt
+          python -m playwright install --with-deps chromium
+          sudo apt-get install -y -q fonts-noto-cjk || true
+      - name: 키 확인
+        run: test -n "$ANTHROPIC_API_KEY" || { echo "::error::저장소 비밀 ANTHROPIC_API_KEY 가 없습니다"; exit 1; }
+      - name: 에이전트 실행
+        id: run
+        env:
+          PROMPT: ${{ github.event.inputs.prompt }}
+          PROJECT: ${{ github.event.inputs.project }}
+          EFFORT: ${{ github.event.inputs.effort }}
+        run: |
+          set +e; mkdir -p agent_out
+          python tools/mm_agent.py "$PROMPT" ${PROJECT:+--project "$PROJECT"} --effort "${EFFORT:-medium}" --log agent_out/transcript.json --out-json agent_out/result.json > agent_out.log 2>&1
+          echo "rc=$?" >> "$GITHUB_OUTPUT"; mv agent_out.log agent_out/
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          try: r = json.load(open('agent_out/result.json', encoding='utf-8'))
+          except Exception as e: print('결과 없음:', e); raise SystemExit
+          print('## mm-agent 결과', '', f"ok **{r['ok']}** · 턴 {r['turns']} · {r['seconds']} s · stop {r['stop_reason']}", '', r['final'])
+          PY
+      - name: 결과 브랜치에 커밋
+        if: always()
+        run: |
+          git config user.name "mm-agent"; git config user.email "mm-agent@users.noreply.github.com"
+          git checkout -b "agent/run-${{ github.run_number }}"
+          for d in 작업중 작업완료 sample .claude/skills/3d-print-3mf/references; do [ -e "$d" ] && git add -A -- "$d"; done
+          git commit -q -m "mm-agent run ${{ github.run_number }}: ${{ github.event.inputs.prompt }}" && git push -q origin "agent/run-${{ github.run_number }}" && echo "브랜치 agent/run-${{ github.run_number }}" >> "$GITHUB_STEP_SUMMARY" || echo "변경 없음"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: { name: agent_out, path: agent_out, retention-days: 14 }
+      - name: 판정
+        run: test "${{ steps.run.outputs.rc }}" = "0"

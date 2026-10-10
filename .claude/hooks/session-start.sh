@@ -35,6 +35,12 @@ fi
 # 3) 렌더러 점검
 python3 tools/render_preview.py --check 2>/dev/null || echo "⚠ 렌더러 점검 실패 — tools/render_preview.py --check 로 원인 확인. 렌더 없이 보고하지 말 것"
 
+# 3-1) 표준 프로그램 명령 목록(모든 작업은 이것으로)
+echo
+echo "================ 표준 프로그램: python tools/mm.py <명령> (새 도면: mm.py new <이름> → mm.py make 작업중/<이름>/pipeline.json) ================"
+python3 tools/mm.py help 2>/dev/null | sed -n '/^  [a-z]/p' || echo "⚠ tools/mm.py help 실패"
+echo "보고 첫머리 체크리스트 = mm make 결과의 checklist.line 그대로. API: python tools/mm_agent.py \"요청\" --project <이름>"
+
 # 4) 스킬 전문
 echo
 echo "================ 반드시 따를 지침: .claude/skills/3d-print-3mf (main 기준) ================"
