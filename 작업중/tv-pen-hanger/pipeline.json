@@ -1,5 +1,5 @@
 {
- "name": "tv-pen-hanger v1",
+ "name": "tv-pen-hanger v2",
  "build": [
   "scripts/build.py"
  ],

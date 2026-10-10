@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""tv-pen-hanger 빌드 — 75TR3DQ 펜 자석 거치대에 Ø20×1 자석 3개로 붙는 걸이대(아래쪽에 펜 2개 + MRSVI M5 에어마우스).
+"""tv-pen-hanger 빌드 — 75TR3DQ 펜 자석 거치대에 Ø20×1 자석 3개로 붙는 걸이대(아래쪽에 펜 2개 + MRSVI M5 에어마우스). v2: 펜 12.5 각 R4·176, M5 155×45×9 반영.
 `python tools/mm.py make 작업중/tv-pen-hanger/pipeline.json` 이 이 스크립트를 프로젝트 폴더에서 실행한다.
 스킬 순서: 1 설계 규칙 → 2 모델링(이 파일) → 3 QC → 4 조립 검증 → 5 렌더 → 6 3MF → 7 보고 (3~7 은 파이프라인이 한다).
 
@@ -28,13 +28,16 @@ P = {
     'MAG_X0': 14.0,      # 첫 자석 중심 x — 눈물방울 끝(+21.5)이 윗면(W) 안에 남도록 아래로 치우침
     'MAG_Z': 46.0,       # 자석 중심 높이(z) — 뒷판 위쪽(거치대에 닿는 부분)
     'TEAR_DEG': 28.0,    # 포켓 눈물방울 반각(출력 수직 기준) — tan28° × 0.2 = 0.106/층
-    'MOUSE_T': 18.0,     # 가정: MRSVI M5 두께
-    'MOUSE_W': 42.0,     # 가정: MRSVI M5 폭(세워 꽂음 → 높이 방향)
-    'MOUSE_L': 160.0,    # 가정: MRSVI M5 길이(x 방향으로 눕힘)
-    'MOUSE_CLR': 2.0,    # 마우스 홈 여유(한쪽)
-    'PEN_D': 12.0,       # 가정: 75TR3DQ 전용 펜 지름
-    'PEN_L': 150.0,      # 가정: 펜 길이
-    'PEN_CLR': 0.75,     # 펜 홈 반경 여유
+    'MOUSE_T': 9.0,      # MRSVI M5 두께 (조사: 155×45×9, 다른 설명서 8 → 큰 값)
+    'MOUSE_W': 45.0,     # MRSVI M5 폭(세워 꽂음 → 높이 방향)
+    'MOUSE_L': 155.0,    # MRSVI M5 길이(x 방향으로 눕힘)
+    'MOUSE_CLR': 1.0,    # 마우스 홈 여유(한쪽) — 두께 8~9 오차 + 꺼내기 쉽게
+    'PEN_S': 12.5,       # 펜 굵은 쪽 정사각 단면 한 변 (사용자 실측)
+    'PEN_R': 4.0,        # 펜 굵은 쪽 모서리 R (사용자 실측, 추정)
+    'PEN_THIN_D': 10.0,  # 펜 가는 쪽 지름 (사용자 실측)
+    'PEN_L': 176.0,      # 펜 길이 (사용자 실측 17.6 cm)
+    'PEN_CLR': 0.5,      # 펜 홈 여유(한쪽) — 슬라이드 0.2~0.3 보다 넉넉히(위에서 툭 넣는 받침)
+    'PEN_LIP_H': 9.0,    # 펜 홈 벽 높이(홈 바닥 위) — 펜 12.5 의 72 %
     'WALL': 3.0,         # 마우스 홈 바닥·앞벽
     'PEN_WALL': 2.4,     # 펜 홈 벽(≥1.2, 휘는 부재 ≥ 3 은 앞벽·바닥 3 으로)
     'H_MWALL': 28.0,     # 마우스 홈 앞벽 높이
@@ -44,27 +47,30 @@ COLORS = {'hanger': '#37474f'}
 
 def derived():
     p = dict(P); p['MS'] = p['MOUSE_T'] + 2 * p['MOUSE_CLR']            # 마우스 홈 안쪽 폭(y)
-    p['RP'] = p['PEN_D'] / 2 + p['PEN_CLR']                              # 펜 홈 반경
-    p['RO'] = p['RP'] + p['PEN_WALL']                                     # 펜 홈 바깥 반경
+    p['GW'] = p['PEN_S'] / 2 + p['PEN_CLR']                              # 펜 홈 반폭
+    p['GR'] = p['PEN_R'] + p['PEN_CLR']                                  # 펜 홈 바닥 모서리 R(펜 모서리 R + 여유)
     p['Y_MW'] = p['T_BACK'] + p['MS']                                     # 마우스 앞벽 시작 y
-    p['Y_P1'] = p['Y_MW'] + p['WALL'] + p['RP']                            # 펜 홈 1 중심 y (앞벽 = 펜 홈 뒷벽)
-    p['Y_P2'] = p['Y_P1'] + 2 * p['RP'] + p['PEN_WALL']                    # 펜 홈 2 중심 y
-    p['Z_P'] = p['PEN_WALL'] + p['RP']                                    # 펜 홈 중심 z (바닥 살 = PEN_WALL)
+    p['Y_P1'] = p['Y_MW'] + p['WALL'] + p['GW']                            # 펜 홈 1 중심 y (마우스 앞벽 = 펜 홈 뒷벽)
+    p['Y_P2'] = p['Y_P1'] + 2 * p['GW'] + p['PEN_WALL']                    # 펜 홈 2 중심 y
+    p['Y_END'] = p['Y_P2'] + p['GW'] + p['PEN_WALL']                       # 앞 끝
+    p['Z_G'] = p['PEN_WALL']                                              # 펜 홈 바닥 z (바닥 살 = PEN_WALL)
     p['MAG_X'] = [p['MAG_X0'] + i * p['MAG_PITCH'] for i in range(p['MAG_N'])]
     return p
 
+def rounded_slot(yc, half, r, z0, top=200.0):
+    """위가 열린 홈: 폭 2·half, 바닥 z0, 바닥 두 모서리 R r (펜 12.5 각 R4 가 눕는 모양)."""
+    return unary_union([sbox(yc - half, z0 + r, yc + half, top), sbox(yc - half + r, z0, yc + half - r, top),
+                        Point(yc - half + r, z0 + r).buffer(r, 16), Point(yc + half - r, z0 + r).buffer(r, 16)])
+
 def profile(p):
     """옆 단면(y, z) 폴리곤 — 뒷판 + 마우스 홈 + 펜 홈 2개."""
+    lip = p['Z_G'] + p['PEN_LIP_H']
     solid = [sbox(0, 0, p['T_BACK'], p['H_BACK']),                                      # 뒷판
              sbox(p['T_BACK'] - 0.5, 0, p['Y_MW'] + p['WALL'], p['WALL']),               # 마우스 홈 바닥
-             sbox(p['Y_MW'], 0, p['Y_MW'] + p['WALL'], p['H_MWALL'])]                    # 마우스 홈 앞벽
-    for yc in (p['Y_P1'], p['Y_P2']):
-        solid += [Point(yc, p['Z_P']).buffer(p['RO'], 16), sbox(yc - p['RO'], 0, yc + p['RO'], p['Z_P'])]
+             sbox(p['Y_MW'], 0, p['Y_MW'] + p['WALL'], p['H_MWALL']),                    # 마우스 홈 앞벽
+             sbox(p['Y_MW'], 0, p['Y_END'], lip)]                                         # 펜 받침 덩어리
     out = unary_union(solid)
-    cut = []
-    for yc in (p['Y_P1'], p['Y_P2']):
-        cut += [Point(yc, p['Z_P']).buffer(p['RP'], 16), sbox(yc - p['RP'], p['Z_P'], yc + p['RP'], 200)]
-    out = out.difference(unary_union(cut))
+    out = out.difference(unary_union([rounded_slot(yc, p['GW'], p['GR'], p['Z_G']) for yc in (p['Y_P1'], p['Y_P2'])]))
     f = p['FILLET']
     out = out.buffer(-f, 4).buffer(f, 4)                 # 바깥(볼록) 모서리 둥글게
     out = out.buffer(f * 0.6, 4).buffer(-f * 0.6, 4)     # 안쪽(오목) 모서리 둥글게 — 응력 집중 완화
@@ -112,4 +118,4 @@ if __name__ == '__main__':
     for n, m in printed.items(): m.export(f'models/tv-pen-hanger_{n}.stl')          # 파트 STL 동봉(출력 방향, 첫 층 선반영)
     d = derived()
     print('build ok', {n: [round(v, 2) for v in m.extents] for n, m in nominal.items()},
-          {k: (round(v, 2) if isinstance(v, float) else v) for k, v in d.items() if k in ('MS', 'RP', 'RO', 'Y_MW', 'Y_P1', 'Y_P2', 'Z_P', 'MAG_X')})
+          {k: (round(v, 2) if isinstance(v, float) else v) for k, v in d.items() if k in ('MS', 'GW', 'GR', 'Y_MW', 'Y_P1', 'Y_P2', 'Y_END', 'Z_G', 'MAG_X')})

@@ -4,23 +4,23 @@
  "qc": {
   "hanger": {
    "name": "hanger",
-   "faces": 20774,
-   "vertices": 10389,
+   "faces": 20738,
+   "vertices": 10371,
    "watertight": true,
    "is_volume": true,
    "bodies": 1,
    "size_mm": [
-    61.1,
+    50.1,
     60.3,
     110.0
    ],
    "min_z": 0.0,
-   "volume_cm3": 59.65,
-   "weight_g_solid": 74.0,
-   "bed_contact_mm2": 602.0,
-   "first_layer_mm2": 602.0,
-   "footprint_hull_mm2": 2292.5,
-   "aspect_h_over_w": 1.82,
+   "volume_cm3": 52.78,
+   "weight_g_solid": 65.4,
+   "bed_contact_mm2": 535.8,
+   "first_layer_mm2": 535.8,
+   "footprint_hull_mm2": 1874.4,
+   "aspect_h_over_w": 2.2,
    "thin_area_mm2": 0.0,
    "thin_at_z": null,
    "thin_bounds": null,
@@ -50,7 +50,7 @@
     "strict_warnings": 0,
     "collisions": 0,
     "in_bed": true,
-    "triangles": 20774
+    "triangles": 20738
    }
   ],
   "assembly": {

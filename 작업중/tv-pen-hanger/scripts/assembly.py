@@ -17,14 +17,21 @@ def _cyl(r, h, axis, center):
     if axis == 'y': c.apply_transform(trimesh.transformations.rotation_matrix(np.pi / 2, [1, 0, 0]))
     c.apply_translation(center); return c
 
+def _pen(p, yc):
+    """펜 굵은 쪽 단면(12.5 각 R4)을 길이 전체로 — 가는 쪽(Ø10)은 더 작아 홈 안에서 굵은 쪽이 먼저 닿는다. 홈 바닥에 +0.02 띄워 얹음(접촉)."""
+    from shapely.geometry import box as sbox
+    s, r = p['PEN_S'], p['PEN_R']; sec = sbox(-s / 2, -s / 2, s / 2, s / 2).buffer(-r, 16).buffer(r, 16)
+    m = trimesh.creation.extrude_polygon(sec, p['PEN_L'])                       # (u, v, w): w = 길이
+    m.apply_transform(np.array([[0, 0, 1, p['W'] / 2 - p['PEN_L'] / 2], [1, 0, 0, yc], [0, 1, 0, p['Z_G'] + s / 2 + 0.02], [0, 0, 0, 1]], float))
+    return m
+
 def define(parts):
     p = derived(); W = p['W']; mt = p['MAG_T']; rec = p['MAG_CLR_T']
     extra = {'holder': _box([W / 2 - 60, -10, p['MAG_Z'] - 12.5], [W / 2 + 60, 0, p['MAG_Z'] + 12.5])}
     for i, xm in enumerate(p['MAG_X']):
         extra[f'magnet{i + 1}'] = _cyl(p['MAG_D'] / 2, mt, 'y', [xm, rec + mt / 2, p['MAG_Z']])        # 포켓 바닥(y 1.1)에 닿음
-    zpen = p['Z_P'] - p['RP'] + p['PEN_D'] / 2 + 0.02                                                  # 홈 바닥에 얹힘(+0.02 = 다각형 홈 현의 처짐 0.01 만큼 띄워 접촉으로)
-    extra['pen1'] = _cyl(p['PEN_D'] / 2, p['PEN_L'], 'x', [W / 2, p['Y_P1'], zpen])
-    extra['pen2'] = _cyl(p['PEN_D'] / 2, p['PEN_L'], 'x', [W / 2, p['Y_P2'], zpen])
+    for k, yc in (('pen1', p['Y_P1']), ('pen2', p['Y_P2'])):
+        extra[k] = _pen(p, yc)
     y0 = p['T_BACK'] + p['MOUSE_CLR']
     extra['mouse'] = _box([W / 2 - p['MOUSE_L'] / 2, y0, p['WALL']], [W / 2 + p['MOUSE_L'] / 2, y0 + p['MOUSE_T'], p['WALL'] + p['MOUSE_W']])
     mags = [f'magnet{i + 1}' for i in range(len(p['MAG_X']))]
@@ -40,11 +47,11 @@ def define(parts):
                  + [['hanger', 'pen1', {'contact': True}], ['hanger', 'pen2', {'contact': True}], ['hanger', 'mouse', {'contact': True}],
                     ['pen1', 'pen2', {'min_gap': 1.0}], ['pen1', 'mouse', {'min_gap': 1.0}],
                     # 마우스 옆면 ↔ 홈 벽 여유(바닥 접촉 제외: 마우스 옆면 z 6~40 만)
-                    ['hanger', 'mouse', {'region': [[0, -1, 6], [W, ymid, 40]], 'min_gap': 1.5}],
-                    ['hanger', 'mouse', {'region': [[0, ymid, 6], [W, p['Y_MW'] + 1, 40]], 'min_gap': 1.5}],
-                    # 펜 ↔ 홈 옆벽(바닥 접촉 제외: 펜 중심 높이 위쪽)
-                    ['hanger', 'pen1', {'region': [[0, 0, p['Z_P']], [W, 100, 40]], 'min_gap': 0.5}],
-                    ['hanger', 'pen2', {'region': [[0, 0, p['Z_P']], [W, 100, 40]], 'min_gap': 0.5}]],
+                    ['hanger', 'mouse', {'region': [[0, -1, 6], [W, ymid, 40]], 'min_gap': 0.75}],
+                    ['hanger', 'mouse', {'region': [[0, ymid, 6], [W, p['Y_MW'] + 1, 40]], 'min_gap': 0.75}],
+                    # 펜 ↔ 홈 옆벽(바닥·바닥 모서리 접촉 제외: 홈 바닥 R 위쪽)
+                    ['hanger', 'pen1', {'region': [[0, 0, p['Z_G'] + p['GR'] + 0.5], [W, 100, 40]], 'min_gap': 0.4}],
+                    ['hanger', 'pen2', {'region': [[0, 0, p['Z_G'] + p['GR'] + 0.5], [W, 100, 40]], 'min_gap': 0.4}]],
         'sweeps': [],
         'notes': [f"자석 앞면은 걸이대 뒷면에서 {rec} mm 들어감 → 거치대 면과 간격 {rec} mm (흡착력 계산 gap)",
                   '거치대 면·펜·마우스는 가정 치수 — 치수 조사·실측 후 build.py P 만 바꾸면 전부 다시 검사된다'],

@@ -64,7 +64,8 @@ def slits(files):
           'xlim': {'type': 'array', 'items': {'type': 'number'}}, 'ylim': {'type': 'array', 'items': {'type': 'number'}}, 'title': {'type': 'string'}})
 def section(files, plane, out, xlim=None, ylim=None, title=''):
     import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
-    matplotlib.rcParams['font.family'] = ['DejaVu Sans', 'WenQuanYi Zen Hei', 'Noto Sans CJK KR', 'NanumGothic']   # 한글 제목·범례(없으면 □)
+    from matplotlib import font_manager as fm; have = {f.name for f in fm.fontManager.ttflist}                  # 한글 제목·범례(없으면 □) — 설치된 글꼴만
+    matplotlib.rcParams['font.family'] = ['DejaVu Sans'] + [f for f in ('NanumGothic', 'Noto Sans CJK KR', 'WenQuanYi Zen Hei') if f in have]
     ax_name, _, v = plane.partition('='); ai = 'xyz'.index(ax_name.strip()); v = float(v); keep = [i for i in range(3) if i != ai]
     n = np.zeros(3); n[ai] = 1; o = np.zeros(3); o[ai] = v
     fig, ax = plt.subplots(figsize=(8, 6)); cols = ['k', 'r', 'g', 'b', 'm', 'c']; segs = {}
