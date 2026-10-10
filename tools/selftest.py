@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """도구 자가검사: 상자+뚜껑(끼움 0.3, 경첩 회전) 가짜 프로젝트를 만들어 pipeline 을 돌리고
 (1) 정상 설계 → 경고 0·GIF/PNG/3MF 생성, (2) 일부러 간섭시킨 설계 → ⚠ 검출 을 확인한다. 사용: python tools/selftest.py"""
-import os, sys, json, pickle, shutil, tempfile, numpy as np, trimesh
+import os, sys, json, time, pickle, shutil, tempfile, numpy as np, trimesh
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 from generic3mf import write_generic_3mf; from efc import pre_expand_first_layer; import pipeline
 def box(w, d, h, at=(0, 0, 0)):
@@ -44,8 +44,30 @@ def efc_group_case():
     nb2, nb3 = len(r2.split(only_watertight=False)), len(g2.split(only_watertight=False))
     print(f'[EFC 실제 모서리] 단일 조각 {nb2}, 그룹 조각 {nb3} (기대 1, 1; 예전 코드 그룹 2)')
     return ok1 and nb2 == 1 and nb3 == 1
+def slit_case():
+    """벽 속 0.1 mm 수평 틈이 있는 상자는 '얇은 틈' 으로 걸리고, 같은 크기 통짜 상자는 안 걸리는지(Toolbox48 v6/v8 뚜껑 줄 재현)."""
+    import argparse; from qc_model import qc_part
+    qa = argparse.Namespace(layer=0.2, min_wall=1.2, max_tri=200000, max_bridge=7.0, efc=0.15, single_wall=[])
+    solid = trimesh.boolean.difference([box(40, 30, 10), box(36, 26, 9, (2, 2, 1))], engine='manifold')          # 벽 2 mm 통
+    ring = trimesh.boolean.difference([box(40, 30, 0.1, (0, 0, 7.8)), box(36, 26, 0.1, (2, 2, 7.8))], engine='manifold')
+    slit = trimesh.boolean.difference([solid, ring], engine='manifold')
+    a, b = qc_part('solid', solid, qa), qc_part('slit', slit, qa)
+    fa, fb = [f for f in a['flags'] if '수평 틈' in f], [f for f in b['flags'] if '수평 틈' in f]
+    print(f'[벽 속 틈] 통짜 경고 {len(fa)}, 0.1 틈 경고 {len(fb)} {fb} (기대 0, 1)'); return not fa and len(fb) == 1
+def mm_api_case():
+    """표준 프로그램: 파이썬 mm.run 과 HTTP POST /run 결과가 같은지 + 링 로프트(판 쌓기 대신)가 계단·틈 없이 닫히는지."""
+    import threading, urllib.request, http.server, mm
+    from loft import loft_rings; from shapely.geometry import Polygon
+    st = [(z, Polygon([(-20 + 0.5 * z, -10 + 0.5 * z), (20 - 0.5 * z, -10 + 0.5 * z), (20 - 0.5 * z, 10 - 0.5 * z), (-20 + 0.5 * z, 10 - 0.5 * z)])) for z in np.arange(0, 2.01, 0.1)]
+    lf = loft_rings(st); d = tempfile.mkdtemp(); f = os.path.join(d, 'loft.stl'); lf.export(f)
+    a = mm.run('slits', files=[f])
+    port = 8799; t = threading.Thread(target=mm.serve, kwargs={'port': port}, daemon=True); t.start(); time.sleep(1.0)
+    req = urllib.request.Request(f'http://127.0.0.1:{port}/run', data=json.dumps({'cmd': 'mm_slits', 'args': {'files': [f]}}).encode(), headers={'Content-Type': 'application/json'})
+    b = json.loads(urllib.request.build_opener(urllib.request.ProxyHandler({})).open(req, timeout=60).read())
+    ok = lf.is_volume and a == b and a['loft']['slit_z'] == []
+    print(f'[표준 프로그램] 로프트 닫힘 {lf.is_volume}, 파이썬=HTTP {a == b}, 틈 {a["loft"]["slit_z"]}'); return ok
 if __name__ == '__main__':
-    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = efc_group_case()
+    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = efc_group_case() and slit_case() and mm_api_case()
     cfg = fixture(os.path.join(tmp, 'good'), 0.3); rc = pipeline.run(cfg); rep = json.load(open(os.path.join(tmp, 'good', 'qc', 'report.json')))
     files = [os.path.join(tmp, 'good', 'qc', f) for f in ('REPORT.md', 'assembly/turntable.gif', 'motion/turntable.gif', 'plate_A/view_iso.png')]
     print('\n[정상 설계] 종료코드', rc, '| 경고', rep['warn'], '| 산출물', [os.path.exists(f) for f in files])

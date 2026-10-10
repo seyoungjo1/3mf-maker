@@ -16,6 +16,12 @@
 4. 금지 목록: 사용자가 올린 파일을 단면 그림 없이 설명하는 것 / 결합·끼움을 메시를 실제 좌표에 놓은 수치 없이 "맞다·안 맞다" 말하는 것 / QC 표·조립 수치·렌더 확인 없이 파일을 보내는 것 / 코끼리발 선반영(`tools/efc.py`)과 서포트 위치 명시 없이 3MF를 만드는 것 / 숫자 비교만으로 결합 가능성을 단정하는 것.
 5. 당연한 단계(문서 읽기·실측·QC·커밋·푸시·병합)는 허락을 묻지 않고 진행한다. 묻는 것은 결합 치수 변경과 설계 방향의 선택뿐이며, 그때도 실측 그림을 먼저 보여준다.
 
+## 표준 프로그램 규칙 (절대 규칙)
+- **모든 검사·단면 그림·렌더·3MF 검사·파이프라인은 표준 프로그램 `python tools/mm.py <명령>` 으로 한다.** 일회성 인라인 파이썬으로 같은 일을 하지 않는다. 필요한 기능이 없으면 `tools/mm.py` 에 명령을 추가하고 `selftest` 에 시험을 넣는다.
+- 명령: `doctor`(환경) · `qc` · `slits`(벽 속 수평 틈 = 출력물 줄) · `section`(단면 PNG, 실측 근거) · `render` · `check3mf` · `pipeline` · `make`(config 의 build → pipeline 일괄) · `selftest`. `python tools/mm.py help`.
+- 같은 명령을 파이썬(`mm.run('qc', files=[...])`), HTTP(`python tools/mm.py serve` → `POST /run {"cmd","args"}`), Claude API tool use(`python tools/mm.py schema` 의 tools 배열)로도 부른다. 결과는 항상 JSON.
+- 프로젝트 결과물은 `python tools/mm.py make <프로젝트>/pipeline_*.json` 한 번으로 빌드부터 보고까지 재현되어야 한다(`"build": [스크립트, 인자…]`).
+
 ## 파이프라인 규칙 (절대 규칙)
 - **모든 결과물은 `python tools/pipeline.py <프로젝트>/pipeline_*.json` 을 통과한 것만 낸다.** QC → 플레이트 3MF(충돌·베드·lib3mf strict) → 조립 검증(상태별 교집합·간격·영역 간격·각도 스윕) → 렌더(플레이트 5뷰+회전 GIF, 조립 상태 GIF, 작동 GIF) → `REPORT.md` → 종료 코드(⚠ 있으면 1). 종료 코드 1 이면 파일을 보내지 않고 설계로 돌아간다.
 - 프로젝트마다 `scripts/assembly_*.py` 의 `define(parts)` 로 상태·결합 쌍·스윕·추가 파트(명판 같은 내용물)를 정의한다. 결합 쌍은 접촉(`contact`)과 간격 요구(`min_gap`, `region`)를 명시한다.
