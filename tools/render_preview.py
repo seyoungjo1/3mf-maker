@@ -64,13 +64,14 @@ const bedMat=new THREE.MeshStandardMaterial({color:0x23282e,roughness:0.85,metal
 const bed=new THREE.Mesh(new THREE.BoxGeometry(bedSize,bedSize,2),bedMat); bed.position.set(bedSize/2,bedSize/2,-1.05); scene.add(bed);
 const meshes={}; const box=new THREE.Box3();
 for(const p of DATA.parts){ const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(p.positions,3)); g.setIndex(p.indices); g.computeVertexNormals();
-  const m=new THREE.Mesh(g,new THREE.MeshStandardMaterial({color:p.color,roughness:0.55,metalness:0.05,flatShading:true})); m.userData.base=new THREE.Vector3(0,0,0); scene.add(m); meshes[p.name]=m; box.expandByObject(m); }
+  const m=new THREE.Mesh(g,new THREE.MeshStandardMaterial({color:p.color,roughness:0.55,metalness:0.05,flatShading:true,transparent:(p.opacity??1)<1,opacity:p.opacity??1,depthWrite:(p.opacity??1)>=1})); m.userData.base=new THREE.Vector3(0,0,0); scene.add(m); meshes[p.name]=m; box.expandByObject(m); }
 camera.up.set(0,0,1); let c=new THREE.Vector3(), s=100;
-function fit(){ const bb=new THREE.Box3(); for(const m of Object.values(meshes)){ m.updateMatrixWorld(true); bb.expandByObject(m); } c=bb.getCenter(new THREE.Vector3()); s=bb.getSize(new THREE.Vector3()).length(); }
-window.setView=function(mode,azDeg){ fit(); controls.target.copy(c); grid.visible=mode!=='bottom'; bed.visible=mode!=='bottom';
+function fit(){ const bb=new THREE.Box3(); for(const m of Object.values(meshes)){ if(m.material.opacity<1) continue; m.updateMatrixWorld(true); bb.expandByObject(m); } c=bb.getCenter(new THREE.Vector3()); s=bb.getSize(new THREE.Vector3()).length(); window.BELOW=bb.min.z<-0.5; }
+window.setView=function(mode,azDeg){ fit(); controls.target.copy(c); grid.visible=mode!=='bottom'&&!window.BELOW; bed.visible=grid.visible;   // 설치 좌표(z<0)면 베드가 모델을 가리므로 숨김
   if(mode==='top') camera.position.set(c.x,c.y-s*0.001,c.z+s*1.3);
   else if(mode==='side') camera.position.set(c.x,c.y-s*1.3,c.z+s*0.03);
   else if(mode==='bottom') camera.position.set(c.x,c.y-s*0.001,c.z-s*1.3);
+  else if(mode==='profile') camera.position.set(c.x+s*1.2,c.y-s*0.12,c.z+s*0.1);   // x 방향 옆모습(단면 윤곽)
   else if(mode==='front') camera.position.set(c.x+s*0.25,c.y-s*1.15,c.z+s*0.22);
   else { const a=(azDeg===undefined?0:azDeg)*Math.PI/180; const r=s*0.9; camera.position.set(c.x+r*Math.sin(a),c.y-r*Math.cos(a),c.z+s*0.8); }
   camera.lookAt(c); controls.update(); renderer.render(scene,camera); };
@@ -80,8 +81,10 @@ window.setState(DATA.firstState||''); window.setView('iso',0); window.READY=true
 </script></body></html>'''
 
 def mesh_json(m, color, name):
+    """color 는 '#hex' 또는 '#hex@불투명도'(예: '#9e9e9e@0.2' — TV·벽처럼 큰 주변물을 반투명으로, 화면 맞춤에서도 뺀다)."""
     V = np.asarray(m.vertices, np.float32); F = np.asarray(m.faces, np.uint32)
-    return {'name': name, 'color': color, 'positions': [round(float(v), 3) for v in V.ravel()], 'indices': [int(i) for i in F.ravel()]}
+    c, _, a = str(color).partition('@'); op = float(a) if a else 1.0
+    return {'name': name, 'color': c, 'opacity': op, 'positions': [round(float(v), 3) for v in V.ravel()], 'indices': [int(i) for i in F.ravel()]}
 
 def load(paths):
     parts = {}
@@ -116,7 +119,7 @@ def render(parts, out, colors=None, states=None, frames=36, size=(1200, 900), gi
         state_names = list(states) if states else ['']
         for st in state_names:
             pg.evaluate(f'window.setState({json.dumps(st)})')
-            for v in ('iso', 'top', 'side', 'bottom', 'front'):
+            for v in ('iso', 'top', 'side', 'bottom', 'front', 'profile'):
                 pg.evaluate(f'window.setView({json.dumps(v)},0)'); fn = f'view_{v}' + (f'_{st}' if st else '') + '.png'
                 pg.screenshot(path=os.path.join(out, fn)); pngs[fn] = fn
         pg.close()

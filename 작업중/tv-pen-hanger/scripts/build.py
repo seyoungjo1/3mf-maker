@@ -38,6 +38,7 @@ P = {
     'MOUSE_CLR': 1.0,    # 리모컨 칸 여유(한쪽)
     'LIP_R': 10.0,       # 리모컨 칸 앞 입술 높이 — 리모컨 아래를 잡음
     'LIFT': 2.0,         # 리모컨을 입술 위로 들어 넣을 여유(리모컨 위 끝 ↔ 선반 밑면)
+    'MOUSE_R': 4.0,      # M5 단면 모서리 둥글기(가정 — 공개 자료에 곡률 없음, 두께 9 의 거의 반원). 칸 바닥은 안 폭 11 의 반원 U
     'WALL': 2.4,         # 리모컨 칸 바닥·입술 두께
     # ── 펜 J 고리 2개(리모컨 홈 아래, 위아래) + 펜이 착 붙는 숨은 자석 Ø10×2 3개
     'PEN_S': 13.1, 'PEN_L': 176.0,                     # 펜 최대 지름·길이 (사용자 실측)
@@ -47,8 +48,8 @@ P = {
     'LIP': 2.0,          # J 앞 입술 끝 = 펜 축보다 2 위 (펜이 굴러 나오지 않음)
     'OPEN': 15.0,        # J 입구 높이(입술 끝 → 위 부재) — 펜 13.1 이 수평으로 들어갈 틈
     'PM_D': 10.0, 'PM_T': 2.0,                         # 펜용 자석 Ø10×2, J 마다 3개 (사용자 지정)
-    'PM_X': [(j, dx) for j in (1, 2) for dx in (-45.0, 0.0, 45.0)],   # (J 번호, 가운데에서 x) — J 마다 3개(사용자). 펜 자력은 몸통(두께 12.3~10, 펜 23~148)에만 있음(사용자) → 펜 위치 43·88·133. 위아래 같은 x → 일시정지 3번
-    'SKIN': 1.3,         # 펜 홈 바닥 ↔ 자석 사이 살(안 보이게) — 벽 최소 1.2 + 측정 여유 0.1
+    'PM_X': [(j, dx) for j in (1, 2) for dx in (-45.0, 0.0, 45.0)],   # (J 번호, 가운데에서 x) — J 마다 3개(사용자). 펜 자력은 몸통(두께 12.3~10, 펜 23~148)에만 있음(사용자) → 펜 위치 43·88·133
+    'SKIN': 1.3,         # 가장 굵은 펜 홈 바닥 ↔ 자석 사이 살 — 벽 최소 1.2 + 측정 여유 0.1
     'FILLET': 0.9, 'FILLET_IN': 0.8,                   # 바깥·안쪽 모서리 둥글기(2D) — 바깥은 가장 얇은 살 2.0 의 절반 미만
 }
 COLORS = {'hanger': '#37474f'}
@@ -64,16 +65,14 @@ def derived():
     p['YC'] = p['Y_BI'] + p['GW']                                         # J 홈 축 y
     p['Z_RF'] = -p['SHELF'] - p['LIFT'] - p['LIP_R'] - p['MOUSE_W']        # 리모컨 칸 바닥 윗면 z
     p['PM_H'] = p['PM_T'] + p['MAG_CLR_T']                                # 펜 자석 슬롯 두께 2.1
-    p['HEEL'] = p['GW'] + p['SKIN'] + p['PM_H'] + 1.2                     # 축 → J 바닥 밑면 (자석 아래 살 1.2)
+    p['HEEL'] = p['GW'] + p['SKIN'] + p['PM_H']                           # 축 → J 바닥 밑면 (가장 굵은 펜 홈 바닥 아래 살 SKIN + 자석 포켓)
     p['Z1'] = p['Z_RF'] - p['WALL'] - p['OPEN'] - p['LIP']                 # 위 J 축 z (리모컨 칸 바닥 아래 입구 15)
     p['Z2'] = p['Z1'] - p['HEEL'] - p['OPEN'] - p['LIP']                  # 아래 J 축 z
     p['Z_BOT'] = p['Z2'] - p['HEEL']                                      # 아래 끝
-    # (J, x, 슬롯 윗면 z): 그 x 의 펜 홈 바닥(펜 반지름 + 0.3) 바로 아래 살 SKIN — 펜이 가늘어지는 곳도 자석과의 거리가 같게
-    p['PM'] = [(j, p['W'] / 2 + dx, (p['Z1'] if j == 1 else p['Z2']) - (pen_w(p['W'] / 2 + dx + p['PEN_S0']) / 2 + p['PEN_CLR']) - p['SKIN'])
-               for j, dx in p['PM_X']]
-    # 숨은 자석 일시정지 높이(출력 z' = 설치 x): 슬롯 윗면(자석 끝 +0.1)을 층 격자로 올림 → 그 층까지 출력 후 멈춤
-    r = (p['PM_D'] + p['MAG_CLR_D']) / 2
-    p['PAUSE_Z'] = sorted(set(round(math.ceil((x + r + 0.1) / LAYER - 1e-6) * LAYER, 2) for _, x, _ in p['PM']))
+    # (J, x, 굽 밑면 z): 펜 자석 포켓은 J 굽 밑면에서 위로 2.1 — 출력 뒤 밑에서 끼워 접착(사용자: 일시정지 삽입 대신)
+    p['PM'] = [(j, p['W'] / 2 + dx, (p['Z1'] if j == 1 else p['Z2']) - p['HEEL']) for j, dx in p['PM_X']]
+    # 그 x 에서 펜 홈 바닥 ↔ 자석 사이 살(펜이 가늘수록 두꺼움)
+    p['PM_SKIN'] = [round(p['HEEL'] - p['PM_H'] - (pen_w(x + p['PEN_S0']) / 2 + p['PEN_CLR']), 2) for _, x, _ in p['PM']]
     return p
 
 # 펜 윤곽(캡 끝에서 s mm → 지름 w). 사용자 실측: 캡 7, 위에서 23 에 최대 13.1, 148(펜촉 끝에서 28)에 Ø10, 펜촉 3, 길이 176.
@@ -107,11 +106,12 @@ def profile(p):
     parts = [sbox(0, -p['SHELF'], tb, p['H_TOP']),                                        # 앞판
              sbox(yb, -p['SHELF'], tb, 0),                                                # TV 밑면 받침 선반
              sbox(yb, p['Z_BOT'] + 2, ybi, 0),                                            # 뒤 벽
-             sbox(yb, zr - w, ylip + w, zr), sbox(ylip, zr, ylip + w, zr + p['LIP_R'])]   # 리모컨 칸 바닥·앞 입술
-    hw = (p['PM_D'] + p['MAG_CLR_D']) / 2 + 1.5                                          # 굽 반폭: 자석 반지름 + 옆 살 (굽 모서리 R3.5)
+             sbox(yb, zr - w, ylip + w, zr), sbox(ylip, zr, ylip + w, zr + p['LIP_R']),   # 리모컨 칸 바닥·앞 입술
+             sbox(ybi - 0.5, zr - 0.5, ylip + 0.5, zr + p['MS'] / 2).difference(Point(ybi + p['MS'] / 2, zr + p['MS'] / 2).buffer(p['MS'] / 2, 64))]   # 바닥을 U 로(리모컨 둥근 아래 모서리에 맞춤)
+    hw = (p['PM_D'] + p['MAG_CLR_D']) / 2 + 1.5                                          # 굽 반폭: 자석 반지름 + 옆 살 (굽 모서리 R1.5 — 밑면 포켓이 평면 안에)
     for zc in (p['Z1'], p['Z2']):
         parts += [Point(yc, zc).buffer(ro, 64).intersection(sbox(-200, zc - 50, 100, zc + p['LIP'])),
-                  sbox(yb, zc - p['HEEL'], yc + hw, zc).buffer(-3.5, 16).buffer(3.5, 16), sbox(yb, zc - p['HEEL'] + 2, yc, zc + p['LIP'])]
+                  sbox(yb, zc - p['HEEL'], yc + hw, zc).buffer(-1.5, 16).buffer(1.5, 16), sbox(yb, zc - p['HEEL'] + 2, yc, zc + p['LIP'])]
     f, fi = p['FILLET'], p['FILLET_IN']
     out = unary_union(parts).buffer(-f, 8).buffer(f, 8).buffer(fi, 8).buffer(-fi, 8)
     out = out.difference(sbox(-500, 0, 0, 500)).intersection(sbox(-500, -500, tb, 500))   # TV 자리(앞면·밑면 모서리)는 비우고, 앞판 앞면 평면 유지
@@ -124,11 +124,6 @@ def _sweep(prof, W):
     body.apply_transform(np.array([[0, -1, 0, 0], [1, 0, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]], float))   # (py, -px) → (px, py)
     return body                                                                # 출력 좌표 (x', y', z') = (y, z, x)
 
-def slot(r, top):
-    """숨은 자석 슬롯 단면(u=x, v): 아래 반원 + 위로 곧은 홈(윗면 = top, 층 격자). 일시정지 때 위에서 자석을 떨어뜨려 넣고
-    다음 층부터 슬롯 두께(2.1) 폭 브리지로 덮인다."""
-    return unary_union([Point(0, 0).buffer(r, 32), sbox(0, -r, top, r)])
-
 INV = np.array([[0, 1, 0, 0], [0, 0, 1, 0], [1, 0, 0, 0], [0, 0, 0, 1]], float)    # 설치 → 출력 (MOUNT 의 역)
 def _place(poly, h0, h1, L):
     """(u, v) 폴리곤을 h0~h1 로 압출 → 지역 (u, v, h) 를 설치 좌표로 보내는 4×4 L → 출력 좌표."""
@@ -139,9 +134,8 @@ def make_parts():
     p = derived(); dep = p['MAG_T'] + p['MAG_CLR_T']; r = (p['PM_D'] + p['MAG_CLR_D']) / 2; cut = []
     for xm in p['MAG_X']:   # TV 쪽 열린 원형 포켓(깊이 1.1 — 천장이 짧아 양끝에 걸쳐 출력, 사용자 요청으로 눈물방울 없앰): 설치 (x, y, z) = (u + xm, h, MAG_Z − v)  (det +1)
         cut.append(_place(Point(0, 0).buffer((p['MAG_D'] + p['MAG_CLR_D']) / 2, 64), -1.0, dep, np.array([[1, 0, 0, xm], [0, 0, 1, 0], [0, -1, 0, p['MAG_Z']], [0, 0, 0, 1]], float)))
-    for _, xm, ztop in p['PM']:   # 펜 자석 숨은 슬롯: 설치 (x, y, z) = (u + xm, v + YC, h), h = 윗면 − 2.1 ~ 윗면
-        top = math.ceil((xm + r + 0.1) / LAYER - 1e-6) * LAYER - xm
-        cut.append(_place(slot(r, top), ztop - p['PM_H'], ztop, np.array([[1, 0, 0, xm], [0, 1, 0, p['YC']], [0, 0, 1, 0], [0, 0, 0, 1]], float)))
+    for _, xm, zb in p['PM']:     # 펜 자석 포켓: 굽 밑면에서 위로 2.1(밑에서 끼움), 설치 (x, y, z) = (u + xm, v + YC, h)
+        cut.append(_place(Point(0, 0).buffer(r, 64), zb - 1.0, zb + p['PM_H'], np.array([[1, 0, 0, xm], [0, 1, 0, p['YC']], [0, 0, 1, 0], [0, 0, 0, 1]], float)))
     cut += [groove_cutter(p, p['YC'], zc, p['LIP'] + 3.0) for zc in (p['Z1'], p['Z2'])]
     return {'hanger': trimesh.boolean.difference([_sweep(profile(p), p['W'])] + cut, engine='manifold')}
 
@@ -161,4 +155,4 @@ if __name__ == '__main__':
     for n, m in printed.items(): m.export(f'models/tv-pen-hanger_{n}.stl')          # 파트 STL 동봉(출력 방향, 첫 층 선반영)
     d = derived()
     print('build ok', {n: [round(v, 2) for v in m.extents] for n, m in nominal.items()},
-          {k: (round(v, 2) if isinstance(v, float) else v) for k, v in d.items() if k in ('MS', 'GW', 'RO', 'Y_B', 'YC', 'Z_RF', 'HEEL', 'Z1', 'Z2', 'Z_BOT', 'MAG_X', 'PM', 'PAUSE_Z')})
+          {k: (round(v, 2) if isinstance(v, float) else v) for k, v in d.items() if k in ('MS', 'GW', 'RO', 'Y_B', 'YC', 'Z_RF', 'HEEL', 'Z1', 'Z2', 'Z_BOT', 'MAG_X', 'PM', 'PM_SKIN')})

@@ -1,5 +1,5 @@
 {
- "name": "tv-pen-hanger v6",
+ "name": "tv-pen-hanger v7",
  "build": [
   "scripts/build.py"
  ],
@@ -11,10 +11,10 @@
  ],
  "assembly": "scripts/assembly.py",
  "colors": {
-  "hanger": "#37474f",
+  "hanger": "#64b5f6",
   "pen1": "#eceff1",
   "pen2": "#eceff1",
-  "mouse": "#263238",
+  "mouse": "#546e7a",
   "magnet1": "#cfd8dc",
   "magnet2": "#cfd8dc",
   "magnet3": "#cfd8dc",
@@ -26,7 +26,7 @@
   "pm4": "#ffb300",
   "pm5": "#ffb300",
   "pm6": "#ffb300",
-  "tv": "#9e9e9e"
+  "tv": "#9e9e9e@0.18"
  },
  "qc": {
   "efc": 0.15,

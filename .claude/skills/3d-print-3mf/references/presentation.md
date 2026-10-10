@@ -7,3 +7,9 @@
 - 2색: 밑판 #37474f, 글자 #ffb300, 하부 #ff8f00.
 - 헤드리스: `python tools/render_preview.py <파일> --out <dir> [--states states.json] [--colors a=#hex,...]` → view_{iso,top,side,bottom}[_상태].png + turntable.gif(36~54 프레임, 상태 순환). Chromium `/opt/pw-browsers/chromium` + swiftshader.
 - 사용자에게는 GIF와 iso PNG를 파일로 보낸다. 조립 상태가 있으면 닫힘/열림/분리 세 상태를 모두 담는다.
+
+## 설치 좌표 모델이 렌더에서 안 보이던 문제 (tv-pen-hanger v7, 2026-10-10)
+- 조립을 설치 좌표(예: TV 밑면 z=0, 걸이대는 z<0)로 정의하면 모델이 베드 판 아래에 들어가 GIF에 거의 안 보였다. 사용자: "gif가 나한테 보여주는게 맞아? 안 보이는데".
+- 이제 렌더러가 보이는 파트의 최저 z < −0.5 면 베드·격자를 숨긴다(`render_below_case` 자가검사). 주변물(TV 등)은 `'#hex@0.18'` 반투명.
+- 단면 윤곽이 핵심인 압출형 부품은 `view_profile*.png`(x 방향 옆모습)를 함께 본다. 어두운 배경에서는 본체 색을 밝게(`#64b5f6` 등) 둔다.
+- 보내기 전 GIF 프레임을 몇 장 뽑아 실제로 모델이 보이는지 확인한다.

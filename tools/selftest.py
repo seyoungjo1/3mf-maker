@@ -140,6 +140,23 @@ def void_case():
     ok = r1['bodies'] == 1 and r1['voids'] == 1 and not any('조각' in f for f in r1['flags']) and r2['bodies'] == 2 and r2['voids'] == 0
     print('void_case', 'OK' if ok else 'FAIL', r1['bodies'], r1['voids'], r2['bodies'], r2['voids']); return ok
 
+def render_opacity_case():
+    """렌더 색 '#hex@불투명도' → 색·opacity 분리(반투명 주변물), 없으면 1."""
+    import trimesh; from render_preview import mesh_json
+    b = trimesh.creation.box(extents=[1, 1, 1]); a = mesh_json(b, '#9e9e9e@0.2', 'tv'); o = mesh_json(b, '#37474f', 'p')
+    ok = a['color'] == '#9e9e9e' and abs(a['opacity'] - 0.2) < 1e-9 and o['opacity'] == 1.0
+    print('render_opacity_case', 'OK' if ok else 'FAIL'); return ok
+
+def render_below_case():
+    """설치 좌표(z<0)에 있는 모델도 렌더에 보여야 한다: 베드가 가리면 주황 픽셀이 거의 없다. 옆모습(profile) 뷰도 생긴다."""
+    import trimesh; from render_preview import render; from PIL import Image; import numpy as np
+    d = tempfile.mkdtemp(prefix='below_'); b = trimesh.creation.box(extents=[60, 40, 50]); b.apply_translation([30, 20, -40])
+    render({'p': b}, d, {'p': '#ffb300'}, None, 2, size=(320, 240), gif_size=(160, 120))
+    a = np.asarray(Image.open(os.path.join(d, 'view_iso.png')).convert('RGB')).astype(int)
+    frac = ((a[..., 0] > 150) & (a[..., 1] > 90) & (a[..., 2] < 80)).mean()
+    ok = frac > 0.05 and os.path.exists(os.path.join(d, 'view_profile.png'))
+    print(f'render_below_case 주황 비율 {frac:.2f}', 'OK' if ok else 'FAIL'); return ok
+
 def magnet_case():
     """자석 흡착력 계산: 먼 거리는 쌍극자-거울상 식과 2 % 안, 간격이 늘면 단조 감소, 적분 점수 2배에도 같은 값(수렴)."""
     import magnet as mg
@@ -152,7 +169,7 @@ def magnet_case():
     print(f"[자석] 먼 거리/쌍극자 {far:.3f} · 간격별 {[round(x, 2) for x in seq]} N · 수렴 {conv:.1e} · 걸이 미끄럼 안전율 {h['slip_safety']}")
     return ok
 if __name__ == '__main__':
-    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = coarse_gap_case() and void_case() and magnet_case() and efc_group_case() and slit_case() and wall_step_case() and mm_api_case()
+    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = coarse_gap_case() and render_opacity_case() and render_below_case() and void_case() and magnet_case() and efc_group_case() and slit_case() and wall_step_case() and mm_api_case()
     cfg = fixture(os.path.join(tmp, 'good'), 0.3); rc = pipeline.run(cfg); rep = json.load(open(os.path.join(tmp, 'good', 'qc', 'report.json')))
     files = [os.path.join(tmp, 'good', 'qc', f) for f in ('REPORT.md', 'assembly/turntable.gif', 'motion/turntable.gif', 'plate_A/view_iso.png')]
     print('\n[정상 설계] 종료코드', rc, '| 경고', rep['warn'], '| 산출물', [os.path.exists(f) for f in files])
