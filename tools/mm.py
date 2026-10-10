@@ -150,7 +150,9 @@ def make(config):
 def selftest():
     p = subprocess.run([sys.executable, os.path.join(HERE, 'selftest.py')], capture_output=True, text=True)
     lines = [l for l in p.stdout.splitlines() if l.startswith('[') or 'SELFTEST' in l]
-    return {'ok': p.returncode == 0, 'lines': lines}
+    r = {'ok': p.returncode == 0, 'lines': lines}
+    if p.returncode: r['stderr_tail'] = p.stderr[-3000:]   # 실패 원인(예외 추적)을 숨기지 않는다
+    return r
 # ---------------------------------------------------------------- 실행기
 def run(cmd, **args):
     if cmd not in COMMANDS: return {'error': f'모르는 명령 {cmd}', 'commands': list(COMMANDS)}

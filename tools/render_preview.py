@@ -17,7 +17,11 @@ def find_chrome():
     home = os.path.expanduser('~')
     for base in (os.environ.get('PLAYWRIGHT_BROWSERS_PATH', ''), os.path.join(home, '.cache', 'ms-playwright'),
                  os.path.join(home, 'AppData', 'Local', 'ms-playwright'), os.path.join(home, 'Library', 'Caches', 'ms-playwright')):
-        if base: cands += sorted(glob.glob(os.path.join(base, 'chromium-*', '*', 'chrome*')), reverse=True) + sorted(glob.glob(os.path.join(base, 'chromium-*', '*', '*.app', 'Contents', 'MacOS', '*')), reverse=True)
+        # 실행 파일 이름을 정확히 지정한다('chrome*' 로 잡으면 chrome_sandbox·chrome_crashpad_handler 가 먼저 걸려 렌더가 죽는다 — CI 에서 실제로 발생)
+        if base:
+            for pat in (('chromium-*', '*', 'chrome'), ('chromium-*', '*', 'chrome.exe'), ('chromium_headless_shell-*', '*', 'chrome-headless-shell'),
+                        ('chromium-*', '*', '*.app', 'Contents', 'MacOS', 'Chromium'), ('chromium-*', '*', '*.app', 'Contents', 'MacOS', 'Google Chrome for Testing')):
+                cands += sorted(glob.glob(os.path.join(base, *pat)), reverse=True)
     for n in ('chromium', 'chromium-browser', 'google-chrome', 'google-chrome-stable', 'chrome', 'msedge'):
         w = shutil.which(n)
         if w: cands.append(w)
