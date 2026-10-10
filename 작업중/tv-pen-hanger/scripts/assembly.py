@@ -18,11 +18,13 @@ def _cyl(r, h, axis, center):
     c.apply_translation(center); return c
 
 def _pen(p, yc):
-    """펜 굵은 쪽 단면(12.5 각 R4)을 길이 전체로 — 가는 쪽(Ø10)은 더 작아 홈 안에서 굵은 쪽이 먼저 닿는다. 홈 바닥에 +0.02 띄워 얹음(접촉)."""
-    from shapely.geometry import box as sbox
-    s, r = p['PEN_S'], p['PEN_R']; sec = sbox(-s / 2, -s / 2, s / 2, s / 2).buffer(-r, 16).buffer(r, 16)
-    m = trimesh.creation.extrude_polygon(sec, p['PEN_L'])                       # (u, v, w): w = 길이
-    m.apply_transform(np.array([[0, 0, 1, p['W'] / 2 - p['PEN_L'] / 2], [1, 0, 0, yc], [0, 1, 0, p['Z_G'] + s / 2 + 0.02], [0, 0, 0, 1]], float))
+    """펜 전체 윤곽(캡~펜촉, build.pen_section)을 로프트 — 홈 축에서 PEN_CLR 만큼 내려앉혀(−0.3 + 0.02) 홈 바닥에 얹음."""
+    from build import pen_section; from loft import loft_rings
+    from shapely.geometry import Polygon
+    ss = np.r_[np.arange(0.0, p['PEN_L'], 1.0), p['PEN_L']]
+    rings = [(s_, Polygon(np.asarray(pen_section(s_).exterior.coords))) for s_ in ss]
+    m = loft_rings(rings, M=160)                                               # (u, v, s)
+    m.apply_transform(np.array([[0, 0, 1, -p['PEN_S0']], [1, 0, 0, yc], [0, 1, 0, p['ZC'] - p['PEN_CLR'] + 0.02], [0, 0, 0, 1]], float))
     return m
 
 def define(parts):
@@ -49,9 +51,9 @@ def define(parts):
                     # 마우스 옆면 ↔ 홈 벽 여유(바닥 접촉 제외: 마우스 옆면 z 6~40 만)
                     ['hanger', 'mouse', {'region': [[0, -1, 6], [W, ymid, 40]], 'min_gap': 0.75}],
                     ['hanger', 'mouse', {'region': [[0, ymid, 6], [W, p['Y_MW'] + 1, 40]], 'min_gap': 0.75}],
-                    # 펜 ↔ 홈 옆벽(바닥·바닥 모서리 접촉 제외: 홈 바닥 R 위쪽)
-                    ['hanger', 'pen1', {'region': [[0, 0, p['Z_G'] + p['GR'] + 0.5], [W, 100, 40]], 'min_gap': 0.4}],
-                    ['hanger', 'pen2', {'region': [[0, 0, p['Z_G'] + p['GR'] + 0.5], [W, 100, 40]], 'min_gap': 0.4}]],
+                    # 펜 ↔ 홈 옆벽(바닥 접촉 제외: 축 아래 2 mm 위쪽, 걸이대 폭 안)
+                    ['hanger', 'pen1', {'region': [[0, 0, p['ZC'] - 2], [W, 100, 40]], 'min_gap': 0.2}],
+                    ['hanger', 'pen2', {'region': [[0, 0, p['ZC'] - 2], [W, 100, 40]], 'min_gap': 0.2}]],
         'sweeps': [],
         'notes': [f"자석 앞면은 걸이대 뒷면에서 {rec} mm 들어감 → 거치대 면과 간격 {rec} mm (흡착력 계산 gap)",
                   '거치대 면·펜·마우스는 가정 치수 — 치수 조사·실측 후 build.py P 만 바꾸면 전부 다시 검사된다'],

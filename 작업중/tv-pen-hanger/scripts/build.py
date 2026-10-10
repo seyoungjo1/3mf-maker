@@ -16,6 +16,7 @@ from shapely.geometry import box as sbox, Point, Polygon
 from shapely.ops import unary_union
 from efc import pre_expand_first_layer
 from generic3mf import write_generic_3mf
+from loft import loft_rings
 
 # 설계 치수표 (README.md 와 같게). '가정' 표시 값은 치수 조사·실측 후 바꾼다.
 P = {
@@ -36,8 +37,9 @@ P = {
     'PEN_R': 4.0,        # 펜 굵은 쪽 모서리 R (사용자 실측, 추정)
     'PEN_THIN_D': 10.0,  # 펜 가는 쪽 지름 (사용자 실측)
     'PEN_L': 176.0,      # 펜 길이 (사용자 실측 17.6 cm)
-    'PEN_CLR': 0.5,      # 펜 홈 여유(한쪽) — 슬라이드 0.2~0.3 보다 넉넉히(위에서 툭 넣는 받침)
-    'PEN_LIP_H': 9.0,    # 펜 홈 벽 높이(홈 바닥 위) — 펜 12.5 의 72 %
+    'PEN_CLR': 0.3,      # 펜 홈 = 펜 윤곽 + 한쪽 0.3 ('딱 들어가게', 치수 스레드 권장)
+    'PEN_S0': 14.0,      # 걸이대 x=0 에 오는 펜 위치(캡 끝에서 mm) — 어깨(11~22)가 홈 안에 들어와 펜이 좌우로 밀리지 않음
+    'PEN_LIP_H': 9.0,    # 펜 홈 벽 높이(가장 깊은 홈 바닥 위)
     'WALL': 3.0,         # 마우스 홈 바닥·앞벽
     'PEN_WALL': 2.4,     # 펜 홈 벽(≥1.2, 휘는 부재 ≥ 3 은 앞벽·바닥 3 으로)
     'H_MWALL': 28.0,     # 마우스 홈 앞벽 높이
@@ -47,15 +49,37 @@ COLORS = {'hanger': '#37474f'}
 
 def derived():
     p = dict(P); p['MS'] = p['MOUSE_T'] + 2 * p['MOUSE_CLR']            # 마우스 홈 안쪽 폭(y)
-    p['GW'] = p['PEN_S'] / 2 + p['PEN_CLR']                              # 펜 홈 반폭
-    p['GR'] = p['PEN_R'] + p['PEN_CLR']                                  # 펜 홈 바닥 모서리 R(펜 모서리 R + 여유)
+    p['GW'] = p['PEN_S'] / 2 + p['PEN_CLR']                              # 펜 홈 최대 반폭(가장 굵은 곳)
     p['Y_MW'] = p['T_BACK'] + p['MS']                                     # 마우스 앞벽 시작 y
     p['Y_P1'] = p['Y_MW'] + p['WALL'] + p['GW']                            # 펜 홈 1 중심 y (마우스 앞벽 = 펜 홈 뒷벽)
     p['Y_P2'] = p['Y_P1'] + 2 * p['GW'] + p['PEN_WALL']                    # 펜 홈 2 중심 y
     p['Y_END'] = p['Y_P2'] + p['GW'] + p['PEN_WALL']                       # 앞 끝
-    p['Z_G'] = p['PEN_WALL']                                              # 펜 홈 바닥 z (바닥 살 = PEN_WALL)
+    p['Z_G'] = p['PEN_WALL']                                              # 펜 홈 가장 깊은 바닥 z (바닥 살 = PEN_WALL)
+    p['ZC'] = p['Z_G'] + p['GW']                                          # 펜 홈 축 높이(가장 굵은 곳 바닥이 Z_G)
     p['MAG_X'] = [p['MAG_X0'] + i * p['MAG_PITCH'] for i in range(p['MAG_N'])]
     return p
+
+# 펜 윤곽(캡 끝에서 s mm → 폭 w). 사진 실측(부품치수조사.md 7절, 0.396 mm/px, ±0.5)의 위쪽 포락선 + 사용자 실측 고정점
+# (가장 굵은 곳 12.5 각 R4 / 펜촉 끝에서 28 = 148 mm 에서 Ø10 / 길이 176). 사진 표는 px 반올림으로 0.25~0.4 작게 나와 큰 쪽을 쓴다.
+PEN_W = [(0, 4.0), (2, 6.8), (11, 6.8), (22, 12.5), (32, 12.5), (148, 10.0), (167, 3.0), (176, 2.4)]
+def pen_w(s): return float(np.interp(s, *zip(*PEN_W)))
+def pen_r(s):
+    """모서리 R: 굵은 쪽 4(사각) → 148 에서 5(= Ø10 원). 폭의 절반을 넘지 않음."""
+    return min(pen_w(s) / 2, float(np.interp(s, [32, 148], [P['PEN_R'], P['PEN_THIN_D'] / 2])))
+def pen_section(s, grow=0.0):
+    w, r = pen_w(s) + 2 * grow, pen_r(s) + grow
+    if r >= w / 2 - 1e-6: return Point(0, 0).buffer(w / 2, 16)
+    return sbox(-w / 2, -w / 2, w / 2, w / 2).buffer(-r, 4).buffer(r, 16)
+
+def groove_cutter(p, yc):
+    """펜 홈(출력 좌표): z' = 설치 x 마다 펜 단면 + 0.3 을 축 (yc, ZC) 에 두고 위로 열어(축 위는 폭 그대로 직선) 로프트.
+    펜은 0.3 내려앉아 홈 바닥 전체에 닿고 옆은 0.3 — 축 방향으로는 어깨·테이퍼가 걸려 안 밀린다."""
+    xs = np.r_[-1.0, np.arange(0.0, p['W'] + 0.01, 2.0), p['W'] + 1.0]; rings = []
+    for x in xs:
+        sec = pen_section(x + p['PEN_S0'], p['PEN_CLR']); hw = (sec.bounds[2] - sec.bounds[0]) / 2
+        g = unary_union([sec, sbox(-hw, 0, hw, 40.0)])
+        rings.append((x, Polygon(np.asarray(g.exterior.coords) + [yc, p['ZC']])))
+    return loft_rings(rings, M=240)
 
 def rounded_slot(yc, half, r, z0, top=200.0):
     """위가 열린 홈: 폭 2·half, 바닥 z0, 바닥 두 모서리 R r (펜 12.5 각 R4 가 눕는 모양)."""
@@ -70,7 +94,6 @@ def profile(p):
              sbox(p['Y_MW'], 0, p['Y_MW'] + p['WALL'], p['H_MWALL']),                    # 마우스 홈 앞벽
              sbox(p['Y_MW'], 0, p['Y_END'], lip)]                                         # 펜 받침 덩어리
     out = unary_union(solid)
-    out = out.difference(unary_union([rounded_slot(yc, p['GW'], p['GR'], p['Z_G']) for yc in (p['Y_P1'], p['Y_P2'])]))
     f = p['FILLET']
     out = out.buffer(-f, 4).buffer(f, 4)                 # 바깥(볼록) 모서리 둥글게
     out = out.buffer(f * 0.6, 4).buffer(-f * 0.6, 4)     # 안쪽(오목) 모서리 둥글게 — 응력 집중 완화
@@ -99,7 +122,8 @@ def make_parts():
         # 지역 (u, v, w) → 출력 (x'=y = w-1, y'=z = v + MAG_Z, z'=x = u + xm)
         M = np.array([[0, 0, 1, -1.0], [0, 1, 0, p['MAG_Z']], [1, 0, 0, xm], [0, 0, 0, 1]], float)
         pk.apply_transform(M); pockets.append(pk)
-    hanger = trimesh.boolean.difference([body] + pockets, engine='manifold')
+    grooves = [groove_cutter(p, yc) for yc in (p['Y_P1'], p['Y_P2'])]           # 펜 윤곽을 따르는 홈(폭이 x 따라 변함 — 출력 층마다 0.01 이하로 변해 오버행 없음)
+    hanger = trimesh.boolean.difference([body] + pockets + grooves, engine='manifold')
     return {'hanger': hanger}
 
 def plate(parts, gap=10.0):
@@ -118,4 +142,4 @@ if __name__ == '__main__':
     for n, m in printed.items(): m.export(f'models/tv-pen-hanger_{n}.stl')          # 파트 STL 동봉(출력 방향, 첫 층 선반영)
     d = derived()
     print('build ok', {n: [round(v, 2) for v in m.extents] for n, m in nominal.items()},
-          {k: (round(v, 2) if isinstance(v, float) else v) for k, v in d.items() if k in ('MS', 'GW', 'GR', 'Y_MW', 'Y_P1', 'Y_P2', 'Y_END', 'Z_G', 'MAG_X')})
+          {k: (round(v, 2) if isinstance(v, float) else v) for k, v in d.items() if k in ('MS', 'GW', 'ZC', 'Y_MW', 'Y_P1', 'Y_P2', 'Y_END', 'Z_G', 'MAG_X')})
