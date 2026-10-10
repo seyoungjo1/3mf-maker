@@ -36,7 +36,7 @@ AMS 없이 색마다 따로 출력해 끼워 맞춘다(흰 마루 부품은 기�
 | P11 | 흰색 | 하층 흰 테 + 발광 통 2(포개어) + 용마루 | 없음 |
 | P12 | 흰색 | 상층 흰 테 + 내림마루 4 + 추녀마루 8(눕혀) | 없음 |
 
-보낼 파일: `models/v2/plates/P*_bambu.3mf` (Bambu 프로젝트 — 설정 포함). 검사 보고: `qc/v2_pipeline/REPORT.md`.
+보낼 파일: **`models/injeongjeon_lamp_v2_bambu.3mf`** — Bambu 프로젝트 한 파일에 플레이트 12장(이름에 색·서포트 표시). 필라멘트 1 갈색·2 흰색·3 기와색; 회색 월대(P01)는 2번, 초록 띠(P09·P10)는 1번 자리라 미리보기 색만 다르다 — 플레이트마다 실제 색 롤을 넣고 출력. 장별 파일 `models/v2/plates/P*_bambu.3mf` 도 같이 만든다. 검사 보고: `qc/v2_pipeline/REPORT.md`.
 
 ---
 
