@@ -5,13 +5,14 @@ on:
   push:
     paths:
       - '작업중/**/models/*_bambu.3mf'
+      - '작업완료/**/models/*_bambu.3mf'
       - 'tools/**'
       - '.github/workflows/bambu-verify.yml'
   workflow_dispatch:
     inputs:
       files:
         description: '검증할 3MF glob(공백 구분)'
-        default: '작업중/*/models/*_bambu.3mf'
+        default: '작업중/*/models/*_bambu.3mf 작업완료/*/models/*_bambu.3mf'
 jobs:
   verify:
     runs-on: ubuntu-24.04
@@ -37,8 +38,8 @@ jobs:
       - name: Bambu Studio 로 열기·슬라이스
         if: always()
         run: |
-          FILES="${{ github.event.inputs.files || '작업중/*/models/*_bambu.3mf' }}"
-          GEN=$(ls 작업중/*/models/*_v10_B_lid_logo.3mf 2>/dev/null | head -1)   # 비교용 일반 3MF(형상만)
+          FILES="${{ github.event.inputs.files || '작업중/*/models/*_bambu.3mf 작업완료/*/models/*_bambu.3mf' }}"
+          GEN=$(ls 작업중/*/models/*_v10_B_lid_logo.3mf 작업완료/*/models/*_v10_B_lid_logo.3mf 2>/dev/null | head -1)   # 비교용 일반 3MF(형상만)
           python tools/bambu_cli.py --download --files $FILES $GEN --out bambu_out --summary "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@v4
         if: always()
