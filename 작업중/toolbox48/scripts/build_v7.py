@@ -2,7 +2,7 @@
 """Toolbox48 v7 — 42장 → 48장. 칸 깊이(앞 50.0 / 뒤 51.8) → 58.0 (명판 8장 × 7.0 + 여유 2.0).
 본체·뚜껑을 각 칸 노치 중심에서 잘라 y 로 늘린다(앞 +8.0, 뒤 +6.2). 경첩·손잡이 귀·걸쇠 귀·탭·U자 홈 단면은 그대로.
 추가 수정: 본체 바닥 곡선 ≤0.115/층 + 첫 층 EFC +0.15 선반영, 본체 립 바깥면 0.1 깎아 끼움 0.2 → 0.3(립 1.6 → 1.5), 손잡이·걸쇠 첫 층 EFC.
-사용: python scripts/build_v7.py ../toolbox42/v5parts.pkl ../toolbox42/lid_v6.pkl"""
+사용: python scripts/build_v7.py ../toolbox42/v5parts.pkl <lid.pkl> [태그=v7]   (v8: lid_v8.pkl v8 — 뚜껑 모서리 연속 곡선)"""
 import sys, os, pickle, json, numpy as np, trimesh
 from shapely.geometry import Polygon, MultiPolygon
 from shapely.ops import unary_union
@@ -11,7 +11,7 @@ from trimesh.transformations import rotation_matrix as R, translation_matrix as 
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.abspath(os.path.join(HERE, '..', '..', '..'))
 sys.path[:0] = [os.path.join(ROOT, 'tools'), os.path.join(ROOT, '작업중', 'toolbox42', 'scripts')]
 from overhang import layer_poly
-from efc import pre_expand_first_layer
+from efc import pre_expand_first_layer, pre_expand_first_layer_group
 from generic3mf import write_generic_3mf
 MODELS = os.path.join(HERE, '..', 'models'); DOCS = os.path.join(HERE, '..', 'docs')
 C1, C2 = '#30949D', '#F2AF38'
@@ -70,7 +70,7 @@ def shave_lip(m):
     e = ext(cutter, 31 - 26.45); e.apply_translation([0, 0, 26.45])
     return trimesh.boolean.difference([m, e], engine='manifold'), ring
 if __name__ == '__main__':
-    P = pickle.load(open(sys.argv[1], 'rb')); lid6 = pickle.load(open(sys.argv[2], 'rb'))
+    P = pickle.load(open(sys.argv[1], 'rb')); lid6 = pickle.load(open(sys.argv[2], 'rb')); TAG = sys.argv[3] if len(sys.argv) > 3 else 'v7'
     base0, logo0, handle0, latch0 = P['base'], P['logo'], P['handle'], P['latch']
     # 1) 본체 늘리기
     base = stretch_y(base0, [(CUT_FRONT, D_FRONT), (CUT_REAR, D_REAR)])
@@ -86,14 +86,16 @@ if __name__ == '__main__':
     print('EFC: base', base_e.is_volume, round(vol(base_e) - vol(base), 1), 'mm3 | handle', handle.is_volume, '| latch', latch.is_volume)
     # 5) 뚜껑 늘리기 + 로고 이동
     lid = stretch_y(lid6, [(C0 - CUT_FRONT, D_FRONT), (C0 - CUT_REAR, D_REAR)]); logo = logo0.copy(); logo.apply_translation([0, D_REAR, 0])
+    if TAG != 'v7':   # v6 뚜껑은 EFC 가 이미 들어 있음; v8(v5 곡선 기반)은 여기서 뚜껑+로고 그룹으로 첫 층 +0.15 (바깥 윤곽만)
+        z0 = lid.bounds[0, 2]; lid.apply_translation([0, 0, -z0]); logo.apply_translation([0, 0, -z0]); lid, logo = pre_expand_first_layer_group([lid, logo]); print('EFC: lid+logo group', lid.is_volume, logo.is_volume)
     print('lid stretched: is_volume', lid.is_volume, 'bounds', lid.bounds.round(2).tolist(), 'vol', round(lid6.volume), '->', round(vol(lid)), 'faces', len(lid.faces), 'lid∩logo', round(vol(trimesh.boolean.intersection([lid, logo], engine='manifold')), 3))
     parts = {'base': base_e, 'lid': lid, 'logo': logo, 'handle': handle, 'latch': latch}
     # 조립 검사·렌더용 공칭 형상(EFC 선반영 전): 뚜껑 v6 는 이미 EFC 가 들어 있어 그대로(끼움면은 첫 층이 아님)
-    pickle.dump({'base': base, 'lid': lid, 'logo': logo, 'handle': handle0.copy(), 'latch': latch0.copy()}, open(os.path.join(HERE, '..', 'v7parts_nominal.pkl'), 'wb'))
+    pickle.dump({'base': base, 'lid': lid, 'logo': logo, 'handle': handle0.copy(), 'latch': latch0.copy()}, open(os.path.join(HERE, '..', f'{TAG}parts_nominal.pkl'), 'wb'))
     for n, m in parts.items():
         assert m.is_volume and len(m.faces) <= 200000, (n, m.is_volume, len(m.faces))
         print(f'  {n}: faces {len(m.faces)} bounds {m.bounds.round(2).tolist()} bodies {len(m.split(only_watertight=False))}')
-    pickle.dump(parts, open(os.path.join(HERE, '..', 'v7parts.pkl'), 'wb'))
+    pickle.dump(parts, open(os.path.join(HERE, '..', f'{TAG}parts.pkl'), 'wb'))
     # 6) 플레이트 3MF (베드 256, 여유 두고 배치)
     def place(m, x0, y0):
         m = m.copy(); b = m.bounds; m.apply_translation([x0 - b[0, 0], y0 - b[0, 1], -b[0, 2]]); return m
@@ -101,11 +103,11 @@ if __name__ == '__main__':
     b = lid.bounds; d = [40 - b[0, 0], 50 - b[0, 1], -b[0, 2]]; B_lid = lid.copy(); B_lid.apply_translation(d); B_logo = logo.copy(); B_logo.apply_translation(d)
     A = [{'name': 'base', 'parts': [(A_base, C1, 'base')]}, {'name': 'handle', 'parts': [(A_handle, C1, 'handle')]}, {'name': 'latch', 'parts': [(A_latch, C1, 'latch')]}]
     B = [{'name': 'lid+logo', 'parts': [(B_lid, C1, 'lid'), (B_logo, C2, 'logo')]}]
-    write_generic_3mf(os.path.join(MODELS, 'Toolbox48_v7_A_base_handle_latch.3mf'), A, 'Toolbox48 v7 A', material_order=[C1, C2])
-    write_generic_3mf(os.path.join(MODELS, 'Toolbox48_v7_B_lid_logo.3mf'), B, 'Toolbox48 v7 B', material_order=[C1, C2])
+    write_generic_3mf(os.path.join(MODELS, f'Toolbox48_{TAG}_A_base_handle_latch.3mf'), A, f'Toolbox48 {TAG} A', material_order=[C1, C2])
+    write_generic_3mf(os.path.join(MODELS, f'Toolbox48_{TAG}_B_lid_logo.3mf'), B, f'Toolbox48 {TAG} B', material_order=[C1, C2])
     for n, m in [('base', base_e), ('lid', lid), ('handle', handle), ('latch', latch), ('logo', logo)]:
-        mm = m.copy(); mm.export(os.path.join(MODELS, f'Toolbox48_{n}_v7.stl'))
+        mm = m.copy(); mm.export(os.path.join(MODELS, f'Toolbox48_{n}_{TAG}.stl'))
     json.dump({'row_depth': ROW, 'd_front': D_FRONT, 'd_rear': D_REAR, 'cut_front': CUT_FRONT, 'cut_rear': CUT_REAR, 'C_closed': C0 + D_FRONT + D_REAR,
                'knuckle': [0, 192.39 + D_FRONT + D_REAR, 26.5], 'lip_shave': LIP_SHAVE,
-               'front_row': [81.79, 131.79 + D_FRONT], 'divider': [131.79 + D_FRONT, 134.79 + D_FRONT], 'rear_row': [134.79 + D_FRONT, 184.79 + D_FRONT + D_REAR]}, open(os.path.join(DOCS, 'v7_params.json'), 'w'), indent=1)
+               'front_row': [81.79, 131.79 + D_FRONT], 'divider': [131.79 + D_FRONT, 134.79 + D_FRONT], 'rear_row': [134.79 + D_FRONT, 184.79 + D_FRONT + D_REAR]}, open(os.path.join(DOCS, f'{TAG}_params.json'), 'w'), indent=1)
     print('done')

@@ -28,8 +28,24 @@ def define(parts):
     json.dump({'name': 'selftest', 'out': 'qc', 'parts_pkl': 'parts.pkl', 'plates': ['models/A.3mf'], 'assembly': 'scripts/asm.py', 'colors': {'base': '#37474f', 'lid': '#ffb300'}, 'min_gap': 0.25, 'frames': 8},
               open(os.path.join(root, 'cfg.json'), 'w'))
     return os.path.join(root, 'cfg.json')
+def efc_group_case():
+    """뚜껑+인레이(포켓과 0.3 틈) 그룹 EFC 뒤에도 뚜껑이 1조각이고 띠는 바깥에만 생기는지(Toolbox48 v8 24조각 버그 재현)."""
+    from efc import pre_expand_first_layer_group
+    lid = trimesh.boolean.difference([box(40, 30, 3), box(10.6, 6.6, 0.6, (9.7, 11.7, 0)), box(10.6, 6.6, 0.6, (24.7, 11.7, 0))], engine='manifold')
+    inl = [box(10, 6, 0.6, (10, 12, 0)), box(10, 6, 0.6, (25, 12, 0))]; inlay = trimesh.util.concatenate(inl)
+    l2, i2 = pre_expand_first_layer_group([lid, inlay])
+    nb = len(l2.split(only_watertight=False)); grow = (l2.bounds[1, 0] - l2.bounds[0, 0]) - 40
+    print(f'[EFC 그룹] 뚜껑 조각 {nb}, 바깥 성장 {grow:.2f} mm (기대 1, 0.30), 인레이 부피 변화 {abs(i2.volume) - abs(inlay.volume):.3f}')
+    ok1 = nb == 1 and abs(grow - 0.30) < 0.02 and abs(abs(i2.volume) - abs(inlay.volume)) < 0.01   # 구멍 안 띠 = 인레이 부피 증가
+    # 수직 첫 층의 둥근 모서리: 띠 안쪽 경계가 벽과 같은 면 → 부피 0 조각. 실제 Toolbox48 v8 뚜껑 모서리를 잘라 고정 시험편으로 씀(예전 코드 2조각)
+    from efc import pre_expand_first_layer
+    fx = trimesh.load(os.path.join(HERE, 'fixtures', 'efc_vertical_rounded_edge.stl'), force='mesh'); fx.merge_vertices()
+    g2, = pre_expand_first_layer_group([fx]); r2 = pre_expand_first_layer(fx)
+    nb2, nb3 = len(r2.split(only_watertight=False)), len(g2.split(only_watertight=False))
+    print(f'[EFC 실제 모서리] 단일 조각 {nb2}, 그룹 조각 {nb3} (기대 1, 1; 예전 코드 그룹 2)')
+    return ok1 and nb2 == 1 and nb3 == 1
 if __name__ == '__main__':
-    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = True
+    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = efc_group_case()
     cfg = fixture(os.path.join(tmp, 'good'), 0.3); rc = pipeline.run(cfg); rep = json.load(open(os.path.join(tmp, 'good', 'qc', 'report.json')))
     files = [os.path.join(tmp, 'good', 'qc', f) for f in ('REPORT.md', 'assembly/turntable.gif', 'motion/turntable.gif', 'plate_A/view_iso.png')]
     print('\n[정상 설계] 종료코드', rc, '| 경고', rep['warn'], '| 산출물', [os.path.exists(f) for f in files])
