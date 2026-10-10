@@ -14,6 +14,17 @@ def _drop_slivers(m, ref_volume):
     keep = [b for b in bs if abs(b.volume) >= 1.0]
     out = trimesh.util.concatenate(keep) if len(keep) > 1 else keep[0]
     return out if out.is_volume and abs(abs(out.volume) - ref_volume) < 0.5 else m
+def _weld(m, tol=1e-3):
+    """manifold 유니온이 남긴 '위치는 같고 번호만 다른' 정점(≤0.001 mm)을 합친다. 그대로 STL 로 쓰면 다시 읽을 때 정점이 합쳐지며
+    비다양체 모서리가 생겨 열린 메시·여러 조각이 된다(인정전 램프 v2 기와·흰 테·내림마루, 2026-10-10). STL 왕복 뒤에도 닫혀 있을 때만 바꾼다."""
+    import io, manifold3d as mf
+    try:
+        g = mf.Manifold(mf.Mesh(vert_properties=np.asarray(m.vertices, np.float32), tri_verts=np.asarray(m.faces, np.uint32))).simplify(tol).to_mesh()
+        w = trimesh.Trimesh(np.asarray(g.vert_properties)[:, :3], np.asarray(g.tri_verts), process=False)
+        r = trimesh.load(io.BytesIO(w.export(file_type='stl')), file_type='stl')
+        if w.is_volume and r.is_watertight and abs(abs(w.volume) - abs(m.volume)) < 0.05: return w
+    except Exception: pass
+    return m
 OVERLAP = 0.05   # 띠를 파트 안쪽으로 겹치는 폭 — 띠 안쪽 경계가 수직 벽과 같은 면이면 manifold 유니온이 부피 0 조각을 남긴다
 def pre_expand_first_layer(mesh, efc=0.15, layer=0.2):
     """첫 층 단면을 efc 만큼 바깥으로(구멍은 안으로) 키운 0.2 mm 판을 유니온해 돌려준다. 바닥이 z=0 이어야 한다."""
@@ -23,7 +34,7 @@ def pre_expand_first_layer(mesh, efc=0.15, layer=0.2):
     if skirt is None: return mesh
     out = trimesh.boolean.union([mesh, skirt], engine='manifold')
     if not out.is_volume: return mesh
-    return _drop_slivers(out, abs(out.volume))
+    return _weld(_drop_slivers(out, abs(out.volume)))
 def pre_expand_first_layer_group(meshes, efc=0.15, layer=0.2):
     """서로 면접촉하는 파트들(같은 오브젝트의 색 파트)을 한 덩어리로 보고 바깥 윤곽만 efc 키운다.
     키운 띠는 그 자리에 닿아 있는 파트에 나눠 붙인다(파트끼리 겹치지 않음). 반환: 같은 순서의 메시 목록."""
@@ -42,5 +53,5 @@ def pre_expand_first_layer_group(meshes, efc=0.15, layer=0.2):
         mine = unary_union([g for g in (mine.geoms if hasattr(mine, 'geoms') else [mine]) if getattr(g, 'area', 0) > 0.01]) if not mine.is_empty else mine
         skirt = _extrude(mine.buffer(0), layer) if not mine.is_empty else None
         if skirt is None: out.append(m); continue
-        u = trimesh.boolean.union([m, skirt], engine='manifold'); out.append(_drop_slivers(u, abs(u.volume)) if u.is_volume else m)
+        u = trimesh.boolean.union([m, skirt], engine='manifold'); out.append(_weld(_drop_slivers(u, abs(u.volume))) if u.is_volume else m)
     return out

@@ -45,6 +45,15 @@ def efc_group_case():
     nb2, nb3 = len(r2.split(only_watertight=False)), len(g2.split(only_watertight=False))
     print(f'[EFC 실제 모서리] 단일 조각 {nb2}, 그룹 조각 {nb3} (기대 1, 1; 예전 코드 그룹 2)')
     return ok1 and nb2 == 1 and nb3 == 1
+def efc_stl_roundtrip_case():
+    """EFC 유니온 결과를 STL 로 쓰고 다시 읽어도 닫힌 1조각인지(인정전 램프 v2 내림마루: 예전 코드는 열린 2조각)."""
+    import io
+    from efc import pre_expand_first_layer
+    fx = trimesh.load(os.path.join(HERE, 'fixtures', 'efc_stl_roundtrip_bar.stl'), force='mesh'); fx.apply_translation([0, 0, -fx.bounds[0, 2]])
+    r = pre_expand_first_layer(fx); back = trimesh.load(io.BytesIO(r.export(file_type='stl')), file_type='stl')
+    nb = len(back.split(only_watertight=False)); grow = (r.bounds[1, :2] - r.bounds[0, :2]).max() - (fx.bounds[1, :2] - fx.bounds[0, :2]).max()
+    print(f'[EFC STL 왕복] 닫힘 {back.is_watertight}, 조각 {nb}, 첫 층 성장 {grow:.2f} mm (기대 True, 1, >0)')
+    return back.is_watertight and nb == 1 and grow > 0.1
 def slit_case():
     """벽 속 0.1 mm 수평 틈이 있는 상자는 '얇은 틈' 으로 걸리고, 같은 크기 통짜 상자는 안 걸리는지(Toolbox48 v6/v8 뚜껑 줄 재현)."""
     import argparse; from qc_model import qc_part
@@ -124,7 +133,7 @@ def agent_case():
         return ok1 and ok2
     finally: shutil.rmtree(proj, ignore_errors=True)
 if __name__ == '__main__':
-    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = efc_group_case() and slit_case() and wall_step_case() and mm_api_case()
+    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = efc_group_case() and efc_stl_roundtrip_case() and slit_case() and wall_step_case() and mm_api_case()
     cfg = fixture(os.path.join(tmp, 'good'), 0.3); rc = pipeline.run(cfg); rep = json.load(open(os.path.join(tmp, 'good', 'qc', 'report.json')))
     files = [os.path.join(tmp, 'good', 'qc', f) for f in ('REPORT.md', 'assembly/turntable.gif', 'motion/turntable.gif', 'plate_A/view_iso.png')]
     print('\n[정상 설계] 종료코드', rc, '| 경고', rep['warn'], '| 산출물', [os.path.exists(f) for f in files])
