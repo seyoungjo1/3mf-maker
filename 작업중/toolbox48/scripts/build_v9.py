@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Toolbox48 v9 — v8 에서 고친 것:
+"""Toolbox48 v9/v10 — v8 에서 고친 것 (v10: 뚜껑 바깥면을 하판과 같은 곡선의 '한 도형' 로프트와 교집합 한 번으로 만든다):
  1) 뚜껑 벽 속 0.1 mm 수평 틈 제거(v6/v8: 곡선 로프트가 z 7.8 까지, 잘라낼 띠는 7.9 까지 → 벽이 0.1 mm 파임 → 출력물 옆면 줄). 로프트를 z 8.3 까지 만들고 띠는 7.8 에서 멈춘다.
  2) 본체 바닥 곡선: 0.1 mm 판 쌓기(계단) → 링 로프트(tools/loft.py)로 매끈하게.
  3) 로고 1.5배: 옛 포켓을 메우고 → 뚜껑을 늘린 뒤 → 1.5배 로고 모양 그대로 포켓(면 접촉 인레이). 절단면이 큰 로고를 가로지르지 않게 순서를 바꿈.
@@ -15,9 +15,10 @@ from overhang import layer_poly
 from loft import loft_rings
 from efc import pre_expand_first_layer, pre_expand_first_layer_group
 from meshops import drop_slivers
+from edge import apply_edge, fit_rounded_rect, measure_profile
 from shapely.affinity import scale as sscale
 from generic3mf import write_generic_3mf
-MODELS = os.path.join(HERE, '..', 'models'); DOCS = os.path.join(HERE, '..', 'docs'); TAG = 'v9'
+MODELS = os.path.join(HERE, '..', 'models'); DOCS = os.path.join(HERE, '..', 'docs'); TAG = sys.argv[2] if len(sys.argv) > 2 else 'v9'
 LOGO_SCALE = 1.5; LAND = 0.6; ZTOP = 7.8; DZ = 0.2; Z0 = 0.1137
 def polys(p): return list(p.geoms) if p.geom_type == 'MultiPolygon' else [p]
 def vol(m): return float(abs(m.volume)) if m.is_volume else 0.0
@@ -38,6 +39,13 @@ def lid_edge(lid):
     lip = trimesh.boolean.difference([cut, loft], engine='manifold')
     out = trimesh.boolean.difference([lid, lip], engine='manifold'); out.apply_translation([0, 0, -out.bounds[0, 2]])
     out, n, v = drop_slivers(out); print(f'  lid_edge: 계산 찌꺼기 {n}조각 {v:.2e} mm³ 제거'); return out
+# ---------- 1b) v10: 본체 바닥 = v5 하판 원래 곡선(사용자가 좋다고 한 것), 뚜껑 모서리 = 같은 곡선을 '한 도형'으로(tools/edge.py) ----------
+# v5 상판 모서리(아래 1 mm 30° 직선)는 사용자가 별로라고 함. v7~v9 의 ≤0.115 바닥 곡선도 결과적으로 v5 상판과 같은 모양이라 되돌린다.
+# v5 하판 곡선은 첫 층 0.18/층(규칙 0.115 초과) — 사용자 승인 예외(하판 출력 성공 실적), EFC +0.15 선반영은 유지.
+def lid_edge_v10(lid5, base5):
+    rect, info = fit_rounded_rect(lid5, 9.0, x_probe=395); zp, ip = measure_profile(base5)
+    out, r = apply_edge(lid5, rect, zp, ip, dz=0.1, M=1000); print(f'  lid_edge_v10: 몸통 {info}, 곡선 끝 z {r["z_end"]:.2f}, 링 {r["rings"]}, 찌꺼기 {r["slivers_removed"]}조각 {r["sliver_mm3"]:.2e} mm³')
+    return out
 # ---------- 2) 본체 바닥: 링 로프트 ----------
 def base_bottom(m, ZC=1.51, SLOPE=0.115 / 0.2):
     L = layer_poly(m, ZC); stack = []
@@ -60,11 +68,12 @@ if __name__ == '__main__':
     lid5, logo5, base0, handle0, latch0 = P['lid'], P['logo'], P['base'], P['handle'], P['latch']
     # 본체: v7 과 같은 늘리기·립 0.1 → 바닥 로프트
     base = B7.stretch_y(base0, [(B7.CUT_FRONT, B7.D_FRONT), (B7.CUT_REAR, B7.D_REAR)]); base, _ = B7.shave_lip(base)
-    base = base_bottom(base); base.apply_translation([0, 0, -base.bounds[0, 2]])
+    if TAG == 'v9': base = base_bottom(base)
+    base.apply_translation([0, 0, -base.bounds[0, 2]])
     zz = np.arange(Z0, 2.2, 0.2); xs = np.array([layer_poly(base, z).bounds[0] for z in zz]); ins = xs - layer_poly(base, 8.0).bounds[0]
     print('base: is_volume', base.is_volume, 'bodies', len(base.split(only_watertight=False)), '| 바닥 inset', ' '.join(f'{z:.2f}:{i:.2f}' for z, i in zip(zz, ins)), '| 층당 최대', round(float(np.max(-np.diff(ins))), 3))
     # 뚜껑: 모서리 → 옛 포켓 메움 → 늘리기 → 1.5배 로고 포켓
-    lid = lid_edge(lid5); print('lid edge: is_volume', lid.is_volume, 'bodies', len(lid.split(only_watertight=False)))
+    lid = lid_edge_v10(lid5, base0) if TAG != 'v9' else lid_edge(lid5); print('lid edge: is_volume', lid.is_volume, 'bodies', len(lid.split(only_watertight=False)))
     lid, ha = fill_pockets(lid); print('old pockets filled:', round(ha, 1), 'mm², is_volume', lid.is_volume)
     lid = B7.stretch_y(lid, [(B7.C0 - B7.CUT_FRONT, B7.D_FRONT), (B7.C0 - B7.CUT_REAR, B7.D_REAR)])
     # 로고는 0.6 mm 평판 압출(단면×0.6 = 부피 확인) → 단면 폴리곤을 1.5배 해서 인레이와 포켓을 같은 폴리곤으로 압출(정확히 맞물림).

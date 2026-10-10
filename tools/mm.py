@@ -28,7 +28,11 @@ def load_any(spec):
     m = trimesh.load(path, force='mesh'); return {os.path.splitext(os.path.basename(path))[0]: m}
 def _meshes(specs):
     out = {}
-    for s in specs: out.update(load_any(s))
+    for s in specs:
+        for n, m in load_any(s).items():
+            k = n if n not in out else f"{os.path.basename(s.split(':')[0])}:{n}"      # 이름이 겹치면 파일 이름을 붙인다
+            if k in out: k = s
+            out[k] = m
     return out
 # ---------------------------------------------------------------- 명령
 @command('doctor', '환경 점검: 파이썬 의존·Chromium·렌더러·main 동기화 상태', {})
@@ -74,6 +78,23 @@ def section(files, plane, out, xlim=None, ylim=None, title=''):
     ax.set_aspect('equal'); ax.grid(True, alpha=.3); ax.legend(); ax.set_xlabel('xyz'[keep[0]]); ax.set_ylabel('xyz'[keep[1]]); ax.set_title(title or plane)
     os.makedirs(os.path.dirname(_abs(out)) or '.', exist_ok=True); fig.savefig(_abs(out), dpi=90, bbox_inches='tight'); plt.close(fig)
     return {'png': _abs(out), 'loops': segs}
+@command('crop', '메시를 상자로 잘라 STL 저장(클로즈업 렌더·비교용). flip_x=true 면 x축 180° 뒤집기(뒤집어 출력한 뚜껑을 조립 방향으로), 결과를 offset 위치로 옮김',
+         {'file': {'type': 'string'}, 'box': {'type': 'array', 'items': {'type': 'number'}, 'description': '[x0,y0,z0,x1,y1,z1]'}, 'out': {'type': 'string'},
+          'flip_x': {'type': 'boolean', 'default': False}, 'offset': {'type': 'array', 'items': {'type': 'number'}, 'default': [0, 0, 0]}})
+def crop(file, box, out, flip_x=False, offset=(0, 0, 0)):
+    import numpy as np, trimesh
+    from trimesh.transformations import rotation_matrix
+    (n, m), = load_any(file).items() if len(load_any(file)) == 1 else [(k, v) for k, v in load_any(file).items()][:1]
+    lo, hi = np.array(box[:3], float), np.array(box[3:], float); bx = trimesh.creation.box(extents=hi - lo); bx.apply_translation((lo + hi) / 2)
+    c = trimesh.boolean.intersection([m, bx], engine='manifold')
+    if flip_x: c.apply_transform(rotation_matrix(np.pi, [1, 0, 0]))
+    c.apply_translation(-c.bounds[0] + np.asarray(offset, float)); os.makedirs(os.path.dirname(_abs(out)) or '.', exist_ok=True); c.export(_abs(out))
+    return {'stl': _abs(out), 'faces': len(c.faces), 'bounds': c.bounds.round(2).tolist(), 'is_volume': bool(c.is_volume)}
+@command('wallscan', '바깥 벽 단차 검사(출력물 가로줄): 파트 중심에서 n_dir 방향으로 바깥 벽을 z 0.02 간격으로 재서 0.02~0.3 mm 턱이 갑자기 생기는 높이·위치를 보고',
+         {'files': {'type': 'array', 'items': {'type': 'string'}}, 'z_range': {'type': 'array', 'items': {'type': 'number'}, 'default': None}, 'n_dir': {'type': 'integer', 'default': 48}})
+def wallscan(files, z_range=None, n_dir=48):
+    from qc_model import wall_steps
+    return {n: wall_steps(m, z_range=z_range, n_dir=n_dir) for n, m in _meshes(files).items()}
 @command('render', 'three.js 렌더: 5뷰 PNG + 회전 GIF(상태 순환 가능)',
          {'files': {'type': 'array', 'items': {'type': 'string'}}, 'out': {'type': 'string'}, 'colors': {'type': 'object'}, 'states': {'type': 'object'}, 'frames': {'type': 'integer', 'default': 36}, 'status': {'type': 'string'}})
 def render(files, out, colors=None, states=None, frames=36, status=None):

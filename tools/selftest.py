@@ -54,6 +54,16 @@ def slit_case():
     a, b = qc_part('solid', solid, qa), qc_part('slit', slit, qa)
     fa, fb = [f for f in a['flags'] if '수평 틈' in f], [f for f in b['flags'] if '수평 틈' in f]
     print(f'[벽 속 틈] 통짜 경고 {len(fa)}, 0.1 틈 경고 {len(fb)} {fb} (기대 0, 1)'); return not fa and len(fb) == 1
+def wall_step_case():
+    """판 쌓기 계단 바닥(0.1 판, 0.057 단차)은 '바깥 벽 단차' 로 걸리고, 같은 곡선의 링 로프트는 안 걸리는지(Toolbox48 v7 바닥 재현)."""
+    from qc_model import wall_steps; from loft import loft_rings; from shapely.geometry import box as sb
+    sl = []
+    for z0 in np.arange(0, 1.5, 0.1):
+        d = 0.575 * (1.5 - z0 - 0.05); e = trimesh.creation.extrude_polygon(sb(-20, -15, 20, 15).buffer(-d), 0.1001); e.apply_translation([0, 0, z0]); sl.append(e)
+    top = box(40, 30, 6, (-20, -15, 1.5)); stair = trimesh.boolean.union(sl + [top], engine='manifold')
+    sm = loft_rings([(z, sb(-20, -15, 20, 15).buffer(-0.575 * max(0, 1.5 - z))) for z in np.arange(0, 1.51, 0.1)] + [(7.5, sb(-20, -15, 20, 15))])
+    a, b = wall_steps(stair)['n_heights'], wall_steps(sm)['n_heights']
+    print(f'[벽 단차] 판 계단 {a}개 높이, 로프트 {b}개 (기대 ≥3, 0)'); return a >= 3 and b == 0
 def mm_api_case():
     """표준 프로그램: 파이썬 mm.run 과 HTTP POST /run 결과가 같은지 + 링 로프트(판 쌓기 대신)가 계단·틈 없이 닫히는지."""
     import threading, urllib.request, http.server, mm
@@ -67,7 +77,7 @@ def mm_api_case():
     ok = lf.is_volume and a == b and a['loft']['slit_z'] == []
     print(f'[표준 프로그램] 로프트 닫힘 {lf.is_volume}, 파이썬=HTTP {a == b}, 틈 {a["loft"]["slit_z"]}'); return ok
 if __name__ == '__main__':
-    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = efc_group_case() and slit_case() and mm_api_case()
+    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = efc_group_case() and slit_case() and wall_step_case() and mm_api_case()
     cfg = fixture(os.path.join(tmp, 'good'), 0.3); rc = pipeline.run(cfg); rep = json.load(open(os.path.join(tmp, 'good', 'qc', 'report.json')))
     files = [os.path.join(tmp, 'good', 'qc', f) for f in ('REPORT.md', 'assembly/turntable.gif', 'motion/turntable.gif', 'plate_A/view_iso.png')]
     print('\n[정상 설계] 종료코드', rc, '| 경고', rep['warn'], '| 산출물', [os.path.exists(f) for f in files])
