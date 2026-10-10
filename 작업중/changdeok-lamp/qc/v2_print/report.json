@@ -1,0 +1,3967 @@
+{
+ "files": [
+  "작업중/changdeok-lamp/models/v2/print/L_band.stl",
+  "작업중/changdeok-lamp/models/v2/print/L_diffuser.stl",
+  "작업중/changdeok-lamp/models/v2/print/L_floor.stl",
+  "작업중/changdeok-lamp/models/v2/print/L_ring.stl",
+  "작업중/changdeok-lamp/models/v2/print/L_roof_eave_white.stl",
+  "작업중/changdeok-lamp/models/v2/print/L_roof_hip1.stl",
+  "작업중/changdeok-lamp/models/v2/print/L_roof_hip2.stl",
+  "작업중/changdeok-lamp/models/v2/print/L_roof_hip3.stl",
+  "작업중/changdeok-lamp/models/v2/print/L_roof_hip4.stl",
+  "작업중/changdeok-lamp/models/v2/print/L_roof_soffit.stl",
+  "작업중/changdeok-lamp/models/v2/print/L_roof_tile.stl",
+  "작업중/changdeok-lamp/models/v2/print/U_band.stl",
+  "작업중/changdeok-lamp/models/v2/print/U_diffuser.stl",
+  "작업중/changdeok-lamp/models/v2/print/U_floor.stl",
+  "작업중/changdeok-lamp/models/v2/print/U_ring.stl",
+  "작업중/changdeok-lamp/models/v2/print/U_roof_desc1.stl",
+  "작업중/changdeok-lamp/models/v2/print/U_roof_desc2.stl",
+  "작업중/changdeok-lamp/models/v2/print/U_roof_desc3.stl",
+  "작업중/changdeok-lamp/models/v2/print/U_roof_desc4.stl",
+  "작업중/changdeok-lamp/models/v2/print/U_roof_eave_white.stl",
+  "작업중/changdeok-lamp/models/v2/print/U_roof_gableL.stl",
+  "작업중/changdeok-lamp/models/v2/print/U_roof_gableR.stl",
+  "작업중/changdeok-lamp/models/v2/print/U_roof_hip1.stl",
+  "작업중/changdeok-lamp/models/v2/print/U_roof_hip2.stl",
+  "작업중/changdeok-lamp/models/v2/print/U_roof_hip3.stl",
+  "작업중/changdeok-lamp/models/v2/print/U_roof_hip4.stl",
+  "작업중/changdeok-lamp/models/v2/print/U_roof_ridge.stl",
+  "작업중/changdeok-lamp/models/v2/print/U_roof_soffit.stl",
+  "작업중/changdeok-lamp/models/v2/print/U_roof_tile.stl",
+  "작업중/changdeok-lamp/models/v2/print/platform.stl",
+  "작업중/changdeok-lamp/models/v2/print/uwall_back.stl",
+  "작업중/changdeok-lamp/models/v2/print/uwall_front.stl",
+  "작업중/changdeok-lamp/models/v2/print/uwall_left.stl",
+  "작업중/changdeok-lamp/models/v2/print/uwall_right.stl",
+  "작업중/changdeok-lamp/models/v2/print/wall_back.stl",
+  "작업중/changdeok-lamp/models/v2/print/wall_front.stl",
+  "작업중/changdeok-lamp/models/v2/print/wall_left.stl",
+  "작업중/changdeok-lamp/models/v2/print/wall_right.stl"
+ ],
+ "parts": [
+  {
+   "name": "L_band",
+   "faces": 912,
+   "vertices": 456,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    186.49,
+    145.8,
+    8.76
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 47.95,
+   "weight_g_solid": 59.5,
+   "bed_contact_mm2": 6941.5,
+   "first_layer_mm2": 6941.5,
+   "footprint_hull_mm2": 27190.1,
+   "aspect_h_over_w": 0.06,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "L_diffuser",
+   "faces": 64,
+   "vertices": 32,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    156.49,
+    115.8,
+    32.11
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 13.91,
+   "weight_g_solid": 17.2,
+   "bed_contact_mm2": 594.2,
+   "first_layer_mm2": 594.2,
+   "footprint_hull_mm2": 18121.4,
+   "aspect_h_over_w": 0.28,
+   "thin_area_mm2": 241.1,
+   "thin_at_z": 0.3,
+   "thin_bounds": [
+    -77.1,
+    -57.7,
+    77.1,
+    57.7
+   ],
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "note": "단일 벽(발광 갓) 241 mm² — 의도된 0.8 mm 두 줄 벽",
+   "flags": []
+  },
+  {
+   "name": "L_floor",
+   "faces": 448,
+   "vertices": 224,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    171.29,
+    130.6,
+    4.49
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 62.31,
+   "weight_g_solid": 77.3,
+   "bed_contact_mm2": 20435.9,
+   "first_layer_mm2": 20435.9,
+   "footprint_hull_mm2": 22370.3,
+   "aspect_h_over_w": 0.03,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "L_ring",
+   "faces": 160,
+   "vertices": 80,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    170.49,
+    129.8,
+    11.5
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 15.17,
+   "weight_g_solid": 18.8,
+   "bed_contact_mm2": 1604.7,
+   "first_layer_mm2": 1604.7,
+   "footprint_hull_mm2": 22129.4,
+   "aspect_h_over_w": 0.09,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 2225.2,
+   "bridge_max_span": 5.3,
+   "bridge_top": [
+    [
+     1.11,
+     2225.2,
+     5.3
+    ]
+   ],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "L_roof_eave_white",
+   "faces": 2698,
+   "vertices": 1341,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    226.38,
+    185.89,
+    0.9
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 7.18,
+   "weight_g_solid": 8.9,
+   "bed_contact_mm2": 8164.1,
+   "first_layer_mm2": 8164.1,
+   "footprint_hull_mm2": 42082.3,
+   "aspect_h_over_w": 0.0,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "L_roof_hip1",
+   "faces": 220,
+   "vertices": 112,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    12.08,
+    43.67,
+    3.71
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 0.46,
+   "weight_g_solid": 0.6,
+   "bed_contact_mm2": 145.9,
+   "first_layer_mm2": 145.9,
+   "footprint_hull_mm2": 210.1,
+   "aspect_h_over_w": 0.31,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "L_roof_hip2",
+   "faces": 220,
+   "vertices": 112,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    12.08,
+    43.67,
+    3.71
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 0.43,
+   "weight_g_solid": 0.5,
+   "bed_contact_mm2": 145.9,
+   "first_layer_mm2": 145.9,
+   "footprint_hull_mm2": 210.1,
+   "aspect_h_over_w": 0.31,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "L_roof_hip3",
+   "faces": 220,
+   "vertices": 112,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    12.08,
+    43.67,
+    3.71
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 0.43,
+   "weight_g_solid": 0.5,
+   "bed_contact_mm2": 145.9,
+   "first_layer_mm2": 145.9,
+   "footprint_hull_mm2": 210.1,
+   "aspect_h_over_w": 0.31,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "L_roof_hip4",
+   "faces": 220,
+   "vertices": 112,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    12.08,
+    43.67,
+    3.71
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 0.46,
+   "weight_g_solid": 0.6,
+   "bed_contact_mm2": 145.9,
+   "first_layer_mm2": 145.9,
+   "footprint_hull_mm2": 210.1,
+   "aspect_h_over_w": 0.31,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "L_roof_soffit",
+   "faces": 66626,
+   "vertices": 33313,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    231.05,
+    190.65,
+    13.24
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 153.4,
+   "weight_g_solid": 190.2,
+   "bed_contact_mm2": 63.1,
+   "first_layer_mm2": 79.6,
+   "footprint_hull_mm2": 21569.0,
+   "aspect_h_over_w": 0.07,
+   "thin_area_mm2": 124.0,
+   "thin_at_z": 0.3,
+   "thin_bounds": [
+    -94.2,
+    -73.6,
+    94.2,
+    73.6
+   ],
+   "internal_gaps": 3,
+   "slit_z": [],
+   "overhang_mm2": 15195.5,
+   "overhang_top": [
+    [
+     5.31,
+     10263.6,
+     [
+      -109.3,
+      -88.1,
+      109.3,
+      88.1
+     ]
+    ],
+    [
+     5.51,
+     874.4,
+     [
+      -109.5,
+      -88.4,
+      109.5,
+      88.4
+     ]
+    ],
+    [
+     5.11,
+     190.5,
+     [
+      -108.8,
+      -87.6,
+      108.8,
+      87.6
+     ]
+    ],
+    [
+     4.91,
+     184.0,
+     [
+      -108.2,
+      -87.1,
+      108.2,
+      87.1
+     ]
+    ]
+   ],
+   "bridge_mm2": 8949.6,
+   "bridge_max_span": 13.8,
+   "bridge_top": [
+    [
+     7.11,
+     1182.1,
+     4.4
+    ],
+    [
+     5.51,
+     1060.8,
+     13.8
+    ],
+    [
+     5.71,
+     864.5,
+     11.7
+    ],
+    [
+     5.91,
+     607.0,
+     10.4
+    ]
+   ],
+   "wall_steps": [
+    [
+     7.35,
+     4,
+     0.279,
+     [
+      [
+       75,
+       23.6,
+       88.1
+      ],
+      [
+       105,
+       -23.6,
+       88.1
+      ],
+      [
+       255,
+       -23.6,
+       -88.1
+      ],
+      [
+       285,
+       23.6,
+       -88.1
+      ]
+     ]
+    ]
+   ],
+   "flags": [
+    "바깥 벽 단차 0.02~0.3 mm 1개 높이 (z, 방향 수, 최대 mm): [(7.35, 4, 0.279)] — 출력물에 가로줄",
+    "바닥 접지 63.1 mm² < 100 mm² — 브림 필수",
+    "0.8 mm 보다 얇은 살 124.0 mm² (z=0.3, x/y (-94.2, -73.6, 94.2, 73.6))",
+    "오버행(한쪽 지지) 규칙 위반 15196 mm² (서포트 또는 재설계)",
+    "브리지 폭 13.8 mm > 7.0 mm"
+   ]
+  },
+  {
+   "name": "L_roof_tile",
+   "faces": 68886,
+   "vertices": 34427,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    226.04,
+    185.56,
+    15.19
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 208.76,
+   "weight_g_solid": 258.9,
+   "bed_contact_mm2": 23484.0,
+   "first_layer_mm2": 24075.5,
+   "footprint_hull_mm2": 37243.3,
+   "aspect_h_over_w": 0.08,
+   "thin_area_mm2": 5.6,
+   "thin_at_z": 2.95,
+   "thin_bounds": [
+    -110.8,
+    -90.3,
+    110.8,
+    90.3
+   ],
+   "internal_gaps": 9,
+   "slit_z": [],
+   "overhang_mm2": 1734.6,
+   "overhang_top": [
+    [
+     0.31,
+     613.0,
+     [
+      -110.6,
+      -89.8,
+      110.6,
+      89.8
+     ]
+    ],
+    [
+     0.51,
+     274.2,
+     [
+      -110.9,
+      -90.1,
+      110.9,
+      90.1
+     ]
+    ],
+    [
+     0.71,
+     187.6,
+     [
+      -111.1,
+      -90.4,
+      111.1,
+      90.4
+     ]
+    ],
+    [
+     0.91,
+     146.2,
+     [
+      -111.3,
+      -90.6,
+      111.3,
+      90.6
+     ]
+    ]
+   ],
+   "bridge_mm2": 1735.9,
+   "bridge_max_span": 14.4,
+   "bridge_top": [
+    [
+     0.31,
+     501.0,
+     14.4
+    ],
+    [
+     0.51,
+     334.1,
+     13.5
+    ],
+    [
+     0.71,
+     238.0,
+     11.8
+    ],
+    [
+     0.91,
+     163.4,
+     11.4
+    ]
+   ],
+   "wall_steps": [
+    [
+     0.71,
+     10,
+     0.252,
+     [
+      [
+       60,
+       51.2,
+       88.6
+      ],
+      [
+       82,
+       11.6,
+       88.0
+      ],
+      [
+       90,
+       0.0,
+       88.0
+      ],
+      [
+       97,
+       -11.6,
+       88.0
+      ],
+      [
+       120,
+       -51.2,
+       88.6
+      ],
+      [
+       240,
+       -51.2,
+       -88.6
+      ]
+     ]
+    ]
+   ],
+   "flags": [
+    "바깥 벽 단차 0.02~0.3 mm 1개 높이 (z, 방향 수, 최대 mm): [(0.71, 10, 0.252)] — 출력물에 가로줄",
+    "0.8 mm 보다 얇은 살 5.6 mm² (z=2.95, x/y (-110.8, -90.3, 110.8, 90.3))",
+    "오버행(한쪽 지지) 규칙 위반 1735 mm² (서포트 또는 재설계)",
+    "브리지 폭 14.4 mm > 7.0 mm"
+   ]
+  },
+  {
+   "name": "U_band",
+   "faces": 784,
+   "vertices": 392,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    166.23,
+    126.21,
+    8.77
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 42.31,
+   "weight_g_solid": 52.5,
+   "bed_contact_mm2": 6048.7,
+   "first_layer_mm2": 6048.7,
+   "footprint_hull_mm2": 20978.8,
+   "aspect_h_over_w": 0.07,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "U_diffuser",
+   "faces": 64,
+   "vertices": 32,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    136.23,
+    96.21,
+    6.7
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 2.5,
+   "weight_g_solid": 3.1,
+   "bed_contact_mm2": 506.5,
+   "first_layer_mm2": 506.5,
+   "footprint_hull_mm2": 13105.8,
+   "aspect_h_over_w": 0.07,
+   "thin_area_mm2": 208.7,
+   "thin_at_z": 0.85,
+   "thin_bounds": [
+    -67.0,
+    -48.0,
+    67.0,
+    48.0
+   ],
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "note": "단일 벽(발광 갓) 209 mm² — 의도된 0.8 mm 두 줄 벽",
+   "flags": []
+  },
+  {
+   "name": "U_floor",
+   "faces": 96,
+   "vertices": 48,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    151.03,
+    111.01,
+    4.49
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 15.64,
+   "weight_g_solid": 19.4,
+   "bed_contact_mm2": 4973.5,
+   "first_layer_mm2": 4973.5,
+   "footprint_hull_mm2": 16764.8,
+   "aspect_h_over_w": 0.04,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "U_ring",
+   "faces": 160,
+   "vertices": 80,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    150.23,
+    110.21,
+    11.5
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 13.04,
+   "weight_g_solid": 16.2,
+   "bed_contact_mm2": 1381.5,
+   "first_layer_mm2": 1381.5,
+   "footprint_hull_mm2": 16555.9,
+   "aspect_h_over_w": 0.1,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 1916.7,
+   "bridge_max_span": 5.4,
+   "bridge_top": [
+    [
+     1.11,
+     1916.7,
+     5.4
+    ]
+   ],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "U_roof_desc1",
+   "faces": 220,
+   "vertices": 112,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    37.98,
+    54.51,
+    3.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 0.57,
+   "weight_g_solid": 0.7,
+   "bed_contact_mm2": 209.4,
+   "first_layer_mm2": 209.4,
+   "footprint_hull_mm2": 255.0,
+   "aspect_h_over_w": 0.08,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "U_roof_desc2",
+   "faces": 220,
+   "vertices": 112,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    37.98,
+    54.51,
+    3.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 0.57,
+   "weight_g_solid": 0.7,
+   "bed_contact_mm2": 209.4,
+   "first_layer_mm2": 209.4,
+   "footprint_hull_mm2": 255.0,
+   "aspect_h_over_w": 0.08,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "U_roof_desc3",
+   "faces": 220,
+   "vertices": 112,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    37.98,
+    54.51,
+    3.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 0.57,
+   "weight_g_solid": 0.7,
+   "bed_contact_mm2": 209.4,
+   "first_layer_mm2": 209.4,
+   "footprint_hull_mm2": 255.0,
+   "aspect_h_over_w": 0.08,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "U_roof_desc4",
+   "faces": 220,
+   "vertices": 112,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    37.98,
+    54.51,
+    3.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 0.57,
+   "weight_g_solid": 0.7,
+   "bed_contact_mm2": 209.4,
+   "first_layer_mm2": 209.4,
+   "footprint_hull_mm2": 255.0,
+   "aspect_h_over_w": 0.08,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "U_roof_eave_white",
+   "faces": 2532,
+   "vertices": 1258,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    210.54,
+    170.6,
+    0.9
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 6.58,
+   "weight_g_solid": 8.2,
+   "bed_contact_mm2": 7478.0,
+   "first_layer_mm2": 7478.0,
+   "footprint_hull_mm2": 35918.1,
+   "aspect_h_over_w": 0.01,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "U_roof_gableL",
+   "faces": 118,
+   "vertices": 61,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    34.03,
+    102.31,
+    2.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 3.25,
+   "weight_g_solid": 4.0,
+   "bed_contact_mm2": 1655.8,
+   "first_layer_mm2": 1655.8,
+   "footprint_hull_mm2": 1741.0,
+   "aspect_h_over_w": 0.06,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "U_roof_gableR",
+   "faces": 118,
+   "vertices": 61,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    34.03,
+    102.31,
+    2.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 3.25,
+   "weight_g_solid": 4.0,
+   "bed_contact_mm2": 1655.8,
+   "first_layer_mm2": 1655.8,
+   "footprint_hull_mm2": 1741.0,
+   "aspect_h_over_w": 0.06,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "U_roof_hip1",
+   "faces": 220,
+   "vertices": 112,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    11.28,
+    40.06,
+    4.58
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 0.47,
+   "weight_g_solid": 0.6,
+   "bed_contact_mm2": 132.9,
+   "first_layer_mm2": 132.9,
+   "footprint_hull_mm2": 155.2,
+   "aspect_h_over_w": 0.41,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "U_roof_hip2",
+   "faces": 220,
+   "vertices": 112,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    11.28,
+    40.06,
+    4.58
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 0.45,
+   "weight_g_solid": 0.6,
+   "bed_contact_mm2": 132.9,
+   "first_layer_mm2": 132.9,
+   "footprint_hull_mm2": 155.2,
+   "aspect_h_over_w": 0.41,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "U_roof_hip3",
+   "faces": 220,
+   "vertices": 112,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    11.28,
+    40.06,
+    4.58
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 0.45,
+   "weight_g_solid": 0.6,
+   "bed_contact_mm2": 132.9,
+   "first_layer_mm2": 132.9,
+   "footprint_hull_mm2": 155.2,
+   "aspect_h_over_w": 0.41,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "U_roof_hip4",
+   "faces": 220,
+   "vertices": 112,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    11.28,
+    40.06,
+    4.58
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 0.47,
+   "weight_g_solid": 0.6,
+   "bed_contact_mm2": 132.9,
+   "first_layer_mm2": 132.9,
+   "footprint_hull_mm2": 155.2,
+   "aspect_h_over_w": 0.41,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "U_roof_ridge",
+   "faces": 340,
+   "vertices": 172,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    9.12,
+    126.9,
+    4.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 3.52,
+   "weight_g_solid": 4.4,
+   "bed_contact_mm2": 919.1,
+   "first_layer_mm2": 919.1,
+   "footprint_hull_mm2": 1157.9,
+   "aspect_h_over_w": 0.44,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "U_roof_soffit",
+   "faces": 60452,
+   "vertices": 30228,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    215.21,
+    175.36,
+    13.51
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 187.05,
+   "weight_g_solid": 231.9,
+   "bed_contact_mm2": 73.8,
+   "first_layer_mm2": 91.7,
+   "footprint_hull_mm2": 17558.7,
+   "aspect_h_over_w": 0.08,
+   "thin_area_mm2": 127.8,
+   "thin_at_z": 0.3,
+   "thin_bounds": [
+    -84.0,
+    -63.9,
+    84.0,
+    63.9
+   ],
+   "internal_gaps": 1,
+   "slit_z": [],
+   "overhang_mm2": 21714.1,
+   "overhang_top": [
+    [
+     5.51,
+     10546.2,
+     [
+      -101.6,
+      -80.7,
+      101.6,
+      80.7
+     ]
+    ],
+    [
+     5.71,
+     6530.7,
+     [
+      -101.8,
+      -81.0,
+      101.8,
+      81.0
+     ]
+    ],
+    [
+     5.91,
+     552.9,
+     [
+      -102.2,
+      -81.3,
+      102.2,
+      81.3
+     ]
+    ],
+    [
+     0.31,
+     187.5,
+     [
+      -84.3,
+      -64.0,
+      84.3,
+      64.0
+     ]
+    ]
+   ],
+   "bridge_mm2": 8572.2,
+   "bridge_max_span": 14.3,
+   "bridge_top": [
+    [
+     5.71,
+     1116.4,
+     14.3
+    ],
+    [
+     7.51,
+     782.5,
+     3.8
+    ],
+    [
+     5.91,
+     742.2,
+     13.3
+    ],
+    [
+     6.11,
+     609.1,
+     12.3
+    ]
+   ],
+   "wall_steps": [
+    [
+     6.81,
+     4,
+     0.101,
+     [
+      [
+       30,
+       101.7,
+       58.7
+      ],
+      [
+       150,
+       -101.7,
+       58.7
+      ],
+      [
+       210,
+       -101.7,
+       -58.7
+      ],
+      [
+       330,
+       101.7,
+       -58.7
+      ]
+     ]
+    ],
+    [
+     5.75,
+     4,
+     0.158,
+     [
+      [
+       52,
+       61.3,
+       79.9
+      ],
+      [
+       127,
+       -61.3,
+       79.9
+      ],
+      [
+       232,
+       -61.3,
+       -79.9
+      ],
+      [
+       307,
+       61.3,
+       -79.9
+      ]
+     ]
+    ]
+   ],
+   "flags": [
+    "바깥 벽 단차 0.02~0.3 mm 2개 높이 (z, 방향 수, 최대 mm): [(6.81, 4, 0.101), (5.75, 4, 0.158)] — 출력물에 가로줄",
+    "바닥 접지 73.8 mm² < 100 mm² — 브림 필수",
+    "0.8 mm 보다 얇은 살 127.8 mm² (z=0.3, x/y (-84.0, -63.9, 84.0, 63.9))",
+    "오버행(한쪽 지지) 규칙 위반 21714 mm² (서포트 또는 재설계)",
+    "브리지 폭 14.3 mm > 7.0 mm"
+   ]
+  },
+  {
+   "name": "U_roof_tile",
+   "faces": 69344,
+   "vertices": 34662,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    210.21,
+    170.26,
+    60.21
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 599.75,
+   "weight_g_solid": 743.7,
+   "bed_contact_mm2": 30026.4,
+   "first_layer_mm2": 30563.2,
+   "footprint_hull_mm2": 31704.7,
+   "aspect_h_over_w": 0.35,
+   "thin_area_mm2": 2.4,
+   "thin_at_z": 5.72,
+   "thin_bounds": [
+    -93.9,
+    -76.3,
+    93.9,
+    76.3
+   ],
+   "internal_gaps": 20,
+   "slit_z": [],
+   "overhang_mm2": 1506.0,
+   "overhang_top": [
+    [
+     0.31,
+     591.3,
+     [
+      -102.9,
+      -82.4,
+      102.9,
+      82.4
+     ]
+    ],
+    [
+     0.51,
+     213.9,
+     [
+      -103.1,
+      -82.6,
+      103.1,
+      82.6
+     ]
+    ],
+    [
+     0.71,
+     162.9,
+     [
+      -103.3,
+      -82.9,
+      103.3,
+      82.9
+     ]
+    ],
+    [
+     0.91,
+     125.1,
+     [
+      -103.5,
+      -83.1,
+      103.5,
+      83.1
+     ]
+    ]
+   ],
+   "bridge_mm2": 1635.1,
+   "bridge_max_span": 14.3,
+   "bridge_top": [
+    [
+     0.31,
+     415.4,
+     14.3
+    ],
+    [
+     0.51,
+     291.4,
+     13.4
+    ],
+    [
+     0.71,
+     188.5,
+     12.9
+    ],
+    [
+     0.91,
+     131.5,
+     11.5
+    ]
+   ],
+   "wall_steps": [
+    [
+     0.75,
+     4,
+     0.221,
+     [
+      [
+       15,
+       101.8,
+       27.3
+      ],
+      [
+       165,
+       -101.8,
+       27.3
+      ],
+      [
+       195,
+       -101.8,
+       -27.3
+      ],
+      [
+       345,
+       101.8,
+       -27.3
+      ]
+     ]
+    ],
+    [
+     13.15,
+     4,
+     0.261,
+     [
+      [
+       15,
+       68.8,
+       18.4
+      ],
+      [
+       165,
+       -68.8,
+       18.4
+      ],
+      [
+       195,
+       -68.8,
+       -18.4
+      ],
+      [
+       345,
+       68.8,
+       -18.4
+      ]
+     ]
+    ],
+    [
+     1.15,
+     4,
+     0.286,
+     [
+      [
+       30,
+       103.0,
+       59.5
+      ],
+      [
+       150,
+       -103.0,
+       59.5
+      ],
+      [
+       210,
+       -103.0,
+       -59.5
+      ],
+      [
+       330,
+       103.0,
+       -59.5
+      ]
+     ]
+    ],
+    [
+     50.91,
+     4,
+     0.028,
+     [
+      [
+       75,
+       0.6,
+       2.2
+      ],
+      [
+       105,
+       -0.6,
+       2.2
+      ],
+      [
+       255,
+       -0.6,
+       -2.2
+      ],
+      [
+       285,
+       0.6,
+       -2.2
+      ]
+     ]
+    ]
+   ],
+   "flags": [
+    "바깥 벽 단차 0.02~0.3 mm 4개 높이 (z, 방향 수, 최대 mm): [(0.75, 4, 0.221), (13.15, 4, 0.261), (1.15, 4, 0.286), (50.91, 4, 0.028)] — 출력물에 가로줄",
+    "0.8 mm 보다 얇은 살 2.4 mm² (z=5.72, x/y (-93.9, -76.3, 93.9, 76.3))",
+    "오버행(한쪽 지지) 규칙 위반 1506 mm² (서포트 또는 재설계)",
+    "브리지 폭 14.3 mm > 7.0 mm"
+   ]
+  },
+  {
+   "name": "platform",
+   "faces": 1266,
+   "vertices": 633,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    210.89,
+    204.2,
+    23.32
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 747.23,
+   "weight_g_solid": 926.6,
+   "bed_contact_mm2": 43063.7,
+   "first_layer_mm2": 43063.7,
+   "footprint_hull_mm2": 43063.7,
+   "aspect_h_over_w": 0.11,
+   "thin_area_mm2": 0.3,
+   "thin_at_z": 8.56,
+   "thin_bounds": [
+    -0.6,
+    -105.2,
+    0.6,
+    -104.6
+   ],
+   "internal_gaps": 15,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 315.7,
+   "bridge_max_span": 6.0,
+   "bridge_top": [
+    [
+     8.11,
+     315.7,
+     6.0
+    ]
+   ],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "uwall_back",
+   "faces": 1766,
+   "vertices": 829,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    147.03,
+    8.3,
+    3.2
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 2.47,
+   "weight_g_solid": 3.1,
+   "bed_contact_mm2": 1032.8,
+   "first_layer_mm2": 1032.8,
+   "footprint_hull_mm2": 1220.3,
+   "aspect_h_over_w": 0.39,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "uwall_front",
+   "faces": 1766,
+   "vertices": 829,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    147.03,
+    8.3,
+    3.2
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 2.47,
+   "weight_g_solid": 3.1,
+   "bed_contact_mm2": 1032.8,
+   "first_layer_mm2": 1032.8,
+   "footprint_hull_mm2": 1220.3,
+   "aspect_h_over_w": 0.39,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "uwall_left",
+   "faces": 1224,
+   "vertices": 574,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    100.61,
+    8.3,
+    3.2
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 1.66,
+   "weight_g_solid": 2.1,
+   "bed_contact_mm2": 702.5,
+   "first_layer_mm2": 702.5,
+   "footprint_hull_mm2": 835.0,
+   "aspect_h_over_w": 0.39,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 2,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "uwall_right",
+   "faces": 1224,
+   "vertices": 574,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    100.61,
+    8.3,
+    3.2
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 1.66,
+   "weight_g_solid": 2.1,
+   "bed_contact_mm2": 702.5,
+   "first_layer_mm2": 702.5,
+   "footprint_hull_mm2": 835.0,
+   "aspect_h_over_w": 0.39,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 2,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "wall_back",
+   "faces": 4370,
+   "vertices": 1995,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    168.09,
+    33.71,
+    3.6
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 9.05,
+   "weight_g_solid": 11.2,
+   "bed_contact_mm2": 4032.1,
+   "first_layer_mm2": 4032.1,
+   "footprint_hull_mm2": 5665.9,
+   "aspect_h_over_w": 0.11,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "wall_front",
+   "faces": 4370,
+   "vertices": 1995,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    168.09,
+    33.71,
+    3.6
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 9.05,
+   "weight_g_solid": 11.2,
+   "bed_contact_mm2": 4032.1,
+   "first_layer_mm2": 4032.1,
+   "footprint_hull_mm2": 5665.9,
+   "aspect_h_over_w": 0.11,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "wall_left",
+   "faces": 3154,
+   "vertices": 1435,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    120.2,
+    33.71,
+    3.6
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 6.11,
+   "weight_g_solid": 7.6,
+   "bed_contact_mm2": 2822.7,
+   "first_layer_mm2": 2822.7,
+   "footprint_hull_mm2": 4051.4,
+   "aspect_h_over_w": 0.11,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  {
+   "name": "wall_right",
+   "faces": 3154,
+   "vertices": 1435,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    120.2,
+    33.71,
+    3.6
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 6.11,
+   "weight_g_solid": 7.6,
+   "bed_contact_mm2": 2822.7,
+   "first_layer_mm2": 2822.7,
+   "footprint_hull_mm2": 4051.4,
+   "aspect_h_over_w": 0.11,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  }
+ ],
+ "collisions": [
+  {
+   "a": "L_band",
+   "b": "L_diffuser",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 3.8
+  },
+  {
+   "a": "L_band",
+   "b": "L_floor",
+   "intersection_mm3": 5870.231,
+   "min_gap_mm": -3.0
+  },
+  {
+   "a": "L_band",
+   "b": "L_ring",
+   "intersection_mm3": 2335.666,
+   "min_gap_mm": -2.0
+  },
+  {
+   "a": "L_band",
+   "b": "L_roof_eave_white",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 4.971
+  },
+  {
+   "a": "L_band",
+   "b": "L_roof_soffit",
+   "intersection_mm3": 11176.799,
+   "min_gap_mm": -2.748
+  },
+  {
+   "a": "L_band",
+   "b": "L_roof_tile",
+   "intersection_mm3": 47844.12,
+   "min_gap_mm": -0.477
+  },
+  {
+   "a": "L_band",
+   "b": "U_band",
+   "intersection_mm3": 3287.304,
+   "min_gap_mm": -1.293
+  },
+  {
+   "a": "L_band",
+   "b": "U_diffuser",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 13.595
+  },
+  {
+   "a": "L_band",
+   "b": "U_floor",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 6.195
+  },
+  {
+   "a": "L_band",
+   "b": "U_ring",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 6.595
+  },
+  {
+   "a": "L_band",
+   "b": "U_roof_eave_white",
+   "intersection_mm3": 755.231,
+   "min_gap_mm": -0.9
+  },
+  {
+   "a": "L_band",
+   "b": "U_roof_soffit",
+   "intersection_mm3": 30796.363,
+   "min_gap_mm": -3.321
+  },
+  {
+   "a": "L_band",
+   "b": "U_roof_tile",
+   "intersection_mm3": 42817.98,
+   "min_gap_mm": -2.218
+  },
+  {
+   "a": "L_band",
+   "b": "platform",
+   "intersection_mm3": 47677.692,
+   "min_gap_mm": -3.0
+  },
+  {
+   "a": "L_band",
+   "b": "uwall_back",
+   "intersection_mm3": 180.004,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "L_band",
+   "b": "uwall_front",
+   "intersection_mm3": 180.004,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "L_band",
+   "b": "uwall_left",
+   "intersection_mm3": 169.724,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "L_band",
+   "b": "uwall_right",
+   "intersection_mm3": 169.724,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "L_band",
+   "b": "wall_back",
+   "intersection_mm3": 508.866,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "L_band",
+   "b": "wall_front",
+   "intersection_mm3": 508.866,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "L_band",
+   "b": "wall_left",
+   "intersection_mm3": 769.686,
+   "min_gap_mm": -3.229
+  },
+  {
+   "a": "L_band",
+   "b": "wall_right",
+   "intersection_mm3": 769.686,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "L_diffuser",
+   "b": "L_floor",
+   "intersection_mm3": 1328.845,
+   "min_gap_mm": -0.377
+  },
+  {
+   "a": "L_diffuser",
+   "b": "L_ring",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 0.4
+  },
+  {
+   "a": "L_diffuser",
+   "b": "L_roof_eave_white",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 19.974
+  },
+  {
+   "a": "L_diffuser",
+   "b": "L_roof_soffit",
+   "intersection_mm3": 2158.303,
+   "min_gap_mm": -0.394
+  },
+  {
+   "a": "L_diffuser",
+   "b": "L_roof_tile",
+   "intersection_mm3": 5991.69,
+   "min_gap_mm": -0.389
+  },
+  {
+   "a": "L_diffuser",
+   "b": "U_band",
+   "intersection_mm3": 3224.348,
+   "min_gap_mm": -0.399
+  },
+  {
+   "a": "L_diffuser",
+   "b": "U_diffuser",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 8.695
+  },
+  {
+   "a": "L_diffuser",
+   "b": "U_floor",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 1.295
+  },
+  {
+   "a": "L_diffuser",
+   "b": "U_ring",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 1.695
+  },
+  {
+   "a": "L_diffuser",
+   "b": "U_roof_eave_white",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 12.655
+  },
+  {
+   "a": "L_diffuser",
+   "b": "U_roof_soffit",
+   "intersection_mm3": 2090.607,
+   "min_gap_mm": -0.4
+  },
+  {
+   "a": "L_diffuser",
+   "b": "U_roof_tile",
+   "intersection_mm3": 4926.616,
+   "min_gap_mm": -0.391
+  },
+  {
+   "a": "L_diffuser",
+   "b": "platform",
+   "intersection_mm3": 9299.517,
+   "min_gap_mm": -0.373
+  },
+  {
+   "a": "L_diffuser",
+   "b": "uwall_back",
+   "intersection_mm3": 12.739,
+   "min_gap_mm": -0.391
+  },
+  {
+   "a": "L_diffuser",
+   "b": "uwall_front",
+   "intersection_mm3": 12.739,
+   "min_gap_mm": -0.392
+  },
+  {
+   "a": "L_diffuser",
+   "b": "uwall_left",
+   "intersection_mm3": 16.587,
+   "min_gap_mm": -0.395
+  },
+  {
+   "a": "L_diffuser",
+   "b": "uwall_right",
+   "intersection_mm3": 16.587,
+   "min_gap_mm": -0.394
+  },
+  {
+   "a": "L_diffuser",
+   "b": "wall_back",
+   "intersection_mm3": 30.038,
+   "min_gap_mm": -0.364
+  },
+  {
+   "a": "L_diffuser",
+   "b": "wall_front",
+   "intersection_mm3": 30.038,
+   "min_gap_mm": -0.398
+  },
+  {
+   "a": "L_diffuser",
+   "b": "wall_left",
+   "intersection_mm3": 29.946,
+   "min_gap_mm": -0.391
+  },
+  {
+   "a": "L_diffuser",
+   "b": "wall_right",
+   "intersection_mm3": 29.946,
+   "min_gap_mm": -0.254
+  },
+  {
+   "a": "L_floor",
+   "b": "L_ring",
+   "intersection_mm3": 6021.944,
+   "min_gap_mm": -1.524
+  },
+  {
+   "a": "L_floor",
+   "b": "L_roof_eave_white",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 12.57
+  },
+  {
+   "a": "L_floor",
+   "b": "L_roof_soffit",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 0.753
+  },
+  {
+   "a": "L_floor",
+   "b": "L_roof_tile",
+   "intersection_mm3": 32614.257,
+   "min_gap_mm": -1.49
+  },
+  {
+   "a": "L_floor",
+   "b": "U_band",
+   "intersection_mm3": 19008.939,
+   "min_gap_mm": -1.5
+  },
+  {
+   "a": "L_floor",
+   "b": "U_diffuser",
+   "intersection_mm3": 1132.746,
+   "min_gap_mm": -1.497
+  },
+  {
+   "a": "L_floor",
+   "b": "U_floor",
+   "intersection_mm3": 14514.914,
+   "min_gap_mm": -1.499
+  },
+  {
+   "a": "L_floor",
+   "b": "U_ring",
+   "intersection_mm3": 5183.344,
+   "min_gap_mm": -1.497
+  },
+  {
+   "a": "L_floor",
+   "b": "U_roof_eave_white",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 5.254
+  },
+  {
+   "a": "L_floor",
+   "b": "U_roof_soffit",
+   "intersection_mm3": 2687.757,
+   "min_gap_mm": -1.494
+  },
+  {
+   "a": "L_floor",
+   "b": "U_roof_tile",
+   "intersection_mm3": 62294.09,
+   "min_gap_mm": -0.042
+  },
+  {
+   "a": "L_floor",
+   "b": "platform",
+   "intersection_mm3": 62290.71,
+   "min_gap_mm": -0.151
+  },
+  {
+   "a": "L_floor",
+   "b": "uwall_back",
+   "intersection_mm3": 952.166,
+   "min_gap_mm": -1.498
+  },
+  {
+   "a": "L_floor",
+   "b": "uwall_front",
+   "intersection_mm3": 952.166,
+   "min_gap_mm": -1.52
+  },
+  {
+   "a": "L_floor",
+   "b": "uwall_left",
+   "intersection_mm3": 985.155,
+   "min_gap_mm": -1.522
+  },
+  {
+   "a": "L_floor",
+   "b": "uwall_right",
+   "intersection_mm3": 985.155,
+   "min_gap_mm": -1.499
+  },
+  {
+   "a": "L_floor",
+   "b": "wall_back",
+   "intersection_mm3": 3670.496,
+   "min_gap_mm": -1.581
+  },
+  {
+   "a": "L_floor",
+   "b": "wall_front",
+   "intersection_mm3": 3670.496,
+   "min_gap_mm": -1.554
+  },
+  {
+   "a": "L_floor",
+   "b": "wall_left",
+   "intersection_mm3": 3600.584,
+   "min_gap_mm": -1.5
+  },
+  {
+   "a": "L_floor",
+   "b": "wall_right",
+   "intersection_mm3": 3600.584,
+   "min_gap_mm": -1.499
+  },
+  {
+   "a": "L_ring",
+   "b": "L_roof_eave_white",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 12.999
+  },
+  {
+   "a": "L_ring",
+   "b": "L_roof_soffit",
+   "intersection_mm3": 3412.142,
+   "min_gap_mm": -0.947
+  },
+  {
+   "a": "L_ring",
+   "b": "L_roof_tile",
+   "intersection_mm3": 15157.266,
+   "min_gap_mm": -0.352
+  },
+  {
+   "a": "L_ring",
+   "b": "U_band",
+   "intersection_mm3": 7880.596,
+   "min_gap_mm": -0.949
+  },
+  {
+   "a": "L_ring",
+   "b": "U_diffuser",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 10.195
+  },
+  {
+   "a": "L_ring",
+   "b": "U_floor",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 2.795
+  },
+  {
+   "a": "L_ring",
+   "b": "U_ring",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 3.195
+  },
+  {
+   "a": "L_ring",
+   "b": "U_roof_eave_white",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 5.678
+  },
+  {
+   "a": "L_ring",
+   "b": "U_roof_soffit",
+   "intersection_mm3": 6194.704,
+   "min_gap_mm": -0.906
+  },
+  {
+   "a": "L_ring",
+   "b": "U_roof_tile",
+   "intersection_mm3": 13257.565,
+   "min_gap_mm": -0.945
+  },
+  {
+   "a": "L_ring",
+   "b": "platform",
+   "intersection_mm3": 15108.758,
+   "min_gap_mm": -0.429
+  },
+  {
+   "a": "L_ring",
+   "b": "uwall_back",
+   "intersection_mm3": 57.603,
+   "min_gap_mm": -0.94
+  },
+  {
+   "a": "L_ring",
+   "b": "uwall_front",
+   "intersection_mm3": 57.603,
+   "min_gap_mm": -0.762
+  },
+  {
+   "a": "L_ring",
+   "b": "uwall_left",
+   "intersection_mm3": 70.262,
+   "min_gap_mm": -0.911
+  },
+  {
+   "a": "L_ring",
+   "b": "uwall_right",
+   "intersection_mm3": 70.262,
+   "min_gap_mm": -0.919
+  },
+  {
+   "a": "L_ring",
+   "b": "wall_back",
+   "intersection_mm3": 195.843,
+   "min_gap_mm": -0.663
+  },
+  {
+   "a": "L_ring",
+   "b": "wall_front",
+   "intersection_mm3": 195.843,
+   "min_gap_mm": -0.8
+  },
+  {
+   "a": "L_ring",
+   "b": "wall_left",
+   "intersection_mm3": 186.524,
+   "min_gap_mm": -0.923
+  },
+  {
+   "a": "L_ring",
+   "b": "wall_right",
+   "intersection_mm3": 186.524,
+   "min_gap_mm": -0.853
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "L_roof_soffit",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 0.917
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "L_roof_tile",
+   "intersection_mm3": 5366.484,
+   "min_gap_mm": -0.444
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "U_band",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 14.766
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "U_diffuser",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 29.765
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "U_floor",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 22.366
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "U_ring",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 22.768
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "U_roof_desc1",
+   "intersection_mm3": 34.48,
+   "min_gap_mm": -0.449
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "U_roof_desc2",
+   "intersection_mm3": 34.48,
+   "min_gap_mm": -0.444
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "U_roof_desc3",
+   "intersection_mm3": 34.48,
+   "min_gap_mm": -0.448
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "U_roof_desc4",
+   "intersection_mm3": 34.48,
+   "min_gap_mm": -0.441
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "U_roof_eave_white",
+   "intersection_mm3": 1988.391,
+   "min_gap_mm": -0.442
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "U_roof_gableL",
+   "intersection_mm3": 464.049,
+   "min_gap_mm": -0.44
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "U_roof_gableR",
+   "intersection_mm3": 464.049,
+   "min_gap_mm": -0.449
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "U_roof_hip1",
+   "intersection_mm3": 0.009,
+   "min_gap_mm": -0.012
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "U_roof_hip2",
+   "intersection_mm3": 0.009,
+   "min_gap_mm": 0.002
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "U_roof_hip3",
+   "intersection_mm3": 0.009,
+   "min_gap_mm": 0.054
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "U_roof_hip4",
+   "intersection_mm3": 0.009,
+   "min_gap_mm": -0.031
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "U_roof_soffit",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 3.603
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "U_roof_tile",
+   "intersection_mm3": 1284.461,
+   "min_gap_mm": -0.448
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "platform",
+   "intersection_mm3": 4746.562,
+   "min_gap_mm": -0.442
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "uwall_back",
+   "intersection_mm3": 56.48,
+   "min_gap_mm": -0.433
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "uwall_front",
+   "intersection_mm3": 56.48,
+   "min_gap_mm": -0.444
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "uwall_left",
+   "intersection_mm3": 8.369,
+   "min_gap_mm": -0.42
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "uwall_right",
+   "intersection_mm3": 8.369,
+   "min_gap_mm": -0.416
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "wall_back",
+   "intersection_mm3": 243.088,
+   "min_gap_mm": -0.442
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "wall_front",
+   "intersection_mm3": 243.088,
+   "min_gap_mm": -0.446
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "wall_left",
+   "intersection_mm3": 177.855,
+   "min_gap_mm": -0.432
+  },
+  {
+   "a": "L_roof_eave_white",
+   "b": "wall_right",
+   "intersection_mm3": 177.855,
+   "min_gap_mm": -0.445
+  },
+  {
+   "a": "L_roof_hip1",
+   "b": "L_roof_hip3",
+   "intersection_mm3": 409.809,
+   "min_gap_mm": -0.708
+  },
+  {
+   "a": "L_roof_hip1",
+   "b": "platform",
+   "intersection_mm3": 227.154,
+   "min_gap_mm": -0.0
+  },
+  {
+   "a": "L_roof_hip2",
+   "b": "L_roof_hip4",
+   "intersection_mm3": 409.809,
+   "min_gap_mm": -0.675
+  },
+  {
+   "a": "L_roof_hip3",
+   "b": "platform",
+   "intersection_mm3": 184.339,
+   "min_gap_mm": -0.0
+  },
+  {
+   "a": "L_roof_soffit",
+   "b": "L_roof_tile",
+   "intersection_mm3": 72961.171,
+   "min_gap_mm": -2.833
+  },
+  {
+   "a": "L_roof_soffit",
+   "b": "U_band",
+   "intersection_mm3": 9768.034,
+   "min_gap_mm": -2.496
+  },
+  {
+   "a": "L_roof_soffit",
+   "b": "U_diffuser",
+   "intersection_mm3": 536.628,
+   "min_gap_mm": -1.457
+  },
+  {
+   "a": "L_roof_soffit",
+   "b": "U_floor",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 0.753
+  },
+  {
+   "a": "L_roof_soffit",
+   "b": "U_ring",
+   "intersection_mm3": 4621.417,
+   "min_gap_mm": -2.499
+  },
+  {
+   "a": "L_roof_soffit",
+   "b": "U_roof_desc1",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 0.552
+  },
+  {
+   "a": "L_roof_soffit",
+   "b": "U_roof_desc2",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 0.469
+  },
+  {
+   "a": "L_roof_soffit",
+   "b": "U_roof_desc3",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 0.519
+  },
+  {
+   "a": "L_roof_soffit",
+   "b": "U_roof_desc4",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 0.448
+  },
+  {
+   "a": "L_roof_soffit",
+   "b": "U_roof_eave_white",
+   "intersection_mm3": 349.447,
+   "min_gap_mm": -0.614
+  },
+  {
+   "a": "L_roof_soffit",
+   "b": "U_roof_gableL",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 1.357
+  },
+  {
+   "a": "L_roof_soffit",
+   "b": "U_roof_gableR",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 1.366
+  },
+  {
+   "a": "L_roof_soffit",
+   "b": "U_roof_hip1",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 5.071
+  },
+  {
+   "a": "L_roof_soffit",
+   "b": "U_roof_hip2",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 6.414
+  },
+  {
+   "a": "L_roof_soffit",
+   "b": "U_roof_hip3",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 6.366
+  },
+  {
+   "a": "L_roof_soffit",
+   "b": "U_roof_hip4",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 4.988
+  },
+  {
+   "a": "L_roof_soffit",
+   "b": "U_roof_soffit",
+   "intersection_mm3": 98218.773,
+   "min_gap_mm": -3.486
+  },
+  {
+   "a": "L_roof_soffit",
+   "b": "U_roof_tile",
+   "intersection_mm3": 53617.412,
+   "min_gap_mm": -2.512
+  },
+  {
+   "a": "L_roof_soffit",
+   "b": "platform",
+   "intersection_mm3": 139725.727,
+   "min_gap_mm": -3.485
+  },
+  {
+   "a": "L_roof_soffit",
+   "b": "uwall_back",
+   "intersection_mm3": 68.018,
+   "min_gap_mm": -1.714
+  },
+  {
+   "a": "L_roof_soffit",
+   "b": "uwall_front",
+   "intersection_mm3": 68.018,
+   "min_gap_mm": -1.713
+  },
+  {
+   "a": "L_roof_soffit",
+   "b": "uwall_left",
+   "intersection_mm3": 49.215,
+   "min_gap_mm": -1.735
+  },
+  {
+   "a": "L_roof_soffit",
+   "b": "uwall_right",
+   "intersection_mm3": 49.215,
+   "min_gap_mm": -1.865
+  },
+  {
+   "a": "L_roof_soffit",
+   "b": "wall_back",
+   "intersection_mm3": 107.195,
+   "min_gap_mm": -1.336
+  },
+  {
+   "a": "L_roof_soffit",
+   "b": "wall_front",
+   "intersection_mm3": 107.195,
+   "min_gap_mm": -1.46
+  },
+  {
+   "a": "L_roof_soffit",
+   "b": "wall_left",
+   "intersection_mm3": 101.924,
+   "min_gap_mm": -1.572
+  },
+  {
+   "a": "L_roof_soffit",
+   "b": "wall_right",
+   "intersection_mm3": 101.924,
+   "min_gap_mm": -1.561
+  },
+  {
+   "a": "L_roof_tile",
+   "b": "U_band",
+   "intersection_mm3": 42309.859,
+   "min_gap_mm": -6.698
+  },
+  {
+   "a": "L_roof_tile",
+   "b": "U_diffuser",
+   "intersection_mm3": 2495.727,
+   "min_gap_mm": -3.656
+  },
+  {
+   "a": "L_roof_tile",
+   "b": "U_floor",
+   "intersection_mm3": 15641.277,
+   "min_gap_mm": -4.49
+  },
+  {
+   "a": "L_roof_tile",
+   "b": "U_ring",
+   "intersection_mm3": 13039.752,
+   "min_gap_mm": -6.588
+  },
+  {
+   "a": "L_roof_tile",
+   "b": "U_roof_desc1",
+   "intersection_mm3": 58.577,
+   "min_gap_mm": -1.207
+  },
+  {
+   "a": "L_roof_tile",
+   "b": "U_roof_desc2",
+   "intersection_mm3": 58.577,
+   "min_gap_mm": -1.215
+  },
+  {
+   "a": "L_roof_tile",
+   "b": "U_roof_desc3",
+   "intersection_mm3": 58.577,
+   "min_gap_mm": -1.109
+  },
+  {
+   "a": "L_roof_tile",
+   "b": "U_roof_desc4",
+   "intersection_mm3": 58.577,
+   "min_gap_mm": -1.117
+  },
+  {
+   "a": "L_roof_tile",
+   "b": "U_roof_eave_white",
+   "intersection_mm3": 5835.343,
+   "min_gap_mm": -0.9
+  },
+  {
+   "a": "L_roof_tile",
+   "b": "U_roof_gableL",
+   "intersection_mm3": 730.786,
+   "min_gap_mm": -1.044
+  },
+  {
+   "a": "L_roof_tile",
+   "b": "U_roof_gableR",
+   "intersection_mm3": 730.786,
+   "min_gap_mm": -0.989
+  },
+  {
+   "a": "L_roof_tile",
+   "b": "U_roof_hip1",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 0.201
+  },
+  {
+   "a": "L_roof_tile",
+   "b": "U_roof_hip2",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 0.221
+  },
+  {
+   "a": "L_roof_tile",
+   "b": "U_roof_hip3",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 0.23
+  },
+  {
+   "a": "L_roof_tile",
+   "b": "U_roof_hip4",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 0.206
+  },
+  {
+   "a": "L_roof_tile",
+   "b": "U_roof_soffit",
+   "intersection_mm3": 82093.148,
+   "min_gap_mm": -6.699
+  },
+  {
+   "a": "L_roof_tile",
+   "b": "U_roof_tile",
+   "intersection_mm3": 161624.777,
+   "min_gap_mm": -4.322
+  },
+  {
+   "a": "L_roof_tile",
+   "b": "platform",
+   "intersection_mm3": 204394.761,
+   "min_gap_mm": -5.541
+  },
+  {
+   "a": "L_roof_tile",
+   "b": "uwall_back",
+   "intersection_mm3": 667.689,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "L_roof_tile",
+   "b": "uwall_front",
+   "intersection_mm3": 667.689,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "L_roof_tile",
+   "b": "uwall_left",
+   "intersection_mm3": 576.748,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "L_roof_tile",
+   "b": "uwall_right",
+   "intersection_mm3": 576.748,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "L_roof_tile",
+   "b": "wall_back",
+   "intersection_mm3": 2000.885,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "L_roof_tile",
+   "b": "wall_front",
+   "intersection_mm3": 2000.885,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "L_roof_tile",
+   "b": "wall_left",
+   "intersection_mm3": 2105.76,
+   "min_gap_mm": -3.424
+  },
+  {
+   "a": "L_roof_tile",
+   "b": "wall_right",
+   "intersection_mm3": 2105.76,
+   "min_gap_mm": -3.421
+  },
+  {
+   "a": "U_band",
+   "b": "U_diffuser",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 3.8
+  },
+  {
+   "a": "U_band",
+   "b": "U_floor",
+   "intersection_mm3": 5076.262,
+   "min_gap_mm": -3.0
+  },
+  {
+   "a": "U_band",
+   "b": "U_ring",
+   "intersection_mm3": 2019.996,
+   "min_gap_mm": -2.0
+  },
+  {
+   "a": "U_band",
+   "b": "U_roof_eave_white",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 7.449
+  },
+  {
+   "a": "U_band",
+   "b": "U_roof_soffit",
+   "intersection_mm3": 8968.956,
+   "min_gap_mm": -2.494
+  },
+  {
+   "a": "U_band",
+   "b": "U_roof_tile",
+   "intersection_mm3": 42308.338,
+   "min_gap_mm": -0.025
+  },
+  {
+   "a": "U_band",
+   "b": "platform",
+   "intersection_mm3": 42029.148,
+   "min_gap_mm": -2.847
+  },
+  {
+   "a": "U_band",
+   "b": "uwall_back",
+   "intersection_mm3": 171.485,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "U_band",
+   "b": "uwall_front",
+   "intersection_mm3": 171.485,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "U_band",
+   "b": "uwall_left",
+   "intersection_mm3": 201.507,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "U_band",
+   "b": "uwall_right",
+   "intersection_mm3": 201.507,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "U_band",
+   "b": "wall_back",
+   "intersection_mm3": 470.401,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "U_band",
+   "b": "wall_front",
+   "intersection_mm3": 470.401,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "U_band",
+   "b": "wall_left",
+   "intersection_mm3": 468.632,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "U_band",
+   "b": "wall_right",
+   "intersection_mm3": 468.632,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "U_diffuser",
+   "b": "U_floor",
+   "intersection_mm3": 1132.745,
+   "min_gap_mm": -0.4
+  },
+  {
+   "a": "U_diffuser",
+   "b": "U_ring",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 0.4
+  },
+  {
+   "a": "U_diffuser",
+   "b": "U_roof_eave_white",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 22.453
+  },
+  {
+   "a": "U_diffuser",
+   "b": "U_roof_soffit",
+   "intersection_mm3": 417.12,
+   "min_gap_mm": -0.365
+  },
+  {
+   "a": "U_diffuser",
+   "b": "U_roof_tile",
+   "intersection_mm3": 2495.719,
+   "min_gap_mm": -0.0
+  },
+  {
+   "a": "U_diffuser",
+   "b": "platform",
+   "intersection_mm3": 2477.967,
+   "min_gap_mm": -0.0
+  },
+  {
+   "a": "U_diffuser",
+   "b": "uwall_back",
+   "intersection_mm3": 12.052,
+   "min_gap_mm": -0.387
+  },
+  {
+   "a": "U_diffuser",
+   "b": "uwall_front",
+   "intersection_mm3": 12.052,
+   "min_gap_mm": -0.325
+  },
+  {
+   "a": "U_diffuser",
+   "b": "uwall_left",
+   "intersection_mm3": 12.052,
+   "min_gap_mm": -0.345
+  },
+  {
+   "a": "U_diffuser",
+   "b": "uwall_right",
+   "intersection_mm3": 12.052,
+   "min_gap_mm": -0.378
+  },
+  {
+   "a": "U_diffuser",
+   "b": "wall_back",
+   "intersection_mm3": 29.752,
+   "min_gap_mm": -0.384
+  },
+  {
+   "a": "U_diffuser",
+   "b": "wall_front",
+   "intersection_mm3": 29.752,
+   "min_gap_mm": -0.176
+  },
+  {
+   "a": "U_diffuser",
+   "b": "wall_left",
+   "intersection_mm3": 36.372,
+   "min_gap_mm": -0.389
+  },
+  {
+   "a": "U_diffuser",
+   "b": "wall_right",
+   "intersection_mm3": 36.372,
+   "min_gap_mm": -0.357
+  },
+  {
+   "a": "U_floor",
+   "b": "U_ring",
+   "intersection_mm3": 5183.34,
+   "min_gap_mm": -1.526
+  },
+  {
+   "a": "U_floor",
+   "b": "U_roof_eave_white",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 15.051
+  },
+  {
+   "a": "U_floor",
+   "b": "U_roof_soffit",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 1.016
+  },
+  {
+   "a": "U_floor",
+   "b": "U_roof_tile",
+   "intersection_mm3": 15641.204,
+   "min_gap_mm": -0.0
+  },
+  {
+   "a": "U_floor",
+   "b": "platform",
+   "intersection_mm3": 15626.973,
+   "min_gap_mm": -0.491
+  },
+  {
+   "a": "U_floor",
+   "b": "uwall_back",
+   "intersection_mm3": 152.312,
+   "min_gap_mm": -1.501
+  },
+  {
+   "a": "U_floor",
+   "b": "uwall_front",
+   "intersection_mm3": 152.312,
+   "min_gap_mm": -1.501
+  },
+  {
+   "a": "U_floor",
+   "b": "uwall_left",
+   "intersection_mm3": 151.4,
+   "min_gap_mm": -1.537
+  },
+  {
+   "a": "U_floor",
+   "b": "uwall_right",
+   "intersection_mm3": 151.4,
+   "min_gap_mm": -1.485
+  },
+  {
+   "a": "U_floor",
+   "b": "wall_back",
+   "intersection_mm3": 454.753,
+   "min_gap_mm": -1.451
+  },
+  {
+   "a": "U_floor",
+   "b": "wall_front",
+   "intersection_mm3": 454.753,
+   "min_gap_mm": -1.466
+  },
+  {
+   "a": "U_floor",
+   "b": "wall_left",
+   "intersection_mm3": 443.218,
+   "min_gap_mm": -1.513
+  },
+  {
+   "a": "U_floor",
+   "b": "wall_right",
+   "intersection_mm3": 443.218,
+   "min_gap_mm": -1.506
+  },
+  {
+   "a": "U_ring",
+   "b": "U_roof_eave_white",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 15.449
+  },
+  {
+   "a": "U_ring",
+   "b": "U_roof_soffit",
+   "intersection_mm3": 2907.005,
+   "min_gap_mm": -0.933
+  },
+  {
+   "a": "U_ring",
+   "b": "U_roof_tile",
+   "intersection_mm3": 13011.796,
+   "min_gap_mm": -0.173
+  },
+  {
+   "a": "U_ring",
+   "b": "platform",
+   "intersection_mm3": 12982.752,
+   "min_gap_mm": -0.926
+  },
+  {
+   "a": "U_ring",
+   "b": "uwall_back",
+   "intersection_mm3": 60.803,
+   "min_gap_mm": -0.941
+  },
+  {
+   "a": "U_ring",
+   "b": "uwall_front",
+   "intersection_mm3": 60.803,
+   "min_gap_mm": -0.933
+  },
+  {
+   "a": "U_ring",
+   "b": "uwall_left",
+   "intersection_mm3": 62.682,
+   "min_gap_mm": -0.92
+  },
+  {
+   "a": "U_ring",
+   "b": "uwall_right",
+   "intersection_mm3": 62.682,
+   "min_gap_mm": -0.937
+  },
+  {
+   "a": "U_ring",
+   "b": "wall_back",
+   "intersection_mm3": 181.722,
+   "min_gap_mm": -0.916
+  },
+  {
+   "a": "U_ring",
+   "b": "wall_front",
+   "intersection_mm3": 181.722,
+   "min_gap_mm": -0.8
+  },
+  {
+   "a": "U_ring",
+   "b": "wall_left",
+   "intersection_mm3": 166.197,
+   "min_gap_mm": -0.917
+  },
+  {
+   "a": "U_ring",
+   "b": "wall_right",
+   "intersection_mm3": 166.197,
+   "min_gap_mm": -0.833
+  },
+  {
+   "a": "U_roof_desc1",
+   "b": "U_roof_desc3",
+   "intersection_mm3": 572.294,
+   "min_gap_mm": -0.0
+  },
+  {
+   "a": "U_roof_desc1",
+   "b": "U_roof_eave_white",
+   "intersection_mm3": 0.358,
+   "min_gap_mm": -0.0
+  },
+  {
+   "a": "U_roof_desc1",
+   "b": "U_roof_soffit",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 4.946
+  },
+  {
+   "a": "U_roof_desc1",
+   "b": "U_roof_tile",
+   "intersection_mm3": 0.214,
+   "min_gap_mm": -0.334
+  },
+  {
+   "a": "U_roof_desc1",
+   "b": "platform",
+   "intersection_mm3": 31.523,
+   "min_gap_mm": 0.357
+  },
+  {
+   "a": "U_roof_desc2",
+   "b": "U_roof_desc4",
+   "intersection_mm3": 572.294,
+   "min_gap_mm": -0.0
+  },
+  {
+   "a": "U_roof_desc2",
+   "b": "U_roof_eave_white",
+   "intersection_mm3": 0.358,
+   "min_gap_mm": 0.96
+  },
+  {
+   "a": "U_roof_desc2",
+   "b": "U_roof_gableL",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 0.71
+  },
+  {
+   "a": "U_roof_desc2",
+   "b": "U_roof_gableR",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 0.747
+  },
+  {
+   "a": "U_roof_desc2",
+   "b": "U_roof_ridge",
+   "intersection_mm3": 3.935,
+   "min_gap_mm": -0.685
+  },
+  {
+   "a": "U_roof_desc2",
+   "b": "U_roof_soffit",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 4.36
+  },
+  {
+   "a": "U_roof_desc2",
+   "b": "U_roof_tile",
+   "intersection_mm3": 0.215,
+   "min_gap_mm": 0.73
+  },
+  {
+   "a": "U_roof_desc2",
+   "b": "platform",
+   "intersection_mm3": 31.523,
+   "min_gap_mm": -0.274
+  },
+  {
+   "a": "U_roof_desc2",
+   "b": "uwall_back",
+   "intersection_mm3": 36.19,
+   "min_gap_mm": -1.361
+  },
+  {
+   "a": "U_roof_desc2",
+   "b": "uwall_front",
+   "intersection_mm3": 36.19,
+   "min_gap_mm": -1.466
+  },
+  {
+   "a": "U_roof_desc2",
+   "b": "uwall_left",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 26.52
+  },
+  {
+   "a": "U_roof_desc2",
+   "b": "uwall_right",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 26.717
+  },
+  {
+   "a": "U_roof_desc2",
+   "b": "wall_back",
+   "intersection_mm3": 174.567,
+   "min_gap_mm": -1.238
+  },
+  {
+   "a": "U_roof_desc2",
+   "b": "wall_front",
+   "intersection_mm3": 174.567,
+   "min_gap_mm": -1.2
+  },
+  {
+   "a": "U_roof_desc2",
+   "b": "wall_left",
+   "intersection_mm3": 36.357,
+   "min_gap_mm": -1.4
+  },
+  {
+   "a": "U_roof_desc2",
+   "b": "wall_right",
+   "intersection_mm3": 36.357,
+   "min_gap_mm": -0.519
+  },
+  {
+   "a": "U_roof_desc3",
+   "b": "U_roof_eave_white",
+   "intersection_mm3": 0.358,
+   "min_gap_mm": -0.1
+  },
+  {
+   "a": "U_roof_desc3",
+   "b": "U_roof_soffit",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 4.404
+  },
+  {
+   "a": "U_roof_desc3",
+   "b": "U_roof_tile",
+   "intersection_mm3": 0.214,
+   "min_gap_mm": 1.008
+  },
+  {
+   "a": "U_roof_desc3",
+   "b": "platform",
+   "intersection_mm3": 31.523,
+   "min_gap_mm": -0.536
+  },
+  {
+   "a": "U_roof_desc4",
+   "b": "U_roof_eave_white",
+   "intersection_mm3": 0.358,
+   "min_gap_mm": -0.152
+  },
+  {
+   "a": "U_roof_desc4",
+   "b": "U_roof_gableL",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 0.696
+  },
+  {
+   "a": "U_roof_desc4",
+   "b": "U_roof_gableR",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 0.725
+  },
+  {
+   "a": "U_roof_desc4",
+   "b": "U_roof_ridge",
+   "intersection_mm3": 3.935,
+   "min_gap_mm": -0.711
+  },
+  {
+   "a": "U_roof_desc4",
+   "b": "U_roof_soffit",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 4.115
+  },
+  {
+   "a": "U_roof_desc4",
+   "b": "U_roof_tile",
+   "intersection_mm3": 0.215,
+   "min_gap_mm": 0.05
+  },
+  {
+   "a": "U_roof_desc4",
+   "b": "platform",
+   "intersection_mm3": 31.523,
+   "min_gap_mm": -0.78
+  },
+  {
+   "a": "U_roof_desc4",
+   "b": "uwall_back",
+   "intersection_mm3": 36.19,
+   "min_gap_mm": -1.188
+  },
+  {
+   "a": "U_roof_desc4",
+   "b": "uwall_front",
+   "intersection_mm3": 36.19,
+   "min_gap_mm": -1.092
+  },
+  {
+   "a": "U_roof_desc4",
+   "b": "uwall_left",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 26.747
+  },
+  {
+   "a": "U_roof_desc4",
+   "b": "uwall_right",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 26.675
+  },
+  {
+   "a": "U_roof_desc4",
+   "b": "wall_back",
+   "intersection_mm3": 174.567,
+   "min_gap_mm": -1.2
+  },
+  {
+   "a": "U_roof_desc4",
+   "b": "wall_front",
+   "intersection_mm3": 174.567,
+   "min_gap_mm": -1.258
+  },
+  {
+   "a": "U_roof_desc4",
+   "b": "wall_left",
+   "intersection_mm3": 36.357,
+   "min_gap_mm": -1.225
+  },
+  {
+   "a": "U_roof_desc4",
+   "b": "wall_right",
+   "intersection_mm3": 36.357,
+   "min_gap_mm": -1.221
+  },
+  {
+   "a": "U_roof_eave_white",
+   "b": "U_roof_gableL",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 0.961
+  },
+  {
+   "a": "U_roof_eave_white",
+   "b": "U_roof_gableR",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 0.916
+  },
+  {
+   "a": "U_roof_eave_white",
+   "b": "U_roof_soffit",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 1.435
+  },
+  {
+   "a": "U_roof_eave_white",
+   "b": "U_roof_tile",
+   "intersection_mm3": 4983.797,
+   "min_gap_mm": -0.447
+  },
+  {
+   "a": "U_roof_eave_white",
+   "b": "platform",
+   "intersection_mm3": 6577.339,
+   "min_gap_mm": -0.0
+  },
+  {
+   "a": "U_roof_eave_white",
+   "b": "uwall_back",
+   "intersection_mm3": 62.195,
+   "min_gap_mm": -0.432
+  },
+  {
+   "a": "U_roof_eave_white",
+   "b": "uwall_front",
+   "intersection_mm3": 62.195,
+   "min_gap_mm": -0.447
+  },
+  {
+   "a": "U_roof_eave_white",
+   "b": "uwall_left",
+   "intersection_mm3": 48.447,
+   "min_gap_mm": -0.436
+  },
+  {
+   "a": "U_roof_eave_white",
+   "b": "uwall_right",
+   "intersection_mm3": 48.447,
+   "min_gap_mm": -0.447
+  },
+  {
+   "a": "U_roof_eave_white",
+   "b": "wall_back",
+   "intersection_mm3": 190.717,
+   "min_gap_mm": -0.446
+  },
+  {
+   "a": "U_roof_eave_white",
+   "b": "wall_front",
+   "intersection_mm3": 190.717,
+   "min_gap_mm": -0.448
+  },
+  {
+   "a": "U_roof_eave_white",
+   "b": "wall_left",
+   "intersection_mm3": 195.361,
+   "min_gap_mm": -0.445
+  },
+  {
+   "a": "U_roof_eave_white",
+   "b": "wall_right",
+   "intersection_mm3": 195.361,
+   "min_gap_mm": -0.421
+  },
+  {
+   "a": "U_roof_gableL",
+   "b": "U_roof_gableR",
+   "intersection_mm3": 3251.126,
+   "min_gap_mm": -0.0
+  },
+  {
+   "a": "U_roof_gableL",
+   "b": "U_roof_ridge",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 1.115
+  },
+  {
+   "a": "U_roof_gableL",
+   "b": "U_roof_soffit",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 4.44
+  },
+  {
+   "a": "U_roof_gableL",
+   "b": "U_roof_tile",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 1.666
+  },
+  {
+   "a": "U_roof_gableL",
+   "b": "platform",
+   "intersection_mm3": 316.388,
+   "min_gap_mm": -0.874
+  },
+  {
+   "a": "U_roof_gableL",
+   "b": "uwall_back",
+   "intersection_mm3": 393.231,
+   "min_gap_mm": -0.999
+  },
+  {
+   "a": "U_roof_gableL",
+   "b": "uwall_front",
+   "intersection_mm3": 393.231,
+   "min_gap_mm": -1.0
+  },
+  {
+   "a": "U_roof_gableL",
+   "b": "wall_back",
+   "intersection_mm3": 947.621,
+   "min_gap_mm": -0.99
+  },
+  {
+   "a": "U_roof_gableL",
+   "b": "wall_front",
+   "intersection_mm3": 947.621,
+   "min_gap_mm": -0.998
+  },
+  {
+   "a": "U_roof_gableL",
+   "b": "wall_left",
+   "intersection_mm3": 604.71,
+   "min_gap_mm": -0.99
+  },
+  {
+   "a": "U_roof_gableL",
+   "b": "wall_right",
+   "intersection_mm3": 604.71,
+   "min_gap_mm": -0.996
+  },
+  {
+   "a": "U_roof_gableR",
+   "b": "U_roof_ridge",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 1.291
+  },
+  {
+   "a": "U_roof_gableR",
+   "b": "U_roof_soffit",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 4.192
+  },
+  {
+   "a": "U_roof_gableR",
+   "b": "U_roof_tile",
+   "intersection_mm3": 0.0,
+   "min_gap_mm": 1.286
+  },
+  {
+   "a": "U_roof_gableR",
+   "b": "platform",
+   "intersection_mm3": 316.388,
+   "min_gap_mm": -0.781
+  },
+  {
+   "a": "U_roof_gableR",
+   "b": "uwall_back",
+   "intersection_mm3": 393.231,
+   "min_gap_mm": -0.997
+  },
+  {
+   "a": "U_roof_gableR",
+   "b": "uwall_front",
+   "intersection_mm3": 393.231,
+   "min_gap_mm": -0.995
+  },
+  {
+   "a": "U_roof_gableR",
+   "b": "wall_back",
+   "intersection_mm3": 947.621,
+   "min_gap_mm": -0.987
+  },
+  {
+   "a": "U_roof_gableR",
+   "b": "wall_front",
+   "intersection_mm3": 947.621,
+   "min_gap_mm": -0.997
+  },
+  {
+   "a": "U_roof_gableR",
+   "b": "wall_left",
+   "intersection_mm3": 604.71,
+   "min_gap_mm": -0.999
+  },
+  {
+   "a": "U_roof_gableR",
+   "b": "wall_right",
+   "intersection_mm3": 604.71,
+   "min_gap_mm": -0.992
+  },
+  {
+   "a": "U_roof_hip1",
+   "b": "U_roof_hip3",
+   "intersection_mm3": 403.638,
+   "min_gap_mm": -1.495
+  },
+  {
+   "a": "U_roof_hip1",
+   "b": "platform",
+   "intersection_mm3": 342.945,
+   "min_gap_mm": -1.108
+  },
+  {
+   "a": "U_roof_hip2",
+   "b": "U_roof_hip4",
+   "intersection_mm3": 403.638,
+   "min_gap_mm": -1.33
+  },
+  {
+   "a": "U_roof_hip3",
+   "b": "platform",
+   "intersection_mm3": 284.278,
+   "min_gap_mm": -0.0
+  },
+  {
+   "a": "U_roof_ridge",
+   "b": "uwall_back",
+   "intersection_mm3": 112.001,
+   "min_gap_mm": -2.0
+  },
+  {
+   "a": "U_roof_ridge",
+   "b": "uwall_front",
+   "intersection_mm3": 112.001,
+   "min_gap_mm": -2.0
+  },
+  {
+   "a": "U_roof_ridge",
+   "b": "wall_back",
+   "intersection_mm3": 260.7,
+   "min_gap_mm": -1.87
+  },
+  {
+   "a": "U_roof_ridge",
+   "b": "wall_front",
+   "intersection_mm3": 260.7,
+   "min_gap_mm": -2.0
+  },
+  {
+   "a": "U_roof_soffit",
+   "b": "U_roof_tile",
+   "intersection_mm3": 124227.448,
+   "min_gap_mm": -3.855
+  },
+  {
+   "a": "U_roof_soffit",
+   "b": "platform",
+   "intersection_mm3": 171339.806,
+   "min_gap_mm": -3.248
+  },
+  {
+   "a": "U_roof_soffit",
+   "b": "uwall_back",
+   "intersection_mm3": 56.289,
+   "min_gap_mm": -1.642
+  },
+  {
+   "a": "U_roof_soffit",
+   "b": "uwall_front",
+   "intersection_mm3": 56.289,
+   "min_gap_mm": -1.71
+  },
+  {
+   "a": "U_roof_soffit",
+   "b": "uwall_left",
+   "intersection_mm3": 55.521,
+   "min_gap_mm": -1.578
+  },
+  {
+   "a": "U_roof_soffit",
+   "b": "uwall_right",
+   "intersection_mm3": 55.521,
+   "min_gap_mm": -1.8
+  },
+  {
+   "a": "U_roof_soffit",
+   "b": "wall_back",
+   "intersection_mm3": 143.678,
+   "min_gap_mm": -1.595
+  },
+  {
+   "a": "U_roof_soffit",
+   "b": "wall_front",
+   "intersection_mm3": 143.678,
+   "min_gap_mm": -1.595
+  },
+  {
+   "a": "U_roof_soffit",
+   "b": "wall_left",
+   "intersection_mm3": 232.603,
+   "min_gap_mm": -1.356
+  },
+  {
+   "a": "U_roof_soffit",
+   "b": "wall_right",
+   "intersection_mm3": 232.603,
+   "min_gap_mm": -1.529
+  },
+  {
+   "a": "U_roof_tile",
+   "b": "platform",
+   "intersection_mm3": 375933.096,
+   "min_gap_mm": -21.5
+  },
+  {
+   "a": "U_roof_tile",
+   "b": "uwall_back",
+   "intersection_mm3": 1670.893,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "U_roof_tile",
+   "b": "uwall_front",
+   "intersection_mm3": 1670.893,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "U_roof_tile",
+   "b": "uwall_left",
+   "intersection_mm3": 1637.093,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "U_roof_tile",
+   "b": "uwall_right",
+   "intersection_mm3": 1637.093,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "U_roof_tile",
+   "b": "wall_back",
+   "intersection_mm3": 5233.425,
+   "min_gap_mm": -3.599
+  },
+  {
+   "a": "U_roof_tile",
+   "b": "wall_front",
+   "intersection_mm3": 5233.425,
+   "min_gap_mm": -3.598
+  },
+  {
+   "a": "U_roof_tile",
+   "b": "wall_left",
+   "intersection_mm3": 5225.126,
+   "min_gap_mm": -3.599
+  },
+  {
+   "a": "U_roof_tile",
+   "b": "wall_right",
+   "intersection_mm3": 5225.126,
+   "min_gap_mm": -3.598
+  },
+  {
+   "a": "platform",
+   "b": "uwall_back",
+   "intersection_mm3": 1747.901,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "platform",
+   "b": "uwall_front",
+   "intersection_mm3": 1747.901,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "platform",
+   "b": "uwall_left",
+   "intersection_mm3": 1648.925,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "platform",
+   "b": "uwall_right",
+   "intersection_mm3": 1648.925,
+   "min_gap_mm": -3.2
+  },
+  {
+   "a": "platform",
+   "b": "wall_back",
+   "intersection_mm3": 5635.248,
+   "min_gap_mm": -3.599
+  },
+  {
+   "a": "platform",
+   "b": "wall_front",
+   "intersection_mm3": 5635.248,
+   "min_gap_mm": -3.6
+  },
+  {
+   "a": "platform",
+   "b": "wall_left",
+   "intersection_mm3": 5432.18,
+   "min_gap_mm": -3.599
+  },
+  {
+   "a": "platform",
+   "b": "wall_right",
+   "intersection_mm3": 5432.18,
+   "min_gap_mm": -3.599
+  },
+  {
+   "a": "uwall_back",
+   "b": "uwall_front",
+   "intersection_mm3": 2474.518,
+   "min_gap_mm": -0.0
+  },
+  {
+   "a": "uwall_back",
+   "b": "uwall_left",
+   "intersection_mm3": 1505.973,
+   "min_gap_mm": -1.557
+  },
+  {
+   "a": "uwall_back",
+   "b": "uwall_right",
+   "intersection_mm3": 1505.973,
+   "min_gap_mm": -1.568
+  },
+  {
+   "a": "uwall_back",
+   "b": "wall_back",
+   "intersection_mm3": 1969.443,
+   "min_gap_mm": -1.185
+  },
+  {
+   "a": "uwall_back",
+   "b": "wall_front",
+   "intersection_mm3": 1969.443,
+   "min_gap_mm": -1.191
+  },
+  {
+   "a": "uwall_back",
+   "b": "wall_left",
+   "intersection_mm3": 1567.641,
+   "min_gap_mm": -1.196
+  },
+  {
+   "a": "uwall_back",
+   "b": "wall_right",
+   "intersection_mm3": 1567.641,
+   "min_gap_mm": -1.194
+  },
+  {
+   "a": "uwall_front",
+   "b": "uwall_left",
+   "intersection_mm3": 1505.973,
+   "min_gap_mm": -1.45
+  },
+  {
+   "a": "uwall_front",
+   "b": "uwall_right",
+   "intersection_mm3": 1505.973,
+   "min_gap_mm": -1.463
+  },
+  {
+   "a": "uwall_front",
+   "b": "wall_back",
+   "intersection_mm3": 1969.443,
+   "min_gap_mm": -1.196
+  },
+  {
+   "a": "uwall_front",
+   "b": "wall_front",
+   "intersection_mm3": 1969.443,
+   "min_gap_mm": -1.195
+  },
+  {
+   "a": "uwall_front",
+   "b": "wall_left",
+   "intersection_mm3": 1567.641,
+   "min_gap_mm": -1.187
+  },
+  {
+   "a": "uwall_front",
+   "b": "wall_right",
+   "intersection_mm3": 1567.641,
+   "min_gap_mm": -1.2
+  },
+  {
+   "a": "uwall_left",
+   "b": "uwall_right",
+   "intersection_mm3": 1664.198,
+   "min_gap_mm": -0.0
+  },
+  {
+   "a": "uwall_left",
+   "b": "wall_back",
+   "intersection_mm3": 1320.382,
+   "min_gap_mm": -1.177
+  },
+  {
+   "a": "uwall_left",
+   "b": "wall_front",
+   "intersection_mm3": 1320.382,
+   "min_gap_mm": -1.07
+  },
+  {
+   "a": "uwall_left",
+   "b": "wall_left",
+   "intersection_mm3": 1316.976,
+   "min_gap_mm": -1.111
+  },
+  {
+   "a": "uwall_left",
+   "b": "wall_right",
+   "intersection_mm3": 1316.976,
+   "min_gap_mm": -1.189
+  },
+  {
+   "a": "uwall_right",
+   "b": "wall_back",
+   "intersection_mm3": 1320.382,
+   "min_gap_mm": -1.189
+  },
+  {
+   "a": "uwall_right",
+   "b": "wall_front",
+   "intersection_mm3": 1320.382,
+   "min_gap_mm": -1.193
+  },
+  {
+   "a": "uwall_right",
+   "b": "wall_left",
+   "intersection_mm3": 1316.976,
+   "min_gap_mm": -1.172
+  },
+  {
+   "a": "uwall_right",
+   "b": "wall_right",
+   "intersection_mm3": 1316.976,
+   "min_gap_mm": -1.192
+  },
+  {
+   "a": "wall_back",
+   "b": "wall_front",
+   "intersection_mm3": 9049.244,
+   "min_gap_mm": -0.0
+  },
+  {
+   "a": "wall_back",
+   "b": "wall_left",
+   "intersection_mm3": 4831.729,
+   "min_gap_mm": -1.751
+  },
+  {
+   "a": "wall_back",
+   "b": "wall_right",
+   "intersection_mm3": 4831.729,
+   "min_gap_mm": -1.722
+  },
+  {
+   "a": "wall_front",
+   "b": "wall_left",
+   "intersection_mm3": 4831.729,
+   "min_gap_mm": -1.784
+  },
+  {
+   "a": "wall_front",
+   "b": "wall_right",
+   "intersection_mm3": 4831.729,
+   "min_gap_mm": -1.765
+  },
+  {
+   "a": "wall_left",
+   "b": "wall_right",
+   "intersection_mm3": 6111.724,
+   "min_gap_mm": -0.0
+  }
+ ],
+ "total_faces": 298736,
+ "total_weight_g_solid": 2700.2
+}

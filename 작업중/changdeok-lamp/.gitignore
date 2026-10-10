@@ -1,0 +1,4 @@
+# 빌드로 다시 만드는 중간 산출물(재현: python tools/mm.py make 작업중/changdeok-lamp/pipeline_v2.json)
+models/v2/*.pkl
+models/v2/asm/
+models/v2/print/

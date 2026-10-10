@@ -1,0 +1,2233 @@
+{
+ "warn": [],
+ "info": [
+  "L_roof_soffit: 바깥 벽 단차 0.02~0.3 mm 1개 높이 (z, 방향 수, 최대 mm): [(7.35, 4, 0.279)] — 출력물에 가로줄 → 허용(추녀 끝 각재 밑(서포트 면) — mm.py wallscan 확인)",
+  "L_roof_soffit: 바닥 접지 63.1 mm² < 100 mm² — 브림 필수 → 허용(정방향 출력이라 서포트 위에 얹힘 — 서포트+브림)",
+  "L_roof_soffit: 0.8 mm 보다 얇은 살 124.0 mm² (z=0.3, x/y (-94.2, -73.6, 94.2, 73.6)) → 허용(경사 쐐기 맨 아래 끝 1층 띠(서포트 위, 공포 띠에 가려짐))",
+  "L_roof_soffit: 오버행 15195.5 mm² → 서포트(처마밑 밑면 전체(경사 쐐기·서까래 홈·마구리·추녀) — 정방향 출력, 서포트 '빌드 플레이트에만'(사용자 승인), 허용 16000)",
+  "L_roof_soffit: 브리지 폭 13.8 mm > 7 mm → 허용(서포트 구역 안의 천장(서까래 홈 사이))",
+  "L_roof_tile: 바깥 벽 단차 0.02~0.3 mm 1개 높이 (z, 방향 수, 최대 mm): [(0.71, 10, 0.252)] — 출력물에 가로줄 → 허용(z 0.2 EFC 첫 층 띠 · z 0.7~1.2 막새·모서리 들림 띠 시작 — mm.py wallscan 확인)",
+  "L_roof_tile: 0.8 mm 보다 얇은 살 5.6 mm² (z=2.95, x/y (-110.8, -90.3, 110.8, 90.3)) → 허용(수키와 골 꼭대기 마지막 층)",
+  "L_roof_tile: 오버행 1734.6 mm² → 서포트(기와 밑면 네 모서리 처마 들림 띠(흰 테에 가려지는 면, 높이 ≤3) — 서포트 '빌드 플레이트에만'(사용자 승인), 허용 1800)",
+  "L_roof_tile: 브리지 폭 14.4 mm > 7 mm → 허용(모서리 들림 띠 천장(서포트 구역 안))",
+  "U_roof_soffit: 바깥 벽 단차 0.02~0.3 mm 2개 높이 (z, 방향 수, 최대 mm): [(6.81, 4, 0.101), (5.75, 4, 0.158)] — 출력물에 가로줄 → 허용(추녀 끝 각재 밑(서포트 면) — mm.py wallscan 확인)",
+  "U_roof_soffit: 바닥 접지 73.8 mm² < 100 mm² — 브림 필수 → 허용(정방향 출력이라 서포트 위에 얹힘 — 서포트+브림)",
+  "U_roof_soffit: 0.8 mm 보다 얇은 살 127.8 mm² (z=0.3, x/y (-84.0, -63.9, 84.0, 63.9)) → 허용(경사 쐐기 맨 아래 끝 1층 띠(서포트 위, 공포 띠에 가려짐))",
+  "U_roof_soffit: 오버행 21714.1 mm² → 서포트(처마밑 밑면 전체(경사 쐐기·서까래 홈·마구리·추녀) — 정방향 출력, 서포트 '빌드 플레이트에만'(사용자 승인), 허용 23000)",
+  "U_roof_soffit: 브리지 폭 14.3 mm > 7 mm → 허용(서포트 구역 안의 천장(서까래 홈 사이))",
+  "U_roof_tile: 바깥 벽 단차 0.02~0.3 mm 4개 높이 (z, 방향 수, 최대 mm): [(0.75, 4, 0.221), (13.15, 4, 0.261), (1.15, 4, 0.286), (50.91, 4, 0.028)] — 출력물에 가로줄 → 허용(z 0.2 EFC 첫 층 띠 · z 0.76 막새 끝 · z 13.14 합각 널 포켓 가장자리(널로 가려짐) — mm.py wallscan 확인)",
+  "U_roof_tile: 오버행 1508.8 mm² → 서포트(기와 밑면 네 모서리 처마 들림 띠(흰 테에 가려지는 면, 높이 ≤3) — 서포트 '빌드 플레이트에만'(사용자 승인), 허용 1600)",
+  "U_roof_tile: 브리지 폭 14.3 mm > 7 mm → 허용(모서리 들림 띠 천장(서포트 구역 안))"
+ ],
+ "qc": {
+  "L_band": {
+   "name": "L_band",
+   "faces": 912,
+   "vertices": 456,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    186.49,
+    145.8,
+    8.76
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 47.95,
+   "weight_g_solid": 59.5,
+   "bed_contact_mm2": 6941.5,
+   "first_layer_mm2": 6941.5,
+   "footprint_hull_mm2": 27190.1,
+   "aspect_h_over_w": 0.06,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "L_diffuser": {
+   "name": "L_diffuser",
+   "faces": 64,
+   "vertices": 32,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    156.49,
+    115.8,
+    32.11
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 13.91,
+   "weight_g_solid": 17.2,
+   "bed_contact_mm2": 594.2,
+   "first_layer_mm2": 594.2,
+   "footprint_hull_mm2": 18121.4,
+   "aspect_h_over_w": 0.28,
+   "thin_area_mm2": 241.1,
+   "thin_at_z": 0.3,
+   "thin_bounds": [
+    -77.1,
+    -57.7,
+    77.1,
+    57.7
+   ],
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "note": "단일 벽(발광 갓) 241 mm² — 의도된 0.8 mm 두 줄 벽",
+   "flags": []
+  },
+  "L_floor": {
+   "name": "L_floor",
+   "faces": 448,
+   "vertices": 224,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    171.29,
+    130.6,
+    4.49
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 62.31,
+   "weight_g_solid": 77.3,
+   "bed_contact_mm2": 20435.9,
+   "first_layer_mm2": 20435.9,
+   "footprint_hull_mm2": 22370.3,
+   "aspect_h_over_w": 0.03,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "L_ring": {
+   "name": "L_ring",
+   "faces": 160,
+   "vertices": 80,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    170.49,
+    129.8,
+    11.5
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 15.17,
+   "weight_g_solid": 18.8,
+   "bed_contact_mm2": 1604.7,
+   "first_layer_mm2": 1604.7,
+   "footprint_hull_mm2": 22129.4,
+   "aspect_h_over_w": 0.09,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 2225.2,
+   "bridge_max_span": 5.3,
+   "bridge_top": [
+    [
+     1.11,
+     2225.2,
+     5.3
+    ]
+   ],
+   "wall_steps": [],
+   "flags": []
+  },
+  "L_roof_eave_white": {
+   "name": "L_roof_eave_white",
+   "faces": 2700,
+   "vertices": 1342,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    226.38,
+    185.89,
+    0.7
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 5.6,
+   "weight_g_solid": 6.9,
+   "bed_contact_mm2": 8164.1,
+   "first_layer_mm2": 8164.1,
+   "footprint_hull_mm2": 42082.3,
+   "aspect_h_over_w": 0.0,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "L_roof_hip1": {
+   "name": "L_roof_hip1",
+   "faces": 220,
+   "vertices": 112,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    12.08,
+    43.67,
+    3.71
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 0.46,
+   "weight_g_solid": 0.6,
+   "bed_contact_mm2": 145.9,
+   "first_layer_mm2": 145.9,
+   "footprint_hull_mm2": 210.1,
+   "aspect_h_over_w": 0.31,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "L_roof_hip2": {
+   "name": "L_roof_hip2",
+   "faces": 220,
+   "vertices": 112,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    12.08,
+    43.67,
+    3.71
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 0.43,
+   "weight_g_solid": 0.5,
+   "bed_contact_mm2": 145.9,
+   "first_layer_mm2": 145.9,
+   "footprint_hull_mm2": 210.1,
+   "aspect_h_over_w": 0.31,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "L_roof_hip3": {
+   "name": "L_roof_hip3",
+   "faces": 220,
+   "vertices": 112,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    12.08,
+    43.67,
+    3.71
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 0.43,
+   "weight_g_solid": 0.5,
+   "bed_contact_mm2": 145.9,
+   "first_layer_mm2": 145.9,
+   "footprint_hull_mm2": 210.1,
+   "aspect_h_over_w": 0.31,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "L_roof_hip4": {
+   "name": "L_roof_hip4",
+   "faces": 220,
+   "vertices": 112,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    12.08,
+    43.67,
+    3.71
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 0.46,
+   "weight_g_solid": 0.6,
+   "bed_contact_mm2": 145.9,
+   "first_layer_mm2": 145.9,
+   "footprint_hull_mm2": 210.1,
+   "aspect_h_over_w": 0.31,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "L_roof_soffit": {
+   "name": "L_roof_soffit",
+   "faces": 66626,
+   "vertices": 33313,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    231.05,
+    190.65,
+    13.24
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 153.4,
+   "weight_g_solid": 190.2,
+   "bed_contact_mm2": 63.1,
+   "first_layer_mm2": 79.6,
+   "footprint_hull_mm2": 21569.0,
+   "aspect_h_over_w": 0.07,
+   "thin_area_mm2": 124.0,
+   "thin_at_z": 0.3,
+   "thin_bounds": [
+    -94.2,
+    -73.6,
+    94.2,
+    73.6
+   ],
+   "internal_gaps": 3,
+   "slit_z": [],
+   "overhang_mm2": 15195.5,
+   "overhang_top": [
+    [
+     5.31,
+     10263.6,
+     [
+      -109.3,
+      -88.1,
+      109.3,
+      88.1
+     ]
+    ],
+    [
+     5.51,
+     874.4,
+     [
+      -109.5,
+      -88.4,
+      109.5,
+      88.4
+     ]
+    ],
+    [
+     5.11,
+     190.5,
+     [
+      -108.8,
+      -87.6,
+      108.8,
+      87.6
+     ]
+    ],
+    [
+     4.91,
+     184.0,
+     [
+      -108.2,
+      -87.1,
+      108.2,
+      87.1
+     ]
+    ]
+   ],
+   "bridge_mm2": 8949.6,
+   "bridge_max_span": 13.8,
+   "bridge_top": [
+    [
+     7.11,
+     1182.1,
+     4.4
+    ],
+    [
+     5.51,
+     1060.8,
+     13.8
+    ],
+    [
+     5.71,
+     864.5,
+     11.7
+    ],
+    [
+     5.91,
+     607.0,
+     10.4
+    ]
+   ],
+   "wall_steps": [
+    [
+     7.35,
+     4,
+     0.279,
+     [
+      [
+       75,
+       23.6,
+       88.1
+      ],
+      [
+       105,
+       -23.6,
+       88.1
+      ],
+      [
+       255,
+       -23.6,
+       -88.1
+      ],
+      [
+       285,
+       23.6,
+       -88.1
+      ]
+     ]
+    ]
+   ],
+   "flags": [
+    "바깥 벽 단차 0.02~0.3 mm 1개 높이 (z, 방향 수, 최대 mm): [(7.35, 4, 0.279)] — 출력물에 가로줄",
+    "바닥 접지 63.1 mm² < 100 mm² — 브림 필수",
+    "0.8 mm 보다 얇은 살 124.0 mm² (z=0.3, x/y (-94.2, -73.6, 94.2, 73.6))",
+    "오버행(한쪽 지지) 규칙 위반 15196 mm² (서포트 또는 재설계)",
+    "브리지 폭 13.8 mm > 7 mm"
+   ]
+  },
+  "L_roof_tile": {
+   "name": "L_roof_tile",
+   "faces": 68886,
+   "vertices": 34427,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    226.04,
+    185.56,
+    15.19
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 208.76,
+   "weight_g_solid": 258.9,
+   "bed_contact_mm2": 23484.0,
+   "first_layer_mm2": 24075.5,
+   "footprint_hull_mm2": 37243.3,
+   "aspect_h_over_w": 0.08,
+   "thin_area_mm2": 5.6,
+   "thin_at_z": 2.95,
+   "thin_bounds": [
+    -110.8,
+    -90.3,
+    110.8,
+    90.3
+   ],
+   "internal_gaps": 9,
+   "slit_z": [],
+   "overhang_mm2": 1734.6,
+   "overhang_top": [
+    [
+     0.31,
+     613.0,
+     [
+      -110.6,
+      -89.8,
+      110.6,
+      89.8
+     ]
+    ],
+    [
+     0.51,
+     274.2,
+     [
+      -110.9,
+      -90.1,
+      110.9,
+      90.1
+     ]
+    ],
+    [
+     0.71,
+     187.6,
+     [
+      -111.1,
+      -90.4,
+      111.1,
+      90.4
+     ]
+    ],
+    [
+     0.91,
+     146.2,
+     [
+      -111.3,
+      -90.6,
+      111.3,
+      90.6
+     ]
+    ]
+   ],
+   "bridge_mm2": 1735.9,
+   "bridge_max_span": 14.4,
+   "bridge_top": [
+    [
+     0.31,
+     501.0,
+     14.4
+    ],
+    [
+     0.51,
+     334.1,
+     13.5
+    ],
+    [
+     0.71,
+     238.0,
+     11.8
+    ],
+    [
+     0.91,
+     163.4,
+     11.4
+    ]
+   ],
+   "wall_steps": [
+    [
+     0.71,
+     10,
+     0.252,
+     [
+      [
+       60,
+       51.2,
+       88.6
+      ],
+      [
+       82,
+       11.6,
+       88.0
+      ],
+      [
+       90,
+       0.0,
+       88.0
+      ],
+      [
+       97,
+       -11.6,
+       88.0
+      ],
+      [
+       120,
+       -51.2,
+       88.6
+      ],
+      [
+       240,
+       -51.2,
+       -88.6
+      ]
+     ]
+    ]
+   ],
+   "flags": [
+    "바깥 벽 단차 0.02~0.3 mm 1개 높이 (z, 방향 수, 최대 mm): [(0.71, 10, 0.252)] — 출력물에 가로줄",
+    "0.8 mm 보다 얇은 살 5.6 mm² (z=2.95, x/y (-110.8, -90.3, 110.8, 90.3))",
+    "오버행(한쪽 지지) 규칙 위반 1735 mm² (서포트 또는 재설계)",
+    "브리지 폭 14.4 mm > 7 mm"
+   ]
+  },
+  "U_band": {
+   "name": "U_band",
+   "faces": 784,
+   "vertices": 392,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    166.23,
+    126.21,
+    8.77
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 42.31,
+   "weight_g_solid": 52.5,
+   "bed_contact_mm2": 6048.7,
+   "first_layer_mm2": 6048.7,
+   "footprint_hull_mm2": 20978.8,
+   "aspect_h_over_w": 0.07,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "U_diffuser": {
+   "name": "U_diffuser",
+   "faces": 64,
+   "vertices": 32,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    136.23,
+    96.21,
+    6.7
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 2.5,
+   "weight_g_solid": 3.1,
+   "bed_contact_mm2": 506.5,
+   "first_layer_mm2": 506.5,
+   "footprint_hull_mm2": 13105.8,
+   "aspect_h_over_w": 0.07,
+   "thin_area_mm2": 208.7,
+   "thin_at_z": 0.85,
+   "thin_bounds": [
+    -67.0,
+    -48.0,
+    67.0,
+    48.0
+   ],
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "note": "단일 벽(발광 갓) 209 mm² — 의도된 0.8 mm 두 줄 벽",
+   "flags": []
+  },
+  "U_floor": {
+   "name": "U_floor",
+   "faces": 96,
+   "vertices": 48,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    151.03,
+    111.01,
+    4.49
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 15.64,
+   "weight_g_solid": 19.4,
+   "bed_contact_mm2": 4973.5,
+   "first_layer_mm2": 4973.5,
+   "footprint_hull_mm2": 16764.8,
+   "aspect_h_over_w": 0.04,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "U_ring": {
+   "name": "U_ring",
+   "faces": 160,
+   "vertices": 80,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    150.23,
+    110.21,
+    11.5
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 13.04,
+   "weight_g_solid": 16.2,
+   "bed_contact_mm2": 1381.5,
+   "first_layer_mm2": 1381.5,
+   "footprint_hull_mm2": 16555.9,
+   "aspect_h_over_w": 0.1,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 1916.7,
+   "bridge_max_span": 5.4,
+   "bridge_top": [
+    [
+     1.11,
+     1916.7,
+     5.4
+    ]
+   ],
+   "wall_steps": [],
+   "flags": []
+  },
+  "U_roof_desc1": {
+   "name": "U_roof_desc1",
+   "faces": 220,
+   "vertices": 112,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    37.98,
+    54.51,
+    3.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 0.57,
+   "weight_g_solid": 0.7,
+   "bed_contact_mm2": 209.4,
+   "first_layer_mm2": 209.4,
+   "footprint_hull_mm2": 255.0,
+   "aspect_h_over_w": 0.08,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "U_roof_desc2": {
+   "name": "U_roof_desc2",
+   "faces": 220,
+   "vertices": 112,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    37.98,
+    54.51,
+    3.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 0.57,
+   "weight_g_solid": 0.7,
+   "bed_contact_mm2": 209.4,
+   "first_layer_mm2": 209.4,
+   "footprint_hull_mm2": 255.0,
+   "aspect_h_over_w": 0.08,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "U_roof_desc3": {
+   "name": "U_roof_desc3",
+   "faces": 220,
+   "vertices": 112,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    37.98,
+    54.51,
+    3.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 0.57,
+   "weight_g_solid": 0.7,
+   "bed_contact_mm2": 209.4,
+   "first_layer_mm2": 209.4,
+   "footprint_hull_mm2": 255.0,
+   "aspect_h_over_w": 0.08,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "U_roof_desc4": {
+   "name": "U_roof_desc4",
+   "faces": 220,
+   "vertices": 112,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    37.98,
+    54.51,
+    3.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 0.57,
+   "weight_g_solid": 0.7,
+   "bed_contact_mm2": 209.4,
+   "first_layer_mm2": 209.4,
+   "footprint_hull_mm2": 255.0,
+   "aspect_h_over_w": 0.08,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "U_roof_eave_white": {
+   "name": "U_roof_eave_white",
+   "faces": 2532,
+   "vertices": 1258,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    210.54,
+    170.6,
+    0.7
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 5.13,
+   "weight_g_solid": 6.4,
+   "bed_contact_mm2": 7478.0,
+   "first_layer_mm2": 7478.0,
+   "footprint_hull_mm2": 35918.1,
+   "aspect_h_over_w": 0.0,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "U_roof_gableL": {
+   "name": "U_roof_gableL",
+   "faces": 118,
+   "vertices": 61,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    34.03,
+    102.31,
+    2.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 3.25,
+   "weight_g_solid": 4.0,
+   "bed_contact_mm2": 1655.8,
+   "first_layer_mm2": 1655.8,
+   "footprint_hull_mm2": 1741.0,
+   "aspect_h_over_w": 0.06,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "U_roof_gableR": {
+   "name": "U_roof_gableR",
+   "faces": 118,
+   "vertices": 61,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    34.03,
+    102.31,
+    2.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 3.25,
+   "weight_g_solid": 4.0,
+   "bed_contact_mm2": 1655.8,
+   "first_layer_mm2": 1655.8,
+   "footprint_hull_mm2": 1741.0,
+   "aspect_h_over_w": 0.06,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "U_roof_hip1": {
+   "name": "U_roof_hip1",
+   "faces": 220,
+   "vertices": 112,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    11.28,
+    40.06,
+    4.58
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 0.47,
+   "weight_g_solid": 0.6,
+   "bed_contact_mm2": 132.9,
+   "first_layer_mm2": 132.9,
+   "footprint_hull_mm2": 155.2,
+   "aspect_h_over_w": 0.41,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "U_roof_hip2": {
+   "name": "U_roof_hip2",
+   "faces": 220,
+   "vertices": 112,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    11.28,
+    40.06,
+    4.58
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 0.45,
+   "weight_g_solid": 0.6,
+   "bed_contact_mm2": 132.9,
+   "first_layer_mm2": 132.9,
+   "footprint_hull_mm2": 155.2,
+   "aspect_h_over_w": 0.41,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "U_roof_hip3": {
+   "name": "U_roof_hip3",
+   "faces": 220,
+   "vertices": 112,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    11.28,
+    40.06,
+    4.58
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 0.45,
+   "weight_g_solid": 0.6,
+   "bed_contact_mm2": 132.9,
+   "first_layer_mm2": 132.9,
+   "footprint_hull_mm2": 155.2,
+   "aspect_h_over_w": 0.41,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "U_roof_hip4": {
+   "name": "U_roof_hip4",
+   "faces": 220,
+   "vertices": 112,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    11.28,
+    40.06,
+    4.58
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 0.47,
+   "weight_g_solid": 0.6,
+   "bed_contact_mm2": 132.9,
+   "first_layer_mm2": 132.9,
+   "footprint_hull_mm2": 155.2,
+   "aspect_h_over_w": 0.41,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "U_roof_ridge": {
+   "name": "U_roof_ridge",
+   "faces": 340,
+   "vertices": 172,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    9.12,
+    126.9,
+    4.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 3.52,
+   "weight_g_solid": 4.4,
+   "bed_contact_mm2": 919.1,
+   "first_layer_mm2": 919.1,
+   "footprint_hull_mm2": 1157.9,
+   "aspect_h_over_w": 0.44,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "U_roof_soffit": {
+   "name": "U_roof_soffit",
+   "faces": 60452,
+   "vertices": 30228,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    215.21,
+    175.36,
+    13.51
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 187.05,
+   "weight_g_solid": 231.9,
+   "bed_contact_mm2": 73.8,
+   "first_layer_mm2": 91.7,
+   "footprint_hull_mm2": 17558.7,
+   "aspect_h_over_w": 0.08,
+   "thin_area_mm2": 127.8,
+   "thin_at_z": 0.3,
+   "thin_bounds": [
+    -84.0,
+    -63.9,
+    84.0,
+    63.9
+   ],
+   "internal_gaps": 1,
+   "slit_z": [],
+   "overhang_mm2": 21714.1,
+   "overhang_top": [
+    [
+     5.51,
+     10546.2,
+     [
+      -101.6,
+      -80.7,
+      101.6,
+      80.7
+     ]
+    ],
+    [
+     5.71,
+     6530.7,
+     [
+      -101.8,
+      -81.0,
+      101.8,
+      81.0
+     ]
+    ],
+    [
+     5.91,
+     552.9,
+     [
+      -102.2,
+      -81.3,
+      102.2,
+      81.3
+     ]
+    ],
+    [
+     0.31,
+     187.5,
+     [
+      -84.3,
+      -64.0,
+      84.3,
+      64.0
+     ]
+    ]
+   ],
+   "bridge_mm2": 8572.2,
+   "bridge_max_span": 14.3,
+   "bridge_top": [
+    [
+     5.71,
+     1116.4,
+     14.3
+    ],
+    [
+     7.51,
+     782.5,
+     3.8
+    ],
+    [
+     5.91,
+     742.2,
+     13.3
+    ],
+    [
+     6.11,
+     609.1,
+     12.3
+    ]
+   ],
+   "wall_steps": [
+    [
+     6.81,
+     4,
+     0.101,
+     [
+      [
+       30,
+       101.7,
+       58.7
+      ],
+      [
+       150,
+       -101.7,
+       58.7
+      ],
+      [
+       210,
+       -101.7,
+       -58.7
+      ],
+      [
+       330,
+       101.7,
+       -58.7
+      ]
+     ]
+    ],
+    [
+     5.75,
+     4,
+     0.158,
+     [
+      [
+       52,
+       61.3,
+       79.9
+      ],
+      [
+       127,
+       -61.3,
+       79.9
+      ],
+      [
+       232,
+       -61.3,
+       -79.9
+      ],
+      [
+       307,
+       61.3,
+       -79.9
+      ]
+     ]
+    ]
+   ],
+   "flags": [
+    "바깥 벽 단차 0.02~0.3 mm 2개 높이 (z, 방향 수, 최대 mm): [(6.81, 4, 0.101), (5.75, 4, 0.158)] — 출력물에 가로줄",
+    "바닥 접지 73.8 mm² < 100 mm² — 브림 필수",
+    "0.8 mm 보다 얇은 살 127.8 mm² (z=0.3, x/y (-84.0, -63.9, 84.0, 63.9))",
+    "오버행(한쪽 지지) 규칙 위반 21714 mm² (서포트 또는 재설계)",
+    "브리지 폭 14.3 mm > 7 mm"
+   ]
+  },
+  "U_roof_tile": {
+   "name": "U_roof_tile",
+   "faces": 69446,
+   "vertices": 34713,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    210.21,
+    170.26,
+    62.9
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 599.79,
+   "weight_g_solid": 743.7,
+   "bed_contact_mm2": 30026.4,
+   "first_layer_mm2": 30563.2,
+   "footprint_hull_mm2": 31704.7,
+   "aspect_h_over_w": 0.37,
+   "thin_area_mm2": 1.9,
+   "thin_at_z": 5.96,
+   "thin_bounds": [
+    -89.4,
+    -75.9,
+    89.4,
+    75.9
+   ],
+   "internal_gaps": 18,
+   "slit_z": [],
+   "overhang_mm2": 1508.8,
+   "overhang_top": [
+    [
+     0.31,
+     591.3,
+     [
+      -102.9,
+      -82.4,
+      102.9,
+      82.4
+     ]
+    ],
+    [
+     0.51,
+     213.9,
+     [
+      -103.1,
+      -82.6,
+      103.1,
+      82.6
+     ]
+    ],
+    [
+     0.71,
+     162.9,
+     [
+      -103.3,
+      -82.9,
+      103.3,
+      82.9
+     ]
+    ],
+    [
+     0.91,
+     125.1,
+     [
+      -103.5,
+      -83.1,
+      103.5,
+      83.1
+     ]
+    ]
+   ],
+   "bridge_mm2": 1632.8,
+   "bridge_max_span": 14.3,
+   "bridge_top": [
+    [
+     0.31,
+     415.4,
+     14.3
+    ],
+    [
+     0.51,
+     291.4,
+     13.4
+    ],
+    [
+     0.71,
+     188.5,
+     12.9
+    ],
+    [
+     0.91,
+     131.5,
+     11.5
+    ]
+   ],
+   "wall_steps": [
+    [
+     0.75,
+     4,
+     0.221,
+     [
+      [
+       15,
+       101.8,
+       27.3
+      ],
+      [
+       165,
+       -101.8,
+       27.3
+      ],
+      [
+       195,
+       -101.8,
+       -27.3
+      ],
+      [
+       345,
+       101.8,
+       -27.3
+      ]
+     ]
+    ],
+    [
+     13.15,
+     4,
+     0.261,
+     [
+      [
+       15,
+       68.8,
+       18.4
+      ],
+      [
+       165,
+       -68.8,
+       18.4
+      ],
+      [
+       195,
+       -68.8,
+       -18.4
+      ],
+      [
+       345,
+       68.8,
+       -18.4
+      ]
+     ]
+    ],
+    [
+     1.15,
+     4,
+     0.286,
+     [
+      [
+       30,
+       103.0,
+       59.5
+      ],
+      [
+       150,
+       -103.0,
+       59.5
+      ],
+      [
+       210,
+       -103.0,
+       -59.5
+      ],
+      [
+       330,
+       103.0,
+       -59.5
+      ]
+     ]
+    ],
+    [
+     50.91,
+     4,
+     0.028,
+     [
+      [
+       75,
+       0.6,
+       2.2
+      ],
+      [
+       105,
+       -0.6,
+       2.2
+      ],
+      [
+       255,
+       -0.6,
+       -2.2
+      ],
+      [
+       285,
+       0.6,
+       -2.2
+      ]
+     ]
+    ]
+   ],
+   "flags": [
+    "바깥 벽 단차 0.02~0.3 mm 4개 높이 (z, 방향 수, 최대 mm): [(0.75, 4, 0.221), (13.15, 4, 0.261), (1.15, 4, 0.286), (50.91, 4, 0.028)] — 출력물에 가로줄",
+    "오버행(한쪽 지지) 규칙 위반 1509 mm² (서포트 또는 재설계)",
+    "브리지 폭 14.3 mm > 7 mm"
+   ]
+  },
+  "platform": {
+   "name": "platform",
+   "faces": 1266,
+   "vertices": 633,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    210.89,
+    204.2,
+    23.32
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 747.23,
+   "weight_g_solid": 926.6,
+   "bed_contact_mm2": 43063.7,
+   "first_layer_mm2": 43063.7,
+   "footprint_hull_mm2": 43063.7,
+   "aspect_h_over_w": 0.11,
+   "thin_area_mm2": 0.3,
+   "thin_at_z": 8.56,
+   "thin_bounds": [
+    -0.6,
+    -105.2,
+    0.6,
+    -104.6
+   ],
+   "internal_gaps": 15,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 315.7,
+   "bridge_max_span": 6.0,
+   "bridge_top": [
+    [
+     8.11,
+     315.7,
+     6.0
+    ]
+   ],
+   "wall_steps": [],
+   "flags": []
+  },
+  "uwall_back": {
+   "name": "uwall_back",
+   "faces": 1766,
+   "vertices": 829,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    147.03,
+    8.3,
+    3.2
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 2.47,
+   "weight_g_solid": 3.1,
+   "bed_contact_mm2": 1032.8,
+   "first_layer_mm2": 1032.8,
+   "footprint_hull_mm2": 1220.3,
+   "aspect_h_over_w": 0.39,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "uwall_front": {
+   "name": "uwall_front",
+   "faces": 1766,
+   "vertices": 829,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    147.03,
+    8.3,
+    3.2
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 2.47,
+   "weight_g_solid": 3.1,
+   "bed_contact_mm2": 1032.8,
+   "first_layer_mm2": 1032.8,
+   "footprint_hull_mm2": 1220.3,
+   "aspect_h_over_w": 0.39,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "uwall_left": {
+   "name": "uwall_left",
+   "faces": 1224,
+   "vertices": 574,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    100.61,
+    8.3,
+    3.2
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 1.66,
+   "weight_g_solid": 2.1,
+   "bed_contact_mm2": 702.5,
+   "first_layer_mm2": 702.5,
+   "footprint_hull_mm2": 835.0,
+   "aspect_h_over_w": 0.39,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 2,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "uwall_right": {
+   "name": "uwall_right",
+   "faces": 1224,
+   "vertices": 574,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    100.61,
+    8.3,
+    3.2
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 1.66,
+   "weight_g_solid": 2.1,
+   "bed_contact_mm2": 702.5,
+   "first_layer_mm2": 702.5,
+   "footprint_hull_mm2": 835.0,
+   "aspect_h_over_w": 0.39,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 2,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "wall_back": {
+   "name": "wall_back",
+   "faces": 4370,
+   "vertices": 1995,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    168.09,
+    33.71,
+    3.6
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 9.05,
+   "weight_g_solid": 11.2,
+   "bed_contact_mm2": 4032.1,
+   "first_layer_mm2": 4032.1,
+   "footprint_hull_mm2": 5665.9,
+   "aspect_h_over_w": 0.11,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "wall_front": {
+   "name": "wall_front",
+   "faces": 4370,
+   "vertices": 1995,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    168.09,
+    33.71,
+    3.6
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 9.05,
+   "weight_g_solid": 11.2,
+   "bed_contact_mm2": 4032.1,
+   "first_layer_mm2": 4032.1,
+   "footprint_hull_mm2": 5665.9,
+   "aspect_h_over_w": 0.11,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "wall_left": {
+   "name": "wall_left",
+   "faces": 3154,
+   "vertices": 1435,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    120.2,
+    33.71,
+    3.6
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 6.11,
+   "weight_g_solid": 7.6,
+   "bed_contact_mm2": 2822.7,
+   "first_layer_mm2": 2822.7,
+   "footprint_hull_mm2": 4051.4,
+   "aspect_h_over_w": 0.11,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "wall_right": {
+   "name": "wall_right",
+   "faces": 3154,
+   "vertices": 1435,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    120.2,
+    33.71,
+    3.6
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 6.11,
+   "weight_g_solid": 7.6,
+   "bed_contact_mm2": 2822.7,
+   "first_layer_mm2": 2822.7,
+   "footprint_hull_mm2": 4051.4,
+   "aspect_h_over_w": 0.11,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  }
+ },
+ "stages": {
+  "qc": {
+   "L_band": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "L_diffuser": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "L_floor": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "L_ring": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "L_roof_eave_white": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "L_roof_hip1": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "L_roof_hip2": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "L_roof_hip3": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "L_roof_hip4": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "L_roof_soffit": {
+    "flags": [
+     "ℹ 바깥 벽 단차 허용: 추녀 끝 각재 밑(서포트 면) — mm.py wallscan 확인",
+     "ℹ 바닥 접지 허용: 정방향 출력이라 서포트 위에 얹힘 — 서포트+브림",
+     "ℹ 얇은 살 허용: 경사 쐐기 맨 아래 끝 1층 띠(서포트 위, 공포 띠에 가려짐)",
+     "ℹ 서포트: 처마밑 밑면 전체(경사 쐐기·서까래 홈·마구리·추녀) — 정방향 출력, 서포트 '빌드 플레이트에만'(사용자 승인)",
+     "ℹ 브리지 허용: 서포트 구역 안의 천장(서까래 홈 사이)"
+    ],
+    "overhang_mm2": 15195.5,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "L_roof_tile": {
+    "flags": [
+     "ℹ 바깥 벽 단차 허용: z 0.2 EFC 첫 층 띠 · z 0.7~1.2 막새·모서리 들림 띠 시작 — mm.py wallscan 확인",
+     "ℹ 얇은 살 허용: 수키와 골 꼭대기 마지막 층",
+     "ℹ 서포트: 기와 밑면 네 모서리 처마 들림 띠(흰 테에 가려지는 면, 높이 ≤3) — 서포트 '빌드 플레이트에만'(사용자 승인)",
+     "ℹ 브리지 허용: 모서리 들림 띠 천장(서포트 구역 안)"
+    ],
+    "overhang_mm2": 1734.6,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "U_band": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "U_diffuser": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "U_floor": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "U_ring": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "U_roof_desc1": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "U_roof_desc2": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "U_roof_desc3": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "U_roof_desc4": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "U_roof_eave_white": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "U_roof_gableL": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "U_roof_gableR": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "U_roof_hip1": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "U_roof_hip2": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "U_roof_hip3": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "U_roof_hip4": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "U_roof_ridge": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "U_roof_soffit": {
+    "flags": [
+     "ℹ 바깥 벽 단차 허용: 추녀 끝 각재 밑(서포트 면) — mm.py wallscan 확인",
+     "ℹ 바닥 접지 허용: 정방향 출력이라 서포트 위에 얹힘 — 서포트+브림",
+     "ℹ 얇은 살 허용: 경사 쐐기 맨 아래 끝 1층 띠(서포트 위, 공포 띠에 가려짐)",
+     "ℹ 서포트: 처마밑 밑면 전체(경사 쐐기·서까래 홈·마구리·추녀) — 정방향 출력, 서포트 '빌드 플레이트에만'(사용자 승인)",
+     "ℹ 브리지 허용: 서포트 구역 안의 천장(서까래 홈 사이)"
+    ],
+    "overhang_mm2": 21714.1,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "U_roof_tile": {
+    "flags": [
+     "ℹ 바깥 벽 단차 허용: z 0.2 EFC 첫 층 띠 · z 0.76 막새 끝 · z 13.14 합각 널 포켓 가장자리(널로 가려짐) — mm.py wallscan 확인",
+     "ℹ 서포트: 기와 밑면 네 모서리 처마 들림 띠(흰 테에 가려지는 면, 높이 ≤3) — 서포트 '빌드 플레이트에만'(사용자 승인)",
+     "ℹ 브리지 허용: 모서리 들림 띠 천장(서포트 구역 안)"
+    ],
+    "overhang_mm2": 1508.8,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "platform": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "uwall_back": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "uwall_front": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "uwall_left": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "uwall_right": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "wall_back": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "wall_front": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "wall_left": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "wall_right": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   }
+  },
+  "plates": [
+   {
+    "file": "models/v2/plates/P01_gray_platform.3mf",
+    "strict_warnings": 0,
+    "collisions": 0,
+    "in_bed": true,
+    "triangles": 1266
+   },
+   {
+    "file": "models/v2/plates/P02_tile_lower.3mf",
+    "strict_warnings": 0,
+    "collisions": 0,
+    "in_bed": true,
+    "triangles": 68886
+   },
+   {
+    "file": "models/v2/plates/P03_tile_upper.3mf",
+    "strict_warnings": 0,
+    "collisions": 0,
+    "in_bed": true,
+    "triangles": 69446
+   },
+   {
+    "file": "models/v2/plates/P04_brown_soffit_lower.3mf",
+    "strict_warnings": 0,
+    "collisions": 0,
+    "in_bed": true,
+    "triangles": 66626
+   },
+   {
+    "file": "models/v2/plates/P05_brown_soffit_upper.3mf",
+    "strict_warnings": 0,
+    "collisions": 0,
+    "in_bed": true,
+    "triangles": 60452
+   },
+   {
+    "file": "models/v2/plates/P06_brown_floor_walls.3mf",
+    "strict_warnings": 0,
+    "collisions": 0,
+    "in_bed": true,
+    "triangles": 12720
+   },
+   {
+    "file": "models/v2/plates/P07_brown_rings_sidewalls.3mf",
+    "strict_warnings": 0,
+    "collisions": 0,
+    "in_bed": true,
+    "triangles": 6628
+   },
+   {
+    "file": "models/v2/plates/P08_brown_upperfloor_gables.3mf",
+    "strict_warnings": 0,
+    "collisions": 0,
+    "in_bed": true,
+    "triangles": 2780
+   },
+   {
+    "file": "models/v2/plates/P09_green_band_lower.3mf",
+    "strict_warnings": 0,
+    "collisions": 0,
+    "in_bed": true,
+    "triangles": 912
+   },
+   {
+    "file": "models/v2/plates/P10_green_band_upper.3mf",
+    "strict_warnings": 0,
+    "collisions": 0,
+    "in_bed": true,
+    "triangles": 784
+   },
+   {
+    "file": "models/v2/plates/P11_white_lower_ring_diffusers_ridge.3mf",
+    "strict_warnings": 0,
+    "collisions": 0,
+    "in_bed": true,
+    "triangles": 3168
+   },
+   {
+    "file": "models/v2/plates/P12_white_upper_ring_hips_desc.3mf",
+    "strict_warnings": 0,
+    "collisions": 0,
+    "in_bed": true,
+    "triangles": 5172
+   }
+  ],
+  "assembly": {
+   "states": [
+    "분리",
+    "조립"
+   ],
+   "pairs": 59,
+   "sweeps": [],
+   "warnings": 0
+  },
+  "renders": {
+   "qc/v2_pipeline/plate_P01_gray_platform": "plate",
+   "qc/v2_pipeline/plate_P02_tile_lower": "plate",
+   "qc/v2_pipeline/plate_P03_tile_upper": "plate",
+   "qc/v2_pipeline/plate_P04_brown_soffit_lower": "plate",
+   "qc/v2_pipeline/plate_P05_brown_soffit_upper": "plate",
+   "qc/v2_pipeline/plate_P06_brown_floor_walls": "plate",
+   "qc/v2_pipeline/plate_P07_brown_rings_sidewalls": "plate",
+   "qc/v2_pipeline/plate_P08_brown_upperfloor_gables": "plate",
+   "qc/v2_pipeline/plate_P09_green_band_lower": "plate",
+   "qc/v2_pipeline/plate_P10_green_band_upper": "plate",
+   "qc/v2_pipeline/plate_P11_white_lower_ring_diffusers_ridge": "plate",
+   "qc/v2_pipeline/plate_P12_white_upper_ring_hips_desc": "plate",
+   "qc/v2_pipeline/assembly": "assembly"
+  },
+  "efc": {
+   "qc_efc": 0.15,
+   "nominal_pkl": "models/v2/parts_nominal.pkl"
+  },
+  "support_zones": [
+   {
+    "part": "L_roof_soffit",
+    "desc": "처마밑 밑면 전체(경사 쐐기·서까래 홈·마구리·추녀) — 정방향 출력, 서포트 '빌드 플레이트에만'(사용자 승인)",
+    "max_mm2": 16000
+   },
+   {
+    "part": "U_roof_soffit",
+    "desc": "처마밑 밑면 전체(경사 쐐기·서까래 홈·마구리·추녀) — 정방향 출력, 서포트 '빌드 플레이트에만'(사용자 승인)",
+    "max_mm2": 23000
+   },
+   {
+    "part": "L_roof_tile",
+    "desc": "기와 밑면 네 모서리 처마 들림 띠(흰 테에 가려지는 면, 높이 ≤3) — 서포트 '빌드 플레이트에만'(사용자 승인)",
+    "max_mm2": 1800
+   },
+   {
+    "part": "U_roof_tile",
+    "desc": "기와 밑면 네 모서리 처마 들림 띠(흰 테에 가려지는 면, 높이 ≤3) — 서포트 '빌드 플레이트에만'(사용자 승인)",
+    "max_mm2": 1600
+   }
+  ]
+ },
+ "bambu": {
+  "models/v2/plates/P01_gray_platform_bambu.3mf": {
+   "ok": true,
+   "errors": []
+  },
+  "models/v2/plates/P02_tile_lower_bambu.3mf": {
+   "ok": true,
+   "errors": []
+  },
+  "models/v2/plates/P03_tile_upper_bambu.3mf": {
+   "ok": true,
+   "errors": []
+  },
+  "models/v2/plates/P04_brown_soffit_lower_bambu.3mf": {
+   "ok": true,
+   "errors": []
+  },
+  "models/v2/plates/P05_brown_soffit_upper_bambu.3mf": {
+   "ok": true,
+   "errors": []
+  },
+  "models/v2/plates/P06_brown_floor_walls_bambu.3mf": {
+   "ok": true,
+   "errors": []
+  },
+  "models/v2/plates/P07_brown_rings_sidewalls_bambu.3mf": {
+   "ok": true,
+   "errors": []
+  },
+  "models/v2/plates/P08_brown_upperfloor_gables_bambu.3mf": {
+   "ok": true,
+   "errors": []
+  },
+  "models/v2/plates/P09_green_band_lower_bambu.3mf": {
+   "ok": true,
+   "errors": []
+  },
+  "models/v2/plates/P10_green_band_upper_bambu.3mf": {
+   "ok": true,
+   "errors": []
+  },
+  "models/v2/plates/P11_white_lower_ring_diffusers_ridge_bambu.3mf": {
+   "ok": true,
+   "errors": []
+  },
+  "models/v2/plates/P12_white_upper_ring_hips_desc_bambu.3mf": {
+   "ok": true,
+   "errors": []
+  }
+ }
+}

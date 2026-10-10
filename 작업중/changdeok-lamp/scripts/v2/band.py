@@ -1,31 +1,28 @@
-"""공포 띠(초록 계단 띠 + 갈색 포 단위 배열). 조립 좌표로 만들고 출력은 뒤집는다(넓은 단이 바닥).
-ring_out: 평방 링 바깥 치수(w,d). 띠 바닥 단은 1.0 proud, 단마다 step 만큼 더 나감. 안쪽 개구 = 림 바깥 + 0.6."""
+"""공포 띠(초록) — 처마 밑 경사면의 안쪽 부분(쐐기). 스캔 단면: 처마 밑선은 평방 바깥 모서리(z0)에서 처마 끝(z0+h)까지 곧게 올라간다.
+띠 = 그 경사선 위·평방 위의 쐐기(바깥 폭 OUT), 윗면 평평(z0+h, 처마밑이 얹힘). 포 단위 = 경사면 아래로 0.8 돌출한 세로 줄(피치 BRACKET_PITCH).
+출력: 뒤집어서(윗면이 베드) → 경사면·포 줄이 위를 본다(서포트 없음)."""
 import numpy as np
-from geo import B, U, D, RING, centers
+from geo import B, U, D, I, HULL, segbox, centers
 import params as P
-def band(ring_out, rim_out, z0, h, step=P.BAND_STEP, tiers=P.BAND_TIERS, unit_w=6.7, pitch=P.BRACKET_PITCH, clr=P.CLR):
-    w,d=ring_out; th=h/tiers
-    cores=[]
-    for k in range(tiers):
-        o=1.0+step*k; cores.append(B(w+2*o, d+2*o, th+(0.01 if k<tiers-1 else 0), 0,0, z0+th*k))
-    green=U(cores); inner=B(rim_out[0]+2*clr, rim_out[1]+2*clr, h+2, 0,0, z0-1); green=D(green, inner)
-    units=[]
-    # 포 단위: 뒤(띠 안쪽 면에서 1.2 안)에서 앞(단 면 + 1.0)까지 계단형, 폭 unit_w
-    def unit_x(xc, side):     # side: 'f'(-y) / 'b'(+y) 면에 있는 단위, x 중심 xc
-        parts=[]
-        for k in range(tiers):
-            o=1.0+step*k+1.0; back=d/2+1.0-1.2-1.0   # 뒤쪽 끝: 바닥 단 면(d/2+1.0)에서 2.2 안
-            y0=back; y1=d/2+o; cy=(y0+y1)/2*(1 if side=='b' else -1)
-            parts.append(B(unit_w, y1-y0, th+(0.01 if k<tiers-1 else 0), xc, cy, z0+th*k))
-        return U(parts)
-    def unit_y(yc, side):
-        parts=[]
-        for k in range(tiers):
-            o=1.0+step*k+1.0; back=w/2+1.0-2.2; x0=back; x1=w/2+o; cx=(x0+x1)/2*(1 if side=='r' else -1)
-            parts.append(B(x1-x0, unit_w, th+(0.01 if k<tiers-1 else 0), cx, yc, z0+th*k))
-        return U(parts)
-    xs=centers(-w/2, w/2, pitch, margin=unit_w/2+1.0); ys=centers(-d/2, d/2, pitch, margin=unit_w/2+1.0)
-    for x in xs: units.append(unit_x(x,'f')); units.append(unit_x(x,'b'))
-    for y in ys: units.append(unit_y(y,'l')); units.append(unit_y(y,'r'))
-    brown=U(units); green=D(green, brown)
-    return green, brown
+OUT=8.0
+def _rect(w,d,z): return [[sx*w/2,sy*d/2,z] for sx in(-1,1) for sy in(-1,1)]
+def under_wedge(ring_out, eave, z0, z1):
+    """평방 바깥(z0) → 처마 끝(z1) 경사선 위, z1 까지의 쐐기(볼록)"""
+    (w,d),(EX,EY)=ring_out,eave
+    return HULL(_rect(w,d,z0)+_rect(EX,EY,z1)+_rect(w,d,z1))
+def band(ring_out, rim_out, z0, h, eave, clr=P.CLR):
+    w,d=ring_out; EX,EY=eave; z1=z0+h
+    wedge=under_wedge(ring_out, eave, z0, z1)
+    g=U([I(wedge, B(w+2*OUT, d+2*OUT, h+2, 0,0, z0-1)), B(w, d, h, 0,0, z0)])
+    g=D(g, B(rim_out[0]+2*clr, rim_out[1]+2*clr, h+2, 0,0, z0-1))
+    # 포 단위: 경사면을 따라 바깥으로 뻗는 줄(폭 2.4, 0.8 돌출), 모서리 근처 제외
+    sx_=(EX/2-w/2); sy_=(EY/2-d/2); ribs=[]
+    for x in centers(-w/2+4, w/2-4, P.BRACKET_PITCH):
+        for s in (-1,1):
+            a=(x, s*d/2, z0); b=(x, s*(d/2+OUT), z0+h*OUT/sy_); ribs.append(segbox(a,b,2.4,1.6))
+    for y in centers(-d/2+4, d/2-4, P.BRACKET_PITCH):
+        for s in (-1,1):
+            a=(s*w/2, y, z0); b=(s*(w/2+OUT), y, z0+h*OUT/sx_); ribs.append(segbox(a,b,2.4,1.6))
+    ribs=I(U(ribs), B(w+2*OUT-0.01, d+2*OUT-0.01, h+2, 0,0, z0-0.8))
+    ribs=D(ribs, B(w-0.01, d-0.01, h+3, 0,0, z0-1.5))
+    return U([g, ribs]), None

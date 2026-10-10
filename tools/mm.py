@@ -155,7 +155,8 @@ def make(config, skill_read=False):
         out = os.path.join(base, cfg['out']); rp = os.path.join(out, 'report.json'); rep = json.load(open(rp, encoding='utf-8')); rep['bambu'] = {}
         for pl in cfg['plates']:
             dst = os.path.splitext(pl)[0] + '_bambu.3mf'
-            try: v = bambu(os.path.join(base, pl), os.path.join(base, dst), colors=cfg.get('bambu', {}).get('colors'), settings=bs or None, plate_name=os.path.basename(pl), title=cfg['name'])
+            pc = cfg.get('bambu', {}).get('plate_colors', {}).get(pl) or cfg.get('bambu', {}).get('colors')   # 단색 플레이트: 그 색을 1번 필라멘트로(틀 필라멘트 수 제한)
+            try: v = bambu(os.path.join(base, pl), os.path.join(base, dst), colors=pc, settings=bs or None, plate_name=os.path.basename(pl), title=cfg['name'])
             except Exception as e: v = {'ok': False, 'errors': [f'{type(e).__name__}: {e}']}
             rep['bambu'][dst] = {'ok': v.get('ok'), 'errors': v.get('errors', [])}
         json.dump(rep, open(rp, 'w', encoding='utf-8'), ensure_ascii=False, indent=1, default=str); r['bambu'] = rep['bambu']

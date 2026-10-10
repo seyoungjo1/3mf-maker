@@ -6,6 +6,7 @@ description: 이 저장소(3mf-maker)에서 3D 프린팅 모델을 설계·검�
 # 3D 프린팅 모델링 스킬 (3mf-maker)
 
 사용자: Bambu Lab P1S(256×256×250, 노즐 0.4, 층 0.2), 필라멘트 **PLA**(Bambu PLA Basic), Bambu Studio 02.08.x. 답변은 한국어 존댓말, 결론부터.
+**작업할 때마다 이 문서를 처음부터 다시 읽는다(기억·요약으로 대신하지 않는다).**
 **모든 모델링 작업은 이 순서를 따른다: 설계 규칙(1) → 모델링(2) → QC(3) → 조립 검증(4) → 보여주기(5) → 3MF(6) → 보고(7).** 어느 단계도 건너뛰지 않는다.
 
 ## 0. 저장소 규칙
@@ -39,6 +40,7 @@ description: 이 저장소(3mf-maker)에서 3D 프린팅 모델을 설계·검�
 ## 5. 보여주기 — 열쇠고리 프로그램과 같은 방식 (`python tools/render_preview.py ...`) — 상세: `references/presentation.md`
 - three.js 헤드리스 렌더: 어두운 배경, 256 격자 베드, 각진 음영(flatShading), 색은 밑판 `#37474f`·글자/포인트 `#ffb300`(여러 색 파트는 `--colors 이름=#hex`). 뷰 5장(기본·상부·측면·밑면·정면 저각도 front) + **회전 GIF**. 결합 파트가 있으면 상태(분리/조립-닫힘/조립-열림 …)를 GIF에 순환.
 - 하단 상태줄: `완료 — 모델 크기 W × D × H mm` + ⚠ 줄. 사용자에게는 GIF·기본 뷰 PNG를 파일로 보낸다(SendUserFile).
+- **보낸 뒤 사용자 허락을 받기 전에는 6단계(3MF)·커밋·푸시·병합으로 넘어가지 않는다.** 허락 없이 코드를 올리지 않는다(빌드·QC·렌더를 안 돌린 코드는 특히 금지).
 
 ## 6. 3MF — 완성본은 Bambu Studio에서 열려야 한다 (상세: `references/bambu_3mf.md`)
 1. 플레이트마다 일반 3MF 한 장: `작업중/toolbox42/scripts/generic3mf.py`(열쇠고리 `mm3mf.py` 방식: basematerials + model_settings 파트별 extruder + Slic3r_PE). lib3mf strict 경고 0.
