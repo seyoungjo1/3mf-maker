@@ -422,5 +422,105 @@
     "1.2 mm 보다 얇은 살 11.6 mm² (z=2.57, x/y (168.5, -194.9, 211.5, -165.9))"
    ]
   }
+ },
+ "stages": {
+  "qc": {
+   "base": {
+    "flags": [
+     "ℹ 얇은 살 허용: U자 홈 칸막이 윗부분이 1.2→0.1 mm 로 가늘어지는 원본 형상(v5 126 mm², 출력 성공, 끝만 둥글게 나옴)",
+     "ℹ 서포트: 손잡이 귀쌍 밑면 z 13.5~14.3 (서포트 '빌드 플레이트에만') + 바닥 곡선 첫 층 0.18/층 z 0.3~0.9 약 37 mm² (v5 하판 곡선, 사용자 승인)",
+     "ℹ 브리지 허용: 앞벽 z 3.9 소형 귀 사이 8.8 mm² 띠(v5 원본, 출력 성공)"
+    ],
+    "overhang_mm2": 284.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "lid": {
+    "flags": [
+     "ℹ 얇은 살 허용: 경첩 귀 끝 띠 33 mm²(v6 35.5, 출력 성공)",
+     "ℹ 서포트: 경첩 귀 돌기·걸쇠 탭 밑면 z 8.3 + 탭 기둥 z 2.3 (서포트 '빌드 플레이트에만') + 모서리 곡선 첫 층 0.18/층 z 0.5~0.9 약 37 mm² (v5 하판 곡선, 사용자 승인)",
+     "ℹ 브리지 허용: 걸쇠 탭 밑면 z 8.3 50 mm² — 서포트 '빌드 플레이트에만' 영역(v6 동일)"
+    ],
+    "overhang_mm2": 154.7,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "logo": {
+    "flags": [
+     "ℹ 의도된 다중 조각",
+     "ℹ 얇은 살 허용: 로고 1.5배 후 작은 글씨(badminton) 획 0.9 mm — 사용자 로고 그대로 확대(원본 0.6, v5 출력 성공)"
+    ],
+    "overhang_mm2": 0.1,
+    "is_volume": true,
+    "bodies": 18
+   },
+   "handle": {
+    "flags": [],
+    "overhang_mm2": 11.3,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "latch": {
+    "flags": [
+     "ℹ 얇은 살 허용: 쐐기 끝(v5 원본, 출력 성공)"
+    ],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   }
+  },
+  "plates": [
+   {
+    "file": "models/Toolbox48_v10_A_base_handle_latch.3mf",
+    "strict_warnings": 0,
+    "collisions": 0,
+    "in_bed": true,
+    "triangles": 52920
+   },
+   {
+    "file": "models/Toolbox48_v10_B_lid_logo.3mf",
+    "strict_warnings": 0,
+    "collisions": 0,
+    "in_bed": true,
+    "triangles": 178584
+   }
+  ],
+  "assembly": {
+   "states": [
+    "분리",
+    "조립-닫힘",
+    "조립-열림 90°",
+    "명판 48장 (열림 90°)",
+    "명판 48장 (닫힘)"
+   ],
+   "pairs": 6,
+   "sweeps": [
+    "경첩",
+    "손잡이"
+   ],
+   "warnings": 0
+  },
+  "renders": {
+   "qc/v10/plate_Toolbox48_v10_A_base_handle_latch": "plate",
+   "qc/v10/plate_Toolbox48_v10_B_lid_logo": "plate",
+   "qc/v10/assembly": "assembly",
+   "qc/v10/motion": "motion"
+  },
+  "efc": {
+   "qc_efc": 0.15,
+   "nominal_pkl": "v10parts_nominal.pkl"
+  },
+  "support_zones": [
+   {
+    "part": "base",
+    "desc": "손잡이 귀쌍 밑면 z 13.5~14.3 (서포트 '빌드 플레이트에만') + 바닥 곡선 첫 층 0.18/층 z 0.3~0.9 약 37 mm² (v5 하판 곡선, 사용자 승인)",
+    "max_mm2": 320
+   },
+   {
+    "part": "lid",
+    "desc": "경첩 귀 돌기·걸쇠 탭 밑면 z 8.3 + 탭 기둥 z 2.3 (서포트 '빌드 플레이트에만') + 모서리 곡선 첫 층 0.18/층 z 0.5~0.9 약 37 mm² (v5 하판 곡선, 사용자 승인)",
+    "max_mm2": 180
+   }
+  ]
  }
 }

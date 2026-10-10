@@ -12,3 +12,4 @@ matplotlib
 fast-simplification
 pillow
 playwright
+anthropic

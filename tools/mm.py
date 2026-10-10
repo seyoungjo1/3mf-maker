@@ -112,7 +112,9 @@ def check3mf(files):
          {'config': {'type': 'string', 'description': '프로젝트 pipeline_*.json'}, 'render_only': {'type': 'boolean', 'default': False}})
 def pipeline(config, render_only=False):
     import pipeline as PL
-    rc = PL.run(_abs(config), render_only=render_only); cfg = json.load(open(_abs(config), encoding='utf-8'))
+    import contextlib
+    with contextlib.redirect_stdout(sys.stderr): rc = PL.run(_abs(config), render_only=render_only)   # 진행 로그는 stderr, stdout 은 JSON 결과만
+    cfg = json.load(open(_abs(config), encoding='utf-8'))
     out = os.path.join(os.path.dirname(_abs(config)), cfg['out']); rep = json.load(open(os.path.join(out, 'report.json'))) if os.path.exists(os.path.join(out, 'report.json')) else {}
     return {'ok': rc == 0, 'report': os.path.join(out, 'REPORT.md'), 'warn': rep.get('warn', []), 'info': rep.get('info', [])}
 @command('assemble', '조립 검증만(파이프라인과 같은 코드): config 의 조립 정의로 상태별 교집합·간격·스윕. override 로 파트를 다른 버전으로 바꿔 끼워 호환성 확인(예: 이미 출력한 v8 하판 + 새 뚜껑)',
@@ -129,19 +131,50 @@ def assemble(config, override=None, out=None):
     PL.check_assembly(asm, allparts, cfg.get('min_gap', 0.3), L, warn)
     if out: os.makedirs(os.path.dirname(_abs(out)) or '.', exist_ok=True); open(_abs(out), 'w', encoding='utf-8').write('\n'.join(L) + '\n\n' + ('\n'.join('- ⚠ ' + w for w in warn) or '- ✓ 경고 없음') + '\n')
     return {'ok': not warn, 'override': used, 'warn': warn, 'report': _abs(out) if out else None, 'table': [l for l in L if l.startswith('|') or '간섭 0 범위' in l]}
-@command('make', '빌드 → 파이프라인 일괄: config 의 "build": [스크립트, 인자…] 를 config 폴더에서 실행한 뒤 pipeline',
-         {'config': {'type': 'string'}})
-def make(config):
+@command('bambu', 'Bambu Studio 프로젝트 3MF 로 변환(사용자 내보내기 3MF 를 틀로, 설정은 틀 그대로 + 허용된 키만 변경) 후 구조 검증. "형상만 불러옴" 해결용',
+         {'plate': {'type': 'string', 'description': '우리 플레이트 3MF(generic)'}, 'out': {'type': 'string'}, 'template': {'type': 'string', 'default': None},
+          'colors': {'type': 'array', 'items': {'type': 'string'}, 'default': None}, 'settings': {'type': 'object', 'default': None, 'description': '틀에 있는 키만, 같은 형식으로 예 {"enable_support":"1","support_on_build_plate_only":"1"}'},
+          'plate_name': {'type': 'string', 'default': ''}, 'title': {'type': 'string', 'default': ''}})
+def bambu(plate, out, template=None, colors=None, settings=None, plate_name='', title=''):
+    import bambu_project as BP
+    tpl = _abs(template) if template else BP.DEFAULT_TEMPLATE; obs = BP.read_plate(_abs(plate))
+    BP.write_bambu_project(_abs(out), obs, tpl, plate_name, colors, settings, title)
+    r = BP.verify_bambu_project(_abs(out), tpl, obs); r['template'] = tpl; return r
+@command('make', '표준 일괄 실행: build 스크립트 → pipeline(QC·3MF·조립·렌더/GIF·REPORT) → Bambu 프로젝트 3MF → 체크리스트. ok=false 면 결과물을 보내지 않는다',
+         {'config': {'type': 'string'}, 'skill_read': {'type': 'boolean', 'default': False}})
+def make(config, skill_read=False):
     cfg = json.load(open(_abs(config), encoding='utf-8')); base = os.path.dirname(_abs(config)); t = time.time()
     if cfg.get('build'):
         p = subprocess.run([sys.executable] + cfg['build'], cwd=base, capture_output=True, text=True)
         if p.returncode: return {'ok': False, 'stage': 'build', 'stderr': p.stderr[-3000:]}
-    r = pipeline(config); r['build_log_tail'] = (p.stdout[-1500:] if cfg.get('build') else ''); r['seconds'] = round(time.time() - t); return r
+    r = pipeline(config); r['build_log_tail'] = (p.stdout[-1500:] if cfg.get('build') else '')
+    # 6 3MF: 경고 0 일 때만 Bambu 프로젝트 3MF(설정 포함 — '형상만 불러옴' 방지)를 플레이트마다 만든다
+    if r['ok'] and cfg.get('bambu', {}).get('enabled', True):
+        bs = dict(cfg.get('bambu', {}).get('settings', {}))
+        if cfg.get('support_zones'): bs.setdefault('enable_support', '1'); bs.setdefault('support_on_build_plate_only', '1')
+        out = os.path.join(base, cfg['out']); rp = os.path.join(out, 'report.json'); rep = json.load(open(rp, encoding='utf-8')); rep['bambu'] = {}
+        for pl in cfg['plates']:
+            dst = os.path.splitext(pl)[0] + '_bambu.3mf'
+            try: v = bambu(os.path.join(base, pl), os.path.join(base, dst), colors=cfg.get('bambu', {}).get('colors'), settings=bs or None, plate_name=os.path.basename(pl), title=cfg['name'])
+            except Exception as e: v = {'ok': False, 'errors': [f'{type(e).__name__}: {e}']}
+            rep['bambu'][dst] = {'ok': v.get('ok'), 'errors': v.get('errors', [])}
+        json.dump(rep, open(rp, 'w', encoding='utf-8'), ensure_ascii=False, indent=1, default=str); r['bambu'] = rep['bambu']
+    r['checklist'] = checklist(config, skill_read); r['ok'] = r['ok'] and r['checklist']['ok']; r['seconds'] = round(time.time() - t); return r
+@command('new', '새 도면 시작: 작업중/<이름>/ 에 README(체크리스트·설계 치수표), scripts/build.py·assembly.py, pipeline.json 틀을 만든다. 바로 mm make 가 통과하는 상자+경첩 뚜껑 예시',
+         {'name': {'type': 'string', 'description': '프로젝트 폴더 이름(글자·숫자·_·-)'}, 'desc': {'type': 'string', 'default': ''}})
+def new(name, desc=''):
+    import scaffold; return scaffold.new_project(ROOT, name, desc)
+@command('checklist', '체크리스트 자동 판정: pipeline 결과(report.json)·산출물·README 치수표로 10개 항목을 채운다(ok=false 면 보내지 않는다)',
+         {'config': {'type': 'string'}, 'skill_read': {'type': 'boolean', 'default': False, 'description': 'SKILL.md+references 를 읽었음을 호출자가 보증(mm_agent 는 자동 true)'}})
+def checklist(config, skill_read=False):
+    import scaffold; return scaffold.checklist(_abs(config), skill_read)
 @command('selftest', '도구 자가검사(정상/간섭/빡빡한 끼움/EFC 그룹/실제 모서리/벽 속 틈)', {})
 def selftest():
     p = subprocess.run([sys.executable, os.path.join(HERE, 'selftest.py')], capture_output=True, text=True)
     lines = [l for l in p.stdout.splitlines() if l.startswith('[') or 'SELFTEST' in l]
-    return {'ok': p.returncode == 0, 'lines': lines}
+    r = {'ok': p.returncode == 0, 'lines': lines}
+    if p.returncode: r['stderr_tail'] = p.stderr[-3000:]   # 실패 원인(예외 추적)을 숨기지 않는다
+    return r
 # ---------------------------------------------------------------- 실행기
 def run(cmd, **args):
     if cmd not in COMMANDS: return {'error': f'모르는 명령 {cmd}', 'commands': list(COMMANDS)}
@@ -183,7 +216,7 @@ def main(argv):
         if t == 'array': ap.add_argument(k if k == 'files' else f'--{k}', nargs='+', type=(float if v.get('items', {}).get('type') == 'number' else str), default=v.get('default'))
         elif t == 'object': ap.add_argument(f'--{k}', type=json.loads, default=v.get('default'))
         elif t == 'boolean': ap.add_argument(f'--{k}', action='store_true')
-        elif k == 'config': ap.add_argument(k)
+        elif k in ('config', 'name'): ap.add_argument(k)
         else: ap.add_argument(f'--{k}', type=(float if t == 'number' else int if t == 'integer' else str), default=v.get('default'), required='default' not in v)
     a = vars(ap.parse_args(rest)); res = run(cmd, **{k: v for k, v in a.items() if v is not None})
     print(json.dumps(res, ensure_ascii=False, indent=1, default=str))
