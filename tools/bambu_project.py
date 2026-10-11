@@ -47,7 +47,7 @@ def _object_model(parts_local, ids, uuids):
         L.append(f'  <object id="{pid}" p:UUID="{u}" type="model">'); L.append('   <mesh>'); L.append('    <vertices>')
         L += [f'     <vertex x="{_f(a)}" y="{_f(b)}" z="{_f(c)}"/>' for a, b, c in np.asarray(m.vertices)]
         L.append('    </vertices>'); L.append('    <triangles>')
-        L += [f'     <triangle v1="{a}" v2="{b}" v3="{c}"/>' for a, b, c in np.asarray(m.faces)]
+        L += [f'     <triangle v1="{a}" v2="{b}" v3="{c}"/>' for a, b, c in np.asarray(m.faces) if a != b and b != c and a != c]   # 넓이 0(정점 중복) 삼각형 제외
         L.append('    </triangles>'); L.append('   </mesh>'); L.append('  </object>')
     L += [' </resources>', ' <build/>', '</model>']; return '\n'.join(L)
 def _thumb(objects, colors, size, top=True):

@@ -50,6 +50,7 @@ def write_generic_3mf(path, objects, title='model', material_order=None):
         for mesh, col, pname in ob['parts']:
             oid = next_id; next_id += 1; mi = mat_index[_hex(col)]
             v = np.asarray(mesh.vertices, float); f = np.asarray(mesh.faces, np.int64)
+            f = f[(f[:, 0] != f[:, 1]) & (f[:, 1] != f[:, 2]) & (f[:, 0] != f[:, 2])]   # 같은 정점을 두 번 쓰는 넓이 0 삼각형(STL 왕복 정점 병합)은 lib3mf 가 거부(Invalid Model Coordinate Indices) → 뺀다
             vx = ''.join(f'<vertex x="{x:.6f}" y="{y:.6f}" z="{z:.6f}"/>' for x, y, z in v)
             tx = ''.join(f'<triangle v1="{a}" v2="{b}" v3="{c}" pid="1" p1="{mi}"/>' for a, b, c in f)
             res.append(f'<object id="{oid}" name="{_xml(pname)}" type="model" pid="1" pindex="{mi}"><mesh><vertices>{vx}</vertices><triangles>{tx}</triangles></mesh></object>')

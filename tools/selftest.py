@@ -111,6 +111,14 @@ def open_mesh_pair_case():
     L2, warn2 = [], []; pipeline.check_assembly({'states': {'조립': {'a': np.eye(4), 'b': np.eye(4)}}, 'pairs': [['a', 'b', {'contact': True}]]}, {'a': a, 'b': b}, 0.3, L2, warn2)
     ok = any('계산 실패' in w for w in warn) and not warn2
     print(f"[열린 메시 결합 쌍] 경고 {warn} · 닫힌 메시 경고 {warn2} (기대: 계산 실패 1개, 0개)"); return ok
+def degenerate_face_case():
+    """정점을 두 번 쓰는 넓이 0 삼각형이 있는 메시(STL 왕복 정점 병합으로 생김) → 플레이트 3MF 가 lib3mf strict 로 읽혀야 한다(인정전 램프 v2 기와 24개)."""
+    from check3mf import check
+    m = box(20, 20, 5); f = np.vstack([m.faces, [[0, 0, 1]]]); bad = trimesh.Trimesh(m.vertices, f, process=False)
+    d = tempfile.mkdtemp(); p = os.path.join(d, 'deg.3mf'); write_generic_3mf(p, [{'name': 'a', 'parts': [(bad, '#37474f', 'a')]}])
+    try: n, w, _ = check(p); ok = n == 0
+    except Exception as e: ok = False; w = [str(e)]
+    print(f"[넓이 0 삼각형] strict 읽기 {'ok' if ok else '실패'} {w[:1]}"); shutil.rmtree(d, ignore_errors=True); return ok
 def scaffold_case():
     """mm new 틀 → mm make(빌드·파이프라인·Bambu 프로젝트·체크리스트)가 처음부터 통과해야 한다. 끝나면 지운다."""
     import mm
@@ -158,7 +166,7 @@ def agent_case():
         return ok1 and ok2
     finally: shutil.rmtree(proj, ignore_errors=True)
 if __name__ == '__main__':
-    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = efc_group_case() and efc_stl_roundtrip_case() and slit_case() and wall_step_case() and mm_api_case() and bambu_multi_case() and open_mesh_pair_case()
+    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = efc_group_case() and efc_stl_roundtrip_case() and slit_case() and wall_step_case() and mm_api_case() and bambu_multi_case() and open_mesh_pair_case() and degenerate_face_case()
     cfg = fixture(os.path.join(tmp, 'good'), 0.3); rc = pipeline.run(cfg); rep = json.load(open(os.path.join(tmp, 'good', 'qc', 'report.json')))
     files = [os.path.join(tmp, 'good', 'qc', f) for f in ('REPORT.md', 'assembly/turntable.gif', 'motion/turntable.gif', 'plate_A/view_iso.png')]
     print('\n[정상 설계] 종료코드', rc, '| 경고', rep['warn'], '| 산출물', [os.path.exists(f) for f in files])
