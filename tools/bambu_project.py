@@ -73,15 +73,32 @@ def layout_plates(plates, template=DEFAULT_TEMPLATE):
             for m, pn, e in ob['parts']: mm = m.copy(); mm.apply_translation(off); parts.append((mm, pn, e))
             out.append((pi, dict(ob, parts=parts)))
     return out
+def expand_filaments(ps, n):
+    """틀 project_settings 의 필라멘트 수를 n 으로 늘린다(같은 PLA Basic 을 복제). 키 집합은 그대로, 배열 길이만:
+    필라멘트별 키(길이 = 틀 필라멘트 수) 1→n, 변형별 키(길이 2×수, Standard/High Flow 쌍) 2→2n, flush_volumes_matrix n×n, filament_self_index 1,1,2,2,….
+    근거: sample/nameplate(3개, 02.08.02.61) 의 길이-3 키 전부가 sample/Click_Pen(4개)에서 길이 4, 길이-6 키는 Click_Pen(구버전)에서 필라멘트별 — 같은 키 집합."""
+    nf = len(ps['filament_colour'])
+    if n <= nf: return ps
+    ps = dict(ps); off = next((v for i, v in enumerate(ps['flush_volumes_matrix']) if i % (nf + 1)), '0')
+    for k, v in list(ps.items()):
+        if not isinstance(v, list): continue
+        if k == 'flush_volumes_matrix': ps[k] = ['0' if i == j else (v[i * nf + j] if i < nf and j < nf else off) for i in range(n) for j in range(n)]
+        elif k == 'filament_self_index': ps[k] = [str(i + 1) for i in range(n) for _ in range(len(v) // nf)]
+        elif len(v) == nf: ps[k] = v + [v[0]] * (n - nf)
+        elif len(v) == 2 * nf: ps[k] = v + v[:2] * (n - nf)
+    return ps
 def write_bambu_project(out, objects, template=DEFAULT_TEMPLATE, plate_name='', filament_colours=None, settings=None, title='', print_sequence='by layer', plates=None):
     """plates=[{'name','objects'}] 를 주면 한 파일에 플레이트 여러 장(sample/所有部件集合.3mf·test+lunch+box 구조)."""
     tz = zipfile.ZipFile(template); tn = set(tz.namelist())
-    ps = json.loads(tz.read('Metadata/project_settings.config')); nfil = len(ps['filament_colour'])
+    ps = json.loads(tz.read('Metadata/project_settings.config'))
+    if filament_colours and len(filament_colours) > len(ps['filament_colour']): ps = expand_filaments(ps, len(filament_colours))   # 색이 틀보다 많으면 필라멘트 칸을 늘림
+    nfil = len(ps['filament_colour'])
     if plates is None: plates = [{'name': plate_name, 'objects': objects}]
     flat = layout_plates(plates, template); objects = [ob for _, ob in flat]; pidx = [pi for pi, _ in flat]
     used = sorted({e for ob in objects for _, _, e in ob['parts']}); assert max(used) <= nfil, f'필라멘트 {max(used)}번 > 틀의 필라멘트 수 {nfil}'
     if filament_colours:
         for i, c in enumerate(filament_colours[:nfil]): ps['filament_colour'][i] = c.upper()
+        if 'filament_multi_colour' in ps: ps['filament_multi_colour'] = list(ps['filament_colour'])
     for k, v in (settings or {}).items():
         assert k in ps, f'틀 project_settings 에 없는 키 {k} — 지어낸 설정 금지'
         assert type(v) is type(ps[k]) and (not isinstance(v, list) or len(v) == len(ps[k])), f'{k}: 형식이 틀과 다름 ({type(ps[k]).__name__}, 길이 {len(ps[k]) if isinstance(ps[k], list) else "-"})'
@@ -139,6 +156,7 @@ def write_bambu_project(out, objects, template=DEFAULT_TEMPLATE, plate_name='', 
             if k == 'plater_name': v = pl.get('name', '')
             if k == 'print_sequence': v = print_sequence
             if k.endswith('_file') and v: v = re.sub(r'_1(\.png)$', f'_{pi + 1}\\1', v)            # Metadata/plate_N.png · top_N · pick_N · plate_no_light_N
+            if k in ('filament_maps', 'filament_volume_maps') and v: vv = v.split(); v = ' '.join((vv + [vv[0]] * nfil)[:nfil])   # 필라멘트 수만큼
             pmeta.append(f'    <metadata key="{k}" value="{v}"/>')
         pblocks.append('  <plate>\n' + '\n'.join(pmeta) + '\n' + '\n'.join(plate_inst.get(pi, [])) + '\n  </plate>')
     files['Metadata/model_settings.config'] = '<?xml version="1.0" encoding="UTF-8"?>\n<config>\n' + '\n'.join(ms_obj) + '\n' + '\n'.join(pblocks) + '\n  <assemble>\n' + '\n'.join(assemble) + '\n  </assemble>\n</config>\n'

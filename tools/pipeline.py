@@ -63,10 +63,12 @@ def check_assembly(asm, allparts, mg, L, warn, render_only=False):
             need = o.get('min_gap', mg)
             if o.get('region'): L.append(f"| {st} | {a} | {b} (영역 {o['region']}) | {iv:.2f} | {g0:.2f} / {g1:.2f} / {g5:.2f} | {'⚠ 간섭' if iv > 0.01 else ('⚠ 간격 %.2f < %s' % (g1, need) if g1 < need else '✓')} |")
             if o.get('region'):
-                if iv > 0.01: warn.append(f'{st} {a}∩{b} = {iv:.2f} mm³')
+                if iv < 0: warn.append(f'{st} {a}∩{b} 교집합 계산 실패(닫히지 않은 메시)')
+                elif iv > 0.01: warn.append(f'{st} {a}∩{b} = {iv:.2f} mm³')
                 elif g1 < need: warn.append(f'{st} {a}↔{b} 영역 간격 1 % {g1:.2f} < {need}')
                 continue
-            if iv > 0.01: v = '⚠ 간섭'; warn.append(f'{st} {a}∩{b} = {iv:.2f} mm³')
+            if iv < 0: v = '⚠ 교집합 계산 실패'; warn.append(f'{st} {a}∩{b} 교집합 계산 실패(닫히지 않은 메시 — 간섭 여부 모름)')
+            elif iv > 0.01: v = '⚠ 간섭'; warn.append(f'{st} {a}∩{b} = {iv:.2f} mm³')
             elif contact: v = '접촉(의도)' if g0 > -0.02 else '⚠'
             elif g1 < need: v = f'⚠ 간격 {g1:.2f} < {need}'; warn.append(f'{st} {a}↔{b} 간격 1 % {g1:.2f} < {need}')
             else: v = '✓'

@@ -87,20 +87,30 @@ def mm_api_case():
     ok = lf.is_volume and a == b and a['loft']['slit_z'] == []
     print(f'[표준 프로그램] 로프트 닫힘 {lf.is_volume}, 파이썬=HTTP {a == b}, 틈 {a["loft"]["slit_z"]}'); return ok
 def bambu_multi_case():
-    """플레이트 2장 → Bambu 프로젝트 한 파일: <plate> 2개, 둘째 플레이트 x +307.2(sample 간격), 색 다시 매김(2번째 플레이트 흰색 → 2번), 왕복 검증 ok."""
-    import mm, trimesh, zipfile, xml.etree.ElementTree as ET
+    """플레이트 2장 → Bambu 프로젝트 한 파일: <plate> 2개, 둘째 플레이트 x +307.2(sample 간격), 색 다시 매김(둘째 플레이트 회색 → 4번),
+    틀 필라멘트 3개 → 4개로 늘림(필라멘트별 키 길이 4·변형별 8·flush 16, 키 집합 그대로), 왕복 검증 ok."""
+    import mm, trimesh, zipfile, re, xml.etree.ElementTree as ET
     from generic3mf import write_generic_3mf
     d = tempfile.mkdtemp(); a, b = os.path.join(d, 'A.3mf'), os.path.join(d, 'B.3mf')
     m1 = trimesh.creation.box([30, 20, 5]); m1.apply_translation([128, 128, 2.5]); m2 = trimesh.creation.box([20, 20, 8]); m2.apply_translation([100, 140, 4])
     write_generic_3mf(a, [{'name': 'a', 'parts': [(m1, '#6d4c41', 'a')]}], material_order=['#6d4c41'])
-    write_generic_3mf(b, [{'name': 'b', 'parts': [(m2, '#f5f5f5', 'b')]}], material_order=['#f5f5f5'])
+    write_generic_3mf(b, [{'name': 'b', 'parts': [(m2, '#9e9e9e', 'b')]}], material_order=['#9e9e9e'])
     out = os.path.join(d, 'AB_bambu.3mf')
-    r = mm.run('bambu_multi', plates=[a, b], out=out, filaments=['#6d4c41', '#f5f5f5', '#263238'], plate_colors={a: ['#6d4c41'], b: ['#f5f5f5']}, names={b: 'B 흰색'})
+    r = mm.run('bambu_multi', plates=[a, b], out=out, filaments=['#6d4c41', '#f5f5f5', '#263238', '#9e9e9e'], plate_colors={a: ['#6d4c41'], b: ['#9e9e9e']}, names={b: 'B 회색'})
     import bambu_project as BP
     back = BP.read_plate(out); xb = [ob['parts'][0][0].bounds[:, 0].mean() for ob in back]; ex = [ob['parts'][0][2] for ob in back]
-    ok = r['ok'] and len(r['plates']) == 2 and r['plates'][1]['name'] == 'B 흰색' and abs(xb[1] - 100 - 307.2) < 1e-3 and abs(xb[0] - 128) < 1e-3 and ex == [1, 2]
-    print(f"[Bambu 여러 플레이트] ok {r['ok']} · 플레이트 {[(p['id'], p['name']) for p in r['plates']]} · x {[round(x, 1) for x in xb]} · 필라멘트 {ex} · 오류 {r['errors']}")
+    import json as _j; zz = zipfile.ZipFile(out); ps = _j.loads(zz.read('Metadata/project_settings.config')); fm = re.findall(r'filament_maps" value="([^"]*)"', zz.read('Metadata/model_settings.config').decode())
+    nf_ok = len(ps['filament_colour']) == 4 and len(ps['nozzle_temperature']) == 8 and len(ps['flush_volumes_matrix']) == 16 and all(len(v.split()) == 4 for v in fm)
+    ok = r['ok'] and len(r['plates']) == 2 and r['plates'][1]['name'] == 'B 회색' and abs(xb[1] - 100 - 307.2) < 1e-3 and abs(xb[0] - 128) < 1e-3 and ex == [1, 4] and nf_ok
+    print(f"[Bambu 여러 플레이트] ok {r['ok']} · 플레이트 {[(p['id'], p['name']) for p in r['plates']]} · x {[round(float(x), 1) for x in xb]} · 필라멘트 {ex} · 필라멘트 4칸 {nf_ok} · 오류 {r['errors']}")
     shutil.rmtree(d, ignore_errors=True); return ok
+def open_mesh_pair_case():
+    """닫히지 않은 메시가 결합 쌍에 있으면 교집합 계산이 실패(−1)한다 → 경고로 잡아야 한다(인정전 램프 v2 초록 띠: STL 왕복으로 열린 메시인데 '접촉(의도)'로 통과했었다)."""
+    a = box(20, 20, 5); b = box(20, 20, 5, (0, 0, 5)); b2 = b.copy(); b2.update_faces(np.arange(len(b2.faces) - 1)); b2.remove_unreferenced_vertices()
+    L, warn = [], []; pipeline.check_assembly({'states': {'조립': {'a': np.eye(4), 'b': np.eye(4)}}, 'pairs': [['a', 'b', {'contact': True}]]}, {'a': a, 'b': b2}, 0.3, L, warn)
+    L2, warn2 = [], []; pipeline.check_assembly({'states': {'조립': {'a': np.eye(4), 'b': np.eye(4)}}, 'pairs': [['a', 'b', {'contact': True}]]}, {'a': a, 'b': b}, 0.3, L2, warn2)
+    ok = any('계산 실패' in w for w in warn) and not warn2
+    print(f"[열린 메시 결합 쌍] 경고 {warn} · 닫힌 메시 경고 {warn2} (기대: 계산 실패 1개, 0개)"); return ok
 def scaffold_case():
     """mm new 틀 → mm make(빌드·파이프라인·Bambu 프로젝트·체크리스트)가 처음부터 통과해야 한다. 끝나면 지운다."""
     import mm
@@ -148,7 +158,7 @@ def agent_case():
         return ok1 and ok2
     finally: shutil.rmtree(proj, ignore_errors=True)
 if __name__ == '__main__':
-    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = efc_group_case() and efc_stl_roundtrip_case() and slit_case() and wall_step_case() and mm_api_case() and bambu_multi_case()
+    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = efc_group_case() and efc_stl_roundtrip_case() and slit_case() and wall_step_case() and mm_api_case() and bambu_multi_case() and open_mesh_pair_case()
     cfg = fixture(os.path.join(tmp, 'good'), 0.3); rc = pipeline.run(cfg); rep = json.load(open(os.path.join(tmp, 'good', 'qc', 'report.json')))
     files = [os.path.join(tmp, 'good', 'qc', f) for f in ('REPORT.md', 'assembly/turntable.gif', 'motion/turntable.gif', 'plate_A/view_iso.png')]
     print('\n[정상 설계] 종료코드', rc, '| 경고', rep['warn'], '| 산출물', [os.path.exists(f) for f in files])

@@ -66,29 +66,41 @@ def section(files, plane, out, xlim=None, ylim=None, title=''):
     import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
     ax_name, _, v = plane.partition('='); ai = 'xyz'.index(ax_name.strip()); v = float(v); keep = [i for i in range(3) if i != ai]
     n = np.zeros(3); n[ai] = 1; o = np.zeros(3); o[ai] = v
-    fig, ax = plt.subplots(figsize=(8, 6)); cols = ['k', 'r', 'g', 'b', 'm', 'c']; segs = {}
+    fig, ax = plt.subplots(figsize=(9, 6)); cols = plt.get_cmap('tab10').colors; segs = {}
     for k, (nm, m) in enumerate(_meshes(files).items()):
         s = m.section(plane_origin=o, plane_normal=n)
         if s is None: segs[nm] = 0; continue
+        c = cols[k % 10]
         for j, e in enumerate(s.entities):
-            p = s.vertices[e.points]; ax.plot(p[:, keep[0]], p[:, keep[1]], cols[k % 6] + '-', lw=1.2, label=nm if j == 0 else None)
+            p = s.vertices[e.points]; ax.plot(p[:, keep[0]], p[:, keep[1]], '-', color=c, lw=1.2, label=nm if j == 0 else None)
+            if len(p) > 2 and np.allclose(p[0], p[-1]): ax.fill(p[:, keep[0]], p[:, keep[1]], color=c, alpha=0.25, lw=0)   # 닫힌 단면은 칠해서 재질 구분
         segs[nm] = len(s.entities)
     if xlim: ax.set_xlim(*xlim)
     if ylim: ax.set_ylim(*ylim)
-    ax.set_aspect('equal'); ax.grid(True, alpha=.3); ax.legend(); ax.set_xlabel('xyz'[keep[0]]); ax.set_ylabel('xyz'[keep[1]]); ax.set_title(title or plane)
+    ax.set_aspect('equal'); ax.grid(True, alpha=.3); ax.legend(loc='upper left', bbox_to_anchor=(1.01, 1.0), fontsize=8)   # 범례는 그림 밖(단면을 가리지 않게)
+    ax.set_xlabel('xyz'[keep[0]]); ax.set_ylabel('xyz'[keep[1]]); ax.set_title(title or plane)
     os.makedirs(os.path.dirname(_abs(out)) or '.', exist_ok=True); fig.savefig(_abs(out), dpi=90, bbox_inches='tight'); plt.close(fig)
     return {'png': _abs(out), 'loops': segs}
 @command('crop', '메시를 상자로 잘라 STL 저장(클로즈업 렌더·비교용). flip_x=true 면 x축 180° 뒤집기(뒤집어 출력한 뚜껑을 조립 방향으로), 결과를 offset 위치로 옮김',
          {'file': {'type': 'string'}, 'box': {'type': 'array', 'items': {'type': 'number'}, 'description': '[x0,y0,z0,x1,y1,z1]'}, 'out': {'type': 'string'},
-          'flip_x': {'type': 'boolean', 'default': False}, 'offset': {'type': 'array', 'items': {'type': 'number'}, 'default': [0, 0, 0]}})
-def crop(file, box, out, flip_x=False, offset=(0, 0, 0)):
+          'flip_x': {'type': 'boolean', 'default': False}, 'offset': {'type': 'array', 'items': {'type': 'number'}, 'default': [0, 0, 0]},
+          'keep_position': {'type': 'boolean', 'default': False, 'description': 'true 면 잘라낸 조각을 원래 좌표에 둔다(여러 파트를 같은 상자로 잘라 함께 렌더)'}})
+def crop(file, box, out, flip_x=False, offset=(0, 0, 0), keep_position=False):
     import numpy as np, trimesh
     from trimesh.transformations import rotation_matrix
     (n, m), = load_any(file).items() if len(load_any(file)) == 1 else [(k, v) for k, v in load_any(file).items()][:1]
     lo, hi = np.array(box[:3], float), np.array(box[3:], float); bx = trimesh.creation.box(extents=hi - lo); bx.apply_translation((lo + hi) / 2)
-    c = trimesh.boolean.intersection([m, bx], engine='manifold')
+    if m.is_volume: c = trimesh.boolean.intersection([m, bx], engine='manifold')
+    else:                                                                              # 닫히지 않은 메시: 평면 6개로 잘라 보기용 조각(불리언 불가 — is_volume False 로 보고)
+        c = m.copy()
+        for ax in range(3):
+            for sgn, v in ((1, lo[ax]), (-1, hi[ax])):
+                nrm = np.zeros(3); nrm[ax] = sgn; o = np.zeros(3); o[ax] = v
+                c = c.slice_plane(o, nrm) if len(c.faces) else c
+    if len(c.faces) == 0: return {'stl': None, 'faces': 0, 'bounds': None, 'is_volume': False}      # 상자 밖 파트
     if flip_x: c.apply_transform(rotation_matrix(np.pi, [1, 0, 0]))
-    c.apply_translation(-c.bounds[0] + np.asarray(offset, float)); os.makedirs(os.path.dirname(_abs(out)) or '.', exist_ok=True); c.export(_abs(out))
+    if not keep_position: c.apply_translation(-c.bounds[0] + np.asarray(offset, float))
+    os.makedirs(os.path.dirname(_abs(out)) or '.', exist_ok=True); c.export(_abs(out))
     return {'stl': _abs(out), 'faces': len(c.faces), 'bounds': c.bounds.round(2).tolist(), 'is_volume': bool(c.is_volume)}
 @command('wallscan', '바깥 벽 단차 검사(출력물 가로줄): 파트 중심에서 n_dir 방향으로 바깥 벽을 z 0.02 간격으로 재서 0.02~0.3 mm 턱이 갑자기 생기는 높이·위치를 보고',
          {'files': {'type': 'array', 'items': {'type': 'string'}}, 'z_range': {'type': 'array', 'items': {'type': 'number'}, 'default': None}, 'n_dir': {'type': 'integer', 'default': 48}})
