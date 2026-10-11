@@ -1,0 +1,73 @@
+name: freecad-run
+# FreeCAD(리눅스 AppImage, freecadcmd 헤드리스)로 `*/freecad/*.py` 스크립트를 돌려 STEP·STL 을 만들고, 결과를 같은 브랜치에 커밋해 돌려준다.
+# 이 세션 컨테이너는 FreeCAD 설치가 막혀 있어(Ubuntu 24.04 저장소에 없음, GitHub 다운로드 차단) Actions 러너에서 돈다.
+# 스크립트 규약: 환경변수 FC_OUT(출력 폴더)에 결과를 쓴다. 결과 폴더 = 스크립트 폴더(freecad/) 옆 freecad_out/<스크립트 이름>/ (+ log.txt, status.json).
+on:
+  push:
+    paths:
+      - '작업중/**/freecad/*.py'
+      - '작업완료/**/freecad/*.py'
+      - 'tools/freecad/*.py'
+      - '.github/workflows/freecad-run.yml'
+  workflow_dispatch:
+    inputs:
+      scripts:
+        description: '돌릴 스크립트 glob(공백 구분)'
+        default: 'tools/freecad/*.py'
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0, ref: '${{ github.ref_name }}' }
+      - name: FreeCAD 받기(최신 릴리스 AppImage → 풀기)
+        run: |
+          sudo apt-get update -q && sudo apt-get install -y -q libgl1 libegl1 libglu1-mesa libxkbcommon0 libfontconfig1 libdbus-1-3 || true
+          gh release download -R FreeCAD/FreeCAD -p '*Linux-x86_64*.AppImage' -D fc_dl
+          ls -la fc_dl
+          APP=$(ls fc_dl/*.AppImage | head -1); chmod +x "$APP"
+          (cd fc_dl && "./$(basename "$APP")" --appimage-extract >/dev/null)
+          FC=$(find fc_dl/squashfs-root -type f \( -name freecadcmd -o -name FreeCADCmd \) | head -1)
+          echo "FC=$PWD/$FC" >> "$GITHUB_ENV"; echo "FreeCAD: $FC ($(basename "$APP"))"
+      - name: 돌릴 스크립트 고르기
+        run: |
+          PAT='^(작업중|작업완료)/.*/freecad/[^/]*\.py$|^tools/freecad/[^/]*\.py$'
+          if [ -n "${{ github.event.inputs.scripts }}" ]; then
+            LIST=$(ls ${{ github.event.inputs.scripts }} 2>/dev/null)
+          elif [ "${{ github.event.before }}" != "0000000000000000000000000000000000000000" ] && git cat-file -e "${{ github.event.before }}" 2>/dev/null; then
+            LIST=$(git -c core.quotepath=off diff --name-only --diff-filter=AM "${{ github.event.before }}" "${{ github.sha }}" | grep -E "$PAT" || true)
+            git -c core.quotepath=off diff --name-only "${{ github.event.before }}" "${{ github.sha }}" | grep -q '^\.github/workflows/freecad-run.yml$' && LIST=$(ls tools/freecad/*.py)
+          else
+            LIST=$(git -c core.quotepath=off ls-files | grep -E "$PAT" || true)
+          fi
+          echo "$LIST" | grep . > fc_list.txt || true; echo "돌릴 스크립트:"; cat fc_list.txt
+      - name: freecadcmd 로 실행
+        run: |
+          echo "## freecad-run" >> "$GITHUB_STEP_SUMMARY"; echo "FreeCAD: \`$FC\`" >> "$GITHUB_STEP_SUMMARY"
+          FAIL=0
+          while read -r S; do
+            [ -z "$S" ] && continue
+            OUT="$(dirname "$(dirname "$S")")/freecad_out/$(basename "$S" .py)"; rm -rf "$OUT"; mkdir -p "$OUT"
+            set +e; FC_OUT="$PWD/$OUT" timeout 600 "$FC" "$S" > "$OUT/log.txt" 2>&1; RC=$?; set -e
+            grep -qE 'Traceback|Exception|Error:' "$OUT/log.txt" && [ $RC -eq 0 ] && RC=99
+            printf '{"script": "%s", "rc": %d, "freecad": "%s"}\n' "$S" $RC "$(basename "$FC")" > "$OUT/status.json"
+            echo "- \`$S\` → \`$OUT\` rc=$RC: $(ls "$OUT" | tr '\n' ' ')" >> "$GITHUB_STEP_SUMMARY"
+            [ $RC -ne 0 ] && FAIL=1 && tail -30 "$OUT/log.txt"
+          done < fc_list.txt
+          echo "FAIL=$FAIL" >> "$GITHUB_ENV"
+      - name: 결과를 브랜치에 커밋
+        if: always()
+        run: |
+          git config user.name "freecad-run[bot]"; git config user.email "actions@users.noreply.github.com"
+          git add -A -- '*/freecad_out/*' 'tools/freecad_out/*' 2>/dev/null || true
+          git diff --cached --quiet && { echo "커밋할 결과 없음"; exit 0; }
+          git commit -q -m "freecad-run: FreeCAD 결과 (${GITHUB_SHA::7})"
+          for i in 1 2 3; do git pull -q --rebase origin "${{ github.ref_name }}" && git push -q origin "HEAD:${{ github.ref_name }}" && break; sleep 5; done
+      - name: 실패 표시
+        if: env.FAIL == '1'
+        run: exit 1
