@@ -38,7 +38,7 @@ def _meshes(specs):
 @command('doctor', '환경 점검: 파이썬 의존·Chromium·렌더러·main 동기화 상태', {})
 def doctor():
     r = {}
-    for mod in ['trimesh', 'shapely', 'manifold3d', 'lib3mf', 'playwright', 'fast_simplification']:
+    for mod in ['trimesh', 'shapely', 'manifold3d', 'lib3mf', 'playwright', 'fast_simplification', 'build123d']:
         try: __import__(mod); r[mod] = 'ok'
         except Exception as e: r[mod] = f'없음: {e}'
     r['chromium'] = os.path.exists('/opt/pw-browsers/chromium')

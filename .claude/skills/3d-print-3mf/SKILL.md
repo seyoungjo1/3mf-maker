@@ -23,8 +23,8 @@ description: 이 저장소(3mf-maker)에서 3D 프린팅 모델을 설계·검�
 
 ## 2. 모델링 방법
 - **장식·반복 부재가 많은 모델(건축·램프·피규어)은 `references/studies/detail-design-method.md` 절차로 짠다**: 요소 목록(BOM) → 스케일·최소치(과장 목록) → 부재 라이브러리(부재마다 매개변수 함수) → 배열 → 색=파트 분할 → 표준 조인트·쿠폰 → 뼈대에 부재 자리 → 오버레이 비교 → 요소 달성률. 상자 유니온만으로 디테일을 흉내 내지 않는다. **1)~5) 표를 먼저 사용자에게 보여 검사받은 뒤 모델링한다.**
-- 매개변수 치수를 먼저 표로 적고(결합 치수는 상대 파트에서 측정), 2D 윤곽(shapely) → 압출/로프트(trimesh) 또는 build123d(필렛·글자·STEP). 불리언은 manifold3d.
-- **FreeCAD(B-rep 필렛·챔퍼·STEP)가 필요하면 Actions `freecad-run`**: 이 컨테이너엔 FreeCAD 를 못 깐다(24.04 저장소에 없음·GitHub 다운로드 차단). `<프로젝트>/freecad/<이름>.py`(FreeCAD 파이썬, 출력은 환경변수 `FC_OUT` 폴더)를 push 하면 러너가 FreeCAD 1.1.x `freecadcmd` 로 돌려 `<프로젝트>/freecad_out/<이름>/`(STEP·STL·log.txt·status.json)을 같은 브랜치에 커밋한다(1~2분) → `git pull` 후 STL 로 QC·렌더·3MF. 예시 `tools/freecad/example_fillet_box.py`. FreeCAD MCP(GUI RPC)는 클라우드 세션에서 못 쓴다.
+- 매개변수 치수를 먼저 표로 적고(결합 치수는 상대 파트에서 측정), 2D 윤곽(shapely) → 압출/로프트(trimesh) 또는 **build123d**(필렛·챔퍼·shell·글자·STEP — FreeCAD 와 같은 OpenCascade 커널, 이 컨테이너에 설치됨, 몇 초). build123d 형상은 `tools/b3d.py` 의 `to_trimesh(part)`(닫힌 메시, 편차 0.02)·`save(part, stem)`(STEP+STL)로 메시로 바꿔 EFC·QC·파이프라인에 넘긴다. 불리언은 manifold3d.
+- **FreeCAD 자체(사용자가 열 `.FCStd`, FreeCAD 전용 기능)가 필요할 때만 Actions `freecad-run`** — 곡면 형상은 build123d 로 충분: 이 컨테이너엔 FreeCAD 를 못 깐다(24.04 저장소에 없음·GitHub 다운로드 차단). `<프로젝트>/freecad/<이름>.py`(FreeCAD 파이썬, 출력은 환경변수 `FC_OUT` 폴더)를 push 하면 러너가 FreeCAD 1.1.x `freecadcmd` 로 돌려 `<프로젝트>/freecad_out/<이름>/`(STEP·STL·log.txt·status.json)을 같은 브랜치에 커밋한다(1~2분) → `git pull` 후 STL 로 QC·렌더·3MF. 예시 `tools/freecad/example_fillet_box.py`. FreeCAD MCP(GUI RPC)는 클라우드 세션에서 못 쓴다.
 - 필렛·챔퍼는 마지막에, 가능하면 2D에서. 두께 보강은 채움 솔리드 유니온(기존 면을 깎지 않음).
 - 3MF 정점은 XML 직접 파싱(`tools/load3mf.py`, p:path 지원) → `trimesh.Trimesh(process=False)`. STL 왕복·정점 병합 금지.
 - 스냅·경첩·손잡이 같은 기구는 설계 전에 `references/snapfit_beam.md`의 식으로 힘·변형률을 먼저 맞춘다(암 두께·길이 결정).

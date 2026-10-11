@@ -101,6 +101,11 @@ def bambu_multi_case():
     ok = r['ok'] and len(r['plates']) == 2 and r['plates'][1]['name'] == 'B 흰색' and abs(xb[1] - 100 - 307.2) < 1e-3 and abs(xb[0] - 128) < 1e-3 and ex == [1, 2]
     print(f"[Bambu 여러 플레이트] ok {r['ok']} · 플레이트 {[(p['id'], p['name']) for p in r['plates']]} · x {[round(x, 1) for x in xb]} · 필라멘트 {ex} · 오류 {r['errors']}")
     shutil.rmtree(d, ignore_errors=True); return ok
+def b3d_case():
+    from b3d import example_fillet_box, to_trimesh
+    p = example_fillet_box(); m = to_trimesh(p); nb = len(m.split(only_watertight=False)); err = abs(m.volume - p.volume) / p.volume
+    print(f'[build123d] B-rep 유효 {p.is_valid} · 메시 닫힘 {m.is_watertight} · 조각 {nb} · 부피 오차 {err * 100:.3f} % · 크기 {np.round(m.extents, 3).tolist()} (기대 True, True, 1, <0.1 %, [40, 30, 15])')
+    return p.is_valid and m.is_watertight and nb == 1 and err < 1e-3 and np.allclose(m.extents, [40, 30, 15], atol=1e-3)
 def scaffold_case():
     """mm new 틀 → mm make(빌드·파이프라인·Bambu 프로젝트·체크리스트)가 처음부터 통과해야 한다. 끝나면 지운다."""
     import mm
@@ -148,7 +153,7 @@ def agent_case():
         return ok1 and ok2
     finally: shutil.rmtree(proj, ignore_errors=True)
 if __name__ == '__main__':
-    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = efc_group_case() and efc_stl_roundtrip_case() and slit_case() and wall_step_case() and mm_api_case() and bambu_multi_case()
+    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = efc_group_case() and efc_stl_roundtrip_case() and slit_case() and wall_step_case() and mm_api_case() and bambu_multi_case() and b3d_case()
     cfg = fixture(os.path.join(tmp, 'good'), 0.3); rc = pipeline.run(cfg); rep = json.load(open(os.path.join(tmp, 'good', 'qc', 'report.json')))
     files = [os.path.join(tmp, 'good', 'qc', f) for f in ('REPORT.md', 'assembly/turntable.gif', 'motion/turntable.gif', 'plate_A/view_iso.png')]
     print('\n[정상 설계] 종료코드', rc, '| 경고', rep['warn'], '| 산출물', [os.path.exists(f) for f in files])

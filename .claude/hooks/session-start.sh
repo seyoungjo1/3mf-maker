@@ -24,7 +24,7 @@ fi
 
 # 2) 클라우드: 파이썬 의존 설치
 if [ "${CLAUDE_CODE_REMOTE:-}" = "true" ]; then
-  if ! python3 -c "import trimesh, shapely, rtree, manifold3d, mapbox_earcut, lib3mf, matplotlib, scipy, networkx, fast_simplification, PIL, playwright" 2>/dev/null; then
+  if ! python3 -c "import trimesh, shapely, rtree, manifold3d, mapbox_earcut, lib3mf, matplotlib, scipy, networkx, fast_simplification, PIL, playwright, build123d" 2>/dev/null; then
     export PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
     python3 -m pip install --quiet --disable-pip-version-check -r requirements.txt >/dev/null 2>&1 && echo "파이썬 의존 설치 완료" || echo "⚠ 파이썬 의존 설치 실패 — 'pip install -r requirements.txt' 확인"
   else

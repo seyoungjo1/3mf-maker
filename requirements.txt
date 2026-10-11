@@ -13,3 +13,4 @@ fast-simplification
 pillow
 playwright
 anthropic
+build123d   # B-rep(OpenCascade) 필렛·챔퍼·shell·STEP — tools/b3d.py
