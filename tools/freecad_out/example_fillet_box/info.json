@@ -1,0 +1,13 @@
+{
+ "freecad": "1.1.4",
+ "valid": true,
+ "volume_mm3": 17315.81,
+ "bbox_mm": [
+  40.0,
+  30.0,
+  15.0
+ ],
+ "faces": 19,
+ "mesh_triangles": 504,
+ "mesh_solid": true
+}
