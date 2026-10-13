@@ -1,0 +1,43 @@
+{
+ "name": "racket-grip-case",
+ "build": [
+  "scripts/build_v2_tiles.py"
+ ],
+ "out": "qc/v2_tiles",
+ "parts_pkl": "parts.pkl",
+ "assembly_parts_pkl": "parts_nominal.pkl",
+ "plates": [
+  "models/racket-grip-case_A.3mf"
+ ],
+ "assembly": "scripts/assembly_v2_tiles.py",
+ "colors": {
+  "fabric": "#ffb300",
+  "cap": "#37474f",
+  "w_fabric": "#ffb300",
+  "handle": "#8d6e63",
+  "band_top_nat": "#ff8f00",
+  "probe": "#4fc3f7"
+ },
+ "qc": {
+  "efc": 0.15,
+  "max_bridge": 7,
+  "min_wall": 1.2,
+  "single_wall": []
+ },
+ "support_zones": [],
+ "accepted": [
+  {
+   "part": "fabric",
+   "flag": "얇은 살",
+   "max": 30000,
+   "desc": "적층섬유 막: 타일 사이를 잇는 0.4 mm(2층) 막이 의도된 휨 부재(변형률 3.2~3.9 %, 끝까지 조인 위 띠 근처 4.4 %)"
+  }
+ ],
+ "min_gap": 0.3,
+ "frames": 24,
+ "bambu": {
+  "enabled": true,
+  "settings": {}
+ },
+ "inputs": []
+}

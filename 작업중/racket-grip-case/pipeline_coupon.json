@@ -1,0 +1,47 @@
+{
+ "name": "racket-grip-case coupon",
+ "build": [
+  "scripts/coupon.py"
+ ],
+ "out": "qc/coupon",
+ "parts_pkl": "parts_coupon.pkl",
+ "assembly_parts_pkl": "parts_coupon_nominal.pkl",
+ "plates": [
+  "models/racket-grip-case_coupon.3mf"
+ ],
+ "assembly": "scripts/assembly_coupon.py",
+ "colors": {
+  "coupon_A": "#37474f",
+  "coupon_B": "#ffb300",
+  "jA": "#37474f",
+  "jB": "#ffb300"
+ },
+ "qc": {
+  "efc": 0.15,
+  "max_bridge": 7,
+  "min_wall": 1.2,
+  "single_wall": []
+ },
+ "support_zones": [],
+ "accepted": [
+  {
+   "part": "coupon_A",
+   "flag": "조각",
+   "max": 13,
+   "desc": "적층섬유: A 비늘 13개가 각각 따로 찍히고 B 와 맞물림(의도된 다중 조각)"
+  },
+  {
+   "part": "coupon_B",
+   "flag": "조각",
+   "max": 12,
+   "desc": "적층섬유: B 비늘 12개(의도된 다중 조각)"
+  }
+ ],
+ "min_gap": 0.38,
+ "frames": 24,
+ "bambu": {
+  "enabled": true,
+  "settings": {}
+ },
+ "inputs": []
+}

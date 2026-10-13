@@ -9,7 +9,7 @@
 import os, sys, math, pickle
 import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
-import build as B
+import build_v1_links as B
 from trimesh.transformations import translation_matrix as T
 
 def define(parts):

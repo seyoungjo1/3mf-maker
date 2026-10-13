@@ -7,7 +7,7 @@
 import os, sys, pickle
 import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
-import build as B
+import build_v2_tiles as B
 
 def define(parts):
     I = np.eye(4); P = B.P
