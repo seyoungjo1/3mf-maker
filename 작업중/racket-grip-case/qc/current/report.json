@@ -1,0 +1,330 @@
+{
+ "warn": [],
+ "info": [
+  "links_A: 조각 88개로 분리됨 → 허용(적층섬유: A 링크 88개가 각각 따로 찍히고 B 와 맞물린다(의도된 다중 조각, 링크끼리 틈 0.4))",
+  "links_B: 조각 96개로 분리됨 → 허용(적층섬유: B 링크 96개(의도된 다중 조각))",
+  "band_bottom: 바깥 벽 단차 0.02~0.3 mm 1개 높이 (z, 방향 수, 최대 mm): [(1.79, 5, 0.287)] — 출력물에 가로줄 → 허용(띠 위 B 기둥에서 팔(브리지) 밑면이 시작하는 z 1.8 형상 경계 — 벽 속 틈(slits) 아님, band_top 과 같은 형상(거울))"
+ ],
+ "qc": {
+  "links_A": {
+   "name": "links_A",
+   "faces": 18304,
+   "vertices": 8448,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 88,
+   "size_mm": [
+    107.1,
+    156.1,
+    4.6
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 9.37,
+   "weight_g_solid": 11.6,
+   "bed_contact_mm2": 4227.5,
+   "first_layer_mm2": 4227.5,
+   "footprint_hull_mm2": 16622.3,
+   "aspect_h_over_w": 0.04,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 2640.4,
+   "bridge_max_span": 6.0,
+   "bridge_top": [
+    [
+     3.71,
+     2640.4,
+     6.0
+    ]
+   ],
+   "wall_steps": [],
+   "flags": [
+    "조각 88개로 분리됨"
+   ]
+  },
+  "links_B": {
+   "name": "links_B",
+   "faces": 18672,
+   "vertices": 9528,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 96,
+   "size_mm": [
+    110.1,
+    149.3,
+    2.8
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 6.24,
+   "weight_g_solid": 7.7,
+   "bed_contact_mm2": 1733.3,
+   "first_layer_mm2": 1733.3,
+   "footprint_hull_mm2": 16387.0,
+   "aspect_h_over_w": 0.03,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 2541.1,
+   "bridge_max_span": 6.1,
+   "bridge_top": [
+    [
+     1.91,
+     2541.1,
+     6.1
+    ]
+   ],
+   "wall_steps": [],
+   "flags": [
+    "조각 96개로 분리됨"
+   ]
+  },
+  "band_top": {
+   "name": "band_top",
+   "faces": 880,
+   "vertices": 440,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    125.87,
+    14.5,
+    4.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 0.81,
+   "weight_g_solid": 1.0,
+   "bed_contact_mm2": 575.3,
+   "first_layer_mm2": 575.3,
+   "footprint_hull_mm2": 1360.4,
+   "aspect_h_over_w": 0.28,
+   "thin_area_mm2": 0.3,
+   "thin_at_z": 0.3,
+   "thin_bounds": [
+    2.8,
+    169.0,
+    7.8,
+    169.1
+   ],
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 92.0,
+   "bridge_max_span": 6.8,
+   "bridge_top": [
+    [
+     3.11,
+     61.5,
+     6.8
+    ],
+    [
+     1.91,
+     30.5,
+     6.1
+    ]
+   ],
+   "wall_steps": [],
+   "flags": []
+  },
+  "band_bottom": {
+   "name": "band_bottom",
+   "faces": 744,
+   "vertices": 372,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    129.41,
+    14.5,
+    4.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 0.81,
+   "weight_g_solid": 1.0,
+   "bed_contact_mm2": 597.2,
+   "first_layer_mm2": 597.2,
+   "footprint_hull_mm2": 1412.9,
+   "aspect_h_over_w": 0.28,
+   "thin_area_mm2": 0.3,
+   "thin_at_z": 0.92,
+   "thin_bounds": [
+    2.8,
+    -2.5,
+    7.8,
+    -2.4
+   ],
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 92.0,
+   "bridge_max_span": 6.8,
+   "bridge_top": [
+    [
+     3.11,
+     61.5,
+     6.8
+    ],
+    [
+     1.91,
+     30.5,
+     6.1
+    ]
+   ],
+   "wall_steps": [
+    [
+     1.79,
+     5,
+     0.287,
+     [
+      [
+       45,
+       64.3,
+       1.0
+      ],
+      [
+       52,
+       64.3,
+       1.0
+      ],
+      [
+       60,
+       64.4,
+       1.0
+      ],
+      [
+       68,
+       64.4,
+       1.0
+      ],
+      [
+       75,
+       64.5,
+       1.0
+      ]
+     ]
+    ]
+   ],
+   "flags": [
+    "바깥 벽 단차 0.02~0.3 mm 1개 높이 (z, 방향 수, 최대 mm): [(1.79, 5, 0.287)] — 출력물에 가로줄"
+   ]
+  },
+  "cap": {
+   "name": "cap",
+   "faces": 3506,
+   "vertices": 1755,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    37.12,
+    37.12,
+    34.4
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 7.56,
+   "weight_g_solid": 9.4,
+   "bed_contact_mm2": 1081.9,
+   "first_layer_mm2": 1081.9,
+   "footprint_hull_mm2": 1081.9,
+   "aspect_h_over_w": 0.93,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  }
+ },
+ "stages": {
+  "qc": {
+   "links_A": {
+    "flags": [
+     "ℹ 조각 허용: 적층섬유: A 링크 88개가 각각 따로 찍히고 B 와 맞물린다(의도된 다중 조각, 링크끼리 틈 0.4)"
+    ],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 88
+   },
+   "links_B": {
+    "flags": [
+     "ℹ 조각 허용: 적층섬유: B 링크 96개(의도된 다중 조각)"
+    ],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 96
+   },
+   "band_top": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "band_bottom": {
+    "flags": [
+     "ℹ 벽 단차 허용: 띠 위 B 기둥에서 팔(브리지) 밑면이 시작하는 z 1.8 형상 경계 — 벽 속 틈(slits) 아님, band_top 과 같은 형상(거울)"
+    ],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "cap": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   }
+  },
+  "plates": [
+   {
+    "file": "models/racket-grip-case_A.3mf",
+    "strict_warnings": 0,
+    "collisions": 0,
+    "in_bed": true,
+    "triangles": 42106
+   }
+  ],
+  "assembly": {
+   "states": [
+    "펼침(출력)",
+    "감음(조립)",
+    "래칫 물림"
+   ],
+   "pairs": 15,
+   "sweeps": [
+    "링크 꺾임(베드 면 안쪽으로 감김)"
+   ],
+   "warnings": 0
+  },
+  "renders": {
+   "qc/current/plate_racket-grip-case_A": "plate",
+   "qc/current/assembly": "assembly",
+   "qc/current/motion": "motion"
+  },
+  "efc": {
+   "qc_efc": 0.15,
+   "nominal_pkl": "parts_nominal.pkl"
+  },
+  "support_zones": []
+ },
+ "bambu": {
+  "models/racket-grip-case_A_bambu.3mf": {
+   "ok": true,
+   "errors": []
+  }
+ }
+}

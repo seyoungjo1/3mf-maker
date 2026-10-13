@@ -1,0 +1,62 @@
+{
+ "name": "racket-grip-case",
+ "build": [
+  "scripts/build.py"
+ ],
+ "out": "qc/current",
+ "parts_pkl": "parts.pkl",
+ "assembly_parts_pkl": "parts_nominal.pkl",
+ "plates": [
+  "models/racket-grip-case_A.3mf"
+ ],
+ "assembly": "scripts/assembly.py",
+ "colors": {
+  "links_A": "#37474f",
+  "links_B": "#ffb300",
+  "band_top": "#ff8f00",
+  "band_bottom": "#ff8f00",
+  "cap": "#78909c",
+  "w_links_A": "#37474f",
+  "w_links_B": "#ffb300",
+  "w_band_top": "#ff8f00",
+  "w_band_bottom": "#ff8f00",
+  "handle": "#8d6e63",
+  "jA": "#37474f",
+  "jB": "#ffb300",
+  "probe": "#4fc3f7"
+ },
+ "qc": {
+  "efc": 0.15,
+  "max_bridge": 7,
+  "min_wall": 1.2,
+  "single_wall": []
+ },
+ "support_zones": [],
+ "accepted": [
+  {
+   "part": "links_A",
+   "flag": "조각",
+   "max": 88,
+   "desc": "적층섬유: A 링크 88개가 각각 따로 찍히고 B 와 맞물린다(의도된 다중 조각, 링크끼리 틈 0.4)"
+  },
+  {
+   "part": "links_B",
+   "flag": "조각",
+   "max": 96,
+   "desc": "적층섬유: B 링크 96개(의도된 다중 조각)"
+  },
+  {
+   "part": "band_bottom",
+   "flag": "벽 단차",
+   "max": 1000000000.0,
+   "desc": "띠 위 B 기둥에서 팔(브리지) 밑면이 시작하는 z 1.8 형상 경계 — 벽 속 틈(slits) 아님, band_top 과 같은 형상(거울)"
+  }
+ ],
+ "min_gap": 0.4,
+ "frames": 24,
+ "bambu": {
+  "enabled": true,
+  "settings": {}
+ },
+ "inputs": []
+}
