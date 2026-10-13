@@ -11,18 +11,11 @@
  ],
  "assembly": "scripts/assembly.py",
  "colors": {
-  "links_A": "#37474f",
-  "links_B": "#ffb300",
-  "band_top": "#ff8f00",
-  "band_bottom": "#ff8f00",
-  "cap": "#78909c",
-  "w_links_A": "#37474f",
-  "w_links_B": "#ffb300",
-  "w_band_top": "#ff8f00",
-  "w_band_bottom": "#ff8f00",
+  "fabric": "#ffb300",
+  "cap": "#37474f",
+  "w_fabric": "#ffb300",
   "handle": "#8d6e63",
-  "jA": "#37474f",
-  "jB": "#ffb300",
+  "band_top_nat": "#ff8f00",
   "probe": "#4fc3f7"
  },
  "qc": {
@@ -34,25 +27,13 @@
  "support_zones": [],
  "accepted": [
   {
-   "part": "links_A",
-   "flag": "조각",
-   "max": 88,
-   "desc": "적층섬유: A 링크 88개가 각각 따로 찍히고 B 와 맞물린다(의도된 다중 조각, 링크끼리 틈 0.4)"
-  },
-  {
-   "part": "links_B",
-   "flag": "조각",
-   "max": 96,
-   "desc": "적층섬유: B 링크 96개(의도된 다중 조각)"
-  },
-  {
-   "part": "band_bottom",
-   "flag": "벽 단차",
-   "max": 1000000000.0,
-   "desc": "띠 위 B 기둥에서 팔(브리지) 밑면이 시작하는 z 1.8 형상 경계 — 벽 속 틈(slits) 아님, band_top 과 같은 형상(거울)"
+   "part": "fabric",
+   "flag": "얇은 살",
+   "max": 30000,
+   "desc": "적층섬유 막: 타일 사이를 잇는 0.4 mm(2층) 막이 의도된 휨 부재(변형률 3.2~3.9 %, 끝까지 조인 위 띠 근처 4.4 %)"
   }
  ],
- "min_gap": 0.4,
+ "min_gap": 0.3,
  "frames": 24,
  "bambu": {
   "enabled": true,
