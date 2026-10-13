@@ -2,7 +2,7 @@
 """3d-print 열쇠고리 프로그램의 미리보기(three.js, 어두운 배경, 격자 베드, flatShading)를 헤드리스로 재현해
 PNG 5장(기본 iso/상부 top/측면 side/밑면 bottom/정면 저각도 front)과 회전 GIF 를 만든다.
 사용: python tools/render_preview.py <file.3mf | a.stl b.stl ...> --out <dir> [--colors name=#hex,...] [--states states.json] [--frames 36]
-  states.json: {"분리": {"lid": [0,0,30]}, "조립": {"lid": [16개 행우선 4x4 행렬]}}  (파트별 평행이동 [dx,dy,dz] 또는 4x4 행렬)  → 상태별 PNG + GIF 에 상태 순환(키캡의 분리/조립-폄/조립-누름과 같은 방식)
+  states.json: {"분리": {"lid": [0,0,30]}, "조립": {"lid": [16개 행우선 4x4 행렬]}}  (파트별 평행이동 [dx,dy,dz] 또는 4x4 행렬; 상태에 없는 파트는 그 상태에서 숨김)  → 상태별 PNG + GIF 에 상태 순환(키캡의 분리/조립-폄/조립-누름과 같은 방식)
 """
 import os, sys, json, argparse, threading, http.server, socketserver, functools, numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
@@ -66,7 +66,7 @@ const meshes={}; const box=new THREE.Box3();
 for(const p of DATA.parts){ const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(p.positions,3)); g.setIndex(p.indices); g.computeVertexNormals();
   const m=new THREE.Mesh(g,new THREE.MeshStandardMaterial({color:p.color,roughness:0.55,metalness:0.05,flatShading:true})); m.userData.base=new THREE.Vector3(0,0,0); scene.add(m); meshes[p.name]=m; box.expandByObject(m); }
 camera.up.set(0,0,1); let c=new THREE.Vector3(), s=100;
-function fit(){ const bb=new THREE.Box3(); for(const m of Object.values(meshes)){ m.updateMatrixWorld(true); bb.expandByObject(m); } c=bb.getCenter(new THREE.Vector3()); s=bb.getSize(new THREE.Vector3()).length(); }
+function fit(){ const bb=new THREE.Box3(); for(const m of Object.values(meshes)){ if(!m.visible) continue; m.updateMatrixWorld(true); bb.expandByObject(m); } if(bb.isEmpty()){ for(const m of Object.values(meshes)) bb.expandByObject(m); } c=bb.getCenter(new THREE.Vector3()); s=bb.getSize(new THREE.Vector3()).length(); }
 window.setView=function(mode,azDeg){ fit(); controls.target.copy(c); grid.visible=mode!=='bottom'; bed.visible=mode!=='bottom';
   if(mode==='top') camera.position.set(c.x,c.y-s*0.001,c.z+s*1.3);
   else if(mode==='side') camera.position.set(c.x,c.y-s*1.3,c.z+s*0.03);
@@ -74,7 +74,7 @@ window.setView=function(mode,azDeg){ fit(); controls.target.copy(c); grid.visibl
   else if(mode==='front') camera.position.set(c.x+s*0.25,c.y-s*1.15,c.z+s*0.22);
   else { const a=(azDeg===undefined?0:azDeg)*Math.PI/180; const r=s*0.9; camera.position.set(c.x+r*Math.sin(a),c.y-r*Math.cos(a),c.z+s*0.8); }
   camera.lookAt(c); controls.update(); renderer.render(scene,camera); };
-window.setState=function(name){ const st=(DATA.states||{})[name]||{}; for(const [n,m] of Object.entries(meshes)){ const d=st[n]; m.matrixAutoUpdate=false; if(Array.isArray(d)&&d.length===16){ m.matrix.set(...d); } else { const t=d||[0,0,0]; m.matrix.makeTranslation(t[0],t[1],t[2]); } } const lb=document.getElementById('label'); lb.textContent=name||''; lb.style.display=name?'block':'none'; };
+window.setState=function(name){ const st=(DATA.states||{})[name]||{}; const any=Object.keys(st).length>0; for(const [n,m] of Object.entries(meshes)){ const d=st[n]; m.visible=!any||d!==undefined; m.matrixAutoUpdate=false; if(Array.isArray(d)&&d.length===16){ m.matrix.set(...d); } else { const t=d||[0,0,0]; m.matrix.makeTranslation(t[0],t[1],t[2]); } } const lb=document.getElementById('label'); lb.textContent=name||''; lb.style.display=name?'block':'none'; };
 document.getElementById('status').textContent=DATA.status||'';
 window.setState(DATA.firstState||''); window.setView('iso',0); window.READY=true;
 </script></body></html>'''

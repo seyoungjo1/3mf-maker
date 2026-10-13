@@ -74,6 +74,13 @@ def wall_step_case():
     sm = loft_rings([(z, sb(-20, -15, 20, 15).buffer(-0.575 * max(0, 1.5 - z))) for z in np.arange(0, 1.51, 0.1)] + [(7.5, sb(-20, -15, 20, 15))])
     a, b = wall_steps(stair)['n_heights'], wall_steps(sm)['n_heights']
     print(f'[벽 단차] 판 계단 {a}개 높이, 로프트 {b}개 (기대 ≥3, 0)'); return a >= 3 and b == 0
+def wall_step_miss_case():
+    """레이가 한 방향에서 하나도 안 맞는 파트(떨어진 기둥 4개 — 적층섬유 링크처럼)에서 wall_steps 가 죽지 않는지(racket-grip-case 에서 IndexError)."""
+    from qc_model import wall_steps
+    posts = trimesh.util.concatenate([box(2, 2, 4, (x, y, 0)) for x in (-11, 9) for y in (-11, 9)])
+    try: n = wall_steps(posts)['n_heights']; ok = (n == 0)
+    except Exception as e: n, ok = repr(e), False
+    print(f'[벽 단차 빈 레이] 떨어진 기둥 4개 → 단차 높이 {n} (기대 0, 예외 없음)'); return ok
 def mm_api_case():
     """표준 프로그램: 파이썬 mm.run 과 HTTP POST /run 결과가 같은지 + 링 로프트(판 쌓기 대신)가 계단·틈 없이 닫히는지."""
     import threading, urllib.request, http.server, mm
@@ -153,7 +160,7 @@ def agent_case():
         return ok1 and ok2
     finally: shutil.rmtree(proj, ignore_errors=True)
 if __name__ == '__main__':
-    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = efc_group_case() and efc_stl_roundtrip_case() and slit_case() and wall_step_case() and mm_api_case() and bambu_multi_case() and b3d_case()
+    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = efc_group_case() and efc_stl_roundtrip_case() and slit_case() and wall_step_case() and wall_step_miss_case() and mm_api_case() and bambu_multi_case() and b3d_case()
     cfg = fixture(os.path.join(tmp, 'good'), 0.3); rc = pipeline.run(cfg); rep = json.load(open(os.path.join(tmp, 'good', 'qc', 'report.json')))
     files = [os.path.join(tmp, 'good', 'qc', f) for f in ('REPORT.md', 'assembly/turntable.gif', 'motion/turntable.gif', 'plate_A/view_iso.png')]
     print('\n[정상 설계] 종료코드', rc, '| 경고', rep['warn'], '| 산출물', [os.path.exists(f) for f in files])

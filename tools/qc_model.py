@@ -60,6 +60,7 @@ def wall_steps(mesh, z_range=None, n_dir=48, step=0.02, max_step=0.3, dz=0.02, m
     for a in np.linspace(0, 2 * np.pi, n_dir, endpoint=False):
         d = np.array([-np.cos(a), -np.sin(a), 0.0]); o = np.column_stack([np.full(len(zs), c[0] + R * np.cos(a)), np.full(len(zs), c[1] + R * np.sin(a)), zs])
         loc, ri, _ = mesh.ray.intersects_location(o, np.tile(d, (len(zs), 1)), multiple_hits=False)
+        if len(ri) == 0: continue                         # 이 방향은 어느 높이에서도 벽에 안 맞음(떨어진 기둥·링크 사이로 지나감)
         r = np.full(len(zs), np.nan); hit = np.full((len(zs), 2), np.nan); r[ri] = np.linalg.norm(loc[:, :2] - c[:2], axis=1); hit[ri] = loc[:, :2]
         dr = np.abs(np.diff(r)); prev = np.r_[np.nan, dr[:-1]]; nxt = np.r_[dr[1:], np.nan]
         for i in np.where((dr > step) & (dr < max_step))[0]:
