@@ -59,11 +59,19 @@ def slits(files):
         g = [x for x in internal_gaps(m) if x[0] == 2]; cl = collections.Counter(round(x[2][2], 1) for x in g)
         out[n] = {'slit_z': sorted(z for z, c in cl.items() if c >= 10), 'rays': len(g)}
     return out
+def _hangul_font(matplotlib):
+    """그림 제목의 한글이 □ 로 깨지지 않게 설치된 한글 글꼴(WenQuanYi Zen Hei·Noto CJK·Nanum)을 matplotlib 기본으로(없으면 그대로)."""
+    from matplotlib import font_manager as fm
+    for path in ['/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc', '/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc', '/usr/share/fonts/truetype/nanum/NanumGothic.ttf']:
+        if os.path.exists(path):
+            fm.fontManager.addfont(path); matplotlib.rcParams['font.family'] = fm.FontProperties(fname=path).get_name(); matplotlib.rcParams['axes.unicode_minus'] = False; return path
+    return None
 @command('section', '단면 그림(PNG) — 평면 x=/y=/z= 값으로 자른 윤곽을 여러 메시 겹쳐 그림, 실측 근거용',
          {'files': {'type': 'array', 'items': {'type': 'string'}}, 'plane': {'type': 'string', 'description': '예 "y=130"'}, 'out': {'type': 'string'},
           'xlim': {'type': 'array', 'items': {'type': 'number'}}, 'ylim': {'type': 'array', 'items': {'type': 'number'}}, 'title': {'type': 'string'}})
 def section(files, plane, out, xlim=None, ylim=None, title=''):
     import numpy as np, matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
+    _hangul_font(matplotlib)
     ax_name, _, v = plane.partition('='); ai = 'xyz'.index(ax_name.strip()); v = float(v); keep = [i for i in range(3) if i != ai]
     n = np.zeros(3); n[ai] = 1; o = np.zeros(3); o[ai] = v
     fig, ax = plt.subplots(figsize=(8, 6)); cols = ['k', 'r', 'g', 'b', 'm', 'c']; segs = {}
