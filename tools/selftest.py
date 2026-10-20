@@ -2,7 +2,7 @@
 """도구 자가검사: 상자+뚜껑(끼움 0.3, 경첩 회전) 가짜 프로젝트를 만들어 pipeline 을 돌리고
 (1) 정상 설계 → 경고 0·GIF/PNG/3MF 생성, (2) 일부러 간섭시킨 설계 → ⚠ 검출 을 확인한다. 사용: python tools/selftest.py"""
 import os, sys, json, time, pickle, shutil, tempfile, numpy as np, trimesh
-HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
+HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE); ROOT = os.path.dirname(HERE)
 from generic3mf import write_generic_3mf; from efc import pre_expand_first_layer; import pipeline
 def box(w, d, h, at=(0, 0, 0)):
     b = trimesh.creation.box(extents=[w, d, h]); b.apply_translation([at[0] + w / 2, at[1] + d / 2, at[2] + h / 2]); return b
@@ -159,8 +159,18 @@ def agent_case():
         print(f"[API 에이전트] 입력 검증 {invalid} · 게이트 {gated} · 턴 {r['turns']} · 최종 ok {r['ok']} · API 인자 {api_ok} · 거절 턴 도구 미실행 {ok2} (프로젝트 생성됐었음 {before})")
         return ok1 and ok2
     finally: shutil.rmtree(proj, ignore_errors=True)
+def svg2d_case():
+    """SVG 로고 → 도형: 실제 샘플(제네시스 날개, 1000×200) 을 폭 100 mm 로 — 크기·조각(날개·방패 3 + 방패 안 글자 7)·가는 부분 판정."""
+    import svg2d
+    g = svg2d.load_svg(os.path.join(ROOT, 'sample', 'genesis_wing_logo.svg'), 100); x0, y0, x1, y1 = g.bounds
+    from shapely.geometry import Polygon
+    parts = list(g.geoms); hole = Polygon(max(parts, key=lambda q: len(q.interiors)).interiors[0]); txt = [q for q in parts if hole.contains(q)]
+    t_txt = svg2d.thin_parts(__import__('shapely').ops.unary_union(txt), 0.8).area
+    ok = abs(x1 - x0 - 100) < 0.01 and abs(y1 - y0 - 20) < 0.1 and len(parts) == 10 and len(txt) == 7 and t_txt > 0.9 * sum(q.area for q in txt)
+    print('\n[SVG 로고] 크기', round(x1 - x0, 2), round(y1 - y0, 2), '조각', len(parts), '글자', len(txt), '글자 중 0.8 미만 비율', round(t_txt / sum(q.area for q in txt), 2), '→', ok); return ok
+
 if __name__ == '__main__':
-    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = efc_group_case() and efc_stl_roundtrip_case() and slit_case() and wall_step_case() and wall_step_miss_case() and mm_api_case() and bambu_multi_case() and b3d_case()
+    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = efc_group_case() and efc_stl_roundtrip_case() and slit_case() and wall_step_case() and wall_step_miss_case() and mm_api_case() and bambu_multi_case() and b3d_case() and svg2d_case()
     cfg = fixture(os.path.join(tmp, 'good'), 0.3); rc = pipeline.run(cfg); rep = json.load(open(os.path.join(tmp, 'good', 'qc', 'report.json')))
     files = [os.path.join(tmp, 'good', 'qc', f) for f in ('REPORT.md', 'assembly/turntable.gif', 'motion/turntable.gif', 'plate_A/view_iso.png')]
     print('\n[정상 설계] 종료코드', rc, '| 경고', rep['warn'], '| 산출물', [os.path.exists(f) for f in files])
