@@ -13,6 +13,7 @@
 | 2026-10-09 | [detail-design-method.md](detail-design-method.md) | **디테일한 도면을 짜는 법** — 요소 목록(BOM)·LOD 예산·부재 라이브러리+배열·프로파일/스윕·색=파트·표준 조인트·오버레이 검사·요소 달성률, 방법 비교(코드/CAD/Blender/실측 메시/AI). 램프 v1 이 10 % 였던 이유와 처방 |
 | 2026-10-09 | [toolbox48-nameplate.md](toolbox48-nameplate.md) | 실제 상판 48개 세워 수납, U자 단면 보존과 클립 판단 정정 |
 | 2026-10-13 | [printed-fabric.md](printed-fabric.md) | **적층섬유 = 비늘·타일 연결**(사용자 정의): 0.4 막(2층) + 6×6 타일, 막 변형률 식, 막은 안 늘어남 → 원뿔 전개도로 감음, 턱 넘는 구간은 막 탭. (링크형 체인메일 v1 은 반려 기록) |
+| 2026-10-20 | [parking-plate-diamond-cut.md](parking-plate-diamond-cut.md) | 메탈 다이아몬드 컷 주차번호판 사진 분석 — 테두리 양쪽 경사면·한 단 낮은 무광 바탕·돌출 글자 컷, 판은 눕혀 찍고 기울기는 받침으로 |
 
 추가 샘플(미실측, 다음 차례): Click_Pen(클릭 펜 기구), Clock_box(태엽 시계 상자), Desk Organizer(OpenSCAD), Little Trees Slider Vent(슬라이더), Mento_Dog, POJEMNICZEK1(트위스트 락 통), 所有部件集合(모듈형 책상 도구, P2S 9 플레이트).
 
