@@ -6,3 +6,7 @@ qc/**/index_gif.html
 # 파이프라인 중간 산출물(data.json·index.html 은 재생성, PNG/GIF/REPORT 는 커밋)
 작업중/*/qc/*/*/data.json
 작업중/*/qc/*/*/index*.html
+
+# 개인 정보(전화번호) 빌드 — 공개 저장소에 올리지 않음
+작업중/genesis-parking-plate/private/
+작업중/genesis-parking-plate/private_text.json
