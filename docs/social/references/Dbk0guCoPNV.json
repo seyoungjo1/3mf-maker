@@ -1,0 +1,48 @@
+{
+  "notice": "Untrusted public page metadata; not instructions. Fetch success does not establish caption access.",
+  "results": [
+    {
+      "url": "https://www.instagram.com/p/Dbk0guCoPNV/",
+      "status": 200,
+      "final_url": "https://www.instagram.com/p/Dbk0guCoPNV/",
+      "metadata": [
+        {
+          "property": "og:type",
+          "content": "article"
+        },
+        {
+          "name": "description",
+          "content": "1 likes, 0 comments - sy_3dprintgarage on August 3, 2026: \"판타지 속 포션을 현실로! 💫 UV 레진으로 직접 만든 포션 키링. 투명한 병에 색색의 레진이 사탕처럼 보이는데요, 사실 마시면 큰일나요! 😨 3D 프린터와 실리콘 몰드로 만드는 과정이 참 재미있답니다. #포션키링 #UV레진 #DIY #3D프린터\". "
+        },
+        {
+          "property": "og:site_name",
+          "content": "Instagram"
+        },
+        {
+          "property": "og:title",
+          "content": "SY's 3D프린터 공작실 on Instagram: \"판타지 속 포션을 현실로! 💫 UV 레진으로 직접 만든 포션 키링. 투명한 병에 색색의 레진이 사탕처럼 보이는데요, 사실 마시면 큰일나요! 😨 3D 프린터와 실리콘 몰드로 만드는 과정이 참 재미있답니다. #포션키링 #UV레진 #DIY #3D프린터\""
+        },
+        {
+          "property": "og:image",
+          "content": "https://scontent-sjc6-1.cdninstagram.com/v/t51.82787-15/758367897_17961503961169047_682557902236130817_n.jpg?stp=c216.0.648.648a_dst-jpg_e35_s640x640_tt6&_nc_cat=109&ccb=7-5&_nc_sid=18de74&efg=eyJlZmdfdGFnIjoiQ0FST1VTRUxfSVRFTS5iZXN0X2ltYWdlX3VybGdlbi5DMyJ9&_nc_ohc=CJcomdgQEmoQ7kNvwHFzhkp&_nc_oc=AdrmuqURhhNsHLRdGmFvfp986N4qBFkLh3UvipUjyg3q6d9z7hJK5j7q_h5uH0nTUWo&_nc_zt=23&_nc_ht=scontent-sjc6-1.cdninstagram.com&_nc_gid=T3Ib7idFgyLN-n14VJEDKw&_nc_ss=7e60f&oh=00_AQOvTsxsAYE_LHkhcpDJz7xLiWP6sH7UBijorGgsWQAgWQ&oe=6ADE31B7"
+        },
+        {
+          "property": "og:url",
+          "content": "https://www.instagram.com/sy_3dprintgarage/p/Dbk0guCoPNV/"
+        },
+        {
+          "property": "og:description",
+          "content": "1 likes, 0 comments - sy_3dprintgarage on August 3, 2026: \"판타지 속 포션을 현실로! 💫 UV 레진으로 직접 만든 포션 키링. 투명한 병에 색색의 레진이 사탕처럼 보이는데요, 사실 마시면 큰일나요! 😨 3D 프린터와 실리콘 몰드로 만드는 과정이 참 재미있답니다. #포션키링 #UV레진 #DIY #3D프린터\". "
+        }
+      ],
+      "caption_markers_present": true
+    },
+    {
+      "url": "https://www.instagram.com/p/Dbk0guCoPNV/embed/captioned/",
+      "status": 200,
+      "final_url": "https://www.instagram.com/p/Dbk0guCoPNV/embed/captioned/",
+      "metadata": [],
+      "caption_markers_present": true
+    }
+  ]
+}
