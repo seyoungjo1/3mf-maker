@@ -2,6 +2,7 @@
 
 | 날짜 | 제목 | 핵심 |
 |---|---|---|
+| 2026-10-21 | [instagram-publishing.md](instagram-publishing.md) | 3MF 캡처와 게시글을 함께 준비하는 인스타그램 운영: Actions + 공식 API, 이미지·글 편집, 중복 방지·토큰 관리 |
 | 2026-10-09 | [design-method.md](design-method.md) | 도면을 짜는 순서와 규칙 전반 — 치수 잡기, 방향, 두께, 공차, 기구(경첩·기어·스냅·나사/인서트·자석), 상자·뚜껑, 시험편, 검증 |
 | 2026-10-09 | [lunchbox-sample.md](lunchbox-sample.md) | 사용자 샘플(MakerWorld Utility Box, Imagn) 실측 — 벽 3 mm 통일, 뚜껑은 뒤집어 45° 챔퍼(0.2/층), 본체 바닥 필렛은 숨김 |
 | 2026-10-09 | [hinge.md](hinge.md) | 핀 경첩·프린트인플레이스 경첩 규칙, `tools/hinge.py` |

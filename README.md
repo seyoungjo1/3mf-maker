@@ -13,6 +13,8 @@
 
 ## 도구와 스킬
 
+- 인스타그램: [게시 운영·API 설정](docs/social/instagram-publishing.md), [캡처·게시글 편집 기준](docs/social/editorial-guide.md). GitHub Actions + 공식 API 방식, 별도 브랜치 `codex/instagram-publishing`에서 준비 중입니다.
+
 - 작업 지침(항상 적용): `.claude/skills/3d-print-3mf/SKILL.md` + `references/` (설계 규칙·스냅/휨 식·보여주기 규격·Bambu 3MF 규칙·출처)
 - 스터디 기록: `.claude/skills/3d-print-3mf/references/studies/` (설계 방법론, 샘플 실측, 경첩, 기어, 교훈). 시험 파트·렌더는 `작업중/_study/`
 - 도구: `tools/` — QC(`qc_model.py`), 렌더·GIF(`render_preview.py`), 스냅/휨 계산(`snapfit.py`, `beam.py`). 사용법 `tools/README.md`

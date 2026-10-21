@@ -1,5 +1,12 @@
 # 3mf-maker
 
+## 인스타그램 운영
+- 게시 자동화는 **GitHub Actions + Instagram 공식 API(Instagram Login 우선)** 를 사용한다. 인스타그램 관련 변경은 `codex/instagram-publishing` 별도 브랜치에서 진행하고, 별도 요청 전에는 main에 병합하지 않는다.
+- **게시글도 결과물의 일부**다. 3MF 캡처만 업로드하지 말고 프로젝트 기록을 읽어 첫 문장·설계 이야기·확인된 특징·상태 표시·해시태그를 함께 준비한다.
+- 운영 지침: `docs/social/instagram-publishing.md`, 게시글·캡처 편집 기준: `docs/social/editorial-guide.md`. 스터디 색인: `.claude/skills/3d-print-3mf/references/studies/README.md`.
+- 기존 모델 검증·사용자 허락 규칙을 유지한다. 렌더를 실제 출력 사진으로 표현하거나 QC만으로 출력 성공을 주장하지 않는다. 설정·스터디 요청은 게시 실행 허락으로 해석하지 않는다.
+- 토큰은 GitHub Secrets에 보관하고 개인정보가 있는 캡처는 공개용으로 별도 준비한다.
+
 3D 프린팅 모델을 설계하고 Bambu Studio용 3MF를 만드는 저장소입니다.
 
 **시작 규칙 (모든 세션)**: 작업 전에 main 최신 내용을 기준으로 시작하고, `.claude/skills/3d-print-3mf/SKILL.md` 와 그 references(design_rules·presentation·bambu_3mf, 주제에 맞는 studies)를 **반드시 먼저 읽는다**. 세션 시작 훅(`.claude/hooks/session-start.sh`)이 main 동기화·의존 설치·렌더러 점검을 하고 스킬 전문을 출력한다. 훅 출력이 보이지 않으면 직접 `git merge origin/main` 후 SKILL.md 를 Read 한다. 렌더(`tools/render_preview.py`) 없이 결과를 보고하지 않는다 — 렌더러가 안 되면 `python tools/render_preview.py --check` 로 원인을 고친다. **모델링·검사·렌더링·3MF 작업은 반드시 `.claude/skills/3d-print-3mf/SKILL.md`의 순서(설계 규칙 → 모델링 → QC → 조립 검증 → 보여주기 → 3MF → 보고)를 따릅니다.**
