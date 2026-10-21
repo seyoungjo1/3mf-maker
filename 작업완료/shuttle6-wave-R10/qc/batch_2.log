@@ -1,0 +1,38 @@
+[pipeline] QC drawer 39624 faces
+[pipeline] QC cap 101580 faces
+[pipeline] QC drawer_coupon 1992 faces
+[pipeline] QC tip_coupon 16476 faces
+# Shuttle6 C R10 / open ID64 / flat horizontal tray / separate cap / rounded detents — 파이프라인 보고
+
+## 1. QC — 출력 방향 파트 (EFC 0.15 반영, 출력물 기준)
+
+| 파트 | 삼각형 | 닫힘 | 조각 | 크기 (mm) | PLA g(통짜) | 바닥 접지 / 첫 층 mm² | 얇은 살 mm² | 오버행(한쪽) mm² | 브리지 mm² (최대 폭) | 판정 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| drawer | 39,624 | O | 1 | 221.89×221.89×32.09 | 92.0 | 5747.0 / 5859.7 | 0.0 | 4487.3 | 0.0 (0.0) | ℹ 서포트: Horizontal lower curved transitions and two detent undersides; tree auto if QC identifies local overhang. Open scoop has no enclosed roof. |
+| cap | 101,580 | O | 1 | 78.6×78.6×10.0 | 60.3 | 3699.3 / 3699.3 | 0.9 | 0.0 | 1317.6 (1.6) | ✓ |
+| drawer_coupon | 1,992 | O | 1 | 74.95×74.95×32.09 | 9.7 | 894.5 / 911.9 | 0.0 | 692.2 | 0.0 (0.0) | ℹ 서포트: Same horizontal flat base and integrated detent undersides. |
+| tip_coupon | 16,476 | O | 1 | 55.01×55.01×32.0 | 20.2 | 236.0 / 240.5 | 0.0 | 175.4 | 0.0 (0.0) | ℹ 서포트: Same flat horizontal base, local transition support only if detected. |
+
+오버행 상위 위치: drawer: z=0.31 219.6 mm² (-5.9, -185.3, 185.3, 5.9); z=0.51 192.3 mm² (-6.2, -185.7, 185.7, 6.2); z=0.71 178.4 mm² (-6.6, -186.0, 186.0, 6.6); z=0.91 170.3 mm² (-6.9, -186.4, 186.4, 6.9) / drawer_coupon: z=0.31 33.9 mm² (-5.9, -38.4, 38.4, 5.9); z=0.51 29.7 mm² (-6.2, -38.8, 38.8, 6.2); z=0.71 27.6 mm² (-6.6, -39.1, 39.1, 6.6); z=0.91 26.3 mm² (-6.9, -39.4, 39.4, 6.9) / tip_coupon: z=0.31 8.8 mm² (-8.7, -15.6, 15.6, 8.7); z=0.51 7.7 mm² (-9.1, -16.0, 16.0, 9.1); z=0.71 7.1 mm² (-9.4, -16.3, 16.3, 9.4); z=0.91 6.8 mm² (-9.7, -16.7, 16.7, 9.7)
+
+브리지 상위 위치(z, mm², 폭): cap: z=0.71 1317.6 mm² 폭 1.6
+
+얇은 살 위치: 
+
+## 2. 플레이트 3MF — 충돌·베드·lib3mf strict
+
+| 플레이트 | 파트 | 범위 x / y (mm) | 충돌 | strict 경고 | 판정 |
+|---|---|---|---|---|---|
+
+## 4. 렌더 (CPU flat-shaded mesh, 5뷰 + 회전 GIF + 작동 GIF)
+
+
+## 5. 판정
+
+- ℹ drawer: 오버행 4487.3 mm² → 서포트(Horizontal lower curved transitions and two detent undersides; tree auto if QC identifies local overhang. Open scoop has no enclosed roof., 허용 18000)
+- ℹ drawer_coupon: 오버행 692.2 mm² → 서포트(Same horizontal flat base and integrated detent undersides., 허용 5000)
+- ℹ tip_coupon: 오버행 175.4 mm² → 서포트(Same flat horizontal base, local transition support only if detected., 허용 2000)
+- ✓ 경고 없음 — 보낼 수 있음
+
+
+REPORT: /workspace/shuttle6-r10-build/작업중/shuttle6-wave-R10/qc/batch_2/REPORT.md

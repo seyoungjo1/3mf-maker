@@ -1,0 +1,27 @@
+{
+ "ok": true,
+ "lines": [
+  "[베드 배치] 실제 회전 경계·브림 이탈·비강체 변환 거절 True",
+  "[스냅 힘/보 일치] Q 한 번 적용 · 처짐/응력/뿌리 모멘트 교차검증 True",
+  "[소켓 없는 렌더] 5뷰×2상태 10, GIF 4, HTML 안전한 로컬 모듈/데이터 True",
+  "[QC 캐시] 동일 메시 재사용, 치수/설정 변경 재검사: 실제 QC 호출 3 (기대3), True",
+  "[검토 단계 게이트] 검토만3MF 해당없음 / 본출력 strict 필수 / 이미지 비실측 사유 필수 True",
+  "[EFC 그룹] 뚜껑 조각 1, 바깥 성장 0.30 mm (기대 1, 0.30), 인레이 부피 변화 0.000",
+  "[EFC 실제 모서리] 단일 조각 1, 그룹 조각 1 (기대 1, 1; 예전 코드 그룹 2)",
+  "[EFC STL 왕복] 닫힘 True, 조각 1, 첫 층 성장 0.41 mm (기대 True, 1, >0)",
+  "[벽 속 틈] 통짜 경고 0, 0.1 틈 경고 1 ['벽 속 수평 틈(<0.4 mm) z=[np.float64(7.8)] (레이 346개) — 출력물 옆면에 줄이 생김'] (기대 0, 1)",
+  "[벽 단차] 판 계단 15개 높이, 로프트 0개 (기대 ≥3, 0)",
+  "[벽 단차 빈 레이] 떨어진 기둥 4개 → 단차 높이 0 (기대 0, 예외 없음)",
+  "[표준 프로그램] Python API/로프트 검사 True; HTTP transport SKIP — sockets denied by sandbox",
+  "[Bambu 검증] 원본 보존 True · 형상 사본 strict 0 · 알 수 없는 메타 거부 True · raw strict 오류 별도 기록 True",
+  "[Bambu 여러 플레이트] ok True · 플레이트 [('1', 'A'), ('2', 'B 흰색')] · x [np.float64(128.0), np.float64(407.2)] · 필라멘트 [1, 2] · 오류 []",
+  "[build123d] SKIP — optional B-rep backend is not installed; mesh workflow tests still run",
+  "[정상 설계] 종료코드 0 | 경고 [] | 산출물 [True, True, True, True]",
+  "[간섭 설계] 종료코드 1 | 경고 ['닫힘(플러그) base∩plug_lid = 236.00 mm³', '닫힘(플러그) base∩plug_lid = 236.00 mm³']",
+  "[빡빡한 끼움 0.1] 종료코드 1 | 경고 ['닫힘(플러그) base↔plug_lid 영역 간격 1 % 0.10 < 0.25']",
+  "[반대 회전 경첩] 종료코드 1 | 경고 ['스윕 경첩: 요구 [0, 120] 안 간섭 각도 [30, 60, 90] (간섭 0 범위 0~0°, 120~120°)']",
+  "[새 도면 틀] make ok True · 경고 [] · Bambu [True] · [?] Skill 호출 [?] SKILL.md+references 전부 읽음 [-] 올라온 파일은 sample/ 복사·단면 실측 그림·스터디 기록 [x] 설계 치수표(결합 치수는 상대 파트에서 측정) [x] QC [x] 조립 검증(실제 좌표에 놓은 교집합·간격·스윕) [x] 렌더 5뷰+GIF 눈으로 확인 [x] EFC 선반영·서포트 위치 명시 [x] 3MF strict 0 [x] 보고",
+  "[API 에이전트] 입력 검증 True · 게이트 True · 턴 5 · 최종 ok True · API 인자 True · 거절 턴 도구 미실행 True (프로젝트 생성됐었음 True)",
+  "SELFTEST PASS"
+ ]
+}

@@ -1,0 +1,10 @@
+{
+ "ok": true,
+ "report": "/workspace/shuttle6-r10-build/작업중/shuttle6-wave-R10/qc/batch_2/REPORT.md",
+ "warn": [],
+ "info": [
+  "drawer: 오버행 4487.3 mm² → 서포트(Horizontal lower curved transitions and two detent undersides; tree auto if QC identifies local overhang. Open scoop has no enclosed roof., 허용 18000)",
+  "drawer_coupon: 오버행 692.2 mm² → 서포트(Same horizontal flat base and integrated detent undersides., 허용 5000)",
+  "tip_coupon: 오버행 175.4 mm² → 서포트(Same flat horizontal base, local transition support only if detected., 허용 2000)"
+ ]
+}

@@ -1,0 +1,138 @@
+{
+ "strict": {
+  "/workspace/shuttle6-r10-build/작업중/shuttle6-wave-R10/models/Shuttle6_C_R10_ID64_horizontal_bambu.3mf": {
+   "warnings": 0,
+   "messages": [],
+   "objects": 14,
+   "mode": "Bambu original structure + geometry-copy strict",
+   "original_strict_error": "Lib3MFException 5: Unknown Model Metadata.",
+   "removed_template_metadata": [
+    "BambuStudio:3mfVersion",
+    "DesignerCover",
+    "DesignerUserId",
+    "License",
+    "Origin",
+    "ProfileCover",
+    "ProfileDescription",
+    "ProfileTitle"
+   ],
+   "copy_encoding": "3MF Core with original world-space meshes and transforms",
+   "bambu_structure_ok": true
+  },
+  "/workspace/shuttle6-r10-build/작업중/shuttle6-wave-R10/models/plates_R10/P01_body_pair_bambu.3mf": {
+   "warnings": 0,
+   "messages": [],
+   "objects": 4,
+   "mode": "Bambu original structure + geometry-copy strict",
+   "original_strict_error": "Lib3MFException 5: Unknown Model Metadata.",
+   "removed_template_metadata": [
+    "BambuStudio:3mfVersion",
+    "DesignerCover",
+    "DesignerUserId",
+    "License",
+    "Origin",
+    "ProfileCover",
+    "ProfileDescription",
+    "ProfileTitle"
+   ],
+   "copy_encoding": "3MF Core with original world-space meshes and transforms",
+   "bambu_structure_ok": true
+  },
+  "/workspace/shuttle6-r10-build/작업중/shuttle6-wave-R10/models/plates_R10/P02_horizontal_tray_bambu.3mf": {
+   "warnings": 0,
+   "messages": [],
+   "objects": 2,
+   "mode": "Bambu original structure + geometry-copy strict",
+   "original_strict_error": "Lib3MFException 5: Unknown Model Metadata.",
+   "removed_template_metadata": [
+    "BambuStudio:3mfVersion",
+    "DesignerCover",
+    "DesignerUserId",
+    "License",
+    "Origin",
+    "ProfileCover",
+    "ProfileDescription",
+    "ProfileTitle"
+   ],
+   "copy_encoding": "3MF Core with original world-space meshes and transforms",
+   "bambu_structure_ok": true
+  },
+  "/workspace/shuttle6-r10-build/작업중/shuttle6-wave-R10/models/plates_R10/P03_separate_cap_bambu.3mf": {
+   "warnings": 0,
+   "messages": [],
+   "objects": 2,
+   "mode": "Bambu original structure + geometry-copy strict",
+   "original_strict_error": "Lib3MFException 5: Unknown Model Metadata.",
+   "removed_template_metadata": [
+    "BambuStudio:3mfVersion",
+    "DesignerCover",
+    "DesignerUserId",
+    "License",
+    "Origin",
+    "ProfileCover",
+    "ProfileDescription",
+    "ProfileTitle"
+   ],
+   "copy_encoding": "3MF Core with original world-space meshes and transforms",
+   "bambu_structure_ok": true
+  },
+  "/workspace/shuttle6-r10-build/작업중/shuttle6-wave-R10/models/plates_R10/P04_detent_shell_coupon_bambu.3mf": {
+   "warnings": 0,
+   "messages": [],
+   "objects": 2,
+   "mode": "Bambu original structure + geometry-copy strict",
+   "original_strict_error": "Lib3MFException 5: Unknown Model Metadata.",
+   "removed_template_metadata": [
+    "BambuStudio:3mfVersion",
+    "DesignerCover",
+    "DesignerUserId",
+    "License",
+    "Origin",
+    "ProfileCover",
+    "ProfileDescription",
+    "ProfileTitle"
+   ],
+   "copy_encoding": "3MF Core with original world-space meshes and transforms",
+   "bambu_structure_ok": true
+  },
+  "/workspace/shuttle6-r10-build/작업중/shuttle6-wave-R10/models/plates_R10/P05_detent_tray_coupon_bambu.3mf": {
+   "warnings": 0,
+   "messages": [],
+   "objects": 2,
+   "mode": "Bambu original structure + geometry-copy strict",
+   "original_strict_error": "Lib3MFException 5: Unknown Model Metadata.",
+   "removed_template_metadata": [
+    "BambuStudio:3mfVersion",
+    "DesignerCover",
+    "DesignerUserId",
+    "License",
+    "Origin",
+    "ProfileCover",
+    "ProfileDescription",
+    "ProfileTitle"
+   ],
+   "copy_encoding": "3MF Core with original world-space meshes and transforms",
+   "bambu_structure_ok": true
+  },
+  "/workspace/shuttle6-r10-build/작업중/shuttle6-wave-R10/models/plates_R10/P06_tip_coupon_bambu.3mf": {
+   "warnings": 0,
+   "messages": [],
+   "objects": 2,
+   "mode": "Bambu original structure + geometry-copy strict",
+   "original_strict_error": "Lib3MFException 5: Unknown Model Metadata.",
+   "removed_template_metadata": [
+    "BambuStudio:3mfVersion",
+    "DesignerCover",
+    "DesignerUserId",
+    "License",
+    "Origin",
+    "ProfileCover",
+    "ProfileDescription",
+    "ProfileTitle"
+   ],
+   "copy_encoding": "3MF Core with original world-space meshes and transforms",
+   "bambu_structure_ok": true
+  }
+ },
+ "checklist": "[?] Skill 호출 [?] SKILL.md+references 전부 읽음 [x] 올라온 파일은 sample/ 복사·단면 실측 그림·스터디 기록 [x] 설계 치수표(결합 치수는 상대 파트에서 측정) [x] QC [x] 조립 검증(실제 좌표에 놓은 교집합·간격·스윕) [x] 렌더 5뷰+GIF 눈으로 확인 [x] EFC 선반영·서포트 위치 명시 [x] 3MF strict 0 [x] 보고"
+}

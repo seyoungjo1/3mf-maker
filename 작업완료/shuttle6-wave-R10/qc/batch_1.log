@@ -1,0 +1,33 @@
+[pipeline] QC shell_lower 63724 faces
+[pipeline] QC shell_upper 52180 faces
+[pipeline] QC shell_coupon 4152 faces
+# Shuttle6 C R10 / open ID64 / flat horizontal tray / separate cap / rounded detents — 파이프라인 보고
+
+## 1. QC — 출력 방향 파트 (EFC 0.15 반영, 출력물 기준)
+
+| 파트 | 삼각형 | 닫힘 | 조각 | 크기 (mm) | PLA g(통짜) | 바닥 접지 / 첫 층 mm² | 얇은 살 mm² | 오버행(한쪽) mm² | 브리지 mm² (최대 폭) | 판정 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| shell_lower | 63,724 | O | 1 | 74.6×74.6×131.5 | 163.6 | 4381.9 / 4381.9 | 0.0 | 0.0 | 0.0 (0.0) | ✓ |
+| shell_upper | 52,180 | O | 1 | 74.9×74.9×121.5 | 142.6 | 704.7 / 704.7 | 0.0 | 0.0 | 0.0 (0.0) | ✓ |
+| shell_coupon | 4,152 | O | 1 | 74.9×74.9×36.0 | 45.1 | 1078.4 / 1078.4 | 0.0 | 0.0 | 0.0 (0.0) | ✓ |
+
+오버행 상위 위치: 
+
+브리지 상위 위치(z, mm², 폭): 
+
+얇은 살 위치: 
+
+## 2. 플레이트 3MF — 충돌·베드·lib3mf strict
+
+| 플레이트 | 파트 | 범위 x / y (mm) | 충돌 | strict 경고 | 판정 |
+|---|---|---|---|---|---|
+
+## 4. 렌더 (CPU flat-shaded mesh, 5뷰 + 회전 GIF + 작동 GIF)
+
+
+## 5. 판정
+
+- ✓ 경고 없음 — 보낼 수 있음
+
+
+REPORT: /workspace/shuttle6-r10-build/작업중/shuttle6-wave-R10/qc/batch_1/REPORT.md

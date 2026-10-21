@@ -1,0 +1,60 @@
+{
+  "drawer_vs_dimensional_gauge_mm3": 0.0,
+  "shell_vs_dimensional_gauge_mm3": 0.0,
+  "cap_joint_overlap_mm3": 0.0,
+  "detent_crossing_without_compliance": [
+    {
+      "extraction_mm": 0,
+      "rigid_overlap_mm3": 0.0
+    },
+    {
+      "extraction_mm": 0.25,
+      "rigid_overlap_mm3": 0.0
+    },
+    {
+      "extraction_mm": 0.5,
+      "rigid_overlap_mm3": 0.0635607050648493
+    },
+    {
+      "extraction_mm": 0.75,
+      "rigid_overlap_mm3": 0.33192304157618463
+    },
+    {
+      "extraction_mm": 1,
+      "rigid_overlap_mm3": 0.6546826614844955
+    },
+    {
+      "extraction_mm": 1.5,
+      "rigid_overlap_mm3": 1.2412645525982953
+    },
+    {
+      "extraction_mm": 2,
+      "rigid_overlap_mm3": 1.6059384607733591
+    },
+    {
+      "extraction_mm": 3,
+      "rigid_overlap_mm3": 1.709335808754228
+    },
+    {
+      "extraction_mm": 5,
+      "rigid_overlap_mm3": 1.7093323904557185
+    },
+    {
+      "extraction_mm": 8,
+      "rigid_overlap_mm3": 1.7093327570828478
+    },
+    {
+      "extraction_mm": 10,
+      "rigid_overlap_mm3": 0.8546673750161441
+    },
+    {
+      "extraction_mm": 12,
+      "rigid_overlap_mm3": 0.0
+    },
+    {
+      "extraction_mm": 14,
+      "rigid_overlap_mm3": 0.0
+    }
+  ],
+  "scope": "Nominal64mm dimensional gauge offset upward2mm over flat floor,6 nested225mm assumption. Not a measured feather envelope or deformation/contact simulation. Rounded beads have intentional elastic crossing; click force not calculated."
+}
