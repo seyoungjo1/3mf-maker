@@ -104,10 +104,10 @@ def wallscan(files, z_range=None, n_dir=48):
     from qc_model import wall_steps
     return {n: wall_steps(m, z_range=z_range, n_dir=n_dir) for n, m in _meshes(files).items()}
 @command('render', 'three.js 렌더: 5뷰 PNG + 회전 GIF(상태 순환 가능)',
-         {'files': {'type': 'array', 'items': {'type': 'string'}}, 'out': {'type': 'string'}, 'colors': {'type': 'object'}, 'states': {'type': 'object'}, 'frames': {'type': 'integer', 'default': 36}, 'status': {'type': 'string'}})
-def render(files, out, colors=None, states=None, frames=36, status=None):
+         {'files': {'type': 'array', 'items': {'type': 'string'}}, 'out': {'type': 'string'}, 'colors': {'type': 'object'}, 'states': {'type': 'object'}, 'frames': {'type': 'integer', 'default': 36}, 'status': {'type': 'string'}, 'presentation': {'type': 'boolean', 'default': False}})
+def render(files, out, colors=None, states=None, frames=36, status=None, presentation=False):
     from render_preview import render as r3
-    parts = _meshes(files); pngs = r3(parts, _abs(out), colors or {}, states, frames, status=status)
+    parts = _meshes(files); pngs = r3(parts, _abs(out), colors or {}, states, frames, status=status, presentation=presentation)
     return {'pngs': pngs, 'gif': os.path.join(_abs(out), 'turntable.gif')}
 @command('check3mf', 'lib3mf strict 모드 경고 수(ASCII 임시 경로에서)', {'files': {'type': 'array', 'items': {'type': 'string'}}})
 def check3mf(files):
