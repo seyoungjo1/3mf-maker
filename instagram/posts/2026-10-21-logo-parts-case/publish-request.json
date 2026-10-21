@@ -1,0 +1,39 @@
+{
+  "post_id": "logo-parts-case-20261021",
+  "approved_by_user": true,
+  "authorization": "User explicitly requested uploading after moving the closed real photo to the lettering flaw page and adding the AI study and build123d code request process. Each real photo is used exactly once. Publish all six items including slow design animation.",
+  "asset_commit": "255a70ab649513af0a3bfffd76c1c285d09a8cdd",
+  "caption": "나만의 로고 부품케이스. 🧰\n\n대진표에 붙이는 자석 이름표를 정리하고 옮기려고 만든 케이스예요. 비닐봉지에 담아 다니던 이름표를 칸별로 나눠 담을 수 있게 만들었습니다.\n\nAI에게 다른 케이스를 스터디시키고, build123d로 설계 코드를 짜 달라고 요청했어요. 필요한 수납 구성과 제 로고를 담아 다듬었습니다.\n\n이름표를 담는 데서 시작했지만, 이름은 ‘나만의 로고 부품케이스’. 검은 몸통에 초록색 손잡이, 뚜껑에는 내 로고를 넣고 안쪽은 칸칸이 나눴어요.\n\n표면은 무늬 있는 빌드 플레이트를 써서 반짝반짝하게! 다만 안착이 잘 안 돼 작은 글씨가 조금 찌그러졌어요. 반짝임은 마음에 들지만, 작은 글씨는 다음에 더 잘 뽑아 보는 걸로요.\n\n조립에는 M3 × 14mm 나사 6개를 사용했습니다.\n실물 사진은 첫 장과 작은 글씨를 설명하는 장에 각각 한 번씩 담았어요. 설계 화면과 천천히 움직이는 설계 애니메이션도 함께 올립니다. 도면 속 이름표 배치는 수납 예시입니다.\n\n#부품케이스 #나만의로고 #자석이름표 #배드민턴 #3D프린팅 #취미제작\n\n개인 취미와 학습을 위한 작업이며, 브랜드 이름과 참고 이미지의 권리는 각 권리자에게 있습니다.\n해당 게시글은 AI를 통해 작성되었습니다.",
+  "assets": [
+    {
+      "path": "instagram/posts/2026-10-21-logo-parts-case/publish/01.jpg",
+      "type": "IMAGE",
+      "sha256": "6c66f8b20cf43c99db555ff0483cebf59d9ea929c3792fb405855af49f63ce1c"
+    },
+    {
+      "path": "instagram/posts/2026-10-21-logo-parts-case/publish/02.jpg",
+      "type": "IMAGE",
+      "sha256": "1ace00b44b20681a4718b859c245c4f7ea0236daea32ec2e6aa382f34eec09eb"
+    },
+    {
+      "path": "instagram/posts/2026-10-21-logo-parts-case/publish/03.jpg",
+      "type": "IMAGE",
+      "sha256": "a4f02d45c445de13a9fe930275935e7730d4d262eaa10840b9a1fbb1c1a3b02e"
+    },
+    {
+      "path": "instagram/posts/2026-10-21-logo-parts-case/publish/04.jpg",
+      "type": "IMAGE",
+      "sha256": "ed84b78c8786318c22225411591c4114c8fb067e9d3d4620063717159cc20254"
+    },
+    {
+      "path": "instagram/posts/2026-10-21-logo-parts-case/publish/05-design-preview.mp4",
+      "type": "VIDEO",
+      "sha256": "eee4bb5b0d74e768b2fff38891edfb2b99dd378eabbcc5e83418e7e3e100a5fe"
+    },
+    {
+      "path": "instagram/posts/2026-10-21-logo-parts-case/publish/06.jpg",
+      "type": "IMAGE",
+      "sha256": "111ad15dbf8d8ad4ec206e87555a1b6b96e7a6a4d56a73b2f10b9950377868b4"
+    }
+  ]
+}
