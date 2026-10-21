@@ -127,3 +127,12 @@ Actions schedule은 실행이 지연되거나 높은 부하에서 누락될 수 
 4. GitHub 워크플로 이벤트: https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows
 5. Meta 토큰 참고 문서(실설정 시 재확인): https://developers.facebook.com/docs/instagram-platform/reference/refresh_access_token/
 6. Meta 게시 문서(이번 조사 직접 접근 제한): https://developers.facebook.com/docs/instagram-platform/instagram-api-with-instagram-login/content-publishing
+
+## 2026-10-21 연결 확인 결과
+
+- 사용자 제공 계정 ID: `17841465071386831`.
+- GitHub Actions에서 `IG_ACCESS_TOKEN`을 참조해 `GET /v25.0/me?fields=user_id,username` 읽기 확인에 성공했다. 계정은 `sy_3dprintgarage`이며 제공 ID와 일치한다.
+- `config/instagram.json`에 ID와 username을 고정하고 `.github/scripts/instagram_check.py`가 대조한다. 토큰 값은 저장소·로그에 기록하지 않는다.
+- `.github/workflows/instagram-check.yml`은 연결 확인만 한다. 확인을 위한 push 트리거는 해당 브랜치의 연결 코드/설정 변경에만 반응한다.
+- 증거: `connection-status.json`. 이 성공은 프로필 읽기 확인이며 콘텐츠 게시 권한·미디어 업로드·캐러셀 게시 성공을 의미하지 않는다.
+- 게시 실행 워크플로, 공개용 이미지 호스팅, 마지막 안내 장 제작·캐러셀, 중복 방지 원장은 다음 구현 범위다. 자동 예약과 실제 게시는 활성화하지 않았다.
