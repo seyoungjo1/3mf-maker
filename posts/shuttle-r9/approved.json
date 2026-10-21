@@ -1,29 +1,29 @@
 {
-  "post_id": "shuttle-r9-20261021",
+  "post_id": "shuttle-square-slow-20261021",
   "approved_by_user": true,
-  "authorization": "User explicitly requested upload after restoring title, enlarging friendly body text, adding specified disclosures and shuttlecock shapes.",
-  "asset_commit": "a3c2bdfec237a3e35c31bedd6d5e1158dacd034c",
-  "caption": "프링글스 통처럼, 셔틀콕도 쭉 꺼낼 수 있다면? 🏸\n\n안쪽 받침을 당겨 꺼내는 프링글스 용기용 받침을 보고, 이 방식을 셔틀콕통에도 담아보고 싶었어요. 처음 구상한 모습부터 지금의 R9까지 정리해 봤습니다.\n\n몸통에는 파도 문양을 넣고, 받침과 뚜껑은 하나로 이어지게 설계했어요. 출력할 때는 몸통만 두 조각으로 나눠서 붙이는 방식입니다.\n\n지금은 6개용을 목표로 도면과 설계를 정리한 단계예요. 사진과 영상은 3D 설계 미리보기이고, 셔틀콕은 수납을 설명하기 위해 넣은 예시예요. 실제 셔틀콕의 수납감과 잠금 동작은 출력 후에 확인하려고 합니다.\n\n#셔틀콕통 #배드민턴 #3D프린팅 #제품설계 #취미제작\n\n개인 취미와 학습을 위한 작업이며, 브랜드 이름과 참고 이미지의 권리는 각 권리자에게 있습니다.\n해당 게시글은 AI를 통해 작성되었습니다.",
+  "authorization": "User explicitly selected republish as a new post; original will be archived by the user. Explain rounded-square evolution and vibration-driven body split, remove internal version names, slow video.",
+  "asset_commit": "d3499bcc98420542991aaead1a38e788435dbd6a",
+  "caption": "프링글스 통처럼, 셔틀콕도 쭉 꺼낼 수 있다면? 🏸\n\n안쪽 받침을 당겨 꺼내는 프링글스 용기용 받침에서 시작했어요. 셔틀콕통에도 이 방식을 담아보고 싶었습니다.\n\n처음에는 원통 모양으로 구상했지만, 여러 번 고치고 다듬으면서 지금의 둥근 사각형으로 바꿨어요. 몸통에는 파도 문양을 넣고, 받침과 뚜껑은 하나로 이어지게 했습니다.\n\n출력 방법도 바꿨어요. 길게 세워 출력할 때 진동 때문에 깨지는 문제를 피하려고, 몸통을 두 조각으로 나눠 낮게 출력한 뒤 붙이는 방식으로 설계했습니다. 그냥 나눈 게 아니라, 출력할 때의 문제를 줄이기 위한 선택이에요.\n\n이미지와 영상에 기획의 출발점부터 지금의 모습까지 담았어요. 6개용을 목표로 한 설계 미리보기이며, 셔틀콕은 수납을 설명하기 위한 예시입니다. 실제 수납감과 잠금 동작은 출력 후 확인할 예정이에요.\n\n#셔틀콕통 #배드민턴 #3D프린팅 #제품설계 #취미제작\n\n개인 취미와 학습을 위한 작업이며, 브랜드 이름과 참고 이미지의 권리는 각 권리자에게 있습니다.\n해당 게시글은 AI를 통해 작성되었습니다.",
   "assets": [
     {
       "path": "docs/social/previews/shuttle-r9/publish/01-cover.jpg",
       "type": "IMAGE",
-      "sha256": "465b7c0f34a8fcc44c27a43b7948b9b0de84b83dbd0c59664b1a77ac30ff3ce1"
+      "sha256": "15850a1abd4f0897a9101bdcc99375a54246ffb05013f3e636a6c783ef43d666"
     },
     {
       "path": "docs/social/previews/shuttle-r9/publish/02-origin.jpg",
       "type": "IMAGE",
-      "sha256": "36af2b7a7a8e1c2ea91248828dc9ae0e604fcc896c334d76d156ca05d83efe43"
+      "sha256": "1cdd55a1fb45aa076498f8f8067dcee5b6cfdba83916201d956993740064116b"
     },
     {
       "path": "docs/social/previews/shuttle-r9/publish/03-design.jpg",
       "type": "IMAGE",
-      "sha256": "dcb5bc61411400e4ed4e3534966b1e9caba3a20913c13532ce0c1bdd609cf63b"
+      "sha256": "9dae3a2afb30d036dea9f654e4c0ac622172ddd7eb3545561e9ca82ad0783d8f"
     },
     {
       "path": "docs/social/previews/shuttle-r9/publish/04-preview.mp4",
       "type": "VIDEO",
-      "sha256": "92b651b3739c3fa5ae17567d3b01b69099d31543bf2f60ab00411bd0dc65bfe1"
+      "sha256": "1b449962d66591c6fd0c0e6b9dcd8855f9fe390f917b9d623b259ac54806c449"
     },
     {
       "path": "docs/social/previews/shuttle-r9/publish/05-notice.jpg",
