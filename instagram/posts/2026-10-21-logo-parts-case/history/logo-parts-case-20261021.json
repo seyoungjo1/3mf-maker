@@ -1,6 +1,6 @@
 {
   "post_id": "logo-parts-case-20261021",
-  "status": "publishing",
+  "status": "published",
   "user_id": "17841465071386831",
   "children": [
     "17973539892169047",
@@ -11,5 +11,6 @@
     "17973540207169047"
   ],
   "asset_commit": "255a70ab649513af0a3bfffd76c1c285d09a8cdd",
-  "container_id": "17973540225169047"
+  "container_id": "17973540225169047",
+  "media_id": "17886448413653254"
 }
