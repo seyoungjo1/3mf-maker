@@ -45,7 +45,7 @@ def validate(manifest):
     if manifest.get('approved_by_user') is not True: raise PublishError('No publication authorization')
     for item in manifest['assets']:
         path=Path(item['path'])
-        if not str(path).startswith('docs/social/previews/shuttle-r9/') or '..' in path.parts: raise PublishError('Invalid asset path')
+        if not str(path).startswith('instagram/posts/') or '..' in path.parts: raise PublishError('Invalid asset path')
         if hashlib.sha256(path.read_bytes()).hexdigest()!=item['sha256']: raise PublishError('Asset hash mismatch')
         data=path.read_bytes()
         if item['type']=='IMAGE' and data[:3]!=b'\xff\xd8\xff': raise PublishError('Image must be JPEG')
@@ -53,14 +53,15 @@ def validate(manifest):
         if item['type'] not in ('IMAGE','VIDEO'): raise PublishError('Invalid media type')
 
 def run():
-    manifest=json.loads(Path('posts/shuttle-r9/approved.json').read_text())
+    manifest_path=Path(os.environ['IG_POST_MANIFEST'])
+    manifest=json.loads(manifest_path.read_text())
     validate(manifest)
-    path=Path('docs/social/publish-state')/(manifest['post_id']+'.json')
+    path=manifest_path.parent/'history'/(manifest['post_id']+'.json')
     if path.exists():
         previous=json.loads(path.read_text())
         if previous.get('status')=='published': print('Already published:',previous.get('permalink'));return
         raise PublishError('Existing publication checkpoint. Inspect it; do not retry blindly.')
-    config=json.loads(Path('config/instagram.json').read_text());token=os.environ.get('IG_ACCESS_TOKEN','').strip()
+    config=json.loads(Path('instagram/config.json').read_text());token=os.environ.get('IG_ACCESS_TOKEN','').strip()
     if not token: raise PublishError('Missing IG_ACCESS_TOKEN')
     version=config['api_version'];account=config['user_id']
     me=api('me',token,version,{'fields':'user_id,username'})

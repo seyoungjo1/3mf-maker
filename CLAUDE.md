@@ -1,11 +1,12 @@
 # 3mf-maker
 
 ## 인스타그램 운영
+- 모든 인스타그램 문서·예시·게시글 자료는 `instagram/`에 관리한다. 게시글마다 `instagram/posts/YYYY-MM-DD-topic/` 폴더를 만들고 본문·이미지·영상·출처·수정 이력·게시 링크를 모은다.
 - **캡처 품질이 우선**: 흰 배경과 밝은 조명으로 형태·로고·구조가 읽히게 찍고 그 이미지에 맞춰 글을 쓴다. 농담은 필수가 아니다.
-- 브랜드·로고 등으로 안내가 필요한 게시물에만 마지막 이미지로 취미 제작·반복 생산/판매 목적 없음·비공식 관계·권리자 요청 시 삭제 안내를 넣는다. 딱딱하지 않은 말투와 읽기 편한 한글 폰트를 사용한다. 모든 캡션에 기계적으로 붙이지 않고 면책이나 이용 허락이라고 표현하지 않는다. 정확한 문구는 `docs/social/editorial-guide.md`를 따른다.
+- 필요한 마지막 안내는 사용자의 최종 문구를 따른다: 개인 취미·학습, 브랜드·참고 이미지 권리자 표시, AI 작성 표시. 제목은 Jua를 유지하고 설명문은 크게 Gamja Flower로 쓴다. 내부 버전명보다 무엇을 왜 바꿨는지 설명한다. 정확한 기준은 `instagram/WRITING_GUIDE.md`를 따른다.
 - 게시 자동화는 **GitHub Actions + Instagram 공식 API(Instagram Login 우선)** 를 사용한다. 인스타그램 관련 변경은 `codex/instagram-publishing` 별도 브랜치에서 진행하고, 별도 요청 전에는 main에 병합하지 않는다.
 - **게시글도 결과물의 일부**다. 3MF 캡처만 업로드하지 말고 프로젝트 기록을 읽어 첫 문장·설계 이야기·확인된 특징·상태 표시·해시태그를 함께 준비한다.
-- 운영 지침: `docs/social/instagram-publishing.md`, 게시글·캡처 편집 기준: `docs/social/editorial-guide.md`. 스터디 색인: `.claude/skills/3d-print-3mf/references/studies/README.md`.
+- 운영 지침: `instagram/API_SETUP.md`, 게시글·캡처 편집 기준: `instagram/WRITING_GUIDE.md`. 스터디 색인: `.claude/skills/3d-print-3mf/references/studies/README.md`.
 - 기존 모델 검증·사용자 허락 규칙을 유지한다. 렌더를 실제 출력 사진으로 표현하거나 QC만으로 출력 성공을 주장하지 않는다. 설정·스터디 요청은 게시 실행 허락으로 해석하지 않는다.
 - 토큰은 GitHub Secrets에 보관하고 개인정보가 있는 캡처는 공개용으로 별도 준비한다.
 

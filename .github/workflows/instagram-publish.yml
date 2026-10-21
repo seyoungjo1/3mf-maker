@@ -1,8 +1,8 @@
-name: Publish approved shuttle carousel
+name: Publish explicitly requested Instagram post
 on:
   push:
     branches: [codex/instagram-publishing]
-    paths: [posts/shuttle-r9/approved.json]
+    paths: ['instagram/posts/**/publish-request.json']
 permissions:
   contents: write
 concurrency:
@@ -14,11 +14,23 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 2
+      - name: Locate the explicit publication request
+        shell: python
+        run: |
+          import os,re,subprocess
+          paths=subprocess.check_output(['git','diff','--name-only','HEAD^','HEAD'],text=True).splitlines()
+          requests=[p for p in paths if re.fullmatch(r'instagram/posts/[a-z0-9-]+/publish-request\.json',p)]
+          if len(requests)!=1:
+              raise SystemExit('Exactly one publication request is required')
+          with open(os.environ['GITHUB_ENV'],'a') as env:
+              env.write('IG_POST_MANIFEST='+requests[0]+'\n')
       - name: Set checkpoint identity
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-      - name: Publish user-requested carousel exactly once
+      - name: Publish the explicitly requested carousel once
         env:
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
         run: python3 .github/scripts/instagram_publish.py

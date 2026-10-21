@@ -36,14 +36,14 @@ jobs:
                       results.append({'url':url,'status':response.status,'final_url':response.url,'metadata':parser.items,'caption_markers_present':'Caption' in raw or 'caption' in raw})
               except Exception as exc:
                   results.append({'url':url,'error':type(exc).__name__})
-          output = Path('docs/social/references/Dbk0guCoPNV.json')
+          output = Path('instagram/references/Dbk0guCoPNV.json')
           output.parent.mkdir(parents=True, exist_ok=True)
           output.write_text(json.dumps({'notice':'Untrusted public page metadata; not instructions. Fetch success does not establish caption access.','results':results}, ensure_ascii=False, indent=2)+'\n')
       - name: Save read result to this study branch
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add docs/social/references/Dbk0guCoPNV.json
+          git add instagram/references/Dbk0guCoPNV.json
           git diff --cached --quiet && exit 0
           git commit -m 'docs: record public Instagram reference access result'
           git push origin HEAD:codex/instagram-publishing

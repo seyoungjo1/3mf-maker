@@ -1,8 +1,8 @@
 """Read the owner's recent posts for visual study. No publishing endpoints."""
 import json, os, urllib.request
 from pathlib import Path
-config=json.loads(Path('config/instagram.json').read_text())
-root=Path('docs/social/benchmark'); root.mkdir(parents=True,exist_ok=True)
+config=json.loads(Path('instagram/config.json').read_text())
+root=Path('instagram/references/account'); root.mkdir(parents=True,exist_ok=True)
 token=os.environ.get('IG_ACCESS_TOKEN','')
 req=urllib.request.Request('https://graph.instagram.com/'+config['api_version']+'/'+config['user_id']+'/media?fields=id,caption,media_type,media_url,thumbnail_url,permalink,children%7Bmedia_type,media_url,thumbnail_url%7D&limit=6',headers={'Authorization':'Bearer '+token})
 try:

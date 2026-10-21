@@ -52,9 +52,9 @@ def check(config, token, opener=urllib.request.urlopen):
 
 
 if __name__ == "__main__":
-    config = json.loads(Path("config/instagram.json").read_text())
+    config = json.loads(Path("instagram/config.json").read_text())
     result = check(config, os.environ.get("IG_ACCESS_TOKEN", ""))
     # This file contains only the allowlisted result fields above.
-    output = Path("docs/social/connection-status.json")
+    output = Path("instagram/connection-status.json")
     output.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n")
     print(json.dumps(result, ensure_ascii=False))

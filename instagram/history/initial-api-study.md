@@ -3,7 +3,7 @@
 작성일: 2026-10-21 / 사용자 표시 시간대: Asia/Seoul
 
 대상 저장소: seyoungjo1/3mf-maker. 작업 브랜치: `codex/instagram-publishing`.
-주 소재는 이 저장소의 3MF 캡처 결과물이다. 이미지 선택·문구·해시태그를 함께 준비하며 [게시글 편집 기준](editorial-guide.md)을 따른다. 이번 단계는 지침과 스터디 기록이며 main 병합이나 자동 게시 활성화는 포함하지 않는다.
+주 소재는 이 저장소의 3MF 캡처 결과물이다. 이미지 선택·문구·해시태그를 함께 준비하며 [게시글 편집 기준](WRITING_GUIDE.md)을 따른다. 이번 단계는 지침과 스터디 기록이며 main 병합이나 자동 게시 활성화는 포함하지 않는다.
 
 ## 결정과 확인 범위
 
@@ -132,7 +132,11 @@ Actions schedule은 실행이 지연되거나 높은 부하에서 누락될 수 
 
 - 사용자 제공 계정 ID: `17841465071386831`.
 - GitHub Actions에서 `IG_ACCESS_TOKEN`을 참조해 `GET /v25.0/me?fields=user_id,username` 읽기 확인에 성공했다. 계정은 `sy_3dprintgarage`이며 제공 ID와 일치한다.
-- `config/instagram.json`에 ID와 username을 고정하고 `.github/scripts/instagram_check.py`가 대조한다. 토큰 값은 저장소·로그에 기록하지 않는다.
+- `instagram/config.json`에 ID와 username을 고정하고 `.github/scripts/instagram_check.py`가 대조한다. 토큰 값은 저장소·로그에 기록하지 않는다.
 - `.github/workflows/instagram-check.yml`은 연결 확인만 한다. 확인을 위한 push 트리거는 해당 브랜치의 연결 코드/설정 변경에만 반응한다.
 - 증거: `connection-status.json`. 이 성공은 프로필 읽기 확인이며 콘텐츠 게시 권한·미디어 업로드·캐러셀 게시 성공을 의미하지 않는다.
 - 게시 실행 워크플로, 공개용 이미지 호스팅, 마지막 안내 장 제작·캐러셀, 중복 방지 원장은 다음 구현 범위다. 자동 예약과 실제 게시는 활성화하지 않았다.
+
+## 폴더 정리 후 게시 실행
+
+게시글 자료는 `instagram/posts/<날짜-주제>/`에 모읍니다. 새 게시가 명시적으로 요청된 경우에만 해당 폴더에 `publish-request.json`을 추가·수정합니다. 이 파일 변경만 게시 워크플로를 실행합니다. 폴더 이동·본문/이미지 편집·문서 수정은 발행 트리거가 아닙니다. 과거 승인 매니페스트는 history에 보존하며, 그 안의 옛 경로는 asset_commit의 파일을 가리킵니다.
