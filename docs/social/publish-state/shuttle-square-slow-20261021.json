@@ -1,6 +1,6 @@
 {
   "post_id": "shuttle-square-slow-20261021",
-  "status": "publishing",
+  "status": "published",
   "user_id": "17841465071386831",
   "children": [
     "17973532947169047",
@@ -10,5 +10,6 @@
     "17973533178169047"
   ],
   "asset_commit": "d3499bcc98420542991aaead1a38e788435dbd6a",
-  "container_id": "17973533202169047"
+  "container_id": "17973533202169047",
+  "media_id": "17942017233379732"
 }
