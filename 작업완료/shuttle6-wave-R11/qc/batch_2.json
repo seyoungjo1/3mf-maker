@@ -1,0 +1,10 @@
+{
+ "ok": true,
+ "report": "/workspace/shuttle6-r10-build/작업중/shuttle6-wave-R11/qc/batch_2/REPORT.md",
+ "warn": [],
+ "info": [
+  "drawer: 오버행 4610.4 mm² → 서포트(눕힌 보강 내관: 바닥 평면 양옆 둥근 전이부와 둥근 돌기 아래. 실제 QC 누적4610.4mm²; 트리 지지 대상이며 완전 무서포트가 아님., 허용 4700)",
+  "drawer_coupon: 오버행 713.1 mm² → 서포트(눕힌 내관 시험편 바닥 양옆 전이부와 돌기 아래. 실제 QC 누적713.1mm²., 허용 720)",
+  "tip_coupon: 오버행 180.0 mm² → 서포트(눕힌 콘끝 시험편 바닥 양옆 전이부. 실제 QC 누적180.0mm²., 허용 190)"
+ ]
+}

@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+*.pkl
+qc/.cache/
+qc/**/data.json
+qc/**/index*.html
+qc/batch*/
+qc/assembly_precheck*
+qc/build_R11.log
+pipeline_qc_*.json
+**/data.json
+**/index*.html
+**/data.json
+**/index*.html

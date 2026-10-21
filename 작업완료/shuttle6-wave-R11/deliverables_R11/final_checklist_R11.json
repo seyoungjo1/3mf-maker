@@ -1,0 +1,67 @@
+{
+ "ok": true,
+ "line": "[?] Skill 호출 [?] SKILL.md+references 전부 읽음 [x] 올라온 파일은 sample/ 복사·단면 실측 그림·스터디 기록 [x] 설계 치수표(결합 치수는 상대 파트에서 측정) [x] QC [x] 조립 검증(실제 좌표에 놓은 교집합·간격·스윕) [x] 렌더 5뷰+GIF 눈으로 확인 [x] EFC 선반영·서포트 위치 명시 [x] 3MF strict 0 [x] 보고",
+ "items": [
+  {
+   "key": "skill",
+   "label": "Skill 호출",
+   "pass": null,
+   "note": "세션이 보증(Skill 도구 호출)"
+  },
+  {
+   "key": "read",
+   "label": "SKILL.md+references 전부 읽음",
+   "pass": null,
+   "note": "세션이 보증(references 전부 Read)"
+  },
+  {
+   "key": "inputs",
+   "label": "올라온 파일은 sample/ 복사·단면 실측 그림·스터디 기록",
+   "pass": true,
+   "note": "3개 sample/·스터디 있음; CAD 단면 확인, 사진 3개는 실측 불가 사유 명시"
+  },
+  {
+   "key": "dims",
+   "label": "설계 치수표(결합 치수는 상대 파트에서 측정)",
+   "pass": true,
+   "note": "치수 17행"
+  },
+  {
+   "key": "qc",
+   "label": "QC",
+   "pass": true,
+   "note": "파트 7개, QC 경고 0"
+  },
+  {
+   "key": "assembly",
+   "label": "조립 검증(실제 좌표에 놓은 교집합·간격·스윕)",
+   "pass": true,
+   "note": "상태 21, 결합 쌍 9, 스윕 [], 경고 0"
+  },
+  {
+   "key": "render",
+   "label": "렌더 5뷰+GIF 눈으로 확인",
+   "pass": true,
+   "note": "GIF 7개 생성 — 눈으로 볼 파일: 작업중/shuttle6-wave-R11/qc/final_R11/plate_P01_body_pair/turntable.gif, 작업중/shuttle6-wave-R11/qc/final_R11/plate_P02_horizontal_tray/turntable.gif, 작업중/shuttle6-wave-R11/qc/final_R11/plate_P03_separate_cap/turntable.gif, 작업중/shuttle6-wave-R11/qc/final_R11/plate_P04_detent_shell_coupon/turntable.gif, 작업중/shuttle6-wave-R11/qc/final_R11/plate_P05_detent_tray_coupon/turntable.gif, 작업중/shuttle6-wave-R11/qc/final_R11/plate_P06_tip_coupon/turntable.gif, 작업중/shuttle6-wave-R11/qc/final_R11/assembly/turntable.gif"
+  },
+  {
+   "key": "efc",
+   "label": "EFC 선반영·서포트 위치 명시",
+   "pass": true,
+   "note": "EFC 0.15 선반영(공칭 pkl 분리) · 서포트 위치 ['cap', 'drawer', 'drawer_coupon', 'tip_coupon']"
+  },
+  {
+   "key": "strict",
+   "label": "3MF strict 0",
+   "pass": true,
+   "note": "플레이트 6장 strict 0·충돌 0·베드 안 · Bambu 프로젝트 7장 구조 검증 ok"
+  },
+  {
+   "key": "report",
+   "label": "보고",
+   "pass": true,
+   "note": "REPORT.md · 경고 0"
+  }
+ ],
+ "legend": "[x] 통과 [ ] 실패 [-] 해당 없음 [?] 세션이 보증"
+}

@@ -1,0 +1,8 @@
+{
+ "ok": true,
+ "report": "/workspace/shuttle6-r10-build/작업중/shuttle6-wave-R11/qc/batch_1/REPORT.md",
+ "warn": [],
+ "info": [
+  "shell_lower: 1.2 mm 보다 얇은 살 5.2 mm² (z=135.2, x/y (23.3, 23.3, 29.4, 29.4)) → 허용(키 선단1mm 삽입 유도면의 국부 모서리: 실제 QC5.2mm²,z135.2. 독립 벽/탄성 암이 아니며 뒤쪽 연속 collar 벽은 선단에서도1.85mm 이상, 축부2.20mm·키 폭8mm·길이14mm. 어깨부/키 뿌리는 깎지 않았고 선단의 작은 형상만 허용. 실제 강도 미검증.)"
+ ]
+}

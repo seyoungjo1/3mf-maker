@@ -1,0 +1,32 @@
+{
+ "name": "shuttle6-wave-R11",
+ "build": [
+  "scripts/build.py"
+ ],
+ "out": "qc/current",
+ "parts_pkl": "parts.pkl",
+ "assembly_parts_pkl": "parts_nominal.pkl",
+ "plates": [
+  "models/shuttle6-wave-R11_A.3mf"
+ ],
+ "assembly": "scripts/assembly.py",
+ "colors": {
+  "base": "#37474f",
+  "lid": "#ffb300"
+ },
+ "qc": {
+  "efc": 0.15,
+  "max_bridge": 7,
+  "min_wall": 1.2,
+  "single_wall": []
+ },
+ "support_zones": [],
+ "accepted": [],
+ "min_gap": 0.3,
+ "frames": 24,
+ "bambu": {
+  "enabled": true,
+  "settings": {}
+ },
+ "inputs": []
+}

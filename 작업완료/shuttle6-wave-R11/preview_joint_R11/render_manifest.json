@@ -1,0 +1,20 @@
+{
+ "backend": "software",
+ "states": [
+  "분리",
+  "맞물림"
+ ],
+ "views": [
+  "view_iso_분리.png",
+  "view_top_분리.png",
+  "view_side_분리.png",
+  "view_bottom_분리.png",
+  "view_front_분리.png",
+  "view_iso_맞물림.png",
+  "view_top_맞물림.png",
+  "view_side_맞물림.png",
+  "view_bottom_맞물림.png",
+  "view_front_맞물림.png"
+ ],
+ "frames": 24
+}

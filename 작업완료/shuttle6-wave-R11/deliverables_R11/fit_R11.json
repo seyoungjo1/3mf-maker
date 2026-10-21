@@ -1,0 +1,127 @@
+{
+  "drawer_vs_dimensional_gauge_mm3": 0.0,
+  "shell_vs_dimensional_gauge_mm3": 0.0,
+  "cap_joint_overlap_mm3": 0.0,
+  "detent_crossing_without_compliance": [
+    {
+      "extraction_mm": 0,
+      "rigid_overlap_mm3": 0.0
+    },
+    {
+      "extraction_mm": 0.25,
+      "rigid_overlap_mm3": 0.0
+    },
+    {
+      "extraction_mm": 0.5,
+      "rigid_overlap_mm3": 0.06330501824573768
+    },
+    {
+      "extraction_mm": 0.75,
+      "rigid_overlap_mm3": 0.33099677410226985
+    },
+    {
+      "extraction_mm": 1,
+      "rigid_overlap_mm3": 0.6530186215914568
+    },
+    {
+      "extraction_mm": 1.5,
+      "rigid_overlap_mm3": 1.23819207143913
+    },
+    {
+      "extraction_mm": 2,
+      "rigid_overlap_mm3": 1.601793075464684
+    },
+    {
+      "extraction_mm": 3,
+      "rigid_overlap_mm3": 1.7045807754001696
+    },
+    {
+      "extraction_mm": 5,
+      "rigid_overlap_mm3": 1.704582016379921
+    },
+    {
+      "extraction_mm": 8,
+      "rigid_overlap_mm3": 1.704584144943927
+    },
+    {
+      "extraction_mm": 10,
+      "rigid_overlap_mm3": 0.8522908562589843
+    },
+    {
+      "extraction_mm": 12,
+      "rigid_overlap_mm3": 0.0
+    },
+    {
+      "extraction_mm": 14,
+      "rigid_overlap_mm3": 0.0
+    }
+  ],
+  "glue_key_rotation_checks": [
+    {
+      "angle_deg": 0,
+      "solid_overlap_mm3": 0.0
+    },
+    {
+      "angle_deg": -0.5,
+      "solid_overlap_mm3": 2.669155618912763
+    },
+    {
+      "angle_deg": 0.5,
+      "solid_overlap_mm3": 2.669156927246263
+    },
+    {
+      "angle_deg": -1,
+      "solid_overlap_mm3": 6.383907867075455
+    },
+    {
+      "angle_deg": 1,
+      "solid_overlap_mm3": 6.383907452804654
+    },
+    {
+      "angle_deg": -3,
+      "solid_overlap_mm3": 19.980082778048352
+    },
+    {
+      "angle_deg": 3,
+      "solid_overlap_mm3": 19.980082377780793
+    },
+    {
+      "angle_deg": 90,
+      "solid_overlap_mm3": 79.19498414670063
+    }
+  ],
+  "glue_joint_measured": {
+    "collar_wall_mm": 2.2000007547093503,
+    "radial_gap_mm": 0.14999962232591457,
+    "key_tip_gap_mm": 0.14999962232591457,
+    "key_side_gap_mm": 0.10000082734596782,
+    "key_width_mm": 7.999998918996401
+  },
+  "glue_joint_axial_insertion_checks": [
+    {
+      "remaining_insertion_mm": 0,
+      "overlap_mm3": 0.0
+    },
+    {
+      "remaining_insertion_mm": 2,
+      "overlap_mm3": 0.0
+    },
+    {
+      "remaining_insertion_mm": 5,
+      "overlap_mm3": 0.0
+    },
+    {
+      "remaining_insertion_mm": 10,
+      "overlap_mm3": 0.0
+    },
+    {
+      "remaining_insertion_mm": 14,
+      "overlap_mm3": 0.0
+    },
+    {
+      "remaining_insertion_mm": 16,
+      "overlap_mm3": 0.0
+    }
+  ],
+  "scope": "Nominal64mm dimensional gauge offset upward2mm over flat floor,6 nested225mm assumption. Not a measured feather envelope or deformation/contact simulation. Rounded beads have intentional elastic crossing; click force not calculated."
+}
