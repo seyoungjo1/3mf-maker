@@ -1,6 +1,6 @@
 {
   "post_id": "shuttle-r9-20261021",
-  "status": "creating",
+  "status": "container_created",
   "user_id": "17841465071386831",
   "children": [
     "17973531018169047",
@@ -9,5 +9,6 @@
     "17973531072169047",
     "17973531198169047"
   ],
-  "asset_commit": "a3c2bdfec237a3e35c31bedd6d5e1158dacd034c"
+  "asset_commit": "a3c2bdfec237a3e35c31bedd6d5e1158dacd034c",
+  "container_id": "17973531219169047"
 }
