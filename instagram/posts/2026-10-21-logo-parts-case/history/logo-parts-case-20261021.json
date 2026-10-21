@@ -2,6 +2,8 @@
   "post_id": "logo-parts-case-20261021",
   "status": "creating",
   "user_id": "17841465071386831",
-  "children": [],
+  "children": [
+    "17973539892169047"
+  ],
   "asset_commit": "255a70ab649513af0a3bfffd76c1c285d09a8cdd"
 }
