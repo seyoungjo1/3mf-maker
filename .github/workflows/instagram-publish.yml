@@ -1,0 +1,24 @@
+name: Publish approved shuttle carousel
+on:
+  push:
+    branches: [codex/instagram-publishing]
+    paths: [posts/shuttle-r9/approved.json]
+permissions:
+  contents: write
+concurrency:
+  group: instagram-publish-17841465071386831
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Set checkpoint identity
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+      - name: Publish user-requested carousel exactly once
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+        run: python3 .github/scripts/instagram_publish.py
