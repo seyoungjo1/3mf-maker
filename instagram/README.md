@@ -13,7 +13,7 @@
 | 작업 | 상태 | 자료 | 실제 게시물 |
 |---|---|---|---|
 | 셔틀콕통 — 슬라이드 모티브·사각형 개선·분할 출력 | 재게시 완료 | [게시글 폴더](posts/2026-10-21-shuttlecock/README.md) | [현재 게시물](https://www.instagram.com/p/DevvvV4DKvc/) |
-| 나만의 로고 부품케이스 — 자석 이름표 보관에서 시작 | 검토용 초안 | [게시글 폴더](posts/2026-10-21-logo-parts-case/README.md) | 미게시 |
+| 나만의 로고 부품케이스 — 자석 이름표 보관에서 시작 | 게시 완료 · 총 6개 첨부 | [게시글 폴더](posts/2026-10-21-logo-parts-case/README.md) | [게시물](https://www.instagram.com/p/Dev3ilggTTQ/) |
 
 ## 폴더 규칙
 
