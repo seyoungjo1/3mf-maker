@@ -1,0 +1,10 @@
+{
+ "drawer_vs_clearance_mm3": 0.0,
+ "shell_vs_clearance_mm3": 0.0,
+ "scope": "Assumed six-stack envelope225mm, featherD68/baseD28/length85/pitch28; offset1.5mm, clipped only at front resting face. Not measured brand fit.",
+ "sampled_surface_distance_mm_not_min_clearance": [
+  10.355755041081693,
+  10.371901157596131,
+  11.558040868395697
+ ]
+}

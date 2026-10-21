@@ -1,0 +1,129 @@
+{
+  "parameters_mm": {
+    "OUTER_W": 82.0,
+    "SIDE_R": 100.0,
+    "CORNER_R": 30.0,
+    "CAP_W": 86.0,
+    "CAP_SIDE_R": 102.0,
+    "CAP_CORNER_R": 32.0,
+    "ID": 76.0,
+    "BODY_L": 243.0,
+    "FLOOR": 3.0,
+    "CAP_T": 10.0,
+    "CLOSED_L": 253.0,
+    "TRAY_R": 37.7,
+    "TRAY_T": 2.0,
+    "TRAY_END": 249.8,
+    "STOP_T": 1.25,
+    "USE_L": 225.0,
+    "RADIAL_GAP": 0.3,
+    "ARM_ROOT": 3.5,
+    "ARM_L": 30.5,
+    "ARM_T": 3.0,
+    "ARM_B": 8.0,
+    "PRESS": 1.5,
+    "HOOK_X": 40.2,
+    "GROOVE_D": 0.6,
+    "GROOVE_W": 2.4,
+    "PATTERN_START": 55.0,
+    "PATTERN_END": 190.0,
+    "CONTENT_D": 68.0,
+    "CONTENT_L": 225.0,
+    "STACK_PITCH": 28.0,
+    "SHUTTLE_L": 85.0,
+    "CONTENT_BASE_D": 28.0,
+    "END_ANGLE_FROM_BED": 45.0,
+    "END_BRIDGE_D": 4.0,
+    "BODY_SPLIT_Z": 121.5,
+    "GLUE_L": 10.0,
+    "GLUE_R": 39.4,
+    "GLUE_INNER_R": 38.0,
+    "GLUE_SOCKET_R": 39.7,
+    "CONTENT_CLEARANCE": 1.5,
+    "OUTER_PERIMETER": 270.75966401283245,
+    "PATTERN_PITCH": 22.563305334402703,
+    "END_BLEND_L": 25.858919494890984,
+    "END_TIP_R": 162.71799410394667,
+    "END_FINAL_BRIDGE_D": 4.0,
+    "END_TERMINAL_ANGLE_FROM_BED": 30.0,
+    "END_ROUND_START_Z": 222.69108050510903,
+    "END_ROUND_START_D": 71.4,
+    "END_ACTUAL_ROOF_Z": 248.55,
+    "END_ACTUAL_ROOF_T": 1.25,
+    "END_LAST_CHORD_ANGLE_FROM_BED": 30.03906250000378
+  },
+  "shell_ray_radii_mm": {
+    "0": [
+      38.0,
+      40.593685150146484
+    ],
+    "1": [
+      38.0,
+      40.593685150146484
+    ],
+    "2": [
+      38.0,
+      40.593685150146484
+    ]
+  },
+  "drawer_bottom_radii_mm": [
+    35.70000076293945,
+    37.70000076293945
+  ],
+  "measured_radial_gap_mm": 0.2999992370605469,
+  "latch_theory": {
+    "strain": 0.004837409298575652,
+    "strain_pct": 0.4837409298575652,
+    "allow_pct": 2.0,
+    "ok": true,
+    "tip_force_N": 6.280701908970355,
+    "insert_force_N": 4.776871874428157,
+    "release_force_N": null,
+    "Ymax_mm": 6.201666666666666,
+    "release_model": "positive lock: press to release; pull strength not tested"
+  },
+  "capacity_basis": "Six shuttle envelopes: featherD68, baseD28, length85, nested pitch28, total225mm. These are assumed envelopes, not a verified brand fit. Clearance test adds1.5mm except at the intended front resting face.",
+  "status": "R9 PRINT EXPORT; body lower/upper glued; geometry and assumed capacity checked; physical fit/fatigue/slicing untested",
+  "latch_conservative_Q1": {
+    "strain": 0.007256113947863478,
+    "strain_pct": 0.7256113947863477,
+    "allow_pct": 2.0,
+    "ok": true,
+    "tip_force_N": 9.421052863455532,
+    "insert_force_N": 7.165307811642236,
+    "release_force_N": null,
+    "Ymax_mm": 4.134444444444444,
+    "root_bending_moment_Nm": 0.2873421123353937,
+    "nominal_root_stress_MPa": 23.945176027949476,
+    "release_model": "Press to release; square shoulder has no rated pull strength",
+    "scope": "Linear elastic beam, assumed Q/friction, excludes notch stress, fatigue and layer failure; moment is not opening torque"
+  },
+  "end_geometry": {
+    "main_angle_from_bed_deg": 45.0,
+    "terminal_tangent_from_bed_deg": 30.0,
+    "last_mesh_chord_from_bed_deg": 30.03906250000378,
+    "main_step_per_layer_mm": 0.20000000000000004,
+    "mouth_tangent_blend_mm": 25.858919494890984,
+    "tip_round_radius_mm": 162.71799410394667,
+    "round_start_opening_mm": 71.4,
+    "round_start_z_mm": 222.69108050510903,
+    "final_bridge_mm": 4.0,
+    "roof_underside_z_mm": 248.55,
+    "roof_thickness_mm": 1.25,
+    "outside_filled": true,
+    "measured_nominal_mesh_chord_from_bed_deg": 30.039442643356104,
+    "measured_nominal_bridge_width_mm": 4.0,
+    "measured_chord_endpoints_mm": [
+      [
+        -4.026769749654118e-16,
+        -2.1920711994171143,
+        248.43893432617188
+      ],
+      [
+        -3.6739402930577075e-16,
+        -2.0,
+        248.5500030517578
+      ]
+    ]
+  }
+}
