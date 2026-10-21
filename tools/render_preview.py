@@ -72,6 +72,7 @@ window.setView=function(mode,azDeg){ fit(); controls.target.copy(c); grid.visibl
   else if(mode==='side') camera.position.set(c.x,c.y-s*1.3,c.z+s*0.03);
   else if(mode==='bottom') camera.position.set(c.x,c.y-s*0.001,c.z-s*1.3);
   else if(mode==='front') camera.position.set(c.x+s*0.25,c.y-s*1.15,c.z+s*0.22);
+  else if(mode==='profile') camera.position.set(c.x-s*1.05,c.y-s*0.45,c.z+s*0.18);   // 옆 3/4(왼쪽 앞) — 받침 옆선(지붕·뒤) 확인용
   else { const a=(azDeg===undefined?0:azDeg)*Math.PI/180; const r=s*0.9; camera.position.set(c.x+r*Math.sin(a),c.y-r*Math.cos(a),c.z+s*0.8); }
   camera.lookAt(c); controls.update(); renderer.render(scene,camera); };
 window.setState=function(name){ const st=(DATA.states||{})[name]||{}; const any=Object.keys(st).length>0; for(const [n,m] of Object.entries(meshes)){ const d=st[n]; m.visible=!any||d!==undefined; m.matrixAutoUpdate=false; if(Array.isArray(d)&&d.length===16){ m.matrix.set(...d); } else { const t=d||[0,0,0]; m.matrix.makeTranslation(t[0],t[1],t[2]); } } const lb=document.getElementById('label'); lb.textContent=name||''; lb.style.display=name?'block':'none'; };
@@ -116,7 +117,7 @@ def render(parts, out, colors=None, states=None, frames=36, size=(1200, 900), gi
         state_names = list(states) if states else ['']
         for st in state_names:
             pg.evaluate(f'window.setState({json.dumps(st)})')
-            for v in ('iso', 'top', 'side', 'bottom', 'front'):
+            for v in ('iso', 'top', 'side', 'bottom', 'front', 'profile'):
                 pg.evaluate(f'window.setView({json.dumps(v)},0)'); fn = f'view_{v}' + (f'_{st}' if st else '') + '.png'
                 pg.screenshot(path=os.path.join(out, fn)); pngs[fn] = fn
         pg.close()
