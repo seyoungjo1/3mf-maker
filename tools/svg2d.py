@@ -43,6 +43,28 @@ def load_svg(path, width_mm=None, step=0.5):
     if width_mm: k = width_mm / (x1 - x0); g = sscale(g, k, k, origin=(0, 0))
     return g
 
+def load_raster(path, width_mm=None, channel='red', up=6, blur=1.2, level=0.5, simplify=0.02, min_area=0.5):
+    """래스터 로고(PNG) → shapely 도형(mm). 작은 그림도 계단 없이: up 배 bicubic 확대 → 가우시안 흐림(원본 px 기준 blur) → level 등고선
+    (matplotlib 마칭 스퀘어) → 고리 짝홀 합성. channel: 'red'(빨간 로고) | 'dark'(어두운 글자) | 'alpha'(투명 배경). y 위쪽(+), (0,0) 왼쪽 아래."""
+    import numpy as np
+    from PIL import Image, ImageFilter
+    import matplotlib; matplotlib.use('Agg'); import matplotlib.pyplot as plt
+    im = Image.open(path).convert('RGBA'); a = np.asarray(im).astype(float) / 255
+    if channel == 'red': m = np.clip((a[..., 0] - np.maximum(a[..., 1], a[..., 2])) * 2, 0, 1) * a[..., 3]
+    elif channel == 'dark': m = (1 - a[..., :3].mean(-1)) * a[..., 3]
+    else: m = a[..., 3]
+    g = Image.fromarray((m * 255).astype(np.uint8)).resize((im.width * up, im.height * up), Image.BICUBIC).filter(ImageFilter.GaussianBlur(blur * up))
+    m = np.pad(np.asarray(g).astype(float) / 255, 2)
+    cs = plt.figure().add_subplot().contour(m, levels=[level]); plt.close('all')
+    geom = Polygon()
+    for seg in cs.allsegs[0]:
+        if len(seg) < 4: continue
+        q = Polygon(seg).buffer(0)
+        if q.area > min_area * up * up: geom = geom.symmetric_difference(q)
+    geom = sscale(geom, 1, -1, origin=(0, 0)); x0, y0, x1, y1 = geom.bounds; geom = translate(geom, -x0, -y0)
+    k = (width_mm / (x1 - x0)) if width_mm else 1.0 / up
+    return sscale(geom, k, k, origin=(0, 0)).simplify(simplify)
+
 def thin_parts(g, w):
     """폭 w 보다 가는 부분 = g − opening(g, w/2)."""
     return g.difference(g.buffer(-w / 2, join_style=2).buffer(w / 2, join_style=2))
