@@ -44,23 +44,23 @@ def check():
 PALETTE = ['#37474f', '#ffb300', '#78909c', '#7ccb8b', '#e57373', '#ba68c8', '#4dd0e1', '#a1887f']
 
 HTML = r'''<!doctype html><html><head><meta charset="utf-8"><style>
-html,body{margin:0;background:#1a1d21;overflow:hidden}#viewer{width:__W__px;height:__H__px}
-#status{position:absolute;left:12px;bottom:10px;color:#c8cdd3;font:13px/1.5 sans-serif;white-space:pre;background:#1b1e23cc;border:1px solid #3c4043;border-radius:8px;padding:6px 10px}
-#label{position:absolute;right:12px;top:10px;color:#e8eaed;font:13px sans-serif;background:#23272ecc;border:1px solid #3c4043;border-radius:6px;padding:5px 10px}
+html,body{margin:0;background:#ffffff;overflow:hidden}#viewer{width:__W__px;height:__H__px}
+#status{position:absolute;left:12px;bottom:10px;color:#30343b;font:13px/1.5 sans-serif;white-space:pre;background:#ffffffdd;border:1px solid #d3d7dc;border-radius:8px;padding:6px 10px}
+#label{position:absolute;right:12px;top:10px;color:#30343b;font:13px sans-serif;background:#ffffffdd;border:1px solid #d3d7dc;border-radius:6px;padding:5px 10px}
 </style></head><body><div id="viewer"></div><div id="status"></div><div id="label"></div>
 <script type="importmap">{"imports":{"three":"/viewer/three.module.js"}}</script>
 <script type="module">
 import * as THREE from 'three'; import { OrbitControls } from '/viewer/OrbitControls.js';
 const DATA = await (await fetch('/data.json')).json();
-const viewer=document.getElementById('viewer'); const scene=new THREE.Scene(); scene.background=new THREE.Color(0x1a1d21);
+const viewer=document.getElementById('viewer'); const scene=new THREE.Scene(); scene.background=new THREE.Color(0xffffff);
 const camera=new THREE.PerspectiveCamera(45,__W__/__H__,0.1,4000); const renderer=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});
 renderer.setSize(__W__,__H__); renderer.setPixelRatio(1); viewer.appendChild(renderer.domElement);
 const controls=new OrbitControls(camera,renderer.domElement);
-scene.add(new THREE.HemisphereLight(0xffffff,0x444455,1.1));
+scene.add(new THREE.HemisphereLight(0xffffff,0xc9cdd3,1.5));
 const dir=new THREE.DirectionalLight(0xffffff,1.2); dir.position.set(-40,-60,90); scene.add(dir);
 const dirUp=new THREE.DirectionalLight(0xffffff,0.55); dirUp.position.set(40,60,-90); scene.add(dirUp);
-const bedSize=DATA.bed||256; const grid=new THREE.GridHelper(bedSize,bedSize/10,0x3c4043,0x2a2e33); grid.rotation.x=Math.PI/2; grid.position.set(bedSize/2,bedSize/2,0); scene.add(grid);
-const bedMat=new THREE.MeshStandardMaterial({color:0x23282e,roughness:0.85,metalness:0.1});
+const bedSize=DATA.bed||256; const grid=new THREE.GridHelper(bedSize,bedSize/10,0xc3c8ce,0xe1e5e9); grid.rotation.x=Math.PI/2; grid.position.set(bedSize/2,bedSize/2,0); scene.add(grid);
+const bedMat=new THREE.MeshStandardMaterial({color:0xf4f5f6,roughness:0.85,metalness:0.1});
 const bed=new THREE.Mesh(new THREE.BoxGeometry(bedSize,bedSize,2),bedMat); bed.position.set(bedSize/2,bedSize/2,-1.05); scene.add(bed);
 const meshes={}; const box=new THREE.Box3();
 for(const p of DATA.parts){ const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.Float32BufferAttribute(p.positions,3)); g.setIndex(p.indices); g.computeVertexNormals();

@@ -1,6 +1,8 @@
 # 3mf-maker
 
 ## 인스타그램 운영
+- **캡처 품질이 우선**: 흰 배경과 밝은 조명으로 형태·로고·구조가 읽히게 찍고 그 이미지에 맞춰 글을 쓴다. 농담은 필수가 아니다.
+- 브랜드·로고 등으로 안내가 필요한 게시물에만 마지막 이미지로 취미 제작·반복 생산/판매 목적 없음·비공식 관계·권리자 요청 시 삭제 안내를 넣는다. 딱딱하지 않은 말투와 읽기 편한 한글 폰트를 사용한다. 모든 캡션에 기계적으로 붙이지 않고 면책이나 이용 허락이라고 표현하지 않는다. 정확한 문구는 `docs/social/editorial-guide.md`를 따른다.
 - 게시 자동화는 **GitHub Actions + Instagram 공식 API(Instagram Login 우선)** 를 사용한다. 인스타그램 관련 변경은 `codex/instagram-publishing` 별도 브랜치에서 진행하고, 별도 요청 전에는 main에 병합하지 않는다.
 - **게시글도 결과물의 일부**다. 3MF 캡처만 업로드하지 말고 프로젝트 기록을 읽어 첫 문장·설계 이야기·확인된 특징·상태 표시·해시태그를 함께 준비한다.
 - 운영 지침: `docs/social/instagram-publishing.md`, 게시글·캡처 편집 기준: `docs/social/editorial-guide.md`. 스터디 색인: `.claude/skills/3d-print-3mf/references/studies/README.md`.
