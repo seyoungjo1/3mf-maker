@@ -1,0 +1,35 @@
+name: Instagram connection check (read only)
+on:
+  push:
+    branches: [codex/instagram-publishing]
+    paths:
+      - .github/workflows/instagram-check.yml
+      - .github/scripts/instagram_check.py
+      - config/instagram.json
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: instagram-connection-check
+  cancel-in-progress: false
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Verify token account without publishing
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+        run: python3 .github/scripts/instagram_check.py
+      - name: Persist sanitized connection result
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add docs/social/connection-status.json
+          git diff --cached --quiet && exit 0
+          git commit -m 'docs: record read-only Instagram connection check'
+          git push
+      - name: Report failed connection
+        run: |
+          python3 -c 'import json; from pathlib import Path; raise SystemExit(0 if json.loads(Path("docs/social/connection-status.json").read_text())["ok"] else 1)'
