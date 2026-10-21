@@ -1,0 +1,75 @@
+{
+ "ok": true,
+ "report": "/workspace/3mf-maker/작업중/shuttle6-wave-R9/qc/review_R9/REPORT.md",
+ "warn": [],
+ "info": [],
+ "build_log_tail": "157,\n  \"release_force_N\": null,\n  \"Ymax_mm\": 6.201666666666666,\n  \"release_model\": \"positive lock: press to release; pull strength not tested\"\n },\n \"capacity_basis\": \"Six shuttle envelopes: featherD68, baseD28, length85, nested pitch28, total225mm. These are assumed envelopes, not a verified brand fit. Clearance test adds1.5mm except at the intended front resting face.\",\n \"status\": \"R9 REVIEW; physical fit and fatigue untested\",\n \"latch_conservative_Q1\": {\n  \"strain\": 0.007256113947863478,\n  \"strain_pct\": 0.7256113947863477,\n  \"allow_pct\": 2.0,\n  \"ok\": true,\n  \"tip_force_N\": 9.421052863455532,\n  \"insert_force_N\": 7.165307811642236,\n  \"release_force_N\": null,\n  \"Ymax_mm\": 4.134444444444444,\n  \"root_bending_moment_Nm\": 0.2873421123353937,\n  \"nominal_root_stress_MPa\": 23.945176027949476,\n  \"release_model\": \"Press to release; square shoulder has no rated pull strength\",\n  \"scope\": \"Linear elastic beam, assumed Q/friction, excludes notch stress, fatigue and layer failure; moment is not opening torque\"\n },\n \"end_geometry\": {\n  \"main_angle_from_bed_deg\": 45.0,\n  \"terminal_tangent_from_bed_deg\": 30.0,\n  \"last_mesh_chord_from_bed_deg\": 30.03906250000378,\n  \"main_step_per_layer_mm\": 0.20000000000000004,\n  \"mouth_tangent_blend_mm\": 25.858919494890984,\n  \"tip_round_radius_mm\": 162.71799410394667,\n  \"round_start_opening_mm\": 71.4,\n  \"round_start_z_mm\": 222.69108050510903,\n  \"final_bridge_mm\": 4.0,\n  \"roof_underside_z_mm\": 248.55,\n  \"roof_thickness_mm\": 1.25,\n  \"outside_filled\": true\n }\n}\n",
+ "checklist": {
+  "ok": true,
+  "line": "[?] Skill 호출 [?] SKILL.md+references 전부 읽음 [x] 올라온 파일은 sample/ 복사·단면 실측 그림·스터디 기록 [x] 설계 치수표(결합 치수는 상대 파트에서 측정) [x] QC [x] 조립 검증(실제 좌표에 놓은 교집합·간격·스윕) [x] 렌더 5뷰+GIF 눈으로 확인 [x] EFC 선반영·서포트 위치 명시 [-] 3MF strict 0 [x] 보고",
+  "items": [
+   {
+    "key": "skill",
+    "label": "Skill 호출",
+    "pass": null,
+    "note": "세션이 보증(Skill 도구 호출)"
+   },
+   {
+    "key": "read",
+    "label": "SKILL.md+references 전부 읽음",
+    "pass": null,
+    "note": "세션이 보증(references 전부 Read)"
+   },
+   {
+    "key": "inputs",
+    "label": "올라온 파일은 sample/ 복사·단면 실측 그림·스터디 기록",
+    "pass": true,
+    "note": "3개 sample/·스터디 있음; CAD 단면 확인, 사진 3개는 실측 불가 사유 명시"
+   },
+   {
+    "key": "dims",
+    "label": "설계 치수표(결합 치수는 상대 파트에서 측정)",
+    "pass": true,
+    "note": "치수 14행"
+   },
+   {
+    "key": "qc",
+    "label": "QC",
+    "pass": true,
+    "note": "파트 6개, QC 경고 0"
+   },
+   {
+    "key": "assembly",
+    "label": "조립 검증(실제 좌표에 놓은 교집합·간격·스윕)",
+    "pass": true,
+    "note": "상태 25, 결합 쌍 7, 스윕 [], 경고 0"
+   },
+   {
+    "key": "render",
+    "label": "렌더 5뷰+GIF 눈으로 확인",
+    "pass": true,
+    "note": "GIF 1개 생성 — 눈으로 볼 파일: 작업중/shuttle6-wave-R9/qc/review_R9/assembly/turntable.gif"
+   },
+   {
+    "key": "efc",
+    "label": "EFC 선반영·서포트 위치 명시",
+    "pass": true,
+    "note": "EFC 0.15 선반영(공칭 pkl 분리) · 서포트 위치 ['drawer', 'drawer_coupon', 'tip_coupon']"
+   },
+   {
+    "key": "strict",
+    "label": "3MF strict 0",
+    "pass": "N/A",
+    "note": "검토 단계: 렌더 승인 전3MF 미생성, strict 검사 미실행"
+   },
+   {
+    "key": "report",
+    "label": "보고",
+    "pass": true,
+    "note": "REPORT.md · 경고 0"
+   }
+  ],
+  "legend": "[x] 통과 [ ] 실패 [-] 해당 없음 [?] 세션이 보증"
+ },
+ "seconds": 88
+}

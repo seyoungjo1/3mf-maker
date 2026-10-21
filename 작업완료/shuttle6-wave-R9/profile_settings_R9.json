@@ -1,0 +1,244 @@
+{
+  "template": "sample/nameplate_50x30x7_EtoA.3mf",
+  "template_sha256": "2577a7ad871bfe9e504ead1772eef68b3a354836855b135ccae0aacc477c177f",
+  "printer": "Bambu Lab P1S 0.4 nozzle",
+  "nozzle_diameter": [
+    "0.4"
+  ],
+  "filament_type": [
+    "PLA",
+    "PLA",
+    "PLA"
+  ],
+  "filament_settings_id": [
+    "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+    "Bambu PLA Basic @BBL P1S 0.4 nozzle",
+    "Bambu PLA Basic @BBL P1S 0.4 nozzle"
+  ],
+  "settings_applied": {
+    "layer_height": "0.2",
+    "initial_layer_print_height": "0.2",
+    "elefant_foot_compensation": "0.15",
+    "wall_loops": "4",
+    "top_shell_layers": "5",
+    "bottom_shell_layers": "5",
+    "sparse_infill_density": "15%",
+    "sparse_infill_pattern": "gyroid",
+    "brim_type": "outer_only",
+    "brim_width": "10",
+    "enable_support": "1",
+    "support_type": "tree(auto)",
+    "support_on_build_plate_only": "0",
+    "support_threshold_angle": "30",
+    "enable_prime_tower": "0",
+    "bridge_no_support": "1",
+    "support_remove_small_overhang": "0",
+    "slow_down_layer_time": [
+      "8",
+      "8",
+      "8"
+    ],
+    "outer_wall_speed": [
+      "40",
+      "40"
+    ],
+    "inner_wall_speed": [
+      "60",
+      "60"
+    ],
+    "sparse_infill_speed": [
+      "80",
+      "80"
+    ],
+    "internal_solid_infill_speed": [
+      "60",
+      "60"
+    ],
+    "top_surface_speed": [
+      "30",
+      "30"
+    ],
+    "bridge_speed": [
+      "20",
+      "20"
+    ],
+    "travel_speed": [
+      "120",
+      "120"
+    ],
+    "default_acceleration": [
+      "1500",
+      "1500"
+    ],
+    "outer_wall_acceleration": [
+      "600",
+      "600"
+    ],
+    "inner_wall_acceleration": [
+      "1000",
+      "1000"
+    ],
+    "travel_acceleration": [
+      "1500",
+      "1500"
+    ],
+    "top_surface_acceleration": [
+      "600",
+      "600"
+    ],
+    "initial_layer_speed": [
+      "20",
+      "20"
+    ],
+    "initial_layer_infill_speed": [
+      "30",
+      "30"
+    ],
+    "gap_infill_speed": [
+      "40",
+      "40"
+    ],
+    "support_speed": [
+      "60",
+      "60"
+    ],
+    "support_interface_speed": [
+      "30",
+      "30"
+    ],
+    "initial_layer_travel_acceleration": [
+      "1000",
+      "1000"
+    ]
+  },
+  "support_reason": "Small supports under the latch shoulder at z30 and the slot closure lip at z45.5. Roof windows finish with4mm bridges; the filled rear scoop curves immediately from45deg at the mouth to30deg at the tip, without a straight cone run and ends at4mm bridge. bridge_no_support=1. Actual Bambu Studio slicing not yet observed.",
+  "geometry_source_sha256": "1d9a0ec0b24be7215eda910d9af910d95cb985895b011ade56094d3e41422282",
+  "plates": [
+    {
+      "file": "models/plates_R9/P01_body_pair.3mf",
+      "objects": [
+        {
+          "part": "shell_lower",
+          "bounds_mm": [
+            [
+              31.0,
+              87.0,
+              0.0
+            ],
+            [
+              113.0,
+              169.0,
+              131.5
+            ]
+          ],
+          "triangles": 64396
+        },
+        {
+          "part": "shell_upper",
+          "bounds_mm": [
+            [
+              142.8499984741211,
+              86.8499984741211,
+              0.0
+            ],
+            [
+              225.1500015258789,
+              169.1500015258789,
+              121.5
+            ]
+          ],
+          "triangles": 52560
+        }
+      ],
+      "color": "#33383e"
+    },
+    {
+      "file": "models/plates_R9/P02_drawer.3mf",
+      "objects": [
+        {
+          "part": "drawer",
+          "bounds_mm": [
+            [
+              85.02473831176758,
+              85.0,
+              0.0
+            ],
+            [
+              170.97526168823242,
+              171.0,
+              249.8000030517578
+            ]
+          ],
+          "triangles": 124250
+        }
+      ],
+      "color": "#bd6f53"
+    },
+    {
+      "file": "models/plates_R9/P03_shell_coupon.3mf",
+      "objects": [
+        {
+          "part": "shell_coupon",
+          "bounds_mm": [
+            [
+              86.8499984741211,
+              86.8499984741211,
+              0.0
+            ],
+            [
+              169.1500015258789,
+              169.1500015258789,
+              36.0
+            ]
+          ],
+          "triangles": 3608
+        }
+      ],
+      "color": "#33383e"
+    },
+    {
+      "file": "models/plates_R9/P04_drawer_coupon.3mf",
+      "objects": [
+        {
+          "part": "drawer_coupon",
+          "bounds_mm": [
+            [
+              85.02473831176758,
+              85.0,
+              0.0
+            ],
+            [
+              170.97526168823242,
+              171.0,
+              42.0
+            ]
+          ],
+          "triangles": 17956
+        }
+      ],
+      "color": "#bd6f53"
+    },
+    {
+      "file": "models/plates_R9/P05_tip_coupon.3mf",
+      "objects": [
+        {
+          "part": "tip_coupon",
+          "bounds_mm": [
+            [
+              90.14752578735352,
+              108.99998931586742,
+              0.0
+            ],
+            [
+              165.85247421264648,
+              147.00001068413258,
+              9.800003051757812
+            ]
+          ],
+          "triangles": 18640
+        }
+      ],
+      "color": "#bd6f53"
+    }
+  ]
+}

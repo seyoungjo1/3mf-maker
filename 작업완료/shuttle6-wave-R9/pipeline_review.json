@@ -1,0 +1,73 @@
+{
+ "name": "Shuttle6 C R9 / 입구45도부터 즉시 곡률→끝30도·브리지4mm / 몸통2분할",
+ "build": [
+  "scripts/build.py"
+ ],
+ "out": "qc/review_R9",
+ "parts_pkl": "parts.pkl",
+ "assembly_parts_pkl": "parts_nominal.pkl",
+ "plates": [],
+ "assembly": "scripts/assembly.py",
+ "colors": {
+  "shell_lower": "#33383e",
+  "shell_upper": "#33383e",
+  "shell": "#33383e",
+  "drawer": "#bd6f53",
+  "drawer_pressed": "#bd6f53",
+  "shell_coupon": "#33383e",
+  "drawer_coupon": "#bd6f53",
+  "contents": "#eeeeee",
+  "clearance": "#89b7d0",
+  "tip_coupon": "#bd6f53"
+ },
+ "qc": {
+  "efc": 0.15,
+  "max_bridge": 5,
+  "min_wall": 1.2,
+  "single_wall": []
+ },
+ "support_zones": [
+  {
+   "part": "drawer",
+   "desc": "걸쇠 턱z30·슬롯 끝z45.5 트리서포트. 콘은 입구45도부터 끝30도까지 즉시 연속 곡률, 마지막4mm 브리지. QC의 국부 사면 돌출도 포함하며 실제 슬라이싱에서 지지 확인.",
+   "max_mm2": 30
+  },
+  {
+   "part": "drawer_coupon",
+   "desc": "걸쇠 수평 턱 z30 아래 작은 트리서포트. 시험편에는 슬롯 닫힘 끝이 없음.",
+   "max_mm2": 30
+  },
+  {
+   "part": "tip_coupon",
+   "desc": "끝9.8mm 시험편의 곡면에 누적1.6mm² 국부 돌출. 자동 트리서포트를 유지하고 슬라이싱 배치 확인. 마지막4mm는 브리지.",
+   "max_mm2": 2.0
+  }
+ ],
+ "accepted": [],
+ "min_gap": 0.3,
+ "frames": 19,
+ "bambu": {
+  "enabled": false
+ },
+ "inputs": [
+  {
+   "file": "shuttle6_slide_reference.jpg",
+   "kind": "image",
+   "sections_na": "축척이 없는 사진이라 mm 단면 실측 불가. 신규 CAD 단면은 별도 제공하며 사진 실측으로 주장하지 않음.",
+   "study": ".claude/skills/3d-print-3mf/references/studies/shuttle6-wave.md"
+  },
+  {
+   "file": "shuttle6_concept_reference.jpg",
+   "kind": "image",
+   "sections_na": "치수 없는 개념 그림이며 신규 CAD 단면을 별도로 측정. 사진 치수로 주장하지 않음.",
+   "study": ".claude/skills/3d-print-3mf/references/studies/shuttle6-wave.md"
+  },
+  {
+   "file": "shuttle6_conical_end_sketch.jpg",
+   "kind": "image",
+   "sections_na": "치수 없는 개념 그림이며 신규 CAD 단면을 별도로 측정. 사진 치수로 주장하지 않음.",
+   "study": ".claude/skills/3d-print-3mf/references/studies/shuttle6-wave.md"
+  }
+ ],
+ "review_only": true
+}

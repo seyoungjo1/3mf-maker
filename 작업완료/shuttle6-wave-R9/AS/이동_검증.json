@@ -1,0 +1,13 @@
+{
+  "geometry_changed": false,
+  "source_before": "작업중/shuttle6-wave-R9",
+  "destination": "작업완료/shuttle6-wave-R9",
+  "original_file_count": 476,
+  "original_gif_count": 11,
+  "all_original_paths_present": true,
+  "modified_existing_files": [
+    "README.md",
+    "scripts/pack_print.py"
+  ],
+  "modification_scope": "README archive path and stale round-start diameter correction; pack script portable selftest path. All other original files byte-identical."
+}

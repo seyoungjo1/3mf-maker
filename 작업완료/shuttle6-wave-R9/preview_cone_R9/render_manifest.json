@@ -1,0 +1,20 @@
+{
+ "backend": "software",
+ "states": [
+  "이전 R8",
+  "수정 R9"
+ ],
+ "views": [
+  "view_iso_이전 R8.png",
+  "view_top_이전 R8.png",
+  "view_side_이전 R8.png",
+  "view_bottom_이전 R8.png",
+  "view_front_이전 R8.png",
+  "view_iso_수정 R9.png",
+  "view_top_수정 R9.png",
+  "view_side_수정 R9.png",
+  "view_bottom_수정 R9.png",
+  "view_front_수정 R9.png"
+ ],
+ "frames": 24
+}
