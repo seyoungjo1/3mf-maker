@@ -1,0 +1,14 @@
+{
+ "backend": "software",
+ "states": [
+  ""
+ ],
+ "views": [
+  "view_iso.png",
+  "view_top.png",
+  "view_side.png",
+  "view_bottom.png",
+  "view_front.png"
+ ],
+ "frames": 24
+}

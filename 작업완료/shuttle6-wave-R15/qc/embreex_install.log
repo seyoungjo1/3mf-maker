@@ -1,0 +1,10 @@
+Collecting embreex
+  Downloading embreex-4.4.0.post1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (3.0 kB)
+Requirement already satisfied: numpy in ./3mf-maker-venv/lib/python3.12/site-packages (from embreex) (2.5.3)
+Downloading embreex-4.4.0.post1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (14.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 14.6/14.6 MB 37.2 MB/s eta 0:00:00
+Installing collected packages: embreex
+Successfully installed embreex-4.4.0.post1
+
+[notice] A new release of pip is available: 25.0.1 -> 26.2.2
+[notice] To update, run: python -m pip install --upgrade pip
