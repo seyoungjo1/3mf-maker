@@ -1,0 +1,13 @@
+{
+ "same_revision_body_meshes_unchanged": true,
+ "body_sha256": {
+  "shell_lower": "1b474f9ef6ba1b563f2ccbc95b432ddf05bd1e33ad90e9ab3e36fac7cbda1736",
+  "shell_upper": "c9a27a617c6eb5f1cacecab1df9f6d9264b3bf368d3ecf5739163e6f8ce6f5d1"
+ },
+ "updated": [
+  "cap",
+  "drawer",
+  "drawer_coupon"
+ ],
+ "scope": "Latest user changes only the front cap/tray connection. Default build.py reproduces complete geometry from scratch."
+}

@@ -1,0 +1,28 @@
+{
+ "before_bounds_mm": [
+  [
+   -39.101688385009766,
+   -39.100425720214844,
+   0.0
+  ],
+  [
+   39.102691650390625,
+   39.10198974609375,
+   121.50010681152344
+  ]
+ ],
+ "after_bounds_mm": [
+  [
+   -39.101688385009766,
+   -39.100425720214844,
+   0.0
+  ],
+  [
+   39.102691650390625,
+   39.10198974609375,
+   121.5
+  ]
+ ],
+ "max_axial_trim_mm": 0.0001068115234375,
+ "reason": "Eliminate0.000107mm QEM overshoot into the cap contact plane; printed outer pattern and collar dimensions retained."
+}

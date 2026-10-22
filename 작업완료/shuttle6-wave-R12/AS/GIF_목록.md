@@ -1,0 +1,26 @@
+# R12 GIF 전체
+
+- [AS/문양_비교/turntable.gif](../AS/문양_비교/turntable.gif)
+- [deliverables_R12/GIF/assembly.gif](../deliverables_R12/GIF/assembly.gif)
+- [deliverables_R12/GIF/plate_P01_body_pair.gif](../deliverables_R12/GIF/plate_P01_body_pair.gif)
+- [deliverables_R12/GIF/plate_P02_horizontal_tray.gif](../deliverables_R12/GIF/plate_P02_horizontal_tray.gif)
+- [deliverables_R12/GIF/plate_P03_separate_cap.gif](../deliverables_R12/GIF/plate_P03_separate_cap.gif)
+- [deliverables_R12/GIF/plate_P04_detent_shell_coupon.gif](../deliverables_R12/GIF/plate_P04_detent_shell_coupon.gif)
+- [deliverables_R12/GIF/plate_P05_detent_tray_coupon.gif](../deliverables_R12/GIF/plate_P05_detent_tray_coupon.gif)
+- [deliverables_R12/GIF/plate_P06_tip_coupon.gif](../deliverables_R12/GIF/plate_P06_tip_coupon.gif)
+- [deliverables_R12/preview/cap_turntable.gif](../deliverables_R12/preview/cap_turntable.gif)
+- [deliverables_R12/preview/joint_turntable.gif](../deliverables_R12/preview/joint_turntable.gif)
+- [deliverables_R12/preview/turntable.gif](../deliverables_R12/preview/turntable.gif)
+- [preview_R12/turntable.gif](../preview_R12/turntable.gif)
+- [preview_cap_R12/turntable.gif](../preview_cap_R12/turntable.gif)
+- [preview_joint_R12/turntable.gif](../preview_joint_R12/turntable.gif)
+- [qc/final_R12/assembly/turntable.gif](../qc/final_R12/assembly/turntable.gif)
+- [qc/final_R12/plate_P01_body_pair/turntable.gif](../qc/final_R12/plate_P01_body_pair/turntable.gif)
+- [qc/final_R12/plate_P02_horizontal_tray/turntable.gif](../qc/final_R12/plate_P02_horizontal_tray/turntable.gif)
+- [qc/final_R12/plate_P03_separate_cap/turntable.gif](../qc/final_R12/plate_P03_separate_cap/turntable.gif)
+- [qc/final_R12/plate_P04_detent_shell_coupon/turntable.gif](../qc/final_R12/plate_P04_detent_shell_coupon/turntable.gif)
+- [qc/final_R12/plate_P05_detent_tray_coupon/turntable.gif](../qc/final_R12/plate_P05_detent_tray_coupon/turntable.gif)
+- [qc/final_R12/plate_P06_tip_coupon/turntable.gif](../qc/final_R12/plate_P06_tip_coupon/turntable.gif)
+- [qc/review_R12/assembly/turntable.gif](../qc/review_R12/assembly/turntable.gif)
+
+검토·최종·문양 비교·연결부와 출력자료 사본까지22개를 보존합니다.

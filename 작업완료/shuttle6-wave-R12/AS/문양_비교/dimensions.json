@@ -1,0 +1,29 @@
+{
+ "scope": "Preview of44-48mm wide curved wall segments only; not the complete case, no3MF export or main publication. Print defect causes not confirmed from physical photos.",
+ "existing": {
+  "pitch_mm": 21.437707098157333,
+  "groove_width_mm": 2.4,
+  "groove_depth_mm": 0.6,
+  "between_concentric_grooves_land_mm": 0.06533631628809333,
+  "circumference_sampling_mm": 1.004892520226125,
+  "axial_sampling_mm": 0.6
+ },
+ "proposed": {
+  "pitch_mm": 25.7252485177888,
+  "groove_width_mm": 1.6,
+  "groove_depth_mm": 0.4,
+  "between_concentric_grooves_land_mm": 1.358403579545712,
+  "circumference_sampling_mm": 0.25122313005653124,
+  "axial_sampling_mm": 0.11986754966887418
+ },
+ "same": [
+  "Four concentric arcs",
+  "Exterior R100/R30",
+  "ID69.8mm bore",
+  "Upright print direction"
+ ],
+ "nominal_triangles": {
+  "existing": 6726,
+  "proposed": 121368
+ }
+}

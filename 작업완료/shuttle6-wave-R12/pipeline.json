@@ -1,0 +1,225 @@
+{
+ "name": "Shuttle6 C R12 / open ID64 / flat horizontal tray / separate cap / rounded detents",
+ "build": [
+  "scripts/export_print.py"
+ ],
+ "out": "qc/final_R12",
+ "parts_pkl": "parts.pkl",
+ "assembly_parts_pkl": "parts_nominal.pkl",
+ "plates": [
+  "models/plates_R12/P01_body_pair.3mf",
+  "models/plates_R12/P02_horizontal_tray.3mf",
+  "models/plates_R12/P03_separate_cap.3mf",
+  "models/plates_R12/P04_detent_shell_coupon.3mf",
+  "models/plates_R12/P05_detent_tray_coupon.3mf",
+  "models/plates_R12/P06_tip_coupon.3mf"
+ ],
+ "assembly": "scripts/assembly_print.py",
+ "colors": {
+  "shell_lower": "#33383e",
+  "shell_upper": "#33383e",
+  "shell": "#33383e",
+  "drawer": "#bd6f53",
+  "drawer_pressed": "#bd6f53",
+  "shell_coupon": "#33383e",
+  "drawer_coupon": "#bd6f53",
+  "contents": "#eeeeee",
+  "clearance": "#89b7d0",
+  "tip_coupon": "#bd6f53",
+  "cap": "#bd6f53",
+  "drawer_cap_pressed": "#bd6f53"
+ },
+ "qc": {
+  "efc": 0.15,
+  "max_bridge": 5,
+  "min_wall": 1.2,
+  "single_wall": []
+ },
+ "support_zones": [
+  {
+   "part": "drawer",
+   "desc": "보강 내관의 바닥 양옆 전이부·돌기 아래·새 반원/사각 키 앞끝 전이부. 실제 누적4652.0mm². 트리서포트 사용.",
+   "max_mm2": 4700
+  },
+  {
+   "part": "drawer_coupon",
+   "desc": "내관 시험편의 바닥 양옆 전이부·돌기와 새 앞끝 아래. 실제 누적754.8mm². 트리서포트 사용.",
+   "max_mm2": 780
+  },
+  {
+   "part": "tip_coupon",
+   "desc": "눕힌 콘끝 시험편 바닥 양옆 전이부. 실제 QC 누적180.0mm².",
+   "max_mm2": 190
+  },
+  {
+   "part": "cap",
+   "desc": "Separate cap face-down; socket opens upward.",
+   "max_mm2": 30
+  }
+ ],
+ "accepted": [
+  {
+   "part": "shell_lower",
+   "flag": "얇은 살",
+   "max": 6.0,
+   "desc": "키 선단1mm 삽입 유도면의 국부 모서리: 실제 QC5.2mm²,z135.2. 독립 벽/탄성 암이 아니며 뒤쪽 연속 collar 벽은 선단에서도1.85mm 이상, 축부2.20mm·키 폭8mm·길이14mm. 어깨부/키 뿌리는 깎지 않았고 선단의 작은 형상만 허용. 실제 강도 미검증."
+  }
+ ],
+ "min_gap": 0.3,
+ "frames": 19,
+ "bambu": {
+  "enabled": true,
+  "plate_colors": {
+   "models/plates_R12/P01_body_pair.3mf": [
+    "#33383e"
+   ],
+   "models/plates_R12/P02_horizontal_tray.3mf": [
+    "#bd6f53"
+   ],
+   "models/plates_R12/P03_separate_cap.3mf": [
+    "#bd6f53"
+   ],
+   "models/plates_R12/P04_detent_shell_coupon.3mf": [
+    "#33383e"
+   ],
+   "models/plates_R12/P05_detent_tray_coupon.3mf": [
+    "#bd6f53"
+   ],
+   "models/plates_R12/P06_tip_coupon.3mf": [
+    "#bd6f53"
+   ]
+  },
+  "settings": {
+   "layer_height": "0.2",
+   "initial_layer_print_height": "0.2",
+   "elefant_foot_compensation": "0.15",
+   "wall_loops": "4",
+   "top_shell_layers": "5",
+   "bottom_shell_layers": "5",
+   "sparse_infill_density": "15%",
+   "sparse_infill_pattern": "gyroid",
+   "brim_type": "outer_only",
+   "brim_width": "10",
+   "enable_support": "1",
+   "support_type": "tree(auto)",
+   "support_on_build_plate_only": "0",
+   "support_threshold_angle": "30",
+   "enable_prime_tower": "0",
+   "bridge_no_support": "1",
+   "support_remove_small_overhang": "0",
+   "slow_down_layer_time": [
+    "8",
+    "8",
+    "8"
+   ],
+   "outer_wall_speed": [
+    "40",
+    "40"
+   ],
+   "inner_wall_speed": [
+    "60",
+    "60"
+   ],
+   "sparse_infill_speed": [
+    "80",
+    "80"
+   ],
+   "internal_solid_infill_speed": [
+    "60",
+    "60"
+   ],
+   "top_surface_speed": [
+    "30",
+    "30"
+   ],
+   "bridge_speed": [
+    "20",
+    "20"
+   ],
+   "travel_speed": [
+    "120",
+    "120"
+   ],
+   "default_acceleration": [
+    "1500",
+    "1500"
+   ],
+   "outer_wall_acceleration": [
+    "600",
+    "600"
+   ],
+   "inner_wall_acceleration": [
+    "1000",
+    "1000"
+   ],
+   "travel_acceleration": [
+    "1500",
+    "1500"
+   ],
+   "top_surface_acceleration": [
+    "600",
+    "600"
+   ],
+   "initial_layer_speed": [
+    "20",
+    "20"
+   ],
+   "initial_layer_infill_speed": [
+    "30",
+    "30"
+   ],
+   "gap_infill_speed": [
+    "40",
+    "40"
+   ],
+   "support_speed": [
+    "60",
+    "60"
+   ],
+   "support_interface_speed": [
+    "30",
+    "30"
+   ],
+   "initial_layer_travel_acceleration": [
+    "1000",
+    "1000"
+   ]
+  },
+  "combined": {
+   "out": "models/Shuttle6_C_R12_ID64_horizontal_bambu.3mf",
+   "filaments": [
+    "#33383e",
+    "#bd6f53"
+   ],
+   "names": {
+    "models/plates_R12/P01_body_pair.3mf": "01 몸통2조각",
+    "models/plates_R12/P02_horizontal_tray.3mf": "02 내관 눕힘·대각선",
+    "models/plates_R12/P03_separate_cap.3mf": "03 별도 끼움뚜껑",
+    "models/plates_R12/P04_detent_shell_coupon.3mf": "04 딸깍 외관 시험편",
+    "models/plates_R12/P05_detent_tray_coupon.3mf": "05 딸깍 내관 시험편",
+    "models/plates_R12/P06_tip_coupon.3mf": "06 콘끝 시험편"
+   }
+  }
+ },
+ "inputs": [
+  {
+   "file": "shuttle6_slide_reference.jpg",
+   "kind": "image",
+   "sections_na": "축척이 없는 사진이라 mm 단면 실측 불가. 신규 CAD 단면은 별도 제공하며 사진 실측으로 주장하지 않음.",
+   "study": ".claude/skills/3d-print-3mf/references/studies/shuttle6-wave.md"
+  },
+  {
+   "file": "shuttle6_concept_reference.jpg",
+   "kind": "image",
+   "sections_na": "치수 없는 개념 그림이며 신규 CAD 단면을 별도로 측정. 사진 치수로 주장하지 않음.",
+   "study": ".claude/skills/3d-print-3mf/references/studies/shuttle6-wave.md"
+  },
+  {
+   "file": "shuttle6_conical_end_sketch.jpg",
+   "kind": "image",
+   "sections_na": "치수 없는 개념 그림이며 신규 CAD 단면을 별도로 측정. 사진 치수로 주장하지 않음.",
+   "study": ".claude/skills/3d-print-3mf/references/studies/shuttle6-wave.md"
+  }
+ ],
+ "review_only": false
+}

@@ -1,0 +1,20 @@
+{
+ "backend": "software",
+ "states": [
+  "반원4mm·사각30mm",
+  "딸깍 조립"
+ ],
+ "views": [
+  "view_iso_반원4mm·사각30mm.png",
+  "view_top_반원4mm·사각30mm.png",
+  "view_side_반원4mm·사각30mm.png",
+  "view_bottom_반원4mm·사각30mm.png",
+  "view_front_반원4mm·사각30mm.png",
+  "view_iso_딸깍 조립.png",
+  "view_top_딸깍 조립.png",
+  "view_side_딸깍 조립.png",
+  "view_bottom_딸깍 조립.png",
+  "view_front_딸깍 조립.png"
+ ],
+ "frames": 24
+}
