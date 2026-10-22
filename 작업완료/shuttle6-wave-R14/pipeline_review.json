@@ -1,0 +1,89 @@
+{
+ "name": "Shuttle6 R14 / full round64 chamber / additive external cradle / six detents in rail",
+ "build": [
+  "scripts/build.py"
+ ],
+ "out": "qc/review_R14",
+ "parts_pkl": "parts.pkl",
+ "assembly_parts_pkl": "parts_nominal.pkl",
+ "plates": [],
+ "assembly": "scripts/assembly_print.py",
+ "colors": {
+  "shell_lower": "#33383e",
+  "shell_upper": "#33383e",
+  "shell": "#33383e",
+  "drawer": "#bd6f53",
+  "drawer_pressed": "#bd6f53",
+  "shell_coupon": "#33383e",
+  "drawer_coupon": "#bd6f53",
+  "contents": "#eeeeee",
+  "clearance": "#89b7d0",
+  "tip_coupon": "#bd6f53",
+  "cap": "#bd6f53",
+  "drawer_cap_pressed": "#bd6f53"
+ },
+ "qc": {
+  "efc": 0.15,
+  "max_bridge": 5,
+  "min_wall": 1.2,
+  "single_wall": []
+ },
+ "support_zones": [
+  {
+   "part": "drawer",
+   "desc": "앞쪽 사각 뚜껑 연결키 아래만 국부 서포트. 실제85.4mm²; 긴 받침·레일 돌기에는 불필요.",
+   "max_mm2": 100
+  },
+  {
+   "part": "drawer_coupon",
+   "desc": "앞쪽 사각 뚜껑 연결키 아래만 국부 서포트. 실제85.4mm²; 긴 받침·레일 돌기에는 불필요.",
+   "max_mm2": 100
+  }
+ ],
+ "accepted": [
+  {
+   "part": "shell_lower",
+   "flag": "얇은 살",
+   "max": 6.0,
+   "desc": "키 선단 삽입 유도면의 국부 모서리5.2mm²만 허용. 독립 벽·탄성 암이 아니며 연속 collar와 폭8mm 키 뿌리 유지. 접착 끼움22mm, 실제 강도 미검증."
+  }
+ ],
+ "min_gap": 0.3,
+ "frames": 24,
+ "bambu": {
+  "enabled": false
+ },
+ "inputs": [
+  {
+   "file": "shuttle6_slide_reference.jpg",
+   "kind": "image",
+   "sections_na": "축척이 없는 사진이라 mm 단면 실측 불가. 신규 CAD 단면은 별도 제공하며 사진 실측으로 주장하지 않음.",
+   "study": ".claude/skills/3d-print-3mf/references/studies/shuttle6-wave.md"
+  },
+  {
+   "file": "shuttle6_concept_reference.jpg",
+   "kind": "image",
+   "sections_na": "치수 없는 개념 그림이며 신규 CAD 단면을 별도로 측정. 사진 치수로 주장하지 않음.",
+   "study": ".claude/skills/3d-print-3mf/references/studies/shuttle6-wave.md"
+  },
+  {
+   "file": "shuttle6_conical_end_sketch.jpg",
+   "kind": "image",
+   "sections_na": "치수 없는 개념 그림이며 신규 CAD 단면을 별도로 측정. 사진 치수로 주장하지 않음.",
+   "study": ".claude/skills/3d-print-3mf/references/studies/shuttle6-wave.md"
+  },
+  {
+   "file": "shuttle6_six_detent_reference.jpg",
+   "kind": "image",
+   "sections_na": "치수 없는 사용자 개념 스케치. 길이 방향 양옆 6개 돌기를 해석했고, CAD 단면을 별도 실측.",
+   "study": ".claude/skills/3d-print-3mf/references/studies/shuttle6-wave-R14.md"
+  },
+  {
+   "file": "shuttle6_additive_cradle_reference.jpg",
+   "kind": "image",
+   "sections_na": "치수 없는 사용자 스케치. 안쪽 원형 유지·바깥 받침 추가 원리를 반영하고 실제 CAD를 별도 단면 측정.",
+   "study": ".claude/skills/3d-print-3mf/references/studies/shuttle6-wave-R14.md"
+  }
+ ],
+ "review_only": true
+}
