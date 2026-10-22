@@ -1,0 +1,148 @@
+{
+ "warn": [
+  "shell_upper: 오버행(한쪽 지지) 규칙 위반 7342 mm² (서포트 또는 재설계)",
+  "shell_upper: 브리지 폭 10.5 mm > 5 mm"
+ ],
+ "info": [],
+ "qc": {
+  "shell_upper": {
+   "name": "shell_upper",
+   "faces": 128068,
+   "vertices": 64026,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    78.5,
+    78.5,
+    121.5
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 161.37,
+   "weight_g_solid": 200.1,
+   "bed_contact_mm2": 916.0,
+   "first_layer_mm2": 916.0,
+   "footprint_hull_mm2": 5246.4,
+   "aspect_h_over_w": 1.55,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 23,
+   "slit_z": [],
+   "overhang_mm2": 7342.1,
+   "overhang_top": [
+    [
+     112.11,
+     3507.5,
+     [
+      -34.8,
+      -32.8,
+      34.8,
+      34.8
+     ]
+    ],
+    [
+     110.91,
+     3507.1,
+     [
+      -34.8,
+      -32.8,
+      34.8,
+      34.8
+     ]
+    ],
+    [
+     111.51,
+     324.1,
+     [
+      -34.8,
+      -2.8,
+      -0.1,
+      34.8
+     ]
+    ],
+    [
+     112.91,
+     3.4,
+     [
+      -34.7,
+      -1.7,
+      34.7,
+      -1.6
+     ]
+    ]
+   ],
+   "bridge_mm2": 672.8,
+   "bridge_max_span": 10.5,
+   "bridge_top": [
+    [
+     110.91,
+     263.2,
+     10.5
+    ],
+    [
+     112.11,
+     263.2,
+     10.5
+    ],
+    [
+     111.51,
+     70.5,
+     10.2
+    ],
+    [
+     14.31,
+     8.4,
+     4.9
+    ]
+   ],
+   "wall_steps": [],
+   "flags": [
+    "오버행(한쪽 지지) 규칙 위반 7342 mm² (서포트 또는 재설계)",
+    "브리지 폭 10.5 mm > 5 mm"
+   ]
+  }
+ },
+ "stages": {
+  "qc": {
+   "shell_upper": {
+    "flags": [
+     "⚠ 오버행(한쪽 지지) 규칙 위반 7342 mm² (서포트 또는 재설계)",
+     "⚠ 브리지 폭 10.5 mm > 5 mm"
+    ],
+    "overhang_mm2": 7342.1,
+    "is_volume": true,
+    "bodies": 1
+   }
+  },
+  "plates": [],
+  "assembly": null,
+  "renders": {},
+  "efc": {
+   "qc_efc": 0.15,
+   "nominal_pkl": "parts_nominal.pkl"
+  },
+  "support_zones": [
+   {
+    "part": "drawer",
+    "desc": "눕힌 내관 아래 곡면과 양옆 낮은 돌기 6쌍 아래. 트리 서포트.",
+    "max_mm2": 4800
+   },
+   {
+    "part": "drawer_coupon",
+    "desc": "눕힌 시험편 바닥 양옆 곡면과 돌기 아래. 트리 서포트.",
+    "max_mm2": 780
+   },
+   {
+    "part": "tip_coupon",
+    "desc": "눕힌 콘끝 시험편 바닥 양옆 전이부. 실제 QC 누적180.0mm².",
+    "max_mm2": 190
+   },
+   {
+    "part": "cap",
+    "desc": "Separate cap face-down; socket opens upward.",
+    "max_mm2": 30
+   }
+  ]
+ }
+}

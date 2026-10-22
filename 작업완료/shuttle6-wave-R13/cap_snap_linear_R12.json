@@ -1,0 +1,15 @@
+{
+ "strain": 0.003524160075182081,
+ "strain_pct": 0.3524160075182081,
+ "allow_pct": 2.0,
+ "ok": true,
+ "tip_force_N": 2.1612769310629925,
+ "insert_force_N": 2.0341393534371943,
+ "release_force_N": null,
+ "Ymax_mm": 2.2700444444444448,
+ "root_bending_moment_Nm": 0.048844858642023634,
+ "nominal_root_stress_MPa": 11.629728248100866,
+ "release_model": "Press to release; square shoulder has no rated pull strength",
+ "scope": "Linear elastic beam, assumed Q/friction, excludes notch stress, fatigue and layer failure; moment is not opening torque",
+ "orientation_note": "Spring length is in printerZ for horizontal tray; use12.5MPa conservative nominal stress target. Excludes notch stress, fatigue and actual layer strength."
+}

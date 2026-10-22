@@ -1,0 +1,5 @@
+{
+ "3mf": "/workspace/shuttle6-r10-build/작업중/shuttle6-wave-R13/deliverables_R13/Shuttle6_C_R13_ID64_horizontal_bambu.3mf",
+ "zip": "/workspace/shuttle6-r10-build/작업중/shuttle6-wave-R13/deliverables_R13/Shuttle6_C_R13_ID64_평면레일_6단딸깍_출력자료.zip",
+ "checklist": "[x] Skill 호출 [x] SKILL.md+references 전부 읽음 [x] 올라온 파일은 sample/ 복사·단면 실측 그림·스터디 기록 [x] 설계 치수표(결합 치수는 상대 파트에서 측정) [x] QC [x] 조립 검증(실제 좌표에 놓은 교집합·간격·스윕) [x] 렌더 5뷰+GIF 눈으로 확인 [x] EFC 선반영·서포트 위치 명시 [x] 3MF strict 0 [x] 보고"
+}

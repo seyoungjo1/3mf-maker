@@ -1,0 +1,333 @@
+{
+  "drawer_vs_dimensional_gauge_mm3": 0.0,
+  "shell_vs_dimensional_gauge_mm3": 0.0,
+  "cap_joint_overlap_mm3": 0.0,
+  "rail_and_detents": {
+    "flat_measurements": {
+      "shell_flat_y_mm": -32.900001525878906,
+      "tray_outer_y_mm": -32.599998474121094,
+      "normal_gap_mm": 0.3000030517578125
+    },
+    "aligned_stage_checks": [
+      {
+        "extraction_mm": 0,
+        "overlap_mm3": 0.0,
+        "remaining_rows": 6
+      },
+      {
+        "extraction_mm": 36,
+        "overlap_mm3": 0.0,
+        "remaining_rows": 5
+      },
+      {
+        "extraction_mm": 72,
+        "overlap_mm3": 0.0,
+        "remaining_rows": 4
+      },
+      {
+        "extraction_mm": 108,
+        "overlap_mm3": 0.0,
+        "remaining_rows": 3
+      },
+      {
+        "extraction_mm": 144,
+        "overlap_mm3": 0.0,
+        "remaining_rows": 2
+      },
+      {
+        "extraction_mm": 180,
+        "overlap_mm3": 0.0,
+        "remaining_rows": 1
+      },
+      {
+        "extraction_mm": 216,
+        "overlap_mm3": 0.0,
+        "remaining_rows": 0
+      },
+      {
+        "extraction_mm": 236,
+        "overlap_mm3": 0.0,
+        "remaining_rows": 0
+      }
+    ],
+    "rotation_samples_deg": [
+      {
+        "angle_deg": 0,
+        "overlap_mm3": 0.0
+      },
+      {
+        "angle_deg": -1,
+        "overlap_mm3": 0.0
+      },
+      {
+        "angle_deg": 1,
+        "overlap_mm3": 0.0
+      },
+      {
+        "angle_deg": -2,
+        "overlap_mm3": 26.20573715328178
+      },
+      {
+        "angle_deg": 2,
+        "overlap_mm3": 26.206001870678026
+      },
+      {
+        "angle_deg": -3,
+        "overlap_mm3": 177.73251028858715
+      },
+      {
+        "angle_deg": 3,
+        "overlap_mm3": 177.73226899874828
+      },
+      {
+        "angle_deg": -5,
+        "overlap_mm3": 597.5978227442852
+      },
+      {
+        "angle_deg": 5,
+        "overlap_mm3": 597.5978995669507
+      },
+      {
+        "angle_deg": -15,
+        "overlap_mm3": 2871.2515761934887
+      },
+      {
+        "angle_deg": 15,
+        "overlap_mm3": 2871.2510171936174
+      },
+      {
+        "angle_deg": 90,
+        "overlap_mm3": 2851.7346700534986
+      },
+      {
+        "angle_deg": 180,
+        "overlap_mm3": 0.0
+      }
+    ],
+    "pocket_ray_measurements": [
+      {
+        "body_z_mm": 53,
+        "pocket_x_extent_mm": 34.84005355834961
+      },
+      {
+        "body_z_mm": 89,
+        "pocket_x_extent_mm": 34.84005355834961
+      },
+      {
+        "body_z_mm": 125,
+        "pocket_x_extent_mm": 34.84005355834961
+      },
+      {
+        "body_z_mm": 161,
+        "pocket_x_extent_mm": 34.84005355834961
+      },
+      {
+        "body_z_mm": 197,
+        "pocket_x_extent_mm": 34.84005355834961
+      },
+      {
+        "body_z_mm": 233,
+        "pocket_x_extent_mm": 34.84005355834961
+      }
+    ],
+    "minimum_collar_wall_radial_bound_mm": 1.8500000000000014,
+    "scope": "Rigid intersections and sample rotation obstruction only. Samples block continuous rotation from2deg. An open half-tray may be separately inserted upside-down at180deg; this is not unique orientation coding. Compressed nubs are kinematic proxies; no wall elasticity, click force, wear, torque rating or fatigue simulation."
+  },
+  "cap_joint_measured": {
+    "pocket_depth_mm": 4.0,
+    "tongue_length_mm": 3.8,
+    "gap_per_side_mm": 0.2,
+    "floor_gap_mm": 0.2,
+    "primary_pocket_floor_z_mm": 6.0,
+    "minimum_front_wall_mm": 3.0,
+    "square_pocket_side_mm": 30.0,
+    "square_pocket_depth_mm": 3.0,
+    "square_key_side_mm": 29.6,
+    "square_key_length_mm": 3.0,
+    "mode": "Full half-disc socket plus30mm square pocket and protected snap beams. Physical cap retention is not rated.",
+    "actual_solid_overlap_mm3": 0.0,
+    "measured_pocket_depth_mm": 4.0,
+    "measured_solid_tongue_length_mm": 3.8000001907348633,
+    "measured_floor_gap_mm": 0.19999980926513672,
+    "measured_square_pocket_depth_mm": 3.0,
+    "measured_square_pocket_side_mm": 30.0
+  },
+  "cap_deflected_insertion_checks": [
+    {
+      "cap_offset_mm": -1.5,
+      "compressed_overlap_mm3": 0.0
+    },
+    {
+      "cap_offset_mm": -1.0,
+      "compressed_overlap_mm3": 0.0
+    },
+    {
+      "cap_offset_mm": -0.5,
+      "compressed_overlap_mm3": 0.0
+    }
+  ],
+  "cap_joint_insertion_checks": [
+    {
+      "cap_offset_mm": -6,
+      "solid_overlap_mm3": 0.0
+    },
+    {
+      "cap_offset_mm": -4,
+      "solid_overlap_mm3": 0.0
+    },
+    {
+      "cap_offset_mm": -2,
+      "solid_overlap_mm3": 0.11250059008659719
+    },
+    {
+      "cap_offset_mm": -1,
+      "solid_overlap_mm3": 1.3000007390974133
+    },
+    {
+      "cap_offset_mm": 0,
+      "solid_overlap_mm3": 0.0
+    }
+  ],
+  "detent_crossing_without_compliance": [
+    {
+      "extraction_mm": 0,
+      "rigid_overlap_mm3": 0.0
+    },
+    {
+      "extraction_mm": 0.5,
+      "rigid_overlap_mm3": 0.00015033171137342669
+    },
+    {
+      "extraction_mm": 2,
+      "rigid_overlap_mm3": 2.129960368344352
+    },
+    {
+      "extraction_mm": 10,
+      "rigid_overlap_mm3": 1.9806027706897567
+    },
+    {
+      "extraction_mm": 18,
+      "rigid_overlap_mm3": 1.8306935203446906
+    },
+    {
+      "extraction_mm": 34,
+      "rigid_overlap_mm3": 1.7749652145990162
+    },
+    {
+      "extraction_mm": 36,
+      "rigid_overlap_mm3": 0.0
+    },
+    {
+      "extraction_mm": 54,
+      "rigid_overlap_mm3": 1.4645551357745983
+    },
+    {
+      "extraction_mm": 72,
+      "rigid_overlap_mm3": 0.0
+    },
+    {
+      "extraction_mm": 90,
+      "rigid_overlap_mm3": 1.0984163332952903
+    },
+    {
+      "extraction_mm": 108,
+      "rigid_overlap_mm3": 0.0
+    },
+    {
+      "extraction_mm": 126,
+      "rigid_overlap_mm3": 0.7322765621682947
+    },
+    {
+      "extraction_mm": 144,
+      "rigid_overlap_mm3": 0.0
+    },
+    {
+      "extraction_mm": 162,
+      "rigid_overlap_mm3": 0.3661380113319031
+    },
+    {
+      "extraction_mm": 180,
+      "rigid_overlap_mm3": 0.0
+    },
+    {
+      "extraction_mm": 190,
+      "rigid_overlap_mm3": 0.18306989244568891
+    },
+    {
+      "extraction_mm": 216,
+      "rigid_overlap_mm3": 0.0
+    },
+    {
+      "extraction_mm": 236,
+      "rigid_overlap_mm3": 0.0
+    }
+  ],
+  "glue_key_rotation_checks": [
+    {
+      "angle_deg": 0,
+      "solid_overlap_mm3": 0.0
+    },
+    {
+      "angle_deg": -0.5,
+      "solid_overlap_mm3": 2.669155618912763
+    },
+    {
+      "angle_deg": 0.5,
+      "solid_overlap_mm3": 2.6691569272463007
+    },
+    {
+      "angle_deg": -1,
+      "solid_overlap_mm3": 6.383907867075474
+    },
+    {
+      "angle_deg": 1,
+      "solid_overlap_mm3": 6.383907452804654
+    },
+    {
+      "angle_deg": -3,
+      "solid_overlap_mm3": 19.98008273016357
+    },
+    {
+      "angle_deg": 3,
+      "solid_overlap_mm3": 19.980082377780793
+    },
+    {
+      "angle_deg": 90,
+      "solid_overlap_mm3": 79.19498414670063
+    }
+  ],
+  "glue_joint_measured": {
+    "collar_wall_mm": 2.2000007547093503,
+    "radial_gap_mm": 0.14999962232591457,
+    "key_tip_gap_mm": 0.14999962232591457,
+    "key_side_gap_mm": 0.10000082734596782,
+    "key_width_mm": 7.999998918996401
+  },
+  "glue_joint_axial_insertion_checks": [
+    {
+      "remaining_insertion_mm": 0,
+      "overlap_mm3": 0.0
+    },
+    {
+      "remaining_insertion_mm": 2,
+      "overlap_mm3": 0.0
+    },
+    {
+      "remaining_insertion_mm": 5,
+      "overlap_mm3": 0.0
+    },
+    {
+      "remaining_insertion_mm": 10,
+      "overlap_mm3": 0.0
+    },
+    {
+      "remaining_insertion_mm": 14,
+      "overlap_mm3": 0.0
+    },
+    {
+      "remaining_insertion_mm": 16,
+      "overlap_mm3": 0.0
+    }
+  ],
+  "scope": "Nominal64mm dimensional gauge offset upward2mm over flat floor,6 nested225mm assumption. Not a measured feather envelope or deformation/contact simulation. Six paired broad beads have intentional elastic crossing; trough-wall compliance is not simulated and click force is not calculated."
+}

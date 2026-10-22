@@ -1,0 +1,93 @@
+{
+ "name": "Shuttle6 C R13 / ID64 / internal flat guide / six paired shallow detents",
+ "build": [
+  "scripts/build.py"
+ ],
+ "out": "qc/review_R13",
+ "parts_pkl": "parts.pkl",
+ "assembly_parts_pkl": "parts_nominal.pkl",
+ "plates": [],
+ "assembly": "scripts/assembly_print.py",
+ "colors": {
+  "shell_lower": "#33383e",
+  "shell_upper": "#33383e",
+  "shell": "#33383e",
+  "drawer": "#bd6f53",
+  "drawer_pressed": "#bd6f53",
+  "shell_coupon": "#33383e",
+  "drawer_coupon": "#bd6f53",
+  "contents": "#eeeeee",
+  "clearance": "#89b7d0",
+  "tip_coupon": "#bd6f53",
+  "cap": "#bd6f53",
+  "drawer_cap_pressed": "#bd6f53"
+ },
+ "qc": {
+  "efc": 0.15,
+  "max_bridge": 5,
+  "min_wall": 1.2,
+  "single_wall": []
+ },
+ "support_zones": [
+  {
+   "part": "drawer",
+   "desc": "내관 아래 곡면·돌기 부근: 실제 누적4652.0mm². 트리서포트.",
+   "max_mm2": 4700
+  },
+  {
+   "part": "drawer_coupon",
+   "desc": "눕힌 시험편 바닥 양옆 곡면과 돌기 아래. 트리 서포트.",
+   "max_mm2": 780
+  },
+  {
+   "part": "tip_coupon",
+   "desc": "눕힌 콘끝 시험편 바닥 양옆 전이부. 실제 QC 누적180.0mm².",
+   "max_mm2": 190
+  },
+  {
+   "part": "cap",
+   "desc": "Separate cap face-down; socket opens upward.",
+   "max_mm2": 30
+  }
+ ],
+ "accepted": [
+  {
+   "part": "shell_lower",
+   "flag": "얇은 살",
+   "max": 6.0,
+   "desc": "키 선단1mm 삽입 유도면의 국부 모서리: 실제 QC5.2mm²,z135.2. 독립 벽/탄성 암이 아니며 뒤쪽 연속 collar 벽은 선단에서도1.85mm 이상, 축부2.20mm·키 폭8mm·길이14mm. 어깨부/키 뿌리는 깎지 않았고 선단의 작은 형상만 허용. 실제 강도 미검증."
+  }
+ ],
+ "min_gap": 0.3,
+ "frames": 24,
+ "bambu": {
+  "enabled": false
+ },
+ "inputs": [
+  {
+   "file": "shuttle6_slide_reference.jpg",
+   "kind": "image",
+   "sections_na": "축척이 없는 사진이라 mm 단면 실측 불가. 신규 CAD 단면은 별도 제공하며 사진 실측으로 주장하지 않음.",
+   "study": ".claude/skills/3d-print-3mf/references/studies/shuttle6-wave.md"
+  },
+  {
+   "file": "shuttle6_concept_reference.jpg",
+   "kind": "image",
+   "sections_na": "치수 없는 개념 그림이며 신규 CAD 단면을 별도로 측정. 사진 치수로 주장하지 않음.",
+   "study": ".claude/skills/3d-print-3mf/references/studies/shuttle6-wave.md"
+  },
+  {
+   "file": "shuttle6_conical_end_sketch.jpg",
+   "kind": "image",
+   "sections_na": "치수 없는 개념 그림이며 신규 CAD 단면을 별도로 측정. 사진 치수로 주장하지 않음.",
+   "study": ".claude/skills/3d-print-3mf/references/studies/shuttle6-wave.md"
+  },
+  {
+   "file": "shuttle6_six_detent_reference.jpg",
+   "kind": "image",
+   "sections_na": "치수 없는 사용자 개념 스케치. 길이 방향 양옆 6개 돌기를 해석했고, CAD 단면을 별도 실측.",
+   "study": ".claude/skills/3d-print-3mf/references/studies/shuttle6-wave-R13.md"
+  }
+ ],
+ "review_only": true
+}

@@ -1,0 +1,601 @@
+{
+ "warn": [],
+ "info": [
+  "shell_lower: 1.2 mm 보다 얇은 살 5.2 mm² (z=135.2, x/y (23.3, 23.3, 29.4, 29.4)) → 허용(키 선단1mm 삽입 유도면의 국부 모서리: 실제 QC5.2mm²,z135.2. 독립 벽/탄성 암이 아니며 뒤쪽 연속 collar 벽은 선단에서도1.85mm 이상, 축부2.20mm·키 폭8mm·길이14mm. 어깨부/키 뿌리는 깎지 않았고 선단의 작은 형상만 허용. 실제 강도 미검증.)",
+  "drawer: 오버행 4652.0 mm² → 서포트(내관 아래 곡면·돌기 부근: 실제 누적4652.0mm². 트리서포트., 허용 4700)",
+  "drawer_coupon: 오버행 754.8 mm² → 서포트(눕힌 시험편 바닥 양옆 곡면과 돌기 아래. 트리 서포트., 허용 780)",
+  "tip_coupon: 오버행 180.0 mm² → 서포트(눕힌 콘끝 시험편 바닥 양옆 전이부. 실제 QC 누적180.0mm²., 허용 190)"
+ ],
+ "qc": {
+  "shell_lower": {
+   "name": "shell_lower",
+   "faces": 153572,
+   "vertices": 76788,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    78.2,
+    78.2,
+    135.5
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 187.94,
+   "weight_g_solid": 233.0,
+   "bed_contact_mm2": 4866.3,
+   "first_layer_mm2": 4866.3,
+   "footprint_hull_mm2": 4869.5,
+   "aspect_h_over_w": 1.73,
+   "thin_area_mm2": 5.2,
+   "thin_at_z": 135.2,
+   "thin_bounds": [
+    23.3,
+    23.3,
+    29.4,
+    29.4
+   ],
+   "internal_gaps": 59,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": [
+    "1.2 mm 보다 얇은 살 5.2 mm² (z=135.2, x/y (23.3, 23.3, 29.4, 29.4))"
+   ]
+  },
+  "shell_upper": {
+   "name": "shell_upper",
+   "faces": 128500,
+   "vertices": 64250,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    78.5,
+    78.5,
+    121.5
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 161.37,
+   "weight_g_solid": 200.1,
+   "bed_contact_mm2": 916.0,
+   "first_layer_mm2": 916.0,
+   "footprint_hull_mm2": 5246.4,
+   "aspect_h_over_w": 1.55,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 23,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 75.9,
+   "bridge_max_span": 4.9,
+   "bridge_top": [
+    [
+     14.31,
+     8.4,
+     4.9
+    ],
+    [
+     14.51,
+     4.5,
+     1.8
+    ],
+    [
+     14.71,
+     4.5,
+     2.6
+    ],
+    [
+     14.91,
+     4.4,
+     2.6
+    ]
+   ],
+   "wall_steps": [],
+   "flags": []
+  },
+  "drawer": {
+   "name": "drawer",
+   "faces": 42810,
+   "vertices": 21407,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    221.18,
+    221.18,
+    32.6
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 97.59,
+   "weight_g_solid": 121.0,
+   "bed_contact_mm2": 5746.2,
+   "first_layer_mm2": 5858.0,
+   "footprint_hull_mm2": 5910.5,
+   "aspect_h_over_w": 0.15,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 4652.0,
+   "overhang_top": [
+    [
+     0.31,
+     222.6,
+     [
+      -4.4,
+      -185.4,
+      185.4,
+      4.4
+     ]
+    ],
+    [
+     2.91,
+     191.9,
+     [
+      -8.2,
+      -189.2,
+      189.2,
+      8.2
+     ]
+    ],
+    [
+     0.51,
+     190.6,
+     [
+      -4.8,
+      -185.8,
+      185.8,
+      4.8
+     ]
+    ],
+    [
+     0.71,
+     181.8,
+     [
+      -5.1,
+      -186.1,
+      186.1,
+      5.1
+     ]
+    ]
+   ],
+   "bridge_mm2": 0.8,
+   "bridge_max_span": 3.3,
+   "bridge_top": [
+    [
+     25.11,
+     0.8,
+     3.3
+    ]
+   ],
+   "wall_steps": [],
+   "flags": [
+    "오버행(한쪽 지지) 규칙 위반 4652 mm² (서포트 또는 재설계)"
+   ]
+  },
+  "cap": {
+   "name": "cap",
+   "faces": 109904,
+   "vertices": 54950,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    82.2,
+    82.2,
+    10.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 45.1,
+   "weight_g_solid": 55.9,
+   "bed_contact_mm2": 4083.8,
+   "first_layer_mm2": 4083.8,
+   "footprint_hull_mm2": 5434.0,
+   "aspect_h_over_w": 0.12,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 2,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 1459.5,
+   "bridge_max_span": 1.9,
+   "bridge_top": [
+    [
+     0.71,
+     1457.1,
+     1.6
+    ],
+    [
+     5.11,
+     2.3,
+     1.9
+    ]
+   ],
+   "wall_steps": [],
+   "flags": []
+  },
+  "shell_coupon": {
+   "name": "shell_coupon",
+   "faces": 3652,
+   "vertices": 1826,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    78.5,
+    78.5,
+    36.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 50.88,
+   "weight_g_solid": 63.1,
+   "bed_contact_mm2": 1484.5,
+   "first_layer_mm2": 1484.5,
+   "footprint_hull_mm2": 5246.4,
+   "aspect_h_over_w": 0.46,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "drawer_coupon": {
+   "name": "drawer_coupon",
+   "faces": 1080,
+   "vertices": 542,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    74.25,
+    74.25,
+    32.6
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 17.83,
+   "weight_g_solid": 22.1,
+   "bed_contact_mm2": 850.7,
+   "first_layer_mm2": 867.1,
+   "footprint_hull_mm2": 875.9,
+   "aspect_h_over_w": 0.44,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 754.8,
+   "overhang_top": [
+    [
+     2.91,
+     101.1,
+     [
+      -8.2,
+      -42.3,
+      42.3,
+      8.2
+     ]
+    ],
+    [
+     0.31,
+     32.7,
+     [
+      -4.4,
+      -38.5,
+      38.5,
+      4.4
+     ]
+    ],
+    [
+     0.51,
+     28.0,
+     [
+      -4.8,
+      -38.8,
+      38.8,
+      4.8
+     ]
+    ],
+    [
+     0.71,
+     26.7,
+     [
+      -5.1,
+      -39.2,
+      39.2,
+      5.1
+     ]
+    ]
+   ],
+   "bridge_mm2": 0.8,
+   "bridge_max_span": 3.3,
+   "bridge_top": [
+    [
+     25.11,
+     0.8,
+     3.3
+    ]
+   ],
+   "wall_steps": [],
+   "flags": [
+    "오버행(한쪽 지지) 규칙 위반 755 mm² (서포트 또는 재설계)"
+   ]
+  },
+  "tip_coupon": {
+   "name": "tip_coupon",
+   "faces": 16460,
+   "vertices": 8232,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    55.86,
+    55.86,
+    32.6
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 16.89,
+   "weight_g_solid": 20.9,
+   "bed_contact_mm2": 238.1,
+   "first_layer_mm2": 242.6,
+   "footprint_hull_mm2": 244.7,
+   "aspect_h_over_w": 0.58,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 180.0,
+   "overhang_top": [
+    [
+     0.31,
+     9.0,
+     [
+      -8.8,
+      -15.7,
+      15.7,
+      8.8
+     ]
+    ],
+    [
+     0.51,
+     7.7,
+     [
+      -9.1,
+      -16.1,
+      16.1,
+      9.1
+     ]
+    ],
+    [
+     0.71,
+     7.3,
+     [
+      -9.5,
+      -16.4,
+      16.4,
+      9.5
+     ]
+    ],
+    [
+     0.91,
+     6.8,
+     [
+      -9.8,
+      -16.7,
+      16.7,
+      9.8
+     ]
+    ]
+   ],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": [
+    "오버행(한쪽 지지) 규칙 위반 180 mm² (서포트 또는 재설계)"
+   ]
+  }
+ },
+ "stages": {
+  "qc": {
+   "shell_lower": {
+    "flags": [
+     "ℹ 얇은 살 허용: 키 선단1mm 삽입 유도면의 국부 모서리: 실제 QC5.2mm²,z135.2. 독립 벽/탄성 암이 아니며 뒤쪽 연속 collar 벽은 선단에서도1.85mm 이상, 축부2.20mm·키 폭8mm·길이14mm. 어깨부/키 뿌리는 깎지 않았고 선단의 작은 형상만 허용. 실제 강도 미검증."
+    ],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "shell_upper": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "drawer": {
+    "flags": [
+     "ℹ 서포트: 내관 아래 곡면·돌기 부근: 실제 누적4652.0mm². 트리서포트."
+    ],
+    "overhang_mm2": 4652.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "cap": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "shell_coupon": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "drawer_coupon": {
+    "flags": [
+     "ℹ 서포트: 눕힌 시험편 바닥 양옆 곡면과 돌기 아래. 트리 서포트."
+    ],
+    "overhang_mm2": 754.8,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "tip_coupon": {
+    "flags": [
+     "ℹ 서포트: 눕힌 콘끝 시험편 바닥 양옆 전이부. 실제 QC 누적180.0mm²."
+    ],
+    "overhang_mm2": 180.0,
+    "is_volume": true,
+    "bodies": 1
+   }
+  },
+  "plates": [
+   {
+    "file": "models/plates_R13/P01_body_pair.3mf",
+    "strict_warnings": 0,
+    "collisions": 0,
+    "in_bed": true,
+    "triangles": 282072
+   },
+   {
+    "file": "models/plates_R13/P02_horizontal_tray.3mf",
+    "strict_warnings": 0,
+    "collisions": 0,
+    "in_bed": true,
+    "triangles": 42810
+   },
+   {
+    "file": "models/plates_R13/P03_separate_cap.3mf",
+    "strict_warnings": 0,
+    "collisions": 0,
+    "in_bed": true,
+    "triangles": 109904
+   },
+   {
+    "file": "models/plates_R13/P04_detent_shell_coupon.3mf",
+    "strict_warnings": 0,
+    "collisions": 0,
+    "in_bed": true,
+    "triangles": 3652
+   },
+   {
+    "file": "models/plates_R13/P05_detent_tray_coupon.3mf",
+    "strict_warnings": 0,
+    "collisions": 0,
+    "in_bed": true,
+    "triangles": 1080
+   },
+   {
+    "file": "models/plates_R13/P06_tip_coupon.3mf",
+    "strict_warnings": 0,
+    "collisions": 0,
+    "in_bed": true,
+    "triangles": 16460
+   }
+  ],
+  "assembly": {
+   "states": [
+    "닫힘",
+    "열림",
+    "분리",
+    "인출 36mm",
+    "인출 72mm",
+    "인출 108mm",
+    "인출 144mm",
+    "인출 180mm",
+    "몸통 접착",
+    "뚜껑 끼움 전",
+    "뚜껑 딸깍 통과",
+    "뚜껑 끼움 완료",
+    "딸깍 통과 18mm",
+    "딸깍 시험편 닫힘",
+    "딸깍 시험편 통과"
+   ],
+   "pairs": 10,
+   "sweeps": [],
+   "warnings": 0
+  },
+  "renders": {
+   "qc/final_R13/plate_P01_body_pair": "plate",
+   "qc/final_R13/plate_P02_horizontal_tray": "plate",
+   "qc/final_R13/plate_P03_separate_cap": "plate",
+   "qc/final_R13/plate_P04_detent_shell_coupon": "plate",
+   "qc/final_R13/plate_P05_detent_tray_coupon": "plate",
+   "qc/final_R13/plate_P06_tip_coupon": "plate",
+   "qc/final_R13/assembly": "assembly"
+  },
+  "efc": {
+   "qc_efc": 0.15,
+   "nominal_pkl": "parts_nominal.pkl"
+  },
+  "support_zones": [
+   {
+    "part": "drawer",
+    "desc": "내관 아래 곡면·돌기 부근: 실제 누적4652.0mm². 트리서포트.",
+    "max_mm2": 4700
+   },
+   {
+    "part": "drawer_coupon",
+    "desc": "눕힌 시험편 바닥 양옆 곡면과 돌기 아래. 트리 서포트.",
+    "max_mm2": 780
+   },
+   {
+    "part": "tip_coupon",
+    "desc": "눕힌 콘끝 시험편 바닥 양옆 전이부. 실제 QC 누적180.0mm².",
+    "max_mm2": 190
+   },
+   {
+    "part": "cap",
+    "desc": "Separate cap face-down; socket opens upward.",
+    "max_mm2": 30
+   }
+  ]
+ },
+ "bambu": {
+  "models/plates_R13/P01_body_pair_bambu.3mf": {
+   "ok": true,
+   "errors": []
+  },
+  "models/plates_R13/P02_horizontal_tray_bambu.3mf": {
+   "ok": true,
+   "errors": []
+  },
+  "models/plates_R13/P03_separate_cap_bambu.3mf": {
+   "ok": true,
+   "errors": []
+  },
+  "models/plates_R13/P04_detent_shell_coupon_bambu.3mf": {
+   "ok": true,
+   "errors": []
+  },
+  "models/plates_R13/P05_detent_tray_coupon_bambu.3mf": {
+   "ok": true,
+   "errors": []
+  },
+  "models/plates_R13/P06_tip_coupon_bambu.3mf": {
+   "ok": true,
+   "errors": []
+  },
+  "models/Shuttle6_C_R13_ID64_horizontal_bambu.3mf": {
+   "ok": true,
+   "errors": [],
+   "plates": 6
+  }
+ }
+}
