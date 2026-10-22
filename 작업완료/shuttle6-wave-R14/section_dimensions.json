@@ -1,0 +1,11 @@
+{
+ "base_width_mm": 40.25596849675223,
+ "outer_envelope": [
+  -39.1,
+  -39.1,
+  39.1,
+  39.1
+ ],
+ "normal_channel_gap_mm": 0.3,
+ "chamber_radius_mm": 32.0
+}

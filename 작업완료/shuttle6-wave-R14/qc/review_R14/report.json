@@ -1,0 +1,390 @@
+{
+ "warn": [],
+ "info": [
+  "shell_lower: 1.2 mm 보다 얇은 살 5.2 mm² (z=143.2, x/y (23.3, 23.3, 29.4, 29.4)) → 허용(키 선단 삽입 유도면의 국부 모서리5.2mm²만 허용. 독립 벽·탄성 암이 아니며 연속 collar와 폭8mm 키 뿌리 유지. 접착 끼움22mm, 실제 강도 미검증.)",
+  "drawer: 오버행 85.4 mm² → 서포트(앞쪽 사각 뚜껑 연결키 아래만 국부 서포트. 실제85.4mm²; 긴 받침·레일 돌기에는 불필요., 허용 100)",
+  "drawer_coupon: 오버행 85.4 mm² → 서포트(앞쪽 사각 뚜껑 연결키 아래만 국부 서포트. 실제85.4mm²; 긴 받침·레일 돌기에는 불필요., 허용 100)"
+ ],
+ "qc": {
+  "shell_lower": {
+   "name": "shell_lower",
+   "faces": 140924,
+   "vertices": 70464,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    78.2,
+    78.2,
+    143.5
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 163.67,
+   "weight_g_solid": 203.0,
+   "bed_contact_mm2": 4990.6,
+   "first_layer_mm2": 4990.6,
+   "footprint_hull_mm2": 5007.7,
+   "aspect_h_over_w": 1.84,
+   "thin_area_mm2": 5.2,
+   "thin_at_z": 143.2,
+   "thin_bounds": [
+    23.3,
+    23.3,
+    29.4,
+    29.4
+   ],
+   "internal_gaps": 59,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": [
+    "1.2 mm 보다 얇은 살 5.2 mm² (z=143.2, x/y (23.3, 23.3, 29.4, 29.4))"
+   ]
+  },
+  "shell_upper": {
+   "name": "shell_upper",
+   "faces": 119804,
+   "vertices": 59902,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    78.5,
+    78.5,
+    121.5
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 136.65,
+   "weight_g_solid": 169.4,
+   "bed_contact_mm2": 924.6,
+   "first_layer_mm2": 924.6,
+   "footprint_hull_mm2": 5317.0,
+   "aspect_h_over_w": 1.55,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 23,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 3.5,
+   "bridge_max_span": 4.4,
+   "bridge_top": [
+    [
+     22.31,
+     3.5,
+     4.4
+    ]
+   ],
+   "wall_steps": [],
+   "flags": []
+  },
+  "drawer": {
+   "name": "drawer",
+   "faces": 61086,
+   "vertices": 30545,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    221.18,
+    221.18,
+    35.2
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 153.32,
+   "weight_g_solid": 190.1,
+   "bed_contact_mm2": 11402.5,
+   "first_layer_mm2": 11402.5,
+   "footprint_hull_mm2": 11414.4,
+   "aspect_h_over_w": 0.16,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 85.4,
+   "overhang_top": [
+    [
+     5.51,
+     85.4,
+     [
+      -8.2,
+      -14.8,
+      14.8,
+      8.2
+     ]
+    ]
+   ],
+   "bridge_mm2": 0.8,
+   "bridge_max_span": 3.3,
+   "bridge_top": [
+    [
+     27.71,
+     0.8,
+     3.3
+    ]
+   ],
+   "wall_steps": [],
+   "flags": [
+    "오버행(한쪽 지지) 규칙 위반 85 mm² (서포트 또는 재설계)"
+   ]
+  },
+  "cap": {
+   "name": "cap",
+   "faces": 109744,
+   "vertices": 54870,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    82.2,
+    82.2,
+    10.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 44.07,
+   "weight_g_solid": 54.6,
+   "bed_contact_mm2": 4083.8,
+   "first_layer_mm2": 4083.8,
+   "footprint_hull_mm2": 5434.0,
+   "aspect_h_over_w": 0.12,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 2,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 1459.5,
+   "bridge_max_span": 1.9,
+   "bridge_top": [
+    [
+     0.71,
+     1457.1,
+     1.6
+    ],
+    [
+     5.11,
+     2.3,
+     1.9
+    ]
+   ],
+   "wall_steps": [],
+   "flags": []
+  },
+  "shell_coupon": {
+   "name": "shell_coupon",
+   "faces": 4782,
+   "vertices": 2391,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    78.5,
+    78.5,
+    36.0
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 43.4,
+   "weight_g_solid": 53.8,
+   "bed_contact_mm2": 1279.3,
+   "first_layer_mm2": 1279.3,
+   "footprint_hull_mm2": 5317.0,
+   "aspect_h_over_w": 0.46,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  },
+  "drawer_coupon": {
+   "name": "drawer_coupon",
+   "faces": 3890,
+   "vertices": 1947,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    74.25,
+    74.25,
+    35.2
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 26.01,
+   "weight_g_solid": 32.3,
+   "bed_contact_mm2": 1687.7,
+   "first_layer_mm2": 1687.7,
+   "footprint_hull_mm2": 1690.5,
+   "aspect_h_over_w": 0.47,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 3,
+   "slit_z": [],
+   "overhang_mm2": 85.4,
+   "overhang_top": [
+    [
+     5.51,
+     85.4,
+     [
+      -8.2,
+      -14.8,
+      14.8,
+      8.2
+     ]
+    ]
+   ],
+   "bridge_mm2": 0.8,
+   "bridge_max_span": 3.3,
+   "bridge_top": [
+    [
+     27.71,
+     0.8,
+     3.3
+    ]
+   ],
+   "wall_steps": [],
+   "flags": [
+    "오버행(한쪽 지지) 규칙 위반 85 mm² (서포트 또는 재설계)"
+   ]
+  },
+  "tip_coupon": {
+   "name": "tip_coupon",
+   "faces": 16104,
+   "vertices": 8054,
+   "watertight": true,
+   "is_volume": true,
+   "bodies": 1,
+   "size_mm": [
+    55.86,
+    55.86,
+    35.2
+   ],
+   "min_z": 0.0,
+   "volume_cm3": 19.39,
+   "weight_g_solid": 24.0,
+   "bed_contact_mm2": 472.2,
+   "first_layer_mm2": 472.2,
+   "footprint_hull_mm2": 472.6,
+   "aspect_h_over_w": 0.63,
+   "thin_area_mm2": 0.0,
+   "thin_at_z": null,
+   "thin_bounds": null,
+   "internal_gaps": 0,
+   "slit_z": [],
+   "overhang_mm2": 0.0,
+   "overhang_top": [],
+   "bridge_mm2": 0.0,
+   "bridge_max_span": 0.0,
+   "bridge_top": [],
+   "wall_steps": [],
+   "flags": []
+  }
+ },
+ "stages": {
+  "qc": {
+   "shell_lower": {
+    "flags": [
+     "ℹ 얇은 살 허용: 키 선단 삽입 유도면의 국부 모서리5.2mm²만 허용. 독립 벽·탄성 암이 아니며 연속 collar와 폭8mm 키 뿌리 유지. 접착 끼움22mm, 실제 강도 미검증."
+    ],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "shell_upper": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "drawer": {
+    "flags": [
+     "ℹ 서포트: 앞쪽 사각 뚜껑 연결키 아래만 국부 서포트. 실제85.4mm²; 긴 받침·레일 돌기에는 불필요."
+    ],
+    "overhang_mm2": 85.4,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "cap": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "shell_coupon": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "drawer_coupon": {
+    "flags": [
+     "ℹ 서포트: 앞쪽 사각 뚜껑 연결키 아래만 국부 서포트. 실제85.4mm²; 긴 받침·레일 돌기에는 불필요."
+    ],
+    "overhang_mm2": 85.4,
+    "is_volume": true,
+    "bodies": 1
+   },
+   "tip_coupon": {
+    "flags": [],
+    "overhang_mm2": 0.0,
+    "is_volume": true,
+    "bodies": 1
+   }
+  },
+  "plates": [],
+  "assembly": {
+   "states": [
+    "닫힘",
+    "열림",
+    "분리",
+    "인출 36mm",
+    "인출 72mm",
+    "인출 108mm",
+    "인출 144mm",
+    "인출 180mm",
+    "몸통 접착",
+    "뚜껑 끼움 전",
+    "뚜껑 딸깍 통과",
+    "뚜껑 끼움 완료",
+    "딸깍 통과 18mm",
+    "딸깍 시험편 닫힘",
+    "딸깍 시험편 통과"
+   ],
+   "pairs": 10,
+   "sweeps": [],
+   "warnings": 0
+  },
+  "renders": {
+   "qc/review_R14/assembly": "assembly"
+  },
+  "efc": {
+   "qc_efc": 0.15,
+   "nominal_pkl": "parts_nominal.pkl"
+  },
+  "support_zones": [
+   {
+    "part": "drawer",
+    "desc": "앞쪽 사각 뚜껑 연결키 아래만 국부 서포트. 실제85.4mm²; 긴 받침·레일 돌기에는 불필요.",
+    "max_mm2": 100
+   },
+   {
+    "part": "drawer_coupon",
+    "desc": "앞쪽 사각 뚜껑 연결키 아래만 국부 서포트. 실제85.4mm²; 긴 받침·레일 돌기에는 불필요.",
+    "max_mm2": 100
+   }
+  ]
+ }
+}

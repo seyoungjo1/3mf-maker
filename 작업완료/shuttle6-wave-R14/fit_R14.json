@@ -1,0 +1,339 @@
+{
+  "drawer_vs_dimensional_gauge_mm3": 0.0,
+  "shell_vs_dimensional_gauge_mm3": 0.0,
+  "cap_joint_overlap_mm3": 0.0,
+  "rail_and_detents": {
+    "measurements": {
+      "inner_radius_min_mm": 31.9961916294096,
+      "inner_radius_max_mm": 32.0,
+      "inner_bottom_y_mm": -32.0,
+      "outer_cradle_bottom_y_mm": -35.20000076293945,
+      "bottom_total_mm": 3.200000762939453,
+      "rail_normal_gap_mm": 0.29999952917161066,
+      "flat_base_width_mm": 46.370680930741514
+    },
+    "inner_chamber_ray_radii_mm": [
+      31.996192362475767,
+      31.9961916294096,
+      31.99999956738326,
+      31.996192236037484,
+      31.99619236803526,
+      31.99999956517308,
+      31.996191724800052,
+      31.996191863457756,
+      31.99999945234333,
+      31.996191863457756,
+      31.996191724800052,
+      31.999999565173084,
+      31.99619236803526,
+      31.996192236037484,
+      31.999999567383256,
+      31.9961916294096,
+      31.996192362475767,
+      32.0,
+      31.996192362475767,
+      31.9961916294096,
+      31.999999567383256,
+      31.996192236037484,
+      31.99619236803526,
+      31.99999956517308,
+      31.996191724800052,
+      31.996191863457756,
+      31.99999945234333,
+      31.996191863457756,
+      31.99619172480005,
+      31.99999956517308,
+      31.99619236803526,
+      31.996192236037484,
+      31.999999567383256,
+      31.9961916294096,
+      31.996192362475767
+    ],
+    "stage_checks": [
+      {
+        "extraction_mm": 0,
+        "overlap_mm3": 0.0
+      },
+      {
+        "extraction_mm": 36,
+        "overlap_mm3": 0.0
+      },
+      {
+        "extraction_mm": 72,
+        "overlap_mm3": 0.0
+      },
+      {
+        "extraction_mm": 108,
+        "overlap_mm3": 0.0
+      },
+      {
+        "extraction_mm": 144,
+        "overlap_mm3": 0.0
+      },
+      {
+        "extraction_mm": 180,
+        "overlap_mm3": 0.0
+      },
+      {
+        "extraction_mm": 216,
+        "overlap_mm3": 0.0
+      },
+      {
+        "extraction_mm": 236,
+        "overlap_mm3": 0.0
+      }
+    ],
+    "rotation_checks": [
+      {
+        "angle_deg": 0,
+        "overlap_mm3": 0.0
+      },
+      {
+        "angle_deg": -0.25,
+        "overlap_mm3": 0.0
+      },
+      {
+        "angle_deg": 0.25,
+        "overlap_mm3": 0.0
+      },
+      {
+        "angle_deg": -0.5,
+        "overlap_mm3": 0.06540705004843517
+      },
+      {
+        "angle_deg": 0.5,
+        "overlap_mm3": 0.065407037325798
+      },
+      {
+        "angle_deg": -1,
+        "overlap_mm3": 171.51492711558723
+      },
+      {
+        "angle_deg": 1,
+        "overlap_mm3": 171.5148283755358
+      },
+      {
+        "angle_deg": -2,
+        "overlap_mm3": 1783.0021156710668
+      },
+      {
+        "angle_deg": 2,
+        "overlap_mm3": 1783.0030027028502
+      },
+      {
+        "angle_deg": -3,
+        "overlap_mm3": 3720.5360665473463
+      },
+      {
+        "angle_deg": 3,
+        "overlap_mm3": 3720.5367340385565
+      },
+      {
+        "angle_deg": 90,
+        "overlap_mm3": 41780.8667293112
+      },
+      {
+        "angle_deg": 180,
+        "overlap_mm3": 47680.174085036255
+      }
+    ],
+    "scope": "Actual nominal meshes; chamber is circular and not filled. Compressed cams are kinematic trimming only, not shell elasticity, force, wear or fatigue simulation."
+  },
+  "cap_joint_measured": {
+    "pocket_depth_mm": 4.0,
+    "tongue_length_mm": 3.8,
+    "gap_per_side_mm": 0.2,
+    "floor_gap_mm": 0.2,
+    "primary_pocket_floor_z_mm": 6.0,
+    "minimum_front_wall_mm": 3.0,
+    "square_pocket_side_mm": 30.0,
+    "square_pocket_depth_mm": 3.0,
+    "square_key_side_mm": 29.6,
+    "square_key_length_mm": 3.0,
+    "mode": "Full half-disc socket plus30mm square pocket and protected snap beams. Physical cap retention is not rated.",
+    "actual_solid_overlap_mm3": 0.0,
+    "measured_pocket_depth_mm": 4.0,
+    "measured_solid_tongue_length_mm": 3.8000001907348633,
+    "measured_floor_gap_mm": 0.19999980926513672,
+    "measured_square_pocket_depth_mm": 3.0,
+    "measured_square_pocket_side_mm": 30.0
+  },
+  "cap_deflected_insertion_checks": [
+    {
+      "cap_offset_mm": -1.5,
+      "compressed_overlap_mm3": 0.0
+    },
+    {
+      "cap_offset_mm": -1.0,
+      "compressed_overlap_mm3": 0.0
+    },
+    {
+      "cap_offset_mm": -0.5,
+      "compressed_overlap_mm3": 0.0
+    }
+  ],
+  "cap_joint_insertion_checks": [
+    {
+      "cap_offset_mm": -6,
+      "solid_overlap_mm3": 0.0
+    },
+    {
+      "cap_offset_mm": -4,
+      "solid_overlap_mm3": 0.0
+    },
+    {
+      "cap_offset_mm": -2,
+      "solid_overlap_mm3": 0.11250059008659719
+    },
+    {
+      "cap_offset_mm": -1,
+      "solid_overlap_mm3": 1.3000007390974133
+    },
+    {
+      "cap_offset_mm": 0,
+      "solid_overlap_mm3": 0.0
+    }
+  ],
+  "detent_crossing_without_compliance": [
+    {
+      "extraction_mm": 0,
+      "rigid_overlap_mm3": 0.0
+    },
+    {
+      "extraction_mm": 0.5,
+      "rigid_overlap_mm3": 0.0
+    },
+    {
+      "extraction_mm": 2,
+      "rigid_overlap_mm3": 1.5574287780860914
+    },
+    {
+      "extraction_mm": 10,
+      "rigid_overlap_mm3": 2.1692085291618164
+    },
+    {
+      "extraction_mm": 18,
+      "rigid_overlap_mm3": 1.971989904302177
+    },
+    {
+      "extraction_mm": 34,
+      "rigid_overlap_mm3": 1.2981918413096878
+    },
+    {
+      "extraction_mm": 36,
+      "rigid_overlap_mm3": 0.0
+    },
+    {
+      "extraction_mm": 54,
+      "rigid_overlap_mm3": 1.5775931797461074
+    },
+    {
+      "extraction_mm": 72,
+      "rigid_overlap_mm3": 0.0
+    },
+    {
+      "extraction_mm": 90,
+      "rigid_overlap_mm3": 1.183191593603927
+    },
+    {
+      "extraction_mm": 108,
+      "rigid_overlap_mm3": 0.0
+    },
+    {
+      "extraction_mm": 126,
+      "rigid_overlap_mm3": 0.7887947500394906
+    },
+    {
+      "extraction_mm": 144,
+      "rigid_overlap_mm3": 0.0
+    },
+    {
+      "extraction_mm": 162,
+      "rigid_overlap_mm3": 0.394397041509895
+    },
+    {
+      "extraction_mm": 180,
+      "rigid_overlap_mm3": 0.0
+    },
+    {
+      "extraction_mm": 190,
+      "rigid_overlap_mm3": 0.19722083351688488
+    },
+    {
+      "extraction_mm": 216,
+      "rigid_overlap_mm3": 0.0
+    },
+    {
+      "extraction_mm": 236,
+      "rigid_overlap_mm3": 0.0
+    }
+  ],
+  "glue_key_rotation_checks": [
+    {
+      "angle_deg": 0,
+      "solid_overlap_mm3": 0.0
+    },
+    {
+      "angle_deg": -0.5,
+      "solid_overlap_mm3": 10.280799906964186
+    },
+    {
+      "angle_deg": 0.5,
+      "solid_overlap_mm3": 10.280803881336965
+    },
+    {
+      "angle_deg": -1,
+      "solid_overlap_mm3": 29.13623108772784
+    },
+    {
+      "angle_deg": 1,
+      "solid_overlap_mm3": 29.136228462136575
+    },
+    {
+      "angle_deg": -3,
+      "solid_overlap_mm3": 99.70592863347429
+    },
+    {
+      "angle_deg": 3,
+      "solid_overlap_mm3": 99.70593342702553
+    },
+    {
+      "angle_deg": 90,
+      "solid_overlap_mm3": 774.0982303426063
+    }
+  ],
+  "glue_joint_measured": {
+    "collar_wall_mm": 2.2000007547093503,
+    "radial_gap_mm": 0.14999962232590747,
+    "key_tip_gap_mm": 0.14999962232591457,
+    "key_side_gap_mm": 0.10000095077246973,
+    "key_width_mm": 7.999998918996401
+  },
+  "glue_joint_axial_insertion_checks": [
+    {
+      "remaining_insertion_mm": 0,
+      "overlap_mm3": 0.0
+    },
+    {
+      "remaining_insertion_mm": 2,
+      "overlap_mm3": 0.0
+    },
+    {
+      "remaining_insertion_mm": 5,
+      "overlap_mm3": 0.0
+    },
+    {
+      "remaining_insertion_mm": 10,
+      "overlap_mm3": 0.0
+    },
+    {
+      "remaining_insertion_mm": 14,
+      "overlap_mm3": 0.0
+    },
+    {
+      "remaining_insertion_mm": 16,
+      "overlap_mm3": 0.0
+    }
+  ],
+  "scope": "Nominal64mm dimensional gauge centered atY0 over the restored circular inner floor,6 nested225mm assumption. Not a measured feather envelope or deformation/contact simulation. Six paired broad beads have intentional elastic crossing; shell/rail compliance is not simulated and click force is not calculated."
+}
