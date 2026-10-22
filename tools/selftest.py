@@ -6,7 +6,7 @@ HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE); ROO
 from generic3mf import write_generic_3mf; from efc import pre_expand_first_layer; import pipeline
 def box(w, d, h, at=(0, 0, 0)):
     b = trimesh.creation.box(extents=[w, d, h]); b.apply_translation([at[0] + w / 2, at[1] + d / 2, at[2] + h / 2]); return b
-def fixture(root, gap, axis_x=-1):
+def fixture(root, gap, axis_x=-1, check_val=0.5):
     base = trimesh.boolean.difference([box(40, 30, 15), box(34, 24, 13, (3, 3, 3))], engine='manifold')          # 벽 3, 바닥 3
     lid = box(40, 30, 2)                                                                                            # 평판 뚜껑(경첩 스윕용, 본체 위에 얹힘=접촉)
     plug = trimesh.boolean.union([box(40, 30, 2), box(34 - 2 * gap, 24 - 2 * gap, 4, (3 + gap, 3 + gap, 2))], engine='manifold')  # 플러그 뚜껑(끼움 gap/면)
@@ -25,7 +25,13 @@ def define(parts):
                        "닫힘(평판)": {"base": np.eye(4), "lid": closed}, "닫힘(플러그)": {"base": np.eye(4), "plug_lid": closed}},
             "pairs": [["base", "lid", {"contact": True}], ["base", "plug_lid", {"contact": True}], ["base", "plug_lid", {"region": [[2, 2, 10.5], [38, 28, 14.9]], "min_gap": 0.25}]],
             "sweeps": [{"name": "경첩", "part": "lid", "pivot": piv, "axis": [AXIS_X, 0, 0], "base": closed, "angles": [0, 30, 60, 90, 120], "against": ["base"], "need": [0, 120]}]}
-''' % axis_x)
+''' % axis_x + '''CHECK_VAL = %r
+_d = define
+def define(parts):
+    a = _d(parts); a["checks"] = [{"name": "예시 폴 변형률 %%", "value": CHECK_VAL, "need": "<= 1", "ok": CHECK_VAL <= 1}]
+    a["frames"] = {"f0": {"base": np.eye(4)}, "f1": {"base": T([0, 0, 5])}}
+    return a
+''' % check_val)
     json.dump({'name': 'selftest', 'out': 'qc', 'parts_pkl': 'parts.pkl', 'plates': ['models/A.3mf'], 'assembly': 'scripts/asm.py', 'colors': {'base': '#37474f', 'lid': '#ffb300'}, 'min_gap': 0.25, 'frames': 8},
               open(os.path.join(root, 'cfg.json'), 'w'))
     return os.path.join(root, 'cfg.json')
@@ -54,6 +60,13 @@ def efc_stl_roundtrip_case():
     nb = len(back.split(only_watertight=False)); grow = (r.bounds[1, :2] - r.bounds[0, :2]).max() - (fx.bounds[1, :2] - fx.bounds[0, :2]).max()
     print(f'[EFC STL 왕복] 닫힘 {back.is_watertight}, 조각 {nb}, 첫 층 성장 {grow:.2f} mm (기대 True, 1, >0)')
     return back.is_watertight and nb == 1 and grow > 0.1
+def extrude_holes_case():
+    """구멍 여러 개(한 줄로 늘어선 슬롯) 판 압출: 단면 구멍 수가 그대로여야 한다(earcut 다리 → 구멍 합쳐짐 재발 방지)."""
+    from shapely.geometry import box as sb; from shapely.ops import unary_union; from efc import extrude_safe
+    P = sb(0, 0, 200, 80).difference(unary_union([sb(10 + i * 6, 10, 12 + i * 6, 12) for i in range(5)] + [sb(10 + i * 6, 20, 12 + i * 6, 22) for i in range(5)]))
+    m = extrude_safe(P, 3); s = m.section([0, 0, 1.5], [0, 0, 1]); nh = sum(len(q.interiors) for q in s.to_2D()[0].polygons_full)
+    ok = m.is_volume and nh == 10 and abs(m.volume - P.area * 3) < 0.1
+    print(f'[구멍 많은 판 압출] 닫힘 {m.is_volume} · 단면 구멍 {nh} (기대 10) → {ok}'); return ok
 def slit_case():
     """벽 속 0.1 mm 수평 틈이 있는 상자는 '얇은 틈' 으로 걸리고, 같은 크기 통짜 상자는 안 걸리는지(Toolbox48 v6/v8 뚜껑 줄 재현)."""
     import argparse; from qc_model import qc_part
@@ -182,7 +195,7 @@ def raster_case():
     print('\n[PNG 로고] 크기', round(x1 - x0, 2), round(y1 - y0, 2), '구멍', len(getattr(g, 'interiors', [])), '넓이 비', round(g.area / area, 3), '→', ok); return ok
 
 if __name__ == '__main__':
-    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = efc_group_case() and efc_stl_roundtrip_case() and slit_case() and wall_step_case() and wall_step_miss_case() and mm_api_case() and bambu_multi_case() and b3d_case() and svg2d_case() and raster_case()
+    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = efc_group_case() and efc_stl_roundtrip_case() and extrude_holes_case() and slit_case() and wall_step_case() and wall_step_miss_case() and mm_api_case() and bambu_multi_case() and b3d_case() and svg2d_case() and raster_case()
     cfg = fixture(os.path.join(tmp, 'good'), 0.3); rc = pipeline.run(cfg); rep = json.load(open(os.path.join(tmp, 'good', 'qc', 'report.json')))
     files = [os.path.join(tmp, 'good', 'qc', f) for f in ('REPORT.md', 'assembly/turntable.gif', 'motion/turntable.gif', 'plate_A/view_iso.png')]
     print('\n[정상 설계] 종료코드', rc, '| 경고', rep['warn'], '| 산출물', [os.path.exists(f) for f in files])
@@ -194,5 +207,8 @@ if __name__ == '__main__':
     # 반대로 도는 경첩(뚜껑이 상자 안으로 회전): 0·90·120° 는 깨끗하고 30·60° 만 간섭 → 예전 판정(최소~최대)은 0~120 통과로 놓쳤다
     cfg = fixture(os.path.join(tmp, 'wrongway'), 0.3, axis_x=1); rc = pipeline.run(cfg); rep = json.load(open(os.path.join(tmp, 'wrongway', 'qc', 'report.json')))
     print('\n[반대 회전 경첩] 종료코드', rc, '| 경고', rep['warn']); ok &= (rc == 1 and any('간섭 각도' in w for w in rep['warn']))
+    # define 이 넘긴 기구 판정(checks) 실패 → ⚠ 로 잡혀야 한다
+    cfg = fixture(os.path.join(tmp, 'badcheck'), 0.3, check_val=2.5); rc = pipeline.run(cfg); rep = json.load(open(os.path.join(tmp, 'badcheck', 'qc', 'report.json')))
+    print('\n[기구 판정 실패] 종료코드', rc, '| 경고', rep['warn']); ok &= (rc == 1 and any(w.startswith('판정 ') for w in rep['warn']))
     ok &= scaffold_case(); ok &= agent_case()
     shutil.rmtree(tmp, ignore_errors=True); print('\nSELFTEST', 'PASS' if ok else 'FAIL'); sys.exit(0 if ok else 1)

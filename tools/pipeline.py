@@ -9,7 +9,8 @@ config.json (경로는 config 파일 위치 기준):
  "parts_pkl": "v7parts.pkl",                      # {이름: trimesh} 출력 방향 메시(바닥 z=0, EFC 선반영 완료) — QC 용
  "assembly_parts_pkl": "v7parts_nominal.pkl",     # (선택) EFC 선반영 전 공칭 형상 — 조립 검사·렌더 용
  "plates": ["models/A.3mf", "models/B.3mf"],      # 플레이트별 일반 3MF (베드 좌표)
- "assembly": "scripts/assembly_v7.py",            # define(parts) -> {"states":{상태:{파트:4x4}}, "sweeps":[...], "extra":{이름:mesh}, "pairs":[[a,b],...], "notes":[...]}
+ "assembly": "scripts/assembly_v7.py",            # define(parts) -> {"states":{상태:{파트:4x4}}, "sweeps":[...], "extra":{이름:mesh}, "pairs":[[a,b],...], "notes":[...],
+                                                  #                   "checks":[{"name","value","need","ok"}] (ok=False → ⚠), "frames":{프레임:{파트:4x4}} (작동 GIF, 검사 없음)}
  "colors": {"base": "#37474f", "logo": "#ffb300"},
  "qc": {"efc": 0.15, "max_bridge": 7, "min_wall": 1.2, "single_wall": []},
  "support_zones": [{"part": "base", "desc": "손잡이 귀 밑면(z 13.5)", "max_mm2": 300}],   # 설계상 돌출 — 서포트로 처리할 곳(측정값이 max_mm2 이하면 ℹ, 넘으면 ⚠)
@@ -158,6 +159,13 @@ def run(cfg_path, render_only=False):
         for sw in asm.get('sweeps', []):
             for n in [sw['part']] + list(sw['against']): assert n in allparts, f"스윕 {sw['name']} 에 없는 파트 {n}"
         nw0 = len(warn); check_assembly(asm, allparts, mg, L, warn, render_only)
+        # 기구 판정(checks): 강체 교집합으로 못 보는 항목(판스프링 폴 물림·변형률·세그먼트 보임 등)을 define 이 계산해 넘긴다 — ok=False 면 ⚠
+        if asm.get('checks') and not render_only:
+            L += ['### 기구 판정 (checks — 휘는 부품·2D 운동학)', '', '| 항목 | 값 | 기준 | 판정 |', '|---|---|---|---|']
+            for c in asm['checks']:
+                L.append(f"| {c['name']} | {c['value']} | {c.get('need', '')} | {'✓' if c['ok'] else '⚠'} |")
+                if not c['ok']: warn.append(f"판정 {c['name']}: {c['value']} (기준 {c.get('need', '')})")
+            L.append('')
         stages['assembly'] = {'states': list(asm['states']), 'pairs': len(asm.get('pairs', [])), 'sweeps': [sw['name'] for sw in asm.get('sweeps', [])], 'warnings': len(warn) - nw0}
         for n in asm.get('notes', []): L.append('- ' + n)
         L.append(''); _flush(out, L)
@@ -183,6 +191,8 @@ def run(cfg_path, render_only=False):
                 for n, M2 in sw.get('also', {}).items(): st[n] = np.asarray(M2).ravel().tolist()
                 for n in sw.get('follow', []): st[n] = np.asarray(M).ravel().tolist()        # 움직이는 파트와 같이 움직이는 파트(뚜껑의 로고)
                 motion[f"{sw['name']} {ang}°"] = st
+        for k, st in asm.get('frames', {}).items():      # 여러 파트가 함께 움직이는 작동 프레임(검사 없이 GIF 만)
+            motion[k] = {n: np.asarray(M).ravel().tolist() for n, M in st.items()}
         if motion:
             names = set(n for st in motion.values() for n in st); sub = {n: m for n, m in allparts.items() if n in names}
             log('render motion', len(motion), 'frames'); d2 = os.path.join(out, 'motion'); render3(sub, d2, colors, motion, len(motion), status=cfg['name'] + ' · 작동(스윕)'); stages['renders'][os.path.relpath(d2, base)] = 'motion'; L.append(f'- 작동 GIF(스윕 각도별 프레임): `{os.path.relpath(d2, base)}/turntable.gif`')

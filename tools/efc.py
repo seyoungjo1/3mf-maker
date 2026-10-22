@@ -3,9 +3,14 @@
 import numpy as np, trimesh
 from shapely.geometry import Polygon, MultiPolygon
 from overhang import layer_poly
+def extrude_safe(p, h):
+    """구멍 있는 다각형 압출. 기본 삼각분할(earcut)은 구멍을 외곽에 '다리'로 이어 붙여 부피는 맞지만 위상·단면에서 구멍이 하나로 합쳐진다
+    (구멍 44개 앞판 → 단면 구멍 14·QC 얇은 살 오탐, digit-counter 2026-10-22). manifold 삼각분할을 먼저 쓴다."""
+    try: return trimesh.creation.extrude_polygon(p, h, engine='manifold')
+    except Exception: return trimesh.creation.extrude_polygon(p, h)
 def _extrude(poly, h):
     polys = list(poly.geoms) if isinstance(poly, MultiPolygon) else [poly]
-    ms = [trimesh.creation.extrude_polygon(p, h) for p in polys if p.area > 1e-6]
+    ms = [extrude_safe(p, h) for p in polys if p.area > 1e-6]
     return trimesh.util.concatenate(ms) if ms else None
 def _drop_slivers(m, ref_volume):
     """불리언이 남긴 부피 0 껍질 조각(같은 면 유니온)을 버린다. 의미 있는 조각(≥1 mm³)은 그대로 둔다."""
