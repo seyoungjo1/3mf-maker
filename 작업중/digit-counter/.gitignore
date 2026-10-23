@@ -1,0 +1,4 @@
+# 빌드 중간 산출물(재생성)
+parts*.pkl
+# 3MF 는 사용자 승인 뒤 git add -f 로 넣는다(CLAUDE.md 허락 규칙)
+models/
