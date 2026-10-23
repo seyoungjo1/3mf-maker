@@ -1,0 +1,15 @@
+키: TRIPO_API_KEY (길이 47, 앞 tsk_…)
+upload /upload/sts: {"code": 0, "data": {"image_token": "698b13b4-3f63-4f6a-a537-e578e0d98730"}}
+task: {"type": "image_to_model", "texture": false, "pbr": false, "face_limit": 150000}
+create: {"code": 0, "data": {"task_id": "ecc11628-7537-4885-b346-58161905fadd"}}
+    5s running 16
+   10s running 30
+   16s running 47
+   21s running 61
+   26s running 75
+   31s running 89
+   36s running 99
+   42s running 99
+   47s success 100
+받음 base_model.glb 4402668 B
+받음 rendered_image.webp 96592 B
