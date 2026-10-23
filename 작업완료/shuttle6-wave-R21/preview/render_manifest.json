@@ -1,0 +1,26 @@
+{
+ "backend": "software",
+ "states": [
+  "닫힘·뚜껑축 클립",
+  "클립 몸통쪽에서 젖힘",
+  "225mm·양옆 멈춤"
+ ],
+ "views": [
+  "view_iso_닫힘·뚜껑축 클립.png",
+  "view_top_닫힘·뚜껑축 클립.png",
+  "view_side_닫힘·뚜껑축 클립.png",
+  "view_bottom_닫힘·뚜껑축 클립.png",
+  "view_front_닫힘·뚜껑축 클립.png",
+  "view_iso_클립 몸통쪽에서 젖힘.png",
+  "view_top_클립 몸통쪽에서 젖힘.png",
+  "view_side_클립 몸통쪽에서 젖힘.png",
+  "view_bottom_클립 몸통쪽에서 젖힘.png",
+  "view_front_클립 몸통쪽에서 젖힘.png",
+  "view_iso_225mm·양옆 멈춤.png",
+  "view_top_225mm·양옆 멈춤.png",
+  "view_side_225mm·양옆 멈춤.png",
+  "view_bottom_225mm·양옆 멈춤.png",
+  "view_front_225mm·양옆 멈춤.png"
+ ],
+ "frames": 30
+}

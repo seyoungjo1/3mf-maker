@@ -1,0 +1,325 @@
+{
+  "receiver_slide_raw_solid_checks": [
+    {
+      "travel_mm": 0.0,
+      "receiver_overlap_mm3": 0.0
+    },
+    {
+      "travel_mm": 0.5,
+      "receiver_overlap_mm3": 0.0
+    },
+    {
+      "travel_mm": 1.0,
+      "receiver_overlap_mm3": 0.0
+    },
+    {
+      "travel_mm": 2.0,
+      "receiver_overlap_mm3": 0.0
+    },
+    {
+      "travel_mm": 3.0,
+      "receiver_overlap_mm3": 0.0
+    },
+    {
+      "travel_mm": 4.0,
+      "receiver_overlap_mm3": 0.0
+    },
+    {
+      "travel_mm": 5.0,
+      "receiver_overlap_mm3": 0.0
+    },
+    {
+      "travel_mm": 8.0,
+      "receiver_overlap_mm3": 0.0
+    },
+    {
+      "travel_mm": 12.0,
+      "receiver_overlap_mm3": 0.0
+    }
+  ],
+  "front_original_hat_profile_samples": [
+    {
+      "tray_z_mm": 13.5,
+      "actual_lower_cavity_radius_mm": 6.166127139035954,
+      "original_hat_mirrored_radius_mm": 6.166127515791338,
+      "profile_copy_error_mm": 3.767553842237703e-07,
+      "cork_radius_mm": 3.7080992435478315,
+      "radial_gap_mm": 2.4580278954881223
+    },
+    {
+      "tray_z_mm": 14.0,
+      "actual_lower_cavity_radius_mm": 7.1375388906154935,
+      "original_hat_mirrored_radius_mm": 7.137539255460483,
+      "profile_copy_error_mm": 3.6484498977529256e-07,
+      "cork_radius_mm": 5.196152422706632,
+      "radial_gap_mm": 1.9413864679088615
+    },
+    {
+      "tray_z_mm": 16.0,
+      "actual_lower_cavity_radius_mm": 11.091133222832031,
+      "original_hat_mirrored_radius_mm": 11.084079922559063,
+      "profile_copy_error_mm": 0.007053300272968244,
+      "cork_radius_mm": 8.660254037844387,
+      "radial_gap_mm": 2.430879184987644
+    },
+    {
+      "tray_z_mm": 20.0,
+      "actual_lower_cavity_radius_mm": 19.74300682370182,
+      "original_hat_mirrored_radius_mm": 19.742089963702146,
+      "profile_copy_error_mm": 0.0009168599996733917,
+      "cork_radius_mm": 12.12435565298214,
+      "radial_gap_mm": 7.618651170719678
+    },
+    {
+      "tray_z_mm": 24.0,
+      "actual_lower_cavity_radius_mm": 29.763024092615773,
+      "original_hat_mirrored_radius_mm": 29.76302195926723,
+      "profile_copy_error_mm": 2.1333485413777e-06,
+      "cork_radius_mm": 13.674794331177344,
+      "radial_gap_mm": 16.088229761438427
+    }
+  ],
+  "rear_open_boat_lower_radius_samples": [
+    {
+      "tray_z_mm": 231.5,
+      "lower_cavity_radius_mm": 32.5
+    },
+    {
+      "tray_z_mm": 235.0,
+      "lower_cavity_radius_mm": 32.5
+    },
+    {
+      "tray_z_mm": 238.0,
+      "lower_cavity_radius_mm": 32.5
+    },
+    {
+      "tray_z_mm": 240.0,
+      "lower_cavity_radius_mm": 32.5
+    },
+    {
+      "tray_z_mm": 243.5,
+      "lower_cavity_radius_mm": 32.5
+    }
+  ],
+  "rear_upper_roof_checks": [
+    {
+      "tray_z_mm": 236.0,
+      "upper_roof_hit_count": 0
+    },
+    {
+      "tray_z_mm": 240.0,
+      "upper_roof_hit_count": 0
+    },
+    {
+      "tray_z_mm": 245.0,
+      "upper_roof_hit_count": 0
+    },
+    {
+      "tray_z_mm": 249.0,
+      "upper_roof_hit_count": 0
+    }
+  ],
+  "rear_flat_wall_measured_z_mm": 244.0,
+  "rear_feather_rim_z_mm": 238.0,
+  "rear_axial_gap_measured_mm": 6.0,
+  "rear_end_half_disc_thickness_mm": 5.8000030517578125,
+  "rear_radial_gap_to64mm_rim_mm": 0.5,
+  "stack_axial_shift_checks": [
+    {
+      "rearward_stack_shift_mm": 0.0,
+      "solid_overlap_mm3": 0.0
+    },
+    {
+      "rearward_stack_shift_mm": 2.0,
+      "solid_overlap_mm3": 0.0
+    },
+    {
+      "rearward_stack_shift_mm": 4.0,
+      "solid_overlap_mm3": 0.0
+    }
+  ],
+  "feather_rim_offset_checks": [
+    {
+      "dx_mm": 0,
+      "dy_mm": 0,
+      "dz_mm": 0.0,
+      "solid_overlap_mm3": 0.0
+    },
+    {
+      "dx_mm": 0.25,
+      "dy_mm": 0,
+      "dz_mm": 0.0,
+      "solid_overlap_mm3": 0.0
+    },
+    {
+      "dx_mm": -0.25,
+      "dy_mm": 0,
+      "dz_mm": 0.0,
+      "solid_overlap_mm3": 0.0
+    },
+    {
+      "dx_mm": 0,
+      "dy_mm": 0.25,
+      "dz_mm": 0.0,
+      "solid_overlap_mm3": 0.0
+    },
+    {
+      "dx_mm": 0,
+      "dy_mm": -0.25,
+      "dz_mm": 0.0,
+      "solid_overlap_mm3": 0.0
+    },
+    {
+      "dx_mm": 0,
+      "dy_mm": 0,
+      "dz_mm": 2.0,
+      "solid_overlap_mm3": 0.0
+    },
+    {
+      "dx_mm": 0.25,
+      "dy_mm": 0,
+      "dz_mm": 2.0,
+      "solid_overlap_mm3": 0.0
+    },
+    {
+      "dx_mm": -0.25,
+      "dy_mm": 0,
+      "dz_mm": 2.0,
+      "solid_overlap_mm3": 0.0
+    },
+    {
+      "dx_mm": 0,
+      "dy_mm": 0.25,
+      "dz_mm": 2.0,
+      "solid_overlap_mm3": 0.0
+    },
+    {
+      "dx_mm": 0,
+      "dy_mm": -0.25,
+      "dz_mm": 2.0,
+      "solid_overlap_mm3": 0.0
+    },
+    {
+      "dx_mm": 0,
+      "dy_mm": 0,
+      "dz_mm": 4.0,
+      "solid_overlap_mm3": 0.0
+    },
+    {
+      "dx_mm": 0.25,
+      "dy_mm": 0,
+      "dz_mm": 4.0,
+      "solid_overlap_mm3": 0.0
+    },
+    {
+      "dx_mm": -0.25,
+      "dy_mm": 0,
+      "dz_mm": 4.0,
+      "solid_overlap_mm3": 0.0
+    },
+    {
+      "dx_mm": 0,
+      "dy_mm": 0.25,
+      "dz_mm": 4.0,
+      "solid_overlap_mm3": 0.0
+    },
+    {
+      "dx_mm": 0,
+      "dy_mm": -0.25,
+      "dz_mm": 4.0,
+      "solid_overlap_mm3": 0.0
+    }
+  ],
+  "docking_socket_samples": [
+    {
+      "body_z_mm": 5.0,
+      "socket_lower_radius_mm": 34.79997253417969,
+      "radial_gap_to_rear34p6_mm": 0.19997253417968608,
+      "flat_roof_gap_mm": 0.20000000298023224
+    },
+    {
+      "body_z_mm": 7.0,
+      "socket_lower_radius_mm": 34.949954986572266,
+      "radial_gap_to_rear34p6_mm": 0.3499549865722642,
+      "flat_roof_gap_mm": 0.3499999940395355
+    }
+  ],
+  "docking_insertion_depth_mm": 4.100003051757812,
+  "housing_wall_samples": [
+    {
+      "body_z_mm": 60.0,
+      "direction": [
+        0,
+        -1,
+        0
+      ],
+      "old_wall_mm": 4.000292955629831,
+      "new_wall_mm": 2.907912422110506,
+      "bore_change_mm": 2.1771742808596173e-07
+    },
+    {
+      "body_z_mm": 60.0,
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "old_wall_mm": 4.1999969482421875,
+      "new_wall_mm": 3.1817694086212427,
+      "bore_change_mm": 0.0
+    },
+    {
+      "body_z_mm": 60.0,
+      "direction": [
+        1,
+        0,
+        0
+      ],
+      "old_wall_mm": 1.6425434273948056,
+      "new_wall_mm": 1.6425434273948056,
+      "bore_change_mm": 0.0
+    },
+    {
+      "body_z_mm": 180.0,
+      "direction": [
+        0,
+        -1,
+        0
+      ],
+      "old_wall_mm": 3.9963184491265196,
+      "new_wall_mm": 2.8863191996591127,
+      "bore_change_mm": 0.0
+    },
+    {
+      "body_z_mm": 180.0,
+      "direction": [
+        0,
+        1,
+        0
+      ],
+      "old_wall_mm": 4.197030932332147,
+      "new_wall_mm": 3.0869815652009365,
+      "bore_change_mm": 0.0
+    },
+    {
+      "body_z_mm": 180.0,
+      "direction": [
+        1,
+        0,
+        0
+      ],
+      "old_wall_mm": 2.0,
+      "new_wall_mm": 2.0,
+      "bore_change_mm": 0.0
+    }
+  ],
+  "other6_parts_unchanged_from_R20": {
+    "cap": true,
+    "latch": true,
+    "stop_left": true,
+    "stop_right": true,
+    "shell_coupon": true,
+    "drawer_coupon": true
+  },
+  "scope": "Actual nominal mesh ray/solid measurements.225mm/64mm dimensional shuttle gauge; no real feather friction, insertion force, impact or physical strength validation."
+}

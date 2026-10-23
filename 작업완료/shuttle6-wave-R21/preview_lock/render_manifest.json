@@ -1,0 +1,20 @@
+{
+ "backend": "software",
+ "states": [
+  "잠금·축은 뚜껑",
+  "열림·걸림은 몸통"
+ ],
+ "views": [
+  "view_iso_잠금·축은 뚜껑.png",
+  "view_top_잠금·축은 뚜껑.png",
+  "view_side_잠금·축은 뚜껑.png",
+  "view_bottom_잠금·축은 뚜껑.png",
+  "view_front_잠금·축은 뚜껑.png",
+  "view_iso_열림·걸림은 몸통.png",
+  "view_top_열림·걸림은 몸통.png",
+  "view_side_열림·걸림은 몸통.png",
+  "view_bottom_열림·걸림은 몸통.png",
+  "view_front_열림·걸림은 몸통.png"
+ ],
+ "frames": 20
+}

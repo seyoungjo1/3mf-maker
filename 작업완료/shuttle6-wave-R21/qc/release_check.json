@@ -1,0 +1,38 @@
+{
+  "ok": true,
+  "printed_triangles": 441680,
+  "single_solids": 9,
+  "bambu_file": "Shuttle6_C_R21_boat_dock_front_hat_bambu.3mf",
+  "bambu_sha256": "b2f4ace182e4371d40e60b4f1d3ffb934009de4a795d388f497f4b519e0f6d9b",
+  "render_integrity": {
+    "preview": {
+      "pngs": 15,
+      "gif_frames": 30
+    },
+    "preview_lock": {
+      "pngs": 10,
+      "gif_frames": 20
+    },
+    "preview_stops": {
+      "pngs": 10,
+      "gif_frames": 20
+    },
+    "preview_keyring": {
+      "pngs": 10,
+      "gif_frames": 20
+    },
+    "preview_dock": {
+      "pngs": 15,
+      "gif_frames": 24
+    },
+    "preview_plates": {
+      "pngs": 35,
+      "gif_frames": 35
+    },
+    "preview_six_steps": {
+      "pngs": 9,
+      "gif_frames": 79
+    }
+  },
+  "scope": "Digital geometry, metadata, render and file checks. No physical print or observed Bambu GUI slicing."
+}
