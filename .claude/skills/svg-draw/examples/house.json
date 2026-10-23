@@ -1,0 +1,16 @@
+{"width":400,"height":300,"background":"#f7f3e8","grid":20,
+ "steps":[
+  {"name":"1 구도: 땅선·언덕","strokes":[
+    {"fn":"graph","f":"45*exp(-((x-90)/70)**2)","x0":0,"x1":400,"origin":[0,250],"stroke":"#9ccc65","width":3,"id":"언덕(가우스)"},
+    {"fn":"line","p0":[20,250],"p1":[380,250],"stroke":"#5d4037","width":3,"id":"땅선"}]},
+  {"name":"2 큰 형태: 몸통·지붕","strokes":[
+    {"fn":"rect","x":110,"y":140,"w":180,"h":110,"stroke":"#37474f","width":4,"fill":"#ffe0b2","id":"몸통"},
+    {"fn":"through","pts":[[96,146],[200,66],[200,66],[304,146]],"t":[0,0.5,0.5,1],"stroke":"#b71c1c","width":6,"id":"지붕(꺾임 = 같은 점 두 번)"}]},
+  {"name":"3 세부: 창·문·해·풀","strokes":[
+    {"fn":"rect","x":132,"y":165,"w":36,"h":30,"stroke":"#37474f","width":2,"fill":"#90caf9","id":"창","repeat":{"n":2,"dx":100}},
+    {"fn":"rect","x":185,"y":190,"w":30,"h":60,"stroke":"#37474f","width":2,"fill":"#8d6e63","id":"문"},
+    {"fn":"circle","c":[330,60],"r":22,"stroke":"#f9a825","width":3,"fill":"#ffeb3b","id":"해"},
+    {"fn":"line","p0":[330,30],"p1":[330,16],"stroke":"#f9a825","width":2,"id":"햇살","repeat":{"n":12,"rotate":30,"about":[330,60]}},
+    {"fn":"sine","p0":[30,280],"p1":[370,280],"amp":4,"cycles":12,"stroke":"#2e7d32","width":2,"id":"풀"},
+    {"fn":"polar","r":"18*cos(3*th)","c":[60,60],"stroke":"#ad1457","width":2,"id":"꽃(장미곡선 r=18cos3θ)"}]}
+ ]}

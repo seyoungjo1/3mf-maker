@@ -212,6 +212,24 @@ def new(name, desc=''):
          {'config': {'type': 'string'}, 'skill_read': {'type': 'boolean', 'default': False, 'description': 'SKILL.md+references 를 읽었음을 호출자가 보증(mm_agent 는 자동 true)'}})
 def checklist(config, skill_read=False):
     import scaffold; return scaffold.checklist(_abs(config), skill_read)
+@command('svgdraw', 'SVG 단계 그리기(선·함수만): 스펙 JSON(단계 목록, 획 = line·bezier·through·arc·graph·param·polar·sine…) → drawing.svg + 단계별 격자 PNG·모음·GIF. 단계 그림을 보고 다음 단계를 정한다. browser=true 면 Chromium 렌더와 내부 래스터 RMSE',
+         {'spec': {'type': 'string', 'description': '스펙 JSON(또는 SVG) 경로'}, 'out': {'type': 'string'}, 'browser': {'type': 'boolean', 'default': False}})
+def svgdraw(spec, out, browser=False):
+    import svgdraw as sd; r = sd.draw(_abs(spec), _abs(out))
+    if browser: r['browser_rmse'] = sd.browser_rmse(r['svg'], sd.load(_abs(spec)))
+    return r
+@command('svgtrace', 'SVG 점수 최적화 트레이싱(윤곽 따기 아님): 오차 지도로 자리 → 구조 텐서로 방향 → 최적 색(닫힌 식/팔레트) → 언덕 오르기로 오차 감소가 가장 큰 선·곡선을 하나씩 확정. trace.json·trace.svg·progress.gif',
+         {'image': {'type': 'string'}, 'out': {'type': 'string'}, 'strokes': {'type': 'integer', 'default': 300}, 'size': {'type': 'integer', 'default': 160, 'description': '작업 해상도(긴 변 px)'},
+          'kinds': {'type': 'string', 'default': 'line,curve'}, 'colors': {'type': 'integer', 'default': 0, 'description': 'k>0 이면 그림에서 k색 팔레트(필라멘트 수)'},
+          'palette': {'type': 'array', 'items': {'type': 'string'}, 'default': None, 'description': '색 목록 고정(예 ["#37474f","#ffb300"])'}, 'alpha': {'type': 'number', 'default': 0.85},
+          'init': {'type': 'string', 'default': None, 'description': '먼저 그린 스펙(AI 단계 그림) 위에 이어 그림'}, 'seed': {'type': 'integer', 'default': 0}})
+def svgtrace(image, out, strokes=300, size=160, kinds='line,curve', colors=0, palette=None, alpha=0.85, init=None, seed=0):
+    import svgdraw as sd
+    return sd.trace(_abs(image), _abs(out), strokes, size, kinds, alpha, palette, colors, init=_abs(init) if init else None, seed=seed)
+@command('svgscore', 'SVG 채점·제안: 그림(스펙/SVG) ↔ 목표 그림 RMSE·SSIM·윤곽 F1 + 오차 큰 칸(x?y?)·목표 색·윤곽 방향 → 다음 단계에서 그릴 곳. out 이면 목표|그림|오차 PNG',
+         {'drawing': {'type': 'string'}, 'target': {'type': 'string'}, 'out': {'type': 'string', 'default': None}, 'grid': {'type': 'integer', 'default': 10}})
+def svgscore(drawing, target, out=None, grid=10):
+    import svgdraw as sd; return sd.score(_abs(drawing), _abs(target), _abs(out) if out else None, grid=grid)
 @command('selftest', '도구 자가검사(정상/간섭/빡빡한 끼움/EFC 그룹/실제 모서리/벽 속 틈)', {})
 def selftest():
     p = subprocess.run([sys.executable, os.path.join(HERE, 'selftest.py')], capture_output=True, text=True)
@@ -260,7 +278,7 @@ def main(argv):
         if t == 'array': ap.add_argument(k if k == 'files' else f'--{k}', nargs='+', type=(float if v.get('items', {}).get('type') == 'number' else str), default=v.get('default'))
         elif t == 'object': ap.add_argument(f'--{k}', type=json.loads, default=v.get('default'))
         elif t == 'boolean': ap.add_argument(f'--{k}', action='store_true')
-        elif k in ('config', 'name'): ap.add_argument(k)
+        elif k in ('config', 'name', 'spec', 'image', 'drawing', 'target'): ap.add_argument(k)
         else: ap.add_argument(f'--{k}', type=(float if t == 'number' else int if t == 'integer' else str), default=v.get('default'), required='default' not in v)
     a = vars(ap.parse_args(rest)); res = run(cmd, **{k: v for k, v in a.items() if v is not None})
     print(json.dumps(res, ensure_ascii=False, indent=1, default=str))
