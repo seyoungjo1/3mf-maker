@@ -1,0 +1,14 @@
+{
+ "backend": "software",
+ "states": [
+  "앞콘 전체 원형 · 실제 내관 앞부분"
+ ],
+ "views": [
+  "view_iso_앞콘 전체 원형 · 실제 내관 앞부분.png",
+  "view_top_앞콘 전체 원형 · 실제 내관 앞부분.png",
+  "view_side_앞콘 전체 원형 · 실제 내관 앞부분.png",
+  "view_bottom_앞콘 전체 원형 · 실제 내관 앞부분.png",
+  "view_front_앞콘 전체 원형 · 실제 내관 앞부분.png"
+ ],
+ "frames": 24
+}

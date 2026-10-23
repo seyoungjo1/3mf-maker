@@ -1,0 +1,612 @@
+{
+  "backend": "software",
+  "camera": "fixed angle, center and scale for entire sequence",
+  "timeline": [
+    {
+      "state": "000 · 닫힘 · 걸림1/6 · 0mm",
+      "travel_mm": 0,
+      "clip_angle_deg": 0,
+      "duration_ms": 900,
+      "hold": true,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "001 · 클립 풀기",
+      "travel_mm": 0,
+      "clip_angle_deg": 10,
+      "duration_ms": 70,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "002 · 클립 풀기",
+      "travel_mm": 0,
+      "clip_angle_deg": 20,
+      "duration_ms": 70,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "003 · 클립 풀기",
+      "travel_mm": 0,
+      "clip_angle_deg": 30,
+      "duration_ms": 70,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "004 · 클립 풀기",
+      "travel_mm": 0,
+      "clip_angle_deg": 40,
+      "duration_ms": 70,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "005 · 클립 풀기",
+      "travel_mm": 0,
+      "clip_angle_deg": 50,
+      "duration_ms": 70,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "006 · 클립 풀기",
+      "travel_mm": 0,
+      "clip_angle_deg": 60,
+      "duration_ms": 70,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "007 · 클립 풀기",
+      "travel_mm": 0,
+      "clip_angle_deg": 70,
+      "duration_ms": 70,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "008 · 클립 풀기",
+      "travel_mm": 0,
+      "clip_angle_deg": 80,
+      "duration_ms": 70,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "009 · 클립 풀기",
+      "travel_mm": 0,
+      "clip_angle_deg": 90,
+      "duration_ms": 70,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "010 · 잠금 해제 · 걸림1/6 · 0mm",
+      "travel_mm": 0,
+      "clip_angle_deg": 90,
+      "duration_ms": 500,
+      "hold": true,
+      "stage": 1,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "011 · 1 → 2단계 인출",
+      "travel_mm": 1.5469,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "012 · 1 → 2단계 인출",
+      "travel_mm": 5.625,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "013 · 1 → 2단계 인출",
+      "travel_mm": 11.3906,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "014 · 1 → 2단계 인출",
+      "travel_mm": 18.0,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "015 · 1 → 2단계 인출",
+      "travel_mm": 24.6094,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "016 · 1 → 2단계 인출",
+      "travel_mm": 30.375,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "017 · 1 → 2단계 인출",
+      "travel_mm": 34.4531,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "018 · 1 → 2단계 인출",
+      "travel_mm": 36.0,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "019 · 걸림2/6 · 36mm",
+      "travel_mm": 36,
+      "clip_angle_deg": 90,
+      "duration_ms": 650,
+      "hold": true,
+      "stage": 2,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "020 · 2 → 3단계 인출",
+      "travel_mm": 37.5469,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "021 · 2 → 3단계 인출",
+      "travel_mm": 41.625,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "022 · 2 → 3단계 인출",
+      "travel_mm": 47.3906,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "023 · 2 → 3단계 인출",
+      "travel_mm": 54.0,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "024 · 2 → 3단계 인출",
+      "travel_mm": 60.6094,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "025 · 2 → 3단계 인출",
+      "travel_mm": 66.375,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "026 · 2 → 3단계 인출",
+      "travel_mm": 70.4531,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "027 · 2 → 3단계 인출",
+      "travel_mm": 72.0,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "028 · 걸림3/6 · 72mm",
+      "travel_mm": 72,
+      "clip_angle_deg": 90,
+      "duration_ms": 650,
+      "hold": true,
+      "stage": 3,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "029 · 3 → 4단계 인출",
+      "travel_mm": 73.5469,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "030 · 3 → 4단계 인출",
+      "travel_mm": 77.625,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "031 · 3 → 4단계 인출",
+      "travel_mm": 83.3906,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "032 · 3 → 4단계 인출",
+      "travel_mm": 90.0,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "033 · 3 → 4단계 인출",
+      "travel_mm": 96.6094,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "034 · 3 → 4단계 인출",
+      "travel_mm": 102.375,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "035 · 3 → 4단계 인출",
+      "travel_mm": 106.4531,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "036 · 3 → 4단계 인출",
+      "travel_mm": 108.0,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "037 · 걸림4/6 · 108mm",
+      "travel_mm": 108,
+      "clip_angle_deg": 90,
+      "duration_ms": 650,
+      "hold": true,
+      "stage": 4,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "038 · 4 → 5단계 인출",
+      "travel_mm": 109.5469,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "039 · 4 → 5단계 인출",
+      "travel_mm": 113.625,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "040 · 4 → 5단계 인출",
+      "travel_mm": 119.3906,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "041 · 4 → 5단계 인출",
+      "travel_mm": 126.0,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "042 · 4 → 5단계 인출",
+      "travel_mm": 132.6094,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "043 · 4 → 5단계 인출",
+      "travel_mm": 138.375,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "044 · 4 → 5단계 인출",
+      "travel_mm": 142.4531,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "045 · 4 → 5단계 인출",
+      "travel_mm": 144.0,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "046 · 걸림5/6 · 144mm",
+      "travel_mm": 144,
+      "clip_angle_deg": 90,
+      "duration_ms": 650,
+      "hold": true,
+      "stage": 5,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "047 · 5 → 6단계 인출",
+      "travel_mm": 145.5469,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "048 · 5 → 6단계 인출",
+      "travel_mm": 149.625,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "049 · 5 → 6단계 인출",
+      "travel_mm": 155.3906,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "050 · 5 → 6단계 인출",
+      "travel_mm": 162.0,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "051 · 5 → 6단계 인출",
+      "travel_mm": 168.6094,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "052 · 5 → 6단계 인출",
+      "travel_mm": 174.375,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "053 · 5 → 6단계 인출",
+      "travel_mm": 178.4531,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "054 · 5 → 6단계 인출",
+      "travel_mm": 180.0,
+      "clip_angle_deg": 90,
+      "duration_ms": 60,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "055 · 걸림6/6 · 180mm",
+      "travel_mm": 180,
+      "clip_angle_deg": 90,
+      "duration_ms": 650,
+      "hold": true,
+      "stage": 6,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "056 · 6단계 이후 끝까지 인출",
+      "travel_mm": 181.5432,
+      "clip_angle_deg": 90,
+      "duration_ms": 65,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "057 · 6단계 이후 끝까지 인출",
+      "travel_mm": 185.679,
+      "clip_angle_deg": 90,
+      "duration_ms": 65,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "058 · 6단계 이후 끝까지 인출",
+      "travel_mm": 191.6667,
+      "clip_angle_deg": 90,
+      "duration_ms": 65,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "059 · 6단계 이후 끝까지 인출",
+      "travel_mm": 198.7654,
+      "clip_angle_deg": 90,
+      "duration_ms": 65,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "060 · 6단계 이후 끝까지 인출",
+      "travel_mm": 206.2346,
+      "clip_angle_deg": 90,
+      "duration_ms": 65,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "061 · 6단계 이후 끝까지 인출",
+      "travel_mm": 213.3333,
+      "clip_angle_deg": 90,
+      "duration_ms": 65,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "062 · 6단계 이후 끝까지 인출",
+      "travel_mm": 219.321,
+      "clip_angle_deg": 90,
+      "duration_ms": 65,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "063 · 6단계 이후 끝까지 인출",
+      "travel_mm": 223.4568,
+      "clip_angle_deg": 90,
+      "duration_ms": 65,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "064 · 6단계 이후 끝까지 인출",
+      "travel_mm": 225.0,
+      "clip_angle_deg": 90,
+      "duration_ms": 65,
+      "hold": false,
+      "stage": 0,
+      "first_shuttle_lift_mm": 0
+    },
+    {
+      "state": "065 · 6개 노출 · 225mm · 양옆 이탈 방지턱에서 멈춤",
+      "travel_mm": 225,
+      "clip_angle_deg": 90,
+      "duration_ms": 1700,
+      "hold": true,
+      "stage": 7,
+      "first_shuttle_lift_mm": 0
+    }
+  ],
+  "frames": 66,
+  "duration_ms": 9965,
+  "detent_positions_mm": [
+    0,
+    36,
+    72,
+    108,
+    144,
+    180
+  ],
+  "end_stop_mm": 225,
+  "note": "Six detent positions include closed.225mm is the separate final end stop. Shuttlecock geometry is the existing rigid dimensional envelope."
+}

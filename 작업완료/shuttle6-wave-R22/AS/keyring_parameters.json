@@ -1,0 +1,39 @@
+{
+  "hole_diameter_mm": 5.0,
+  "hole_center_xy_mm": [
+    35.70889244992065,
+    35.70889244992065
+  ],
+  "hole_center_angle_deg": 45.0,
+  "outer_radius_mm": 6.5,
+  "thickness_mm": 4.0,
+  "root_width_mm": 16.0,
+  "body_z_low_mm": 239.0,
+  "body_z_high_mm": 243.0,
+  "root_corner_radius_mm": 1.0,
+  "rear_cavity_transition_z_mm": null,
+  "rear_feather_rim_z_mm": 238.0,
+  "rear_axial_clearance_mm": 6.0,
+  "rear_constant_bore_diameter_mm": 65.0,
+  "rear_constant_bore_start_z_mm": 231.0,
+  "rear_flat_wall_z_mm": 244.0,
+  "rear_end_wall_thickness_mm": 5.8,
+  "front_hat_start_z_mm": 10.0,
+  "front_hat_end_z_mm": 24.8,
+  "front_hat_source": "Original R18 rear235..249.8 mirrored at259.8 without removing upper half",
+  "stack_translation_from_R20_mm": 3.0,
+  "rear_shape": "Open semicircular boat ending; unchanged from R21",
+  "outer_rear_socket_body_z_range_mm": [
+    3.0,
+    7.3
+  ],
+  "socket_radial_and_rim_gap_mm": 0.2,
+  "socket_entry_gap_mm": 0.35,
+  "socket_tight_body_z_range_mm": [
+    3.0,
+    6.5
+  ],
+  "housing_max_outer_inset_mm": 1.2,
+  "socket_axial_floor_gap_mm": 0.2,
+  "front_hat_shape": "Full circular original hat; upper half restored"
+}

@@ -1,0 +1,44 @@
+{
+  "shell_lower": {
+    "before_volume_mm3": 177755.49048209548,
+    "after_volume_mm3": 163641.41584789238,
+    "max_outer_inset_mm": 1.2,
+    "moved_vertex_count": 39291,
+    "protected_body_z_mm": [
+      [
+        0,
+        15
+      ],
+      [
+        105,
+        155
+      ],
+      [
+        215,
+        253
+      ]
+    ],
+    "side_rail_no_move_abs_y_mm": 10.0
+  },
+  "shell_upper": {
+    "before_volume_mm3": 151055.76341990588,
+    "after_volume_mm3": 140864.18527997992,
+    "max_outer_inset_mm": 1.1999999893376747,
+    "moved_vertex_count": 26273,
+    "protected_body_z_mm": [
+      [
+        0,
+        15
+      ],
+      [
+        105,
+        155
+      ],
+      [
+        215,
+        253
+      ]
+    ],
+    "side_rail_no_move_abs_y_mm": 10.0
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "hole_nominal_mm": 5.0,
+  "measured_section_xy_mm": [
+    5.0,
+    5.0
+  ],
+  "hole_gauge_intersection_mm3": 0.0,
+  "closed_cap_overlap_mm3": 0.0,
+  "unchanged_other6_parts": {
+    "cap": true,
+    "latch": true,
+    "stop_left": true,
+    "stop_right": true,
+    "shell_coupon": true,
+    "drawer_coupon": true
+  },
+  "loop_end_print_z_mm": 0.0,
+  "hole_center_xy_body_mm": [
+    35.70889244992065,
+    35.70889244992065
+  ],
+  "loop_thickness_mm": 4.0,
+  "nominal_hole_surround_mm": 4.0,
+  "table_support_equation_z_y_offset": [
+    -0.008298469436594963,
+    -0.999965567109693,
+    -39.04886133154306
+  ],
+  "eyelet_table_clearance_mm": 61.180121059212766,
+  "table_scope": "Closed assembly, tray opening upwards, longitudinal support by original body and cap. Eyelet and surrounding corner region X>20,Y>20,Z>=238.9 measured; separate metal keyring not modeled. Roll stability and real surface/print deformation not tested.",
+  "shuttle_orientation": "Cork tips toward cap; feather rims toward rear cup.",
+  "reversed_gauge_overlap_mm3": 0.0,
+  "rear_feather_to_flat_wall_gap_mm": 6.0,
+  "main_bore_measured_mm": 63.99852952966014,
+  "first_pickup_vs_tray_and_cap": [
+    {
+      "lift_mm": 0,
+      "drawer_overlap_mm3": 0.0,
+      "cap_overlap_mm3": 0.0
+    },
+    {
+      "lift_mm": 10,
+      "drawer_overlap_mm3": 627.1143291247068,
+      "cap_overlap_mm3": 0.0
+    },
+    {
+      "lift_mm": 30,
+      "drawer_overlap_mm3": 2436.0744447887505,
+      "cap_overlap_mm3": 0.0
+    },
+    {
+      "lift_mm": 60,
+      "drawer_overlap_mm3": 0.0,
+      "cap_overlap_mm3": 0.0
+    },
+    {
+      "lift_mm": 80,
+      "drawer_overlap_mm3": 0.0,
+      "cap_overlap_mm3": 0.0
+    }
+  ],
+  "pickup_scope": "Direct vertical pickup is blocked by the full circular front cone. These are raw collision measurements, not a validated extraction path. The GIF only shows drawer travel. Adjacent feathers, access and forces untested.",
+  "static_beam_screening": {
+    "assumptions": "20N transverse force; simplified rectangular beam L15,b12,h4mm. Excludes hole concentration, impact, fatigue and actual layers. No load rating.",
+    "I_mm4": 64.0,
+    "deflection_mm": 0.10653409090909091,
+    "moment_Nmm": 300.0,
+    "stress_MPa": 9.375,
+    "allow_MPa": 25.0,
+    "ok": true,
+    "stiffness_N_per_mm": 187.73333333333332
+  }
+}
