@@ -18,6 +18,9 @@
 | `check3mf <3mf…>` | lib3mf strict 경고 수 |
 | `pipeline <config>` / `make <config>` | 게이트 파이프라인 / 빌드→파이프라인 일괄 |
 | `selftest` | 도구 자가검사 |
+| `svgdraw <스펙.json> --out dir [--browser]` | SVG 단계 그리기(선·함수 획만) → drawing.svg + 단계별 격자 PNG·모음·GIF (지침 `.claude/skills/svg-draw/SKILL.md`) |
+| `svgtrace <그림> --out dir [--strokes 300 --size 160 --colors 4 --palette … --init ai.json]` | 점수 최적화 트레이싱: 오차 지도·윤곽 방향·최적 색으로 오차 감소가 가장 큰 선·곡선을 하나씩(윤곽 따기 아님) |
+| `svgscore <스펙|svg> <그림> [--out png --grid 10]` | RMSE·SSIM·윤곽 F1 + 오차 큰 칸(x?y?)·목표 색·방향 = 다음 단계 제안 |
 
 메시 지정: `a.3mf` · `a.3mf:lid` · `a.stl` · `parts.pkl:lid`.
 HTTP: `python tools/mm.py serve --port 8765` → `curl -X POST localhost:8765/run -d '{"cmd":"slits","args":{"files":["a.3mf"]}}'`.

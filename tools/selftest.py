@@ -199,8 +199,37 @@ def raster_case():
     ok = g.geom_type == 'Polygon' and len(g.interiors) == 1 and abs(x1 - x0 - 50) < 0.01 and abs(y1 - y0 - 50) < 0.5 and abs(g.area / area - 1) < 0.03
     print('\n[PNG 로고] 크기', round(x1 - x0, 2), round(y1 - y0, 2), '구멍', len(getattr(g, 'interiors', [])), '넓이 비', round(g.area / area, 3), '→', ok); return ok
 
+def svgdraw_case():
+    """SVG 단계 그리기·점수 트레이싱(tools/svgdraw.py): 통과점 3차 맞춤·격자 점·안전한 식·단계 그림(M/L 만)·트레이싱 오차 감소·팔레트 색만·스펙 재현."""
+    import svgdraw as sd, numpy as np, re
+    from PIL import Image
+    ctx = {'width': 400, 'height': 300, 'grid': 20}
+    P = np.array([[0, 0], [30, 60], [90, 70], [120, 0]], float); t = np.array([0, .3, .7, 1]); C = sd.fit_cubic(P, t)
+    fit = float(np.abs(sd._bern(t, 3) @ C - P).max()); g = sd.pt('x1y1', ctx); corner = sd.f_through(ctx, [[0, 0], [50, 50], [50, 50], [100, 0]], [0, .5, .5, 1])
+    sharp = bool(np.any(np.all(np.isclose(corner, [50, 50]), 1)))
+    try: sd.expr('__import__("os").getcwd()', x=np.zeros(2)); safe = False
+    except ValueError: safe = True
+    tmp = tempfile.mkdtemp(prefix='svgdraw_')
+    spec = {'width': 200, 'height': 150, 'background': '#ffffff', 'grid': 10, 'steps': [
+        {'name': '1 큰 형태', 'strokes': [{'fn': 'circle', 'c': [100, 75], 'r': 50, 'stroke': '#222222', 'width': 4, 'id': '원'}]},
+        {'name': '2 세부', 'strokes': [{'fn': 'graph', 'f': '20*sin(x/10)', 'x0': -40, 'x1': 40, 'origin': [100, 75], 'stroke': '#d32f2f', 'width': 2, 'id': '사인'},
+                                      {'fn': 'line', 'p0': [100, 20], 'p1': [100, 10], 'width': 2, 'repeat': {'n': 8, 'rotate': 45, 'about': [100, 75]}, 'id': '살'}]}]}
+    r = sd.draw(spec, os.path.join(tmp, 'a'))
+    a = np.full((60, 80, 3), 255, np.uint8); yy, xx = np.mgrid[:60, :80]
+    a[np.abs((yy - 5) - 0.6 * (xx - 5)) < 3] = (30, 30, 30); a[np.hypot(xx - 58, yy - 20) < 10] = (220, 30, 40)
+    f = os.path.join(tmp, 't.png'); Image.fromarray(a).save(f)
+    tr = sd.trace(f, os.path.join(tmp, 'b'), strokes_n=60, size=80, seed=1)
+    svg = open(tr['svg'], encoding='utf-8').read(); sc = sd.score(tr['spec'], f, size=80)
+    pt_ = sd.trace(f, os.path.join(tmp, 'c'), strokes_n=30, size=60, palette=['#ffffff', '#1e1e1e', '#dc1e28'], seed=2)
+    cols = {st['stroke'] for s in sd.load(pt_['spec'])['steps'] for st in s['strokes']}
+    ok = (fit < 1e-6 and np.allclose(g, [10, 292.5]) and sharp and safe and r['paths_only_ML'] and r['strokes'] == 10 and all(os.path.exists(p) for p in r['steps'])
+          and tr['error_drop'] > 0.6 and sd._only_lines(svg) and 'data-fn=' in svg and sc['rmse'] < 0.6 * tr['rmse_start'] and cols <= {'#ffffff', '#1e1e1e', '#dc1e28'})
+    print(f"[SVG 단계 그리기] 통과점 오차 {fit:.1e} · 격자점 {g.tolist()} · 꺾임 {sharp} · 식 안전 {safe} · 단계 그림 M/L만 {r['paths_only_ML']} 획 {r['strokes']}"
+          f" · 트레이싱 획 {tr['strokes']} 오차 감소 {tr['error_drop']} RMSE {tr['rmse_start']}→재현 {sc['rmse']} · 팔레트 색 {sorted(cols)} → {ok}")
+    shutil.rmtree(tmp, ignore_errors=True); return ok
+
 if __name__ == '__main__':
-    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = efc_group_case() and efc_stl_roundtrip_case() and extrude_holes_case() and slit_case() and wall_step_case() and wall_step_miss_case() and mm_api_case() and bambu_multi_case() and b3d_case() and svg2d_case() and raster_case() and safe_name_case()
+    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = efc_group_case() and efc_stl_roundtrip_case() and extrude_holes_case() and slit_case() and wall_step_case() and wall_step_miss_case() and mm_api_case() and bambu_multi_case() and b3d_case() and svg2d_case() and raster_case() and safe_name_case() and svgdraw_case()
     cfg = fixture(os.path.join(tmp, 'good'), 0.3); rc = pipeline.run(cfg); rep = json.load(open(os.path.join(tmp, 'good', 'qc', 'report.json')))
     files = [os.path.join(tmp, 'good', 'qc', f) for f in ('REPORT.md', 'assembly/turntable.gif', 'motion/turntable.gif', 'plate_A/view_iso.png')]
     print('\n[정상 설계] 종료코드', rc, '| 경고', rep['warn'], '| 산출물', [os.path.exists(f) for f in files])

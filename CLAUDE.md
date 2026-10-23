@@ -4,7 +4,7 @@
 
 **시작 규칙 (모든 세션)**: 작업 전에 main 최신 내용을 기준으로 시작하고, `.claude/skills/3d-print-3mf/SKILL.md` 와 그 references(design_rules·presentation·bambu_3mf, 주제에 맞는 studies)를 **반드시 먼저 읽는다**. 세션 시작 훅(`.claude/hooks/session-start.sh`)이 main 동기화·의존 설치·렌더러 점검을 하고 스킬 전문을 출력한다. 훅 출력이 보이지 않으면 직접 `git merge origin/main` 후 SKILL.md 를 Read 한다. 렌더(`tools/render_preview.py`) 없이 결과를 보고하지 않는다 — 렌더러가 안 되면 `python tools/render_preview.py --check` 로 원인을 고친다. **모델링·검사·렌더링·3MF 작업은 반드시 `.claude/skills/3d-print-3mf/SKILL.md`의 순서(설계 규칙 → 모델링 → QC → 조립 검증 → 보여주기 → 3MF → 보고)를 따릅니다.**
 
-- 도구: `tools/qc_model.py`(QC: 오버행/브리지 구분·EFC 반영), `tools/render_preview.py`(three.js 렌더·GIF), `tools/snapfit.py`·`tools/beam.py`(힘·휨), `tools/load3mf.py`, `tools/overhang.py`, `tools/efc.py`(첫 층 +0.15 선반영), `tools/gear.py`·`tools/hinge.py`, `tools/b3d.py`(build123d B-rep 필렛·챔퍼·STEP → 메시), Actions `freecad-run`(`*/freecad/*.py` push → FreeCAD 로 STEP·STL 만들어 브랜치에 커밋)
+- 도구: `tools/qc_model.py`(QC: 오버행/브리지 구분·EFC 반영), `tools/render_preview.py`(three.js 렌더·GIF), `tools/snapfit.py`·`tools/beam.py`(힘·휨), `tools/load3mf.py`, `tools/overhang.py`, `tools/efc.py`(첫 층 +0.15 선반영), `tools/gear.py`·`tools/hinge.py`, `tools/b3d.py`(build123d B-rep 필렛·챔퍼·STEP → 메시), `tools/svgdraw.py`(단계적 SVG 그리기 — 선·함수 획만, 점수 최적화 트레이싱·채점, 지침 `.claude/skills/svg-draw/SKILL.md`), Actions `freecad-run`(`*/freecad/*.py` push → FreeCAD 로 STEP·STL 만들어 브랜치에 커밋)
 - 폴더: `작업중/`(진행), `작업완료/`(완성), `sample/`(사용자가 올리는 참고 도면·3MF — 올라오면 분석해 스킬 references 에 반영)
 - 답변은 한국어 존댓말. 커밋·푸시·PR·main 병합까지 자동으로 진행합니다.
 
@@ -19,7 +19,7 @@
 
 ## 표준 프로그램 규칙 (절대 규칙)
 - **모든 검사·단면 그림·렌더·3MF 검사·파이프라인은 표준 프로그램 `python tools/mm.py <명령>` 으로 한다.** 일회성 인라인 파이썬으로 같은 일을 하지 않는다. 필요한 기능이 없으면 `tools/mm.py` 에 명령을 추가하고 `selftest` 에 시험을 넣는다.
-- 명령: `new`(새 도면 틀) · `make`(build → pipeline → Bambu 프로젝트 3MF → 체크리스트 일괄) · `checklist`(체크리스트 자동 판정) · `doctor`(환경) · `qc` · `slits`(벽 속 수평 틈 = 출력물 줄) · `wallscan`(벽 단차) · `section`(단면 PNG, 실측 근거) · `crop` · `render` · `check3mf` · `pipeline` · `assemble`(파트 바꿔 끼워 호환 확인) · `bambu`(Bambu 프로젝트 3MF) · `selftest`. `python tools/mm.py help`.
+- 명령: `new`(새 도면 틀) · `make`(build → pipeline → Bambu 프로젝트 3MF → 체크리스트 일괄) · `checklist`(체크리스트 자동 판정) · `doctor`(환경) · `qc` · `slits`(벽 속 수평 틈 = 출력물 줄) · `wallscan`(벽 단차) · `section`(단면 PNG, 실측 근거) · `crop` · `render` · `check3mf` · `pipeline` · `assemble`(파트 바꿔 끼워 호환 확인) · `bambu`(Bambu 프로젝트 3MF) · `svgdraw`·`svgtrace`·`svgscore`(SVG 단계 그리기·최적화 트레이싱·채점) · `selftest`. `python tools/mm.py help`.
 - **새 도면은 어느 방에서 시작하든 `python tools/mm.py new <이름>` 으로 시작한다** — README(체크리스트·설계 치수표)·`scripts/build.py`·`scripts/assembly.py`·`pipeline.json` 틀이 생기고 바로 `make` 가 통과한다. `make_parts()`·치수표·조립 정의만 새 도면으로 바꾼다.
 - **보고 첫머리의 체크리스트는 손으로 채우지 않는다**: `mm make` 결과의 `checklist.line`(또는 `mm checklist <config>`)을 그대로 붙인다. `ok=false` 면 보내지 않는다. Skill 호출·references 읽음 두 항목만 세션이 보증한다(`[?]`).
 - 같은 로직을 API 로: `python tools/mm_agent.py "요청" --project <이름>` (Claude API 도구 루프 — 지침 전부를 시스템 프롬프트로, 도구는 mm 명령만, 체크리스트 게이트를 코드로 강제). HTTP `--serve` → `POST /agent`. GitHub Actions `mm-agent` 워크플로(수동 실행, 저장소 비밀 `ANTHROPIC_API_KEY`)로도 돈다.
