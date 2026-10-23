@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """digit-counter 빌드 — `python tools/mm.py make 작업중/digit-counter/pipeline.json` 이 프로젝트 폴더에서 실행한다.
 산출: parts_nominal.pkl(조립 좌표·숫자 00 정지 — 조립 검증·렌더용), parts.pkl(출력 방향·첫 층 +0.15 — QC 용),
-meta.json(파트별 색·출력 방향·종류), models/plates/*.3mf(플레이트 5장)."""
+meta.json(파트별 색·출력 방향·종류), models/plates/*.3mf(플레이트 7장)."""
 import os, sys, json, pickle
 HERE = os.path.dirname(os.path.abspath(__file__)); PROJ = os.path.dirname(HERE); ROOT = os.path.dirname(os.path.dirname(PROJ))
 sys.path.insert(0, os.path.join(ROOT, 'tools')); sys.path.insert(0, HERE)
@@ -14,9 +14,11 @@ import geom as G
 PLATES = {   # 플레이트: (파일, [오브젝트 이름 접두/이름], 필라멘트 순서)
     'P1_body': ('models/plates/P1_body.3mf', ['housing', 'lid'], [G.BLACK]),
     'P2_panels': ('models/plates/P2_panels.3mf', ['front', 'mid'], [G.BLACK]),
-    'P3_segments': ('models/plates/P3_segments.3mf', ['sh_', 'stem_'], [G.BLACK, G.YELLOW]),
-    'P4_mechanism': ('models/plates/P4_mechanism.3mf', ['shaft', 'core_', 'collar_', 'disc_', 'star_', 'lever', 'plunger', 'spring', 'leaf_'], [G.GRAY]),
-    'P5_knob_cap': ('models/plates/P5_knob_cap.3mf', ['knob', 'cap'], [G.YELLOW]),
+    'P3_segments_A': ('models/plates/P3_segments_A.3mf', ['sh_A_', 'stem_A_'], [G.BLACK, G.YELLOW]),
+    'P3_segments_B': ('models/plates/P3_segments_B.3mf', ['sh_B_', 'stem_B_'], [G.BLACK, G.YELLOW]),
+    'P4_mech_A': ('models/plates/P4_mech_A.3mf', ['shaft_A', 'core_A_', 'disc_A_', 'star_A_', 'lockdisc_A', 'r1disc_A', 'pin_A', 'plunger_A', 'spring_A', 'leaf_A_', 'collar_l'], [G.GRAY]),
+    'P4_mech_B': ('models/plates/P4_mech_B.3mf', ['shaft_B', 'core_B_', 'disc_B_', 'star_B_', 'lockdisc_B', 'r1disc_B', 'pin_B', 'plunger_B', 'spring_B', 'leaf_B_', 'collar_r'], [G.GRAY]),
+    'P5_yellow': ('models/plates/P5_yellow.3mf', ['knob_l', 'knob_r', 'cap_', 'pinion_', 'colon'], [G.YELLOW]),
 }
 
 def to_print(m, up):
@@ -80,4 +82,4 @@ if __name__ == '__main__':
     missing = set(objs) - used
     assert not missing, f'플레이트에 없는 파트: {missing}'
     ext = {n: [round(v, 1) for v in m.extents] for n, m in printed.items()}
-    print('build ok', len(nominal), 'nominal parts,', len(printed), 'print objects; stroke', round(G.btn_stroke(), 2))
+    print('build ok', len(nominal), 'nominal parts,', len(printed), 'print objects; stroke', round(float(G.btn_stroke()), 2))

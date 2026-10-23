@@ -1,17 +1,19 @@
 {
- "name": "Digit counter v1 — 기계식 7세그먼트 2자리(+1 버튼·리셋 노브) 200×61×80",
+ "name": "Digit counter v2 — 기계식 7세그먼트 4자리 점수판 00:00(+1 버튼·노브 −1/00 멈춤) 200×61×80",
  "build": [
   "scripts/build.py"
  ],
- "out": "qc/v1",
+ "out": "qc/v2",
  "parts_pkl": "parts.pkl",
  "assembly_parts_pkl": "parts_nominal.pkl",
  "plates": [
   "models/plates/P1_body.3mf",
   "models/plates/P2_panels.3mf",
-  "models/plates/P3_segments.3mf",
-  "models/plates/P4_mechanism.3mf",
-  "models/plates/P5_knob_cap.3mf"
+  "models/plates/P3_segments_A.3mf",
+  "models/plates/P3_segments_B.3mf",
+  "models/plates/P4_mech_A.3mf",
+  "models/plates/P4_mech_B.3mf",
+  "models/plates/P5_yellow.3mf"
  ],
  "assembly": "scripts/assembly.py",
  "colors": {
@@ -19,77 +21,151 @@
   "front": "#2b2e33",
   "mid": "#2b2e33",
   "lid": "#2b2e33",
-  "sh_tens_a": "#2b2e33",
-  "rib_tens_a": "#ffb300",
-  "stem_tens_a": "#2b2e33",
-  "disc_tens_a": "#9aa3ad",
-  "sh_tens_b": "#2b2e33",
-  "rib_tens_b": "#ffb300",
-  "stem_tens_b": "#2b2e33",
-  "disc_tens_b": "#9aa3ad",
-  "sh_tens_c": "#2b2e33",
-  "rib_tens_c": "#ffb300",
-  "stem_tens_c": "#2b2e33",
-  "disc_tens_c": "#9aa3ad",
-  "sh_tens_d": "#2b2e33",
-  "rib_tens_d": "#ffb300",
-  "stem_tens_d": "#2b2e33",
-  "disc_tens_d": "#9aa3ad",
-  "sh_tens_e": "#2b2e33",
-  "rib_tens_e": "#ffb300",
-  "stem_tens_e": "#2b2e33",
-  "disc_tens_e": "#9aa3ad",
-  "sh_tens_f": "#2b2e33",
-  "rib_tens_f": "#ffb300",
-  "stem_tens_f": "#2b2e33",
-  "disc_tens_f": "#9aa3ad",
-  "sh_tens_g": "#2b2e33",
-  "rib_tens_g": "#ffb300",
-  "stem_tens_g": "#2b2e33",
-  "disc_tens_g": "#9aa3ad",
-  "star_tens": "#9aa3ad",
-  "core_tens": "#9aa3ad",
-  "sh_ones_a": "#2b2e33",
-  "rib_ones_a": "#ffb300",
-  "stem_ones_a": "#2b2e33",
-  "disc_ones_a": "#9aa3ad",
-  "sh_ones_b": "#2b2e33",
-  "rib_ones_b": "#ffb300",
-  "stem_ones_b": "#2b2e33",
-  "disc_ones_b": "#9aa3ad",
-  "sh_ones_c": "#2b2e33",
-  "rib_ones_c": "#ffb300",
-  "stem_ones_c": "#2b2e33",
-  "disc_ones_c": "#9aa3ad",
-  "sh_ones_d": "#2b2e33",
-  "rib_ones_d": "#ffb300",
-  "stem_ones_d": "#2b2e33",
-  "disc_ones_d": "#9aa3ad",
-  "sh_ones_e": "#2b2e33",
-  "rib_ones_e": "#ffb300",
-  "stem_ones_e": "#2b2e33",
-  "disc_ones_e": "#9aa3ad",
-  "sh_ones_f": "#2b2e33",
-  "rib_ones_f": "#ffb300",
-  "stem_ones_f": "#2b2e33",
-  "disc_ones_f": "#9aa3ad",
-  "sh_ones_g": "#2b2e33",
-  "rib_ones_g": "#ffb300",
-  "stem_ones_g": "#2b2e33",
-  "disc_ones_g": "#9aa3ad",
-  "star_ones": "#9aa3ad",
-  "core_ones": "#9aa3ad",
-  "lever": "#ffb300",
-  "plunger": "#9aa3ad",
-  "cap": "#ffb300",
-  "spring": "#9aa3ad",
-  "leaf_ones": "#9aa3ad",
-  "leaf_shaft": "#9aa3ad",
-  "leaf_tens": "#9aa3ad",
-  "shaft": "#9aa3ad",
-  "collar_r": "#9aa3ad",
+  "colon": "#ffb300",
+  "sh_A_tens_a": "#2b2e33",
+  "rib_A_tens_a": "#ffb300",
+  "stem_A_tens_a": "#2b2e33",
+  "disc_A_tens_a": "#9aa3ad",
+  "sh_A_tens_b": "#2b2e33",
+  "rib_A_tens_b": "#ffb300",
+  "stem_A_tens_b": "#2b2e33",
+  "disc_A_tens_b": "#9aa3ad",
+  "sh_A_tens_c": "#2b2e33",
+  "rib_A_tens_c": "#ffb300",
+  "stem_A_tens_c": "#2b2e33",
+  "disc_A_tens_c": "#9aa3ad",
+  "sh_A_tens_d": "#2b2e33",
+  "rib_A_tens_d": "#ffb300",
+  "stem_A_tens_d": "#2b2e33",
+  "disc_A_tens_d": "#9aa3ad",
+  "sh_A_tens_e": "#2b2e33",
+  "rib_A_tens_e": "#ffb300",
+  "stem_A_tens_e": "#2b2e33",
+  "disc_A_tens_e": "#9aa3ad",
+  "sh_A_tens_f": "#2b2e33",
+  "rib_A_tens_f": "#ffb300",
+  "stem_A_tens_f": "#2b2e33",
+  "disc_A_tens_f": "#9aa3ad",
+  "sh_A_tens_g": "#2b2e33",
+  "rib_A_tens_g": "#ffb300",
+  "stem_A_tens_g": "#2b2e33",
+  "disc_A_tens_g": "#9aa3ad",
+  "star_A_tens": "#9aa3ad",
+  "core_A_tens": "#9aa3ad",
+  "leaf_A_tens": "#9aa3ad",
+  "sh_A_ones_a": "#2b2e33",
+  "rib_A_ones_a": "#ffb300",
+  "stem_A_ones_a": "#2b2e33",
+  "disc_A_ones_a": "#9aa3ad",
+  "sh_A_ones_b": "#2b2e33",
+  "rib_A_ones_b": "#ffb300",
+  "stem_A_ones_b": "#2b2e33",
+  "disc_A_ones_b": "#9aa3ad",
+  "sh_A_ones_c": "#2b2e33",
+  "rib_A_ones_c": "#ffb300",
+  "stem_A_ones_c": "#2b2e33",
+  "disc_A_ones_c": "#9aa3ad",
+  "sh_A_ones_d": "#2b2e33",
+  "rib_A_ones_d": "#ffb300",
+  "stem_A_ones_d": "#2b2e33",
+  "disc_A_ones_d": "#9aa3ad",
+  "sh_A_ones_e": "#2b2e33",
+  "rib_A_ones_e": "#ffb300",
+  "stem_A_ones_e": "#2b2e33",
+  "disc_A_ones_e": "#9aa3ad",
+  "sh_A_ones_f": "#2b2e33",
+  "rib_A_ones_f": "#ffb300",
+  "stem_A_ones_f": "#2b2e33",
+  "disc_A_ones_f": "#9aa3ad",
+  "sh_A_ones_g": "#2b2e33",
+  "rib_A_ones_g": "#ffb300",
+  "stem_A_ones_g": "#2b2e33",
+  "disc_A_ones_g": "#9aa3ad",
+  "star_A_ones": "#9aa3ad",
+  "core_A_ones": "#9aa3ad",
+  "leaf_A_ones": "#9aa3ad",
+  "lockdisc_A": "#9aa3ad",
+  "r1disc_A": "#9aa3ad",
+  "pinion_A": "#ffb300",
+  "pin_A": "#9aa3ad",
+  "plunger_A": "#9aa3ad",
+  "cap_A": "#ffb300",
+  "spring_A": "#9aa3ad",
+  "shaft_A": "#9aa3ad",
+  "sh_B_tens_a": "#2b2e33",
+  "rib_B_tens_a": "#ffb300",
+  "stem_B_tens_a": "#2b2e33",
+  "disc_B_tens_a": "#9aa3ad",
+  "sh_B_tens_b": "#2b2e33",
+  "rib_B_tens_b": "#ffb300",
+  "stem_B_tens_b": "#2b2e33",
+  "disc_B_tens_b": "#9aa3ad",
+  "sh_B_tens_c": "#2b2e33",
+  "rib_B_tens_c": "#ffb300",
+  "stem_B_tens_c": "#2b2e33",
+  "disc_B_tens_c": "#9aa3ad",
+  "sh_B_tens_d": "#2b2e33",
+  "rib_B_tens_d": "#ffb300",
+  "stem_B_tens_d": "#2b2e33",
+  "disc_B_tens_d": "#9aa3ad",
+  "sh_B_tens_e": "#2b2e33",
+  "rib_B_tens_e": "#ffb300",
+  "stem_B_tens_e": "#2b2e33",
+  "disc_B_tens_e": "#9aa3ad",
+  "sh_B_tens_f": "#2b2e33",
+  "rib_B_tens_f": "#ffb300",
+  "stem_B_tens_f": "#2b2e33",
+  "disc_B_tens_f": "#9aa3ad",
+  "sh_B_tens_g": "#2b2e33",
+  "rib_B_tens_g": "#ffb300",
+  "stem_B_tens_g": "#2b2e33",
+  "disc_B_tens_g": "#9aa3ad",
+  "star_B_tens": "#9aa3ad",
+  "core_B_tens": "#9aa3ad",
+  "leaf_B_tens": "#9aa3ad",
+  "sh_B_ones_a": "#2b2e33",
+  "rib_B_ones_a": "#ffb300",
+  "stem_B_ones_a": "#2b2e33",
+  "disc_B_ones_a": "#9aa3ad",
+  "sh_B_ones_b": "#2b2e33",
+  "rib_B_ones_b": "#ffb300",
+  "stem_B_ones_b": "#2b2e33",
+  "disc_B_ones_b": "#9aa3ad",
+  "sh_B_ones_c": "#2b2e33",
+  "rib_B_ones_c": "#ffb300",
+  "stem_B_ones_c": "#2b2e33",
+  "disc_B_ones_c": "#9aa3ad",
+  "sh_B_ones_d": "#2b2e33",
+  "rib_B_ones_d": "#ffb300",
+  "stem_B_ones_d": "#2b2e33",
+  "disc_B_ones_d": "#9aa3ad",
+  "sh_B_ones_e": "#2b2e33",
+  "rib_B_ones_e": "#ffb300",
+  "stem_B_ones_e": "#2b2e33",
+  "disc_B_ones_e": "#9aa3ad",
+  "sh_B_ones_f": "#2b2e33",
+  "rib_B_ones_f": "#ffb300",
+  "stem_B_ones_f": "#2b2e33",
+  "disc_B_ones_f": "#9aa3ad",
+  "sh_B_ones_g": "#2b2e33",
+  "rib_B_ones_g": "#ffb300",
+  "stem_B_ones_g": "#2b2e33",
+  "disc_B_ones_g": "#9aa3ad",
+  "star_B_ones": "#9aa3ad",
+  "core_B_ones": "#9aa3ad",
+  "leaf_B_ones": "#9aa3ad",
+  "lockdisc_B": "#9aa3ad",
+  "r1disc_B": "#9aa3ad",
+  "pinion_B": "#ffb300",
+  "pin_B": "#9aa3ad",
+  "plunger_B": "#9aa3ad",
+  "cap_B": "#ffb300",
+  "spring_B": "#9aa3ad",
+  "shaft_B": "#9aa3ad",
   "collar_l": "#9aa3ad",
-  "knob": "#ffb300"
+  "collar_r": "#9aa3ad",
+  "knob_l": "#ffb300",
+  "knob_r": "#ffb300"
  },
  "qc": {
   "efc": 0.15,
@@ -100,94 +176,184 @@
  "support_zones": [],
  "accepted": [
   {
-   "part": "stem_tens_a",
+   "part": "stem_A_tens_a",
    "flag": "바닥 접지",
    "max": 0,
-   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장, 접지 84~178 mm²"
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
   },
   {
-   "part": "stem_tens_b",
+   "part": "stem_A_tens_b",
    "flag": "바닥 접지",
    "max": 0,
-   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장, 접지 84~178 mm²"
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
   },
   {
-   "part": "stem_tens_c",
+   "part": "stem_A_tens_c",
    "flag": "바닥 접지",
    "max": 0,
-   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장, 접지 84~178 mm²"
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
   },
   {
-   "part": "stem_tens_d",
+   "part": "stem_A_tens_d",
    "flag": "바닥 접지",
    "max": 0,
-   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장, 접지 84~178 mm²"
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
   },
   {
-   "part": "stem_tens_e",
+   "part": "stem_A_tens_e",
    "flag": "바닥 접지",
    "max": 0,
-   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장, 접지 84~178 mm²"
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
   },
   {
-   "part": "stem_tens_f",
+   "part": "stem_A_tens_f",
    "flag": "바닥 접지",
    "max": 0,
-   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장, 접지 84~178 mm²"
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
   },
   {
-   "part": "stem_tens_g",
+   "part": "stem_A_tens_g",
    "flag": "바닥 접지",
    "max": 0,
-   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장, 접지 84~178 mm²"
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
   },
   {
-   "part": "stem_ones_a",
+   "part": "stem_A_ones_a",
    "flag": "바닥 접지",
    "max": 0,
-   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장, 접지 84~178 mm²"
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
   },
   {
-   "part": "stem_ones_b",
+   "part": "stem_A_ones_b",
    "flag": "바닥 접지",
    "max": 0,
-   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장, 접지 84~178 mm²"
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
   },
   {
-   "part": "stem_ones_c",
+   "part": "stem_A_ones_c",
    "flag": "바닥 접지",
    "max": 0,
-   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장, 접지 84~178 mm²"
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
   },
   {
-   "part": "stem_ones_d",
+   "part": "stem_A_ones_d",
    "flag": "바닥 접지",
    "max": 0,
-   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장, 접지 84~178 mm²"
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
   },
   {
-   "part": "stem_ones_e",
+   "part": "stem_A_ones_e",
    "flag": "바닥 접지",
    "max": 0,
-   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장, 접지 84~178 mm²"
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
   },
   {
-   "part": "stem_ones_f",
+   "part": "stem_A_ones_f",
    "flag": "바닥 접지",
    "max": 0,
-   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장, 접지 84~178 mm²"
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
   },
   {
-   "part": "stem_ones_g",
+   "part": "stem_A_ones_g",
    "flag": "바닥 접지",
    "max": 0,
-   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장, 접지 84~178 mm²"
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
   },
   {
-   "part": "shaft",
-   "flag": "벽 속 수평 틈",
+   "part": "stem_B_tens_a",
+   "flag": "바닥 접지",
    "max": 0,
-   "desc": "바깥으로 27° 벌어지는 육각 옆면에 첫 층 +0.15 판을 얹어 생긴 z 0.2 쐐기(0.1 mm) — 슬라이서가 첫 층을 0.15 깎으면 사라지는 모델링 흔적, 하우징 안에 숨는 축"
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
+  },
+  {
+   "part": "stem_B_tens_b",
+   "flag": "바닥 접지",
+   "max": 0,
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
+  },
+  {
+   "part": "stem_B_tens_c",
+   "flag": "바닥 접지",
+   "max": 0,
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
+  },
+  {
+   "part": "stem_B_tens_d",
+   "flag": "바닥 접지",
+   "max": 0,
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
+  },
+  {
+   "part": "stem_B_tens_e",
+   "flag": "바닥 접지",
+   "max": 0,
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
+  },
+  {
+   "part": "stem_B_tens_f",
+   "flag": "바닥 접지",
+   "max": 0,
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
+  },
+  {
+   "part": "stem_B_tens_g",
+   "flag": "바닥 접지",
+   "max": 0,
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
+  },
+  {
+   "part": "stem_B_ones_a",
+   "flag": "바닥 접지",
+   "max": 0,
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
+  },
+  {
+   "part": "stem_B_ones_b",
+   "flag": "바닥 접지",
+   "max": 0,
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
+  },
+  {
+   "part": "stem_B_ones_c",
+   "flag": "바닥 접지",
+   "max": 0,
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
+  },
+  {
+   "part": "stem_B_ones_d",
+   "flag": "바닥 접지",
+   "max": 0,
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
+  },
+  {
+   "part": "stem_B_ones_e",
+   "flag": "바닥 접지",
+   "max": 0,
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
+  },
+  {
+   "part": "stem_B_ones_f",
+   "flag": "바닥 접지",
+   "max": 0,
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
+  },
+  {
+   "part": "stem_B_ones_g",
+   "flag": "바닥 접지",
+   "max": 0,
+   "desc": "높이 2.0 mm 납작한 판(눕혀 출력)이라 넘어지지 않음 — 브림 3 mm 권장"
+  },
+  {
+   "part": "pin_A",
+   "flag": "바닥 접지",
+   "max": 0,
+   "desc": "Ø3×10.2 핀(밑면 D 평면 1.8 폭) — 작아서 접지 < 100 mm², 브림 3 mm 권장"
+  },
+  {
+   "part": "pin_B",
+   "flag": "바닥 접지",
+   "max": 0,
+   "desc": "Ø3×10.2 핀(밑면 D 평면 1.8 폭) — 작아서 접지 < 100 mm², 브림 3 mm 권장"
   }
  ],
  "min_gap": 0.3,
@@ -201,20 +367,27 @@
    "models/plates/P2_panels.3mf": [
     "#2b2e33"
    ],
-   "models/plates/P3_segments.3mf": [
+   "models/plates/P3_segments_A.3mf": [
     "#2b2e33",
     "#ffb300"
    ],
-   "models/plates/P4_mechanism.3mf": [
+   "models/plates/P3_segments_B.3mf": [
+    "#2b2e33",
+    "#ffb300"
+   ],
+   "models/plates/P4_mech_A.3mf": [
     "#9aa3ad"
    ],
-   "models/plates/P5_knob_cap.3mf": [
+   "models/plates/P4_mech_B.3mf": [
+    "#9aa3ad"
+   ],
+   "models/plates/P5_yellow.3mf": [
     "#ffb300"
    ]
   },
   "settings": {},
   "combined": {
-   "out": "models/DigitCounter_v1_bambu.3mf",
+   "out": "models/DigitCounter_v2_bambu.3mf",
    "filaments": [
     "#2b2e33",
     "#ffb300",
@@ -223,9 +396,11 @@
    "names": {
     "models/plates/P1_body.3mf": "01 본체·뚜껑(검정)",
     "models/plates/P2_panels.3mf": "02 앞판·가운데판(검정)",
-    "models/plates/P3_segments.3mf": "03 셔터·스템(검정→2.4mm에서 노랑)",
-    "models/plates/P4_mechanism.3mf": "04 기구(회색)",
-    "models/plates/P5_knob_cap.3mf": "05 노브·버튼캡(노랑)"
+    "models/plates/P3_segments_A.3mf": "03 왼쪽 점수 셔터·스템(검정→2.4mm에서 노랑)",
+    "models/plates/P3_segments_B.3mf": "04 오른쪽 점수 셔터·스템(검정→2.4mm에서 노랑)",
+    "models/plates/P4_mech_A.3mf": "05 왼쪽 기구(회색)",
+    "models/plates/P4_mech_B.3mf": "06 오른쪽 기구(회색)",
+    "models/plates/P5_yellow.3mf": "07 노브·캡·피니언·콜론(노랑)"
    }
   }
  },

@@ -9,7 +9,7 @@ from shapely import affinity
 
 P = dict(
     W=200.0, D=61.0, H=80.0, WALL=3.0, FLOOR=3.0, LID=3.0,
-    # 숫자(日) — 두 자리 중심 x, 숫자 중심 높이 z0
+    # 숫자(日) — 모듈 안 두 자리 중심 x(모듈 중심 기준), 숫자 중심 높이 z0
     DH=60.0, DW=34.0, T=8.0, CX_TENS=-24.5, CX_ONES=24.5, Z0=40.0,
     SLOT=2.0, PITCH=5.5, STROKE=3.0, SLOT_W_V=4.4, RIB_EXT=1.0, NOSE_H=3.0,
     # y 층: 앞판 / 셔터 / 가운데 판(빗)
@@ -18,18 +18,20 @@ P = dict(
     Y_C=22.4, Z_C=32.0, R_LO=9.0, R_HI=12.0, DISC_T=2.8,
     RING_X={'f': -15.5, 'e': -12.0, 'a': -4.5, 'g': 0.0, 'd': 4.5, 'c': 12.0, 'b': 15.5},
     TUBE_R=7.0, TUBE_FLAT=6.0, BORE_R=3.5, CLR=0.2,
-    # 래칫·마스크(일의 자리 왼쪽 끝)와 올림 래칫(십의 자리 오른쪽 끝)
-    RT_ROOT=12.6, RT_TIP=15.0, M1_RIM=15.8, FACE0=34.0,
-    RC_X=(-7.0, -3.4), M1_X=(-3.0, -0.6), R1_X=(-0.6, 3.0), LEVER_X=(3.4, 6.6),
-    # 레버
-    HUB_R=(7.3, 10.5), P1_ANG=-72.0, P2_ANG=-108.0, P1_ARM_R=17.5, P2_ARM_R=20.2, ARM_T=1.2,
-    P1_ROOT=-2.0, P2_ROOT=-30.0, PAWL_TIP=13.0, PAD_ANG=24.0, PAD_R=16.0, PAD_D=4.0, SWING=40.0,
-    # 버튼·스프링
-    PL_X=(3.4, 10.6), SPR_X=(7.0, 10.6),
-    # 별(멈춤쇠)·판스프링
+    # 모듈 가운데(십의 자리 → 일의 자리): 십의 자리 20T | 일의 자리 C(자리올림 이) | L(잠금 링) | R1(+1 래칫)
+    G_X=(-7.2, -4.6), C_X=(-4.2, -2.4), L_X=(-2.4, -0.6), R1_X=(-0.6, 2.8),
+    PIN_FULL=(-7.0, -2.4), PIN_LONG=(-2.4, -0.8), POST_X=((-9.2, -7.6), (-0.4, 1.0)), PIN_R=1.5,
+    # R1 래칫(갈고리 면) — 면 뿌리 = FACE0 + 36k(드럼 좌표, 숫자 0 정지)
+    RT_ROOT=11.8, RT_TIP=15.0, FACE0=14.0, HOOK=5.0,
+    # +1 플런저 폴(세로 이동, 축 뒤 y = Y_C + PAWL_R0 선)
+    PAWL_R0=13.0, PAWL_REST_H=9.0, PAWL_END_ANG=-22.0,
+    PL_X=(0.0, 6.6), ARM_X=(0.0, 2.6), BAR_X=(1.2, 5.4), SPR_X=(3.0, 6.6),
+    # 별(멈춤쇠)·판스프링, 십의 자리 멈춤 돌기(00 에서 더 안 돌아감)
     STAR_TIP=10.0, STAR_ROOT=8.8, STAR_T=2.0, LEAF_T=1.6, LEAF_L=14.0,
-    # 축
-    HEX_V=3.2, HEX_F=2.9, HEX_FW=1.72, SHAFT_X=(-99.5, 108.0), KNOB_X=(100.5, 110.5), KNOB_R=16.0,
+    LUG_R=(10.3, 12.5), LUG_HALF=7.0, LUG_ANG0=162.0, TAB_HZ=1.6, TAB_R=10.6,
+    # 축·노브(모듈 A = 왼쪽 노브, B = 오른쪽 노브)
+    HEX_V=3.2, HEX_F=2.9, HEX_FW=1.72, SHAFT_X={'A': (-108.0, -1.2), 'B': (-0.8, 108.0)}, KNOB_X=(100.5, 110.5), KNOB_R=16.0,
+    POST_C_X=(-4.7, 2.7),
 )
 SEGS = 'abcdefg'
 DIGITS = {0: 'abcdef', 1: 'bc', 2: 'abged', 3: 'abgcd', 4: 'fgbc', 5: 'afgcd', 6: 'afgedc', 7: 'abc', 8: 'abcdefg', 9: 'abcdfg'}
@@ -84,17 +86,16 @@ def cam_r(seg, th):
     elif f >= 28: v = v1
     else: s = (f - 8) / 20.0; v = v0 + (v1 - v0) * (1 - np.cos(np.pi * s)) / 2
     return P['R_LO'] + (P['R_HI'] - P['R_LO']) * v
-def ratchet_r(th):
-    """톱니(10개): 면 = FACE0 + 36k. 면 바로 뒤(+θ) 뿌리 → 다음 면 직전 끝까지 직선 상승."""
-    g = ((th - P['FACE0']) % 36.0) / 36.0
-    return P['RT_ROOT'] + (P['RT_TIP'] - P['RT_ROOT']) * g
-NOTCH = ((P['P2_ANG'] + 324.0 - 2.0) % 360.0, (P['P2_ANG'] + 324.0 + 28.0) % 360.0)    # 일의 자리 9 일 때 P2(드럼 좌표 P2+324)가 떨어지는 마스크 홈(214~244°)
-def mask_r(th):
-    t = th % 360.0; a0, a1 = NOTCH
-    if a0 <= t < a0 + 12.0: return ratchet_r(t)                         # 홈 바닥 = 톱니 경사(오버행 0)
-    if a0 + 12.0 <= t < a1:
-        r0 = ratchet_r(a0 + 12.0); return r0 + (P['M1_RIM'] - r0) * (t - a0 - 12.0) / (a1 - a0 - 12.0)
-    return P['M1_RIM']
+def r1_poly(c=None):
+    """R1 래칫(10 이, 갈고리 면): 면 뿌리(RT_ROOT, F) → 면 끝(RT_TIP, F + HOOK) 이 +θ 로 기울어 폴을 안쪽으로 당긴다.
+    이 등은 뿌리 F 에서 다음 면 끝(F+36+HOOK)까지 직선 상승. 드럼 좌표(숫자 0 정지)."""
+    c = c or AX(); r0, r1, H = P['RT_ROOT'], P['RT_TIP'], P['HOOK']; pts = []
+    for k in range(10):
+        F = P['FACE0'] + 36.0 * k
+        for t in np.linspace(F, F + 36.0 + H, 40):
+            r = r0 + (r1 - r0) * (t - F) / (36.0 + H)
+            pts.append((c[0] + r * np.cos(np.radians(t)), c[1] + r * np.sin(np.radians(t))))
+    return Polygon(pts).buffer(0)
 def star_r(th, center=-90.0, half=9.0):
     d = min(abs(ang_norm(th - center - 36.0 * k)) for k in range(10))
     return P['STAR_TIP'] - (P['STAR_TIP'] - P['STAR_ROOT']) * max(0.0, 1.0 - d / half)
@@ -192,207 +193,251 @@ def disc(s, cx, ones):
         if ones: ms.append(ext_x(bossprof, rx + t / 2 - 0.01, nxt - t / 2 - 0.0))
         else: ms.append(ext_x(bossprof, nxt + t / 2, rx - t / 2 + 0.01))
     return U(ms)
+def lug_poly(c=None):
+    """십의 자리 멈춤 돌기(드럼 좌표, 숫자 0 정지): LUG_ANG0 ± LUG_HALF, r LUG_R. 숫자 k 에서 LUG_ANG0 - 36k."""
+    c = c or AX(); r0, r1 = P['LUG_R']
+    return annulus_sector(r0 - 1.5, r1, P['LUG_ANG0'] - P['LUG_HALF'], P['LUG_ANG0'] + P['LUG_HALF'], c, 28)
 def star_disc(cx, ones):
-    """멈춤쇠 별(10 홈) — 따로 출력해 마지막 캠 디스크 바깥에 끼운다(D 구멍)."""
+    """멈춤쇠 별(10 홈) — 따로 출력해 마지막 캠 디스크 바깥에 끼운다(D 구멍).
+    십의 자리는 바깥쪽에 멈춤 돌기 슬랩(별 ∪ 돌기)이 하나 더 있다: 00 에서 뒤로, 99 에서 앞으로 더 안 돈다(가운데 판 탭에 걸림)."""
     c = AX(); t = P['DISC_T']; bore = d_profile(P['TUBE_R'] + P['CLR'], P['TUBE_FLAT'] + P['CLR'])
     last = cx + P['RING_X']['b' if ones else 'f']; star = polar_poly(lambda th: star_r(th), c=c).difference(bore)
-    return ext_x(star, last + t / 2, last + t / 2 + P['STAR_T']) if ones else ext_x(star, last - t / 2 - P['STAR_T'], last - t / 2)
-KEY_ANG = 90.0
-def key_cut_and_tooth():
-    """코어 관 끝의 리셋 키: 호 모양 판스프링(r 3.5~4.7, 84°→244°, 뿌리 244°) + 안쪽으로 나온 이(걸림면 94°, 끝 r 2.0)."""
-    c = AX(); k = KEY_ANG
-    slit = annulus_sector(4.7, 5.3, k - 10, k + 154, c)
-    endcut = annulus_sector(P['BORE_R'] - 0.5, 5.3, k - 10, k - 6, c)
-    def pt(r, a): return (c[0] + r * np.cos(np.radians(a)), c[1] + r * np.sin(np.radians(a)))
-    tooth = Polygon([pt(P['BORE_R'] + 0.3, k + 4), pt(2.0, k + 4), pt(2.0, k + 1), pt(P['BORE_R'] + 0.3, k - 6)])
-    return unary_union([slit, endcut]), tooth
-def core(ones):
-    """일의 자리 코어: M1(마스크)+R1(래칫)+D관(+키). 십의 자리: Rc(래칫)+D관(+키)."""
-    c = AX(); bore = Point(c).buffer(P['BORE_R'], 64); tube = d_profile(P['TUBE_R'], P['TUBE_FLAT']).difference(bore)
-    cut, tooth = key_cut_and_tooth()
-    if ones:
-        m1 = polar_poly(mask_r, c=c, n=1440).difference(bore); r1 = polar_poly(ratchet_r, c=c, n=1440).difference(bore)
-        parts = [ext_x(m1, *P['M1_X']), ext_x(r1, P['R1_X'][0] - 0.01, P['R1_X'][1]),
-                 ext_x(tube, P['R1_X'][1] - 0.01, 39.6), ext_x(tube.difference(cut).union(tooth), 39.6 - 0.01, 43.6)]
-    else:
-        rc = polar_poly(ratchet_r, c=c, n=1440).difference(bore)
-        parts = [ext_x(rc, *P['RC_X']), ext_x(tube, -39.6, P['RC_X'][0] + 0.01),
-                 ext_x(tube.difference(cut).union(tooth), -43.6, -39.6 + 0.01)]
-    return U(parts)
+    if ones: return ext_x(star, last + t / 2, last + t / 2 + P['STAR_T'])
+    x1 = last - t / 2; x0 = x1 - P['STAR_T']
+    return U([ext_x(star, x0, x1), ext_x(star.union(lug_poly()).difference(bore), x0 - P['STAR_T'], x0 + 0.01)])
+LUG_SLAB = (P['CX_TENS'] + P['RING_X']['f'] - P['DISC_T'] / 2 - 2 * P['STAR_T'], P['CX_TENS'] + P['RING_X']['f'] - P['DISC_T'] / 2 - P['STAR_T'])
+TENS_END = LUG_SLAB[0]                                                          # 십의 자리 관 끝(-45.4)
+ONES_END = P['CX_ONES'] + P['RING_X']['b'] + P['DISC_T'] / 2 + P['STAR_T']     # 일의 자리 관 끝(43.4)
 
-# ---------------------------------------------------------------- 레버(정지 위치에서; 누름 = 축 기준 -SWING 회전)
+# ---------------------------------------------------------------- 전달 피니언(주행거리계식 양방향 자리올림·빌림) — 2D 는 carry.py 에서 설계·검증
+import carry as CR
+CR.setup(); CARRY = CR.ones_profiles()
+def _yz(poly): return affinity.translate(poly, P['Y_C'], P['Z_C'])
+PIN_C = (P['Y_C'] + CR.cp()[0], P['Z_C'] + CR.cp()[1])                         # 피니언 축 (y, z)
+def pinion_angle(tens_digit, ones_deg=None):
+    """피니언 각(°): 십의 자리 k 정지 = PHI_LOCK + 90k. ones_deg(일의 자리 드럼 각)를 주면 자리올림 구간 법칙."""
+    base = CR.PHI_LOCK + 90.0 * tens_digit
+    if ones_deg is None: return base
+    return base + CR.phi_of(ones_deg) - CR.PHI_LOCK
+def hex_profile(off=0.0, c=None):
+    c = c or AX(); v, f, fw = P['HEX_V'] + off, P['HEX_F'] + off, P['HEX_FW'] + off * 0.5
+    return Polygon([(c[0] + x, c[1] + z) for x, z in [(v, 0), (fw, f), (-fw, f), (-v, 0), (-fw, -f), (fw, -f)]])
+def core(ones):
+    """일의 자리 코어: C(자리올림 이 2개 + 허브) + D 관(육각 구멍 = 노브 축에 물림). 십의 자리 코어: 20T 기어 + 보스 + D 관(둥근 구멍, 축 위에서 자유)."""
+    c = AX(); tube = d_profile(P['TUBE_R'], P['TUBE_FLAT'])
+    if ones:
+        bore = hex_profile(0.15)
+        return U([ext_x(_yz(CARRY['C']).difference(bore), *P['C_X']), ext_x(tube.difference(bore), P['C_X'][1] - 0.01, ONES_END)])
+    bore = Point(c).buffer(P['BORE_R'], 64)
+    gear = _yz(CR.tens_gear()).difference(bore)
+    return U([ext_x(gear, *P['G_X']), ext_x(Point(c).buffer(8.5, 128).difference(bore), P['G_X'][0] - 0.4, P['G_X'][0] + 0.01),
+              ext_x(tube.difference(bore), TENS_END, P['G_X'][0] - 0.39)])
+def lock_disc():
+    """일의 자리 L(잠금 링 r_L + 홈) — 따로 납작하게 출력해 D 관에 끼운다(C 와 한 몸이면 어느 쪽을 아래로 해도 오버행)."""
+    bore = d_profile(P['TUBE_R'] + P['CLR'], P['TUBE_FLAT'] + P['CLR'])
+    return ext_x(_yz(CARRY['L']).difference(bore), *P['L_X'])
+def r1_disc():
+    """R1 래칫 + 첫 캠 디스크(f)까지 보스(간격 링)."""
+    c = AX(); bore = d_profile(P['TUBE_R'] + P['CLR'], P['TUBE_FLAT'] + P['CLR'])
+    f0 = P['CX_ONES'] + P['RING_X']['f'] - P['DISC_T'] / 2
+    return U([ext_x(r1_poly().difference(bore), *P['R1_X']), ext_x(Point(c).buffer(8.5, 128).difference(bore), P['R1_X'][1] - 0.01, f0)])
+def pinion(tens_digit=0):
+    """피니언 8T: 온 이(십의 자리 20T + 일의 자리 C) / 긴 이만(일의 자리 L). 십의 자리 숫자 0 정지 자세."""
+    phi = pinion_angle(tens_digit); hole = Point(PIN_C).buffer(P['PIN_R'] + 0.25, 48)
+    full = affinity.translate(CR.place(CR.P_POLY, phi), *PIN_C).difference(hole)
+    long_ = affinity.translate(CR.place(CR.PL_POLY, phi), *PIN_C).difference(hole)
+    return U([ext_x(full, *P['PIN_FULL']), ext_x(long_, P['PIN_FULL'][1] - 0.01, P['PIN_LONG'][1])])
+def pin():
+    """피니언 축 핀 Ø3(밑면 0.3 깎은 D — 눕혀 출력), 양쪽 기둥 구멍에 끼움(0.05)."""
+    pr = Point(PIN_C).buffer(P['PIN_R'], 48).difference(sbox(PIN_C[0] - 5, PIN_C[1] - 5, PIN_C[0] + 5, PIN_C[1] - P['PIN_R'] + 0.3))
+    return ext_x(pr, P['POST_X'][0][0], P['POST_X'][1][1])
+
+# ---------------------------------------------------------------- +1 버튼: 플런저(세로) + 판스프링 폴, 뚜껑 밑 안내 슬리브, 지그재그 스프링
 def _pt(r, a, c=None):
     c = c or AX(); return (c[0] + r * np.cos(np.radians(a)), c[1] + r * np.sin(np.radians(a)))
-def _spoke(r0, r1, a, w):
-    p0, p1 = _pt(r0, a), _pt(r1, a); from shapely.geometry import LineString
-    return LineString([p0, p1]).buffer(w / 2, cap_style=2)
-def pawl_tooth(face, ring_r, back_end, drum_off):
-    """미는 면(-θ 쪽, 각 face)에서 +θ 로 8° 폭, 아랫면 = 래칫 경사 + 0.3, 뒤는 back_end 각에서 ring_r 로 올라감."""
-    pts = [_pt(ring_r + 0.2, face)]
-    for a in np.linspace(face, face + 8.0, 9): pts.append(_pt(ratchet_r(a + drum_off) + 0.3 + (P['PAWL_TIP'] - 13.0), a))
-    pts.append(_pt(ring_r + 0.2, back_end))
-    return Polygon(pts).buffer(0)
-def lever():
-    c = AX(); x0, x1 = P['LEVER_X']; h0, h1 = P['HUB_R']
-    plate = unary_union([annulus_sector(h0, h1, 0, 360, c, 180),
-                         _spoke(h1 - 1, P['PAD_R'], P['PAD_ANG'], 2.4), Point(_pt(P['PAD_R'], P['PAD_ANG'])).buffer(P['PAD_D'] / 2, 32),
-                         _spoke(h1 - 1, P['P1_ARM_R'] + 0.6, P['P1_ROOT'] - 2.5, 3.6),
-                         _spoke(h1 - 1, P['P2_ARM_R'] + 0.6, P['P2_ROOT'] - 2.5, 3.6)])
-    r1a = P['P1_ARM_R']; t = P['ARM_T']
-    p1 = unary_union([annulus_sector(r1a - t / 2, r1a + t / 2, P['P1_ANG'], P['P1_ROOT'], c),
-                      pawl_tooth(P['P1_ANG'], r1a - t / 2, P['P1_ANG'] + 18.0, 0.0)])
-    r2a = P['P2_ARM_R']
-    p2 = unary_union([annulus_sector(r2a - t / 2, r2a + t / 2, P['P2_ANG'], P['P2_ROOT'], c),
-                      pawl_tooth(P['P2_ANG'], r2a - t / 2, P['P2_ANG'] + 13.0, 324.0)])
-    root1 = annulus_sector(r1a - t / 2, r1a + t / 2 + 0.6, P['P1_ROOT'] - 5, P['P1_ROOT'], c)
-    root2 = annulus_sector(r2a - t / 2, r2a + t / 2 + 0.6, P['P2_ROOT'] - 5, P['P2_ROOT'], c)
-    return U([ext_x(plate.union(root1).union(root2), x0, x1),
-              ext_x(p1, P['R1_X'][0] + 0.4, x1), ext_x(p2, P['RC_X'][0] + 0.2, x1)])
-
-# ---------------------------------------------------------------- 버튼(플런저+캡)·스프링
-PAD_REST = _pt(P['PAD_R'], P['PAD_ANG'])
-def plunger_profile():
-    py, pz = PAD_REST; lip_top = pz - P['PAD_D'] / 2; top_lip = pz + P['PAD_D'] / 2 + 1.0
-    return unary_union([sbox(36.4, lip_top - 3.0, 44.6, lip_top),            # 아래 턱(패드를 받쳐 레버를 끌어올림)
-                        sbox(40.8, lip_top - 3.0, 44.6, top_lip + 3.0),      # 뒷벽
-                        sbox(36.4, top_lip, 44.6, top_lip + 3.0),            # 위 턱(누르면 패드를 내림)
-                        sbox(38.6, top_lip + 2.9, 44.6, 74.1),               # 막대
-                        sbox(36.6, 74.0, 46.6, 77.0),                        # 걸림턱(뚜껑 밑)
-                        sbox(38.8, 76.9, 44.4, 96.4)])                       # 뚜껑 위로
-STROKE_BTN = None
-def plunger(): return ext_x(plunger_profile(), *P['PL_X'])
-def cap():
-    """버튼 캡 Ø22×5 — 막대 끝(7.2×5.6)이 4.5 깊이로 들어감."""
-    cy = (38.8 + 44.4) / 2; cxm = sum(P['PL_X']) / 2
-    disk = trimesh.creation.cylinder(radius=11.0, height=5.0, sections=96); disk.apply_translation([cxm, cy, 0])
-    sock = trimesh.creation.box(extents=[7.2 + 0.3, 5.6 + 0.3, 4.6]); sock.apply_translation([cxm, cy, -2.5 + 2.3])
-    m = SUB(disk, [sock]); stroke = btn_stroke(); m.apply_translation([0, 0, 80.0 + stroke + 2.5]); return m
+PAWL_TIP = (P['Y_C'] + P['PAWL_R0'], P['Z_C'] + P['PAWL_REST_H'])          # 폴 이 아래 앞 모서리(미는 점), 정지
+ARM_Y = (P['Y_C'] + P['RT_TIP'] + 0.5, P['Y_C'] + P['RT_TIP'] + 1.8)      # 폴 팔(두께 1.3) — R1 끝원 뒤 0.5
+BODY_Y = (ARM_Y[1] + 0.6, ARM_Y[1] + 6.2); BODY_Z = (45.0, 60.0)          # 플런저 몸통(정지): 윗면이 슬리브 밑에 닿음
+BAR_Y = (BODY_Y[0] + 0.8, BODY_Y[1] - 0.8)
 def btn_stroke():
-    """누름 행정 = 패드 이동(정지→-SWING) + 놀이 1.0."""
-    pz0 = PAD_REST[1]; pz1 = _pt(P['PAD_R'], P['PAD_ANG'] - P['SWING'])[1]
-    return pz0 - pz1 + 1.0
+    """누름 행정 = 폴 끝 정지 높이 → 마지막 면 각(PAWL_END_ANG)까지."""
+    return P['PAWL_REST_H'] - P['PAWL_R0'] * np.tan(np.radians(P['PAWL_END_ANG']))
+def pawl_profile():
+    """폴 이(y-z): 아랫면 수평(미는 면), 앞 끝 = 폴 선(y = Y_C + R0)."""
+    y0, z0 = PAWL_TIP
+    return Polygon([(ARM_Y[0] + 0.05, z0), (y0, z0), (y0, z0 + 1.0), (ARM_Y[0] + 0.05, z0 + 3.0)])
+ARM_ROOT_Z = BODY_Z[1] - 2.0
+def plunger():
+    """몸통(스프링 위) + 앞 판스프링 팔(위 다리에서 매달림, 아래 끝에 폴 이) + 막대(뚜껑 슬리브를 지나 캡)."""
+    z_top = 80.0 + btn_stroke() + 4.5
+    arm = unary_union([sbox(ARM_Y[0], PAWL_TIP[1], ARM_Y[1], BODY_Z[1]), sbox(ARM_Y[0], ARM_ROOT_Z, BODY_Y[0] + 0.01, BODY_Z[1]), pawl_profile()])
+    return U([ext_x(sbox(BODY_Y[0], BODY_Z[0], BODY_Y[1], BODY_Z[1]), *P['PL_X']),
+              ext_x(arm, *P['ARM_X']),
+              ext_x(sbox(BAR_Y[0], BODY_Z[1] - 0.01, BAR_Y[1], z_top), *P['BAR_X'])])
+def cap():
+    """버튼 캡 Ø22×5 — 막대 끝이 4.5 깊이로 들어감. 누름 끝에서 캡이 뚜껑에 닿는다(행정 제한)."""
+    cy = sum(BAR_Y) / 2; cxm = sum(P['BAR_X']) / 2; bw, bd = P['BAR_X'][1] - P['BAR_X'][0], BAR_Y[1] - BAR_Y[0]
+    disk = trimesh.creation.cylinder(radius=11.0, height=5.0, sections=96); disk.apply_translation([cxm, cy, 2.5])
+    sock = trimesh.creation.box(extents=[bw + 0.3, bd + 0.3, 4.6]); sock.apply_translation([cxm, cy, 2.3 - 0.01])
+    m = SUB(disk, [sock]); m.apply_translation([0, 0, 80.0 + btn_stroke()]); return m
+SPRING = dict(N=8, t=1.3, y0=BODY_Y[0] - 2.4, y1=BODY_Y[0] - 2.4 + 20.0, pre=1.2)
 def spring(top_z=None):
-    """지그재그 판스프링(SPR_X 슬랩). 자유 높이로 만들고 top_z 를 주면 z 를 그 높이로 눌러 그린다(조립 확인용 근사)."""
-    lip_bottom = PAD_REST[1] - P['PAD_D'] / 2 - 3.0
-    free_top = lip_bottom + 1.2                                  # 예압 1.2
-    N, t, y0, y1 = 8, 1.3, 35.6, 55.6
+    """지그재그 판스프링(SPR_X 슬랩, 바닥 홈에 꽂음). 자유 높이 = 몸통 밑 + 예압. top_z 를 주면 z 로 눌러 그린다(조립 확인용 근사)."""
+    S = SPRING; free_top = BODY_Z[0] + S['pre']; N, t, y0, y1 = S['N'], S['t'], S['y0'], S['y1']
     z_beam0, z_beam1 = 3.0, free_top - 1.5; g = (z_beam1 - z_beam0 - N * t) / (N - 1)
-    parts = [sbox(y0, 1.0, y1, 3.0 + 0.01), sbox(36.6, z_beam1 - 0.01, 44.0, free_top)]
+    parts = [sbox(y0, 1.0, y1, 3.0 + 0.01), sbox(BODY_Y[0] + 0.2, z_beam1 - 1.0, BODY_Y[1] - 0.2, free_top)]
     for i in range(N):
         zb = z_beam0 + i * (t + g); parts.append(sbox(y0, zb, y1, zb + t))
         if i < N - 1:
             if i % 2 == 0: parts.append(sbox(y1 - 1.6, zb + t - 0.01, y1, zb + t + g + 0.01))
             else: parts.append(sbox(y0, zb + t - 0.01, y0 + 1.6, zb + t + g + 0.01))
-    parts.append(sbox(36.6, z_beam1 - 1.0, 44.0, z_beam1 + 0.01))
     m = ext_x(unary_union(parts), *P['SPR_X'])
     if top_z is not None:
         s = (top_z - 1.0) / (free_top - 1.0); m.apply_translation([0, 0, -1.0]); m.apply_scale([1, 1, s]); m.apply_translation([0, 0, 1.0])
     return m
-SPRING_INFO = {}
+def spring_gap(): S = SPRING; return ((BODY_Z[0] + S['pre'] - 1.5) - 3.0 - S['N'] * S['t']) / (S['N'] - 1)
 
-# ---------------------------------------------------------------- 별 멈춤쇠 판스프링 3개, 축·칼라·노브
-LEAF_SLABS = {'leaf_ones': (41.6, 43.2), 'leaf_shaft': (44.2, 45.8), 'leaf_tens': (-43.2, -41.6)}
+# ---------------------------------------------------------------- 4자리 00:00 — 같은 모듈 두 벌(A 왼쪽 = 왼쪽 노브, B 오른쪽 = 오른쪽 노브)
+PAIRS = {'A': -48.5, 'B': 48.5}        # 모듈 중심 — 숫자 블록 -90.5~90.5, 여백 10, 콜론 칸 14
+MOD_LEAF = {'ones': (41.6, 43.2), 'tens': (-43.2, -41.6)}     # 모듈 기준 별 멈춤쇠 판스프링 슬랩
+def digit_cxs():
+    return {(m, dn): c + (P['CX_TENS'] if dn == 'tens' else P['CX_ONES']) for m, c in PAIRS.items() for dn in ('tens', 'ones')}
+def moved(mesh, dx): mesh.apply_translation([dx, 0, 0]); return mesh
+
+# ---------------------------------------------------------------- 별 멈춤쇠 판스프링, 축·칼라·노브
 def leaf(slab):
     yc, zc = AX(); top = zc - P['STAR_ROOT'] - 0.3 - 1.0; post_y = yc + P['LEAF_L']
     prof = unary_union([sbox(post_y, 1.0, post_y + 3.0, top), sbox(yc - 1.5, top - P['LEAF_T'], post_y + 0.01, top),
                         Polygon([(yc - 1.2, top - 0.01), (yc, top + 1.0), (yc + 1.2, top - 0.01)])])
     return ext_x(prof, *slab)
-def hex_profile(off=0.0, c=None):
-    c = c or AX(); v, f, fw = P['HEX_V'] + off, P['HEX_F'] + off, P['HEX_FW'] + off * 0.5
-    return Polygon([(c[0] + x, c[1] + z) for x, z in [(v, 0), (fw, f), (-fw, f), (-v, 0), (-fw, -f), (fw, -f)]])
-def groove_cut():
-    """축 홈(정지 시 +90° 방향 평면): 걸림벽 96°(r 1.8→3.4), 바닥 r 1.8 96→88°, 경사 88→76°."""
-    return Polygon([_pt(3.6, 96.0), _pt(1.8, 96.0), _pt(1.8, 88.0), _pt(3.6, 74.0)])
-def shaft():
-    return ext_x(hex_profile().difference(groove_cut()), *P['SHAFT_X'])
-def collar(right):
-    c = AX(); hb = hex_profile(0.15)
-    if right:
-        star = polar_poly(lambda th: star_r(th), c=c).difference(hb)
-        return U([ext_x(star, 44.0, 46.0), ext_x(Point(c).buffer(5.5, 96).difference(hb), 46.0 - 0.01, 96.6)])
-    return U([ext_x(Point(c).buffer(10.0, 96).difference(hb), -96.6, -94.6), ext_x(Point(c).buffer(5.5, 96).difference(hb), -94.6 - 0.01, -44.0)])
-def knob():
+def shaft(m):
+    return ext_x(hex_profile(), *P['SHAFT_X'][m])
+def collar(side):
+    """벽 안쪽 칼라(육각 구멍): l = 왼쪽 플랜지(모듈 A 십의 자리 돌기 슬랩 옆), r = 오른쪽 플랜지 + 슬리브(모듈 B 일의 자리 별까지)."""
+    c = AX(); hb = hex_profile(0.15); sl = lambda r: Point(c).buffer(r, 96).difference(hb)
+    if side == 'l': return ext_x(sl(10.0), -96.6, -94.4)
+    b_end = PAIRS['B'] + ONES_END
+    return U([ext_x(sl(10.0), 94.4, 96.6), ext_x(sl(5.5), b_end + 0.3, 94.4 + 0.01)])
+def knob(side):
+    """노브(육각 소켓 7.5) — r: 오른쪽 벽 밖(모듈 B), l: 왼쪽 벽 밖(모듈 A). 화살표는 바깥면."""
     c = AX(); x0, x1 = P['KNOB_X']
     grip = unary_union([Point(c).buffer(P['KNOB_R'] - 1.0, 128)] + [Point(_pt(P['KNOB_R'] - 1.0, a)).buffer(1.2, 16) for a in range(0, 360, 15)])
-    m = ext_x(grip, x0, x1)
-    sock = ext_x(hex_profile(0.12), x0 - 0.1, x0 + 7.5)
-    arrow = ext_x(Polygon([_pt(13.0, 90), _pt(9.0, 84), _pt(9.0, 96)]), x1 - 0.6, x1 + 0.01)
-    return SUB(m, [sock, arrow])
+    arrow = Polygon([_pt(13.0, 90), _pt(9.0, 84), _pt(9.0, 96)])
+    if side == 'r':
+        return SUB(ext_x(grip, x0, x1), [ext_x(hex_profile(0.12), x0 - 0.1, x0 + 7.5), ext_x(arrow, x1 - 0.6, x1 + 0.01)])
+    return SUB(ext_x(grip, -x1, -x0), [ext_x(hex_profile(0.12), -x0 - 7.5, -x0 + 0.1), ext_x(arrow, -x1 - 0.01, -x1 + 0.6)])
+
+# ---------------------------------------------------------------- 콜론(:) — 앞판 슬롯 4개에 끼우는 노란 부품(앞판과 가운데 판 사이에 갇힘)
+COLON_SLOTS = [sbox(-2.5, z, 2.5, z + P['SLOT']) for z in (29.0, 34.5, 43.5, 49.0)]
+def colon():
+    y0, y1 = P['SH_Y0'], P['SH_Y0'] + P['SH_T']
+    plugs = [ext_y(b.buffer(-0.2, join_style=2), P['FP_Y0'], y0 + 0.05) for b in COLON_SLOTS]
+    return U([ext_y(sbox(-4.0, 27.0, 4.0, 53.0), y0, y1)] + plugs)
 
 # ---------------------------------------------------------------- 하우징·앞판·가운데 판·뚜껑
-CXS = {'tens': P['CX_TENS'], 'ones': P['CX_ONES']}
 GROOVES = {'front': (P['FP_Y0'], P['FP_Y0'] + P['FP_T']), 'mid': (P['MP_Y0'], P['MP_Y0'] + P['MP_T'])}
 PANEL_HX = 98.4
 def teardrop(c, r):
     """위가 뾰족한 구멍 — 옆면 수직에서 30°(층당 0.115 이하): 접점 30°/150°, 꼭짓점 2r."""
     return unary_union([Point(c).buffer(r, 64), Polygon([(c[0] - r * 0.8660, c[1] + r * 0.5), (c[0], c[1] + 2.0 * r), (c[0] + r * 0.8660, c[1] + r * 0.5)])])
+def post_profile(c, r_hole, wall):
+    """바닥에서 올라온 기둥(y-z): 둘레 = 눈물방울(r_hole + wall), 아래는 바닥까지, 구멍 = 눈물방울 r_hole."""
+    R = r_hole + wall
+    outer = unary_union([teardrop(c, R), sbox(c[0] - R, P['FLOOR'] - 0.01, c[0] + R, c[1])])
+    return outer.difference(teardrop(c, r_hole))
 def housing():
     W2, D, Hw = P['W'] / 2, P['D'], 77.0
-    body = U([ext_z(sbox(-W2, 0, W2, D), 0, P['FLOOR']),
-              ext_z(sbox(-W2, 0, -W2 + 3, D), 0, Hw), ext_z(sbox(W2 - 3, 0, W2, D), 0, Hw),
-              ext_z(sbox(-W2, D - 3, W2, D), 0, Hw)])
+    body = [ext_z(sbox(-W2, 0, W2, D), 0, P['FLOOR']),
+            ext_z(sbox(-W2, 0, -W2 + 3, D), 0, Hw), ext_z(sbox(W2 - 3, 0, W2, D), 0, Hw),
+            ext_z(sbox(-W2, D - 3, W2, D), 0, Hw)]
+    pp = post_profile(PIN_C, P['PIN_R'] + 0.05, 1.6)
+    for c in PAIRS.values():
+        for x0, x1 in P['POST_X']: body.append(ext_x(pp, c + x0, c + x1))
+    body.append(ext_x(post_profile(AX(), P['HEX_V'] + 0.25, 2.5), *P['POST_C_X']))
+    body = U(body)
     cuts = []
     for y0, y1 in GROOVES.values():
         for sgn in (-1, 1):
             cuts.append(ext_z(sbox(min(sgn * 96.0, sgn * (PANEL_HX + 0.2)), y0 - 0.15, max(sgn * 96.0, sgn * (PANEL_HX + 0.2)), y1 + 0.15), P['FLOOR'], Hw + 1))
     hole = teardrop(AX(), P['HEX_V'] + 0.25)
     cuts += [ext_x(hole, -W2 - 1, -W2 + 4), ext_x(hole, W2 - 4, W2 + 1)]
-    yc = P['Y_C']; py = yc + P['LEAF_L']
-    for x0, x1 in LEAF_SLABS.values(): cuts.append(ext_z(sbox(x0 - 0.2, py - 0.2, x1 + 0.2, py + 3.2), 1.0, P['FLOOR'] + 0.1))
-    cuts.append(ext_z(sbox(P['SPR_X'][0] - 0.2, 35.4, P['SPR_X'][1] + 0.2, 55.8), 1.0, P['FLOOR'] + 0.1))
+    py = P['Y_C'] + P['LEAF_L']
+    for c in PAIRS.values():
+        for x0, x1 in MOD_LEAF.values(): cuts.append(ext_z(sbox(c + x0 - 0.2, py - 0.2, c + x1 + 0.2, py + 3.2), 1.0, P['FLOOR'] + 0.1))
+        S = SPRING; cuts.append(ext_z(sbox(c + P['SPR_X'][0] - 0.2, S['y0'] - 0.2, c + P['SPR_X'][1] + 0.2, S['y1'] + 0.2), 1.0, P['FLOOR'] + 0.1))
     return SUB(body, cuts)
 def front_panel():
     hz0, hz1 = P['FLOOR'] + 0.2, 77.0 - 0.2
     plate = sbox(-PANEL_HX, hz0, PANEL_HX, hz1)
-    holes = [b for cx in CXS.values() for s in SEGS for b in slots(s, cx)]
+    holes = [b for cx in digit_cxs().values() for s in SEGS for b in slots(s, cx)] + COLON_SLOTS
     return ext_y(plate.difference(unary_union(holes)), *GROOVES['front'])
 def mid_slots():
     out = []
-    for cx in CXS.values():
+    for cx in digit_cxs().values():
         for s in SEGS:
             rx = cx + P['RING_X'][s]; zl, zh = stem_z(s, cx)
             out.append(sbox(rx - 1.3, zl - 0.5, rx + 1.3, zh + P['STROKE'] + 0.5))
     u = unary_union(out)
     return u.buffer(0.75, join_style=2).buffer(-0.75, join_style=2)       # 1.5 mm 미만 살은 슬롯으로 합침
-CORE_WIN = (P['RC_X'][0] - 0.6, P['LEVER_X'][1] + 0.4, P['Z_C'] - P['P2_ARM_R'] - 1.5, P['Z_C'] + P['M1_RIM'] + 1.2)   # 코어 플랜지·레버 폴이 지나는 창
+CORE_WIN = (P['POST_X'][0][0] - 0.4, P['R1_X'][1] + 0.4, P['FLOOR'], P['Z_C'] + 16.5 + 0.6)   # 모듈 기준: 기어·피니언·링·래칫·피니언 기둥이 지나는 창(아래가 트인 홈)
+def tab_poly():
+    """가운데 판 뒷면 멈춤 탭(y-z): 축 앞(180°) 쪽으로 TAB_R 까지."""
+    return sbox(P['MP_Y0'] + P['MP_T'] - 0.01, P['Z_C'] - P['TAB_HZ'], P['Y_C'] - P['TAB_R'], P['Z_C'] + P['TAB_HZ'])
 def mid_plate():
-    """가운데 판(빗): 스템 슬롯 + 두 자리 사이 코어 플랜지(M1 r 15.8)가 지나가는 창."""
+    """가운데 판(빗): 스템 슬롯 + 모듈마다 기어·피니언 창 + 십의 자리 멈춤 탭(뒷면)."""
     plate = sbox(-PANEL_HX, P['FLOOR'] + 0.2, PANEL_HX, 77.0 - 0.2)
-    win = sbox(CORE_WIN[0], CORE_WIN[2], CORE_WIN[1], CORE_WIN[3])
-    cut = mid_slots().union(win).buffer(0.75, join_style=2).buffer(-0.75, join_style=2)   # 창과 슬롯 사이 1.5 미만 살은 없앤다
-    return ext_y(plate.difference(cut), *GROOVES['mid'])
+    wins = [sbox(c + CORE_WIN[0], CORE_WIN[2], c + CORE_WIN[1], CORE_WIN[3]) for c in PAIRS.values()]
+    cut = mid_slots().union(unary_union(wins)).buffer(0.75, join_style=2).buffer(-0.75, join_style=2)
+    tabs = [ext_x(tab_poly(), c + LUG_SLAB[0] + 0.1, c + LUG_SLAB[1] - 0.1) for c in PAIRS.values()]
+    return U([ext_y(plate.difference(cut), *GROOVES['mid'])] + tabs)
+SLEEVE_W = 1.6
 def lid():
     W2, D = P['W'] / 2, P['D']
-    top = sbox(-W2, 0, W2, D).difference(sbox(P['PL_X'][0] - 0.2, 38.6, P['PL_X'][1] + 0.2, 44.6))
+    top = sbox(-W2, 0, W2, D); sleeves = []
+    for c in PAIRS.values():
+        hole = sbox(c + P['BAR_X'][0] - 0.2, BAR_Y[0] - 0.2, c + P['BAR_X'][1] + 0.2, BAR_Y[1] + 0.2)
+        top = top.difference(hole)
+        sleeves.append(hole.buffer(SLEEVE_W, join_style=2).difference(hole))
     lips = unary_union([sbox(-96.8, 12.0, -95.6, 56.0), sbox(95.6, 12.0, 96.8, 56.0), sbox(-90.0, 56.6, 90.0, 57.8)])
-    return U([ext_z(top, 77.0, 80.0), ext_z(lips, 74.0, 77.0 + 0.01)])
+    return U([ext_z(top, 77.0, 80.0), ext_z(lips, 74.0, 77.0 + 0.01), ext_z(unary_union(sleeves), BODY_Z[1], 77.0 + 0.01)])
 
 # ---------------------------------------------------------------- 전체 파트 표
 BLACK, YELLOW, GRAY, WHITE = '#2b2e33', '#ffb300', '#9aa3ad', '#e8e8e8'
+def module_parts(m, c):
+    """모듈 m(A/B)의 파트 — 모듈 중심 0 에서 만들어 c 만큼 옮긴다."""
+    out = {}
+    for dn in ('tens', 'ones'):
+        ones = dn == 'ones'; cx = P['CX_ONES'] if ones else P['CX_TENS']
+        for s in SEGS:
+            b, r = shutter(s, cx)
+            out[f'sh_{m}_{dn}_{s}'] = (moved(b, c), BLACK, (0, -1, 0), f'fol:{m}:{dn}:{s}')
+            out[f'rib_{m}_{dn}_{s}'] = (moved(r, c), YELLOW, (0, -1, 0), f'fol:{m}:{dn}:{s}')
+            out[f'stem_{m}_{dn}_{s}'] = (moved(stem(s, cx), c), BLACK, stem_up(s), f'fol:{m}:{dn}:{s}')
+            out[f'disc_{m}_{dn}_{s}'] = (moved(disc(s, cx, ones), c), GRAY, (1, 0, 0) if ones else (-1, 0, 0), f'drum:{m}:{dn}')
+        out[f'star_{m}_{dn}'] = (moved(star_disc(cx, ones), c), GRAY, (1, 0, 0), f'drum:{m}:{dn}')
+        out[f'core_{m}_{dn}'] = (moved(core(ones), c), GRAY, (1, 0, 0) if ones else (-1, 0, 0), f'drum:{m}:{dn}')
+        out[f'leaf_{m}_{dn}'] = (leaf((c + MOD_LEAF[dn][0], c + MOD_LEAF[dn][1])), GRAY, (1, 0, 0), 'fixed')
+    out[f'lockdisc_{m}'] = (moved(lock_disc(), c), GRAY, (1, 0, 0), f'drum:{m}:ones')
+    out[f'r1disc_{m}'] = (moved(r1_disc(), c), GRAY, (-1, 0, 0), f'drum:{m}:ones')
+    out[f'pinion_{m}'] = (moved(pinion(), c), YELLOW, (-1, 0, 0), f'pinion:{m}')
+    out[f'pin_{m}'] = (moved(pin(), c), GRAY, (0, 0, 1), 'fixed')
+    out[f'plunger_{m}'] = (moved(plunger(), c), GRAY, (1, 0, 0), f'button:{m}')
+    out[f'cap_{m}'] = (moved(cap(), c), YELLOW, (0, 0, -1), f'button:{m}')
+    out[f'spring_{m}'] = (moved(spring(), c), GRAY, (1, 0, 0), f'spring:{m}')
+    out[f'shaft_{m}'] = (shaft(m), GRAY, (0, 0, 1), f'drum:{m}:ones')
+    return out
 def all_parts():
-    """{이름: (메시(조립 좌표·정지·숫자 00), 색, 출력 '위' 방향 벡터, 종류)}. 종류: follower/disc/core/... (조립 상태 변환용)"""
+    """{이름: (메시(조립 좌표·정지·00:00), 색, 출력 '위' 방향 벡터, 종류)}.
+    종류: fol:모듈:자리:세그 / drum:모듈:자리(축·노브·칼라 포함 — 일의 자리와 함께 돈다) / pinion:모듈 / button:모듈 / spring:모듈 / fixed"""
     out = {}
     out['housing'] = (housing(), BLACK, (0, 0, 1), 'fixed')
     out['front'] = (front_panel(), BLACK, (0, 1, 0), 'fixed')
     out['mid'] = (mid_plate(), BLACK, (0, 1, 0), 'fixed')
     out['lid'] = (lid(), BLACK, (0, 0, -1), 'fixed')
-    for dn, cx in CXS.items():
-        ones = dn == 'ones'
-        for s in SEGS:
-            b, r = shutter(s, cx)
-            out[f'sh_{dn}_{s}'] = (b, BLACK, (0, -1, 0), f'fol:{dn}:{s}')
-            out[f'rib_{dn}_{s}'] = (r, YELLOW, (0, -1, 0), f'fol:{dn}:{s}')
-            out[f'stem_{dn}_{s}'] = (stem(s, cx), BLACK, stem_up(s), f'fol:{dn}:{s}')
-            out[f'disc_{dn}_{s}'] = (disc(s, cx, ones), GRAY, (1, 0, 0) if ones else (-1, 0, 0), f'drum:{dn}')
-        out[f'star_{dn}'] = (star_disc(cx, ones), GRAY, (1, 0, 0), f'drum:{dn}')
-        out[f'core_{dn}'] = (core(ones), GRAY, (1, 0, 0) if ones else (-1, 0, 0), f'drum:{dn}')
-    out['lever'] = (lever(), YELLOW, (-1, 0, 0), 'lever')
-    out['plunger'] = (plunger(), GRAY, (1, 0, 0), 'button')
-    out['cap'] = (cap(), YELLOW, (0, 0, -1), 'button')
-    out['spring'] = (spring(), GRAY, (1, 0, 0), 'spring')
-    for n, sl in LEAF_SLABS.items(): out[n] = (leaf(sl), GRAY, (1, 0, 0), 'fixed')
-    out['shaft'] = (shaft(), GRAY, (0, 0, 1), 'shaft')
-    out['collar_r'] = (collar(True), GRAY, (1, 0, 0), 'shaft')
-    out['collar_l'] = (collar(False), GRAY, (1, 0, 0), 'shaft')
-    out['knob'] = (knob(), YELLOW, (-1, 0, 0), 'shaft')
+    out['colon'] = (colon(), YELLOW, (0, -1, 0), 'fixed')
+    for m, c in PAIRS.items(): out.update(module_parts(m, c))
+    out['collar_l'] = (collar('l'), GRAY, (1, 0, 0), 'drum:A:ones')
+    out['collar_r'] = (collar('r'), GRAY, (1, 0, 0), 'drum:B:ones')
+    out['knob_l'] = (knob('l'), YELLOW, (1, 0, 0), 'drum:A:ones')
+    out['knob_r'] = (knob('r'), YELLOW, (-1, 0, 0), 'drum:B:ones')
     return out
