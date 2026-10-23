@@ -64,23 +64,35 @@ def upload(path: Path, key, log):
     raise RuntimeError("업로드 실패")
 
 
+MODEL_TYPES = ("image_to_model", "text_to_model", "multiview_to_model")
+
+
+def _file(path: Path, key, log):
+    ext = path.suffix.lower().lstrip(".").replace("jpeg", "jpg")
+    return {"type": ext, "file_token": upload(path, key, log)}
+
+
 def build_task(spec: dict, base: Path, key, log):
+    """type: image_to_model · text_to_model · generate_multiview_image(앞·왼·뒤·오 4방향 그림) · multiview_to_model.
+    image → file, images[4](앞·왼·뒤·오, 빈 문자열은 생략) → files. 다른 작업 결과 그림을 쓰려면 images 에
+    "tripo_out/<이름>/<파일>" 처럼 요청 파일 기준 경로를 준다."""
     t = spec.get("type", "image_to_model")
     task = {"type": t}
-    if t == "image_to_model":
-        img = base / spec["image"]
-        ext = img.suffix.lower().lstrip(".").replace("jpeg", "jpg")
-        task["file"] = {"type": ext, "file_token": upload(img, key, log)}
-    elif t == "text_to_model":
+    if spec.get("image"):
+        task["file"] = _file(base / spec["image"], key, log)
+    if spec.get("images"):
+        task["files"] = [_file(base / p, key, log) if p else {} for p in spec["images"]]
+    if t == "text_to_model":
         task["prompt"] = spec["prompt"]
         if spec.get("negative_prompt"):
             task["negative_prompt"] = spec["negative_prompt"]
-    else:
-        raise ValueError(f"모르는 type: {t}")
-    task["model_version"] = spec.get("model_version", DEFAULT_VERSION)
-    if task["model_version"].startswith("v3"):
-        task["geometry_quality"] = spec.get("geometry_quality", DEFAULT_QUALITY)
-    for k in ("texture", "pbr", "face_limit", "auto_size", "orientation", "quad"):
+    if t in MODEL_TYPES:
+        task["model_version"] = spec.get("model_version", DEFAULT_VERSION)
+        if task["model_version"].startswith("v3"):
+            task["geometry_quality"] = spec.get("geometry_quality", DEFAULT_QUALITY)
+    elif spec.get("model_version"):
+        task["model_version"] = spec["model_version"]
+    for k in ("texture", "pbr", "face_limit", "auto_size", "orientation", "quad", "prompt"):
         if k in spec:
             task[k] = spec[k]
     task.update(spec.get("extra") or {})
@@ -122,7 +134,7 @@ def run(spec_path: str, dry=False):
         tid = spec.get("task_id")  # 이미 만든 작업 받기만(크레딧 0) — 결과 주소 호스트(tripo3d.com)가 막힌 세션용
         if not tid:
             task = build_task(spec, sp.parent, key, log)
-            log("task: " + json.dumps({k: v for k, v in task.items() if k != "file"}, ensure_ascii=False))
+            log("task: " + json.dumps({k: v for k, v in task.items() if k not in ("file", "files")}, ensure_ascii=False))
             res = _req("POST", API + "/task", key, json.dumps(task).encode(), "application/json")
             log(f"create: {json.dumps(res, ensure_ascii=False)}")
             tid = (res.get("data") or {}).get("task_id")

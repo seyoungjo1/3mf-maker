@@ -47,5 +47,21 @@ def main():
     print(out)
 
 
+def photo1():
+    """사진 1(정측면, 거북 + 인 몸통) 전체를 정사각 캔버스에 — 4방향 그림·3D 생성 입력."""
+    im = cv2.imread(str(ROOT / "sample/gukse_turtle_ref.jpg"))[130:520, 95:665].copy()
+    h, w = im.shape[:2]
+    bgc = np.median(np.concatenate([im[:6].reshape(-1, 3), im[:, :6].reshape(-1, 3)]), axis=0).astype(np.uint8)
+    side = max(h, w) + 60
+    canvas = np.full((side, side, 3), bgc, np.uint8)
+    y0, x0 = (side - h) // 2, (side - w) // 2
+    canvas[y0:y0 + h, x0:x0 + w] = im
+    canvas = cv2.resize(canvas, (1024, 1024), interpolation=cv2.INTER_LANCZOS4)
+    out = HERE / "tripo/photo1_full.png"
+    cv2.imwrite(str(out), canvas)
+    print(out)
+
+
 if __name__ == "__main__":
-    main()
+    import sys
+    photo1() if "photo1" in sys.argv else main()

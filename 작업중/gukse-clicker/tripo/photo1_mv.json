@@ -1,0 +1,4 @@
+{
+  "task_id": "3e75bf0d-75c4-4816-98de-099ac9d1a3d1",
+  "_note": "사진 1(거북 + 인 몸통, 입력 photo1_full.png) → generate_multiview_image 4방향 그림(세션에서 실행, 1회). 받기만 Actions"
+}
