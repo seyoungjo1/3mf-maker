@@ -1,0 +1,37 @@
+{
+  "hole_nominal_mm": 5.0,
+  "measured_section_xy_mm": [
+    5.0,
+    5.0
+  ],
+  "hole_gauge_intersection_mm3": 0.0,
+  "closed_cap_overlap_mm3": 0.0,
+  "other_nominal_parts_bytewise_arrays_unchanged": {
+    "shell_lower": true,
+    "drawer": true,
+    "cap": true,
+    "latch": true,
+    "stop_left": true,
+    "stop_right": true,
+    "shell_coupon": true,
+    "drawer_coupon": true
+  },
+  "loop_end_print_z_mm": 0.0,
+  "loop_thickness_mm": 4.0,
+  "minimum_nominal_hole_surround_mm": 4.0,
+  "root_width_mm": 16.0,
+  "hole_center_xy_body_mm": [
+    0,
+    -47
+  ],
+  "static_beam_screening": {
+    "assumptions": "20N transverse force; rectangular cantilever approximation,L14.5mm,b12mm,h4mm,E3300MPa. Excludes hole stress concentration, actual curved root, layer adhesion, impact and fatigue. No physical load rating.",
+    "I_mm4": 64.0,
+    "deflection_mm": 0.09623184974747474,
+    "moment_Nmm": 290.0,
+    "stress_MPa": 9.0625,
+    "allow_MPa": 25.0,
+    "ok": true,
+    "stiffness_N_per_mm": 207.83139940136948
+  }
+}

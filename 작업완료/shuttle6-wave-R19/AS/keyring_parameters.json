@@ -1,0 +1,14 @@
+{
+  "hole_diameter_mm": 5.0,
+  "hole_center_xy_mm": [
+    0.0,
+    -47.0
+  ],
+  "outer_radius_mm": 6.5,
+  "thickness_mm": 4.0,
+  "root_width_mm": 16.0,
+  "root_inside_y_mm": -35.0,
+  "body_z_low_mm": 239.0,
+  "body_z_high_mm": 243.0,
+  "root_corner_radius_mm": 1.0
+}

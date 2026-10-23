@@ -1,0 +1,40 @@
+{
+  "method": "Actual mesh cross-sections; outermost material interval along+X at95 lateral positions per plane. Samples do not establish a global minimum. Joint and intentional stop pockets excluded. Invalid section loops repaired only for the2D measurement, not the mesh.",
+  "samples": [
+    {
+      "body_z_mm": 60,
+      "minimum_x_wall_interval_mm": 1.6328445552191369,
+      "at_y_mm": 6.200000000000001
+    },
+    {
+      "body_z_mm": 90,
+      "minimum_x_wall_interval_mm": 1.6474144038410898,
+      "at_y_mm": -0.1999999999999993
+    },
+    {
+      "body_z_mm": 110,
+      "minimum_x_wall_interval_mm": 1.3982211003504332,
+      "at_y_mm": 2.200000000000001
+    },
+    {
+      "body_z_mm": 120,
+      "minimum_x_wall_interval_mm": 2.4197967429746328,
+      "at_y_mm": 7.000000000000002
+    },
+    {
+      "body_z_mm": 170,
+      "minimum_x_wall_interval_mm": 1.5400231195674081,
+      "at_y_mm": 4.0
+    },
+    {
+      "body_z_mm": 200,
+      "minimum_x_wall_interval_mm": 1.8288315703664324,
+      "at_y_mm": -5.800000000000001
+    },
+    {
+      "body_z_mm": 220,
+      "minimum_x_wall_interval_mm": 1.8279905905073974,
+      "at_y_mm": -5.800000000000001
+    }
+  ]
+}

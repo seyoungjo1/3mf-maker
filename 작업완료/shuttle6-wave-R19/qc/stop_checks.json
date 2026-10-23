@@ -1,0 +1,30 @@
+{
+  "contact_area_each_mm2": {
+    "stop_left": 28.58397047382913,
+    "stop_right": 28.58372102705284
+  },
+  "contact_area_pair_mm2": 57.16769150088197,
+  "R17_reference_pair_mm2": 16.801043702289462,
+  "area_ratio_to_R17": 3.402627391124028,
+  "hypothetical_static_pull_N": 30,
+  "balanced_mean_pressure_MPa": 0.5247719334536566,
+  "one_side_only_mean_pressure_MPa": 1.0495484465303428,
+  "body_joint_overlap_mm3": 0.0,
+  "plain_cup_sample_gaps": {
+    "stop_left": {
+      "sample_count": 121,
+      "scope": "Inner flat stem face to plain rear cup, excluding the axial stop face.",
+      "minimum_mm": 0.20000152587893183,
+      "p1_mm": 0.20000152587893183,
+      "p5_mm": 0.20000152587893183
+    },
+    "stop_right": {
+      "sample_count": 121,
+      "scope": "Inner flat stem face to plain rear cup, excluding the axial stop face.",
+      "minimum_mm": 0.20000152587887499,
+      "p1_mm": 0.20000152587887499,
+      "p5_mm": 0.20000152587887499
+    }
+  },
+  "scope": "Contact area inferred from0.1mm rigid overtravel volume. Pressure assumes an arbitrary static30N pull. No impact, fatigue, layer adhesion, snap insertion force, failure load or physical life validation."
+}
