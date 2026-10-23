@@ -10,14 +10,17 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[3]
 OUT = Path(__file__).resolve().parents[1] / "figures"
-FONT = "/usr/share/fonts/truetype/nanum/NanumGothicBold.ttf"
+FONTS = ["/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc", "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc",
+         "/usr/share/fonts/truetype/nanum/NanumGothicBold.ttf"]
 
 
 def font(n):
-    try:
-        return ImageFont.truetype(FONT, n)
-    except OSError:
-        return ImageFont.load_default()
+    for p in FONTS:
+        try:
+            return ImageFont.truetype(p, n)
+        except OSError:
+            pass
+    return ImageFont.load_default()
 
 
 def hline(d, x0, x1, y, col, txt, f, up=True):
@@ -36,7 +39,7 @@ def vline(d, x, y0, y1, col, txt, f):
 
 def main():
     OUT.mkdir(exist_ok=True)
-    f = font(22)
+    f = font(30)
     # --- 사진 2 (제품) : 잘라낸 좌표(px) 그대로 2배 확대해 그림
     im = Image.open(ROOT / "sample/gukse_clicker_wadiz.jpg").convert("RGB").crop((380, 1300, 920, 1850))
     im = im.resize((im.width * 2, im.height * 2))
