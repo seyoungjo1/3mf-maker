@@ -16,6 +16,7 @@
 | 2026-10-20 | [parking-plate-diamond-cut.md](parking-plate-diamond-cut.md) | 메탈 다이아몬드 컷 주차번호판 사진 분석 — 테두리 양쪽 경사면·한 단 낮은 무광 바탕·돌출 글자 컷, 판은 눕혀 찍고 기울기는 받침으로 |
 | 2026-10-22 | [mechanical-7seg-counter.md](mechanical-7seg-counter.md) | **기계식 7세그먼트 카운터(2→4자리)** — v2: 전달 피니언은 잠금(L)·자리올림(C) 평면을 나눠야 함(한 평면이면 이가 다 깎임), 갈고리 래칫 + 세로 플런저 폴, 00 멈춤 돌기 / — 표시 방식 비례(드럼 면/간격 0.31), 슬롯형 이진 셔터(층 바꿈 2색), 캠 디스크 따로 출력(한 몸은 최소 6 오버행), 마스크 폴 자리올림 + 탈리 키 리셋, 폴 36° 배수 겹침, 레버 좌표계 버튼 부채꼴, 휘는 부품 `checks`, earcut 구멍 합침 |
 | 2026-10-23 | [../../../svg-draw/references/methods.md](../../../svg-draw/references/methods.md) | **단계적 SVG 그리기**(별도 스킬 `svg-draw`) — SketchAgent 격자·통과점 획, Primitive·스트링아트식 점수 최적화(오차 지도·구조 텐서·닫힌 식 최적 색·팔레트), 선·함수 획만; `to_shapely` 로 부조·인레이(0.8 mm 확인) |
+| 2026-10-23 | [gukse-clicker.md](gukse-clicker.md) | **국새 클리커** — Tripo `model_version` 미지정 = v2.5(→ v3.1-20260211 detailed 고정), 4방향 그림 → 다시점 3D, 결과 호스트 막힘 → Actions 받기, Blender(bpy) Manifold 불리언, 세운 면 부조 오버행 처리(P ∩ 위로 옮긴 P), MX 클릭커 기록값 |
 
 추가 샘플(미실측, 다음 차례): Click_Pen(클릭 펜 기구), Clock_box(태엽 시계 상자), Desk Organizer(OpenSCAD), Little Trees Slider Vent(슬라이더), Mento_Dog, POJEMNICZEK1(트위스트 락 통), 所有部件集合(모듈형 책상 도구, P2S 9 플레이트).
 
