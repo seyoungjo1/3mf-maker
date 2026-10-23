@@ -1,0 +1,32 @@
+{
+ "backend": "software",
+ "states": [
+  "닫힘",
+  "열림",
+  "분리",
+  "몸통 두조각"
+ ],
+ "views": [
+  "view_iso_닫힘.png",
+  "view_top_닫힘.png",
+  "view_side_닫힘.png",
+  "view_bottom_닫힘.png",
+  "view_front_닫힘.png",
+  "view_iso_열림.png",
+  "view_top_열림.png",
+  "view_side_열림.png",
+  "view_bottom_열림.png",
+  "view_front_열림.png",
+  "view_iso_분리.png",
+  "view_top_분리.png",
+  "view_side_분리.png",
+  "view_bottom_분리.png",
+  "view_front_분리.png",
+  "view_iso_몸통 두조각.png",
+  "view_top_몸통 두조각.png",
+  "view_side_몸통 두조각.png",
+  "view_bottom_몸통 두조각.png",
+  "view_front_몸통 두조각.png"
+ ],
+ "frames": 36
+}

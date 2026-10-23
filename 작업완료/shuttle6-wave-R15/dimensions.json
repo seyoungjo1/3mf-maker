@@ -1,0 +1,463 @@
+{
+  "parameters_mm": {
+    "OUTER_W": 78.2,
+    "SIDE_R": 100.0,
+    "CORNER_R": 30.0,
+    "CAP_W": 82.2,
+    "CAP_SIDE_R": 102.0,
+    "CAP_CORNER_R": 32.0,
+    "ID": 69.8,
+    "BODY_L": 243.0,
+    "FLOOR": 3.0,
+    "CAP_T": 10.0,
+    "CLOSED_L": 253.0,
+    "TRAY_R": 34.6,
+    "TRAY_T": 2.6,
+    "TRAY_END": 249.8,
+    "STOP_T": 1.25,
+    "USE_L": 225.0,
+    "RADIAL_GAP": 0.3,
+    "GROOVE_D": 0.4,
+    "GROOVE_W": 1.6,
+    "PATTERN_START": 55.0,
+    "PATTERN_END": 190.0,
+    "CONTENT_D": 64.0,
+    "CONTENT_L": 225.0,
+    "STACK_PITCH": 28.0,
+    "SHUTTLE_L": 85.0,
+    "CONTENT_BASE_D": 28.0,
+    "END_ANGLE_FROM_BED": 45.0,
+    "END_BRIDGE_D": 4.0,
+    "BODY_SPLIT_Z": 121.5,
+    "GLUE_L": 22.0,
+    "GLUE_R": 37.1,
+    "GLUE_INNER_R": 34.9,
+    "GLUE_SOCKET_R": 37.25,
+    "CONTENT_CLEARANCE": 0.0,
+    "CAP_SQUARE_SIDE": 30.0,
+    "CAP_SQUARE_DEPTH": 3.0,
+    "CAP_KEY_SIDE": 29.6,
+    "CAP_SNAP_L": 22.6,
+    "CAP_SNAP_T": 3.0,
+    "CAP_SNAP_B": 2.8,
+    "CAP_SNAP_DEFLECTION": 0.4,
+    "GLUE_KEY_ANGLE": 45.0,
+    "GLUE_KEY_WIDTH": 8.0,
+    "GLUE_KEY_R": 37.9,
+    "GLUE_KEY_SIDE_GAP": 0.1,
+    "GLUE_RADIAL_GAP": 0.15,
+    "TRAY_INNER_R": 32.0,
+    "CAP_JOINT_L": 4.0,
+    "CAP_JOINT_GAP": 0.2,
+    "DETENT_Z": 20.0,
+    "CONTENT_OFFSET_Y": 0.0,
+    "DETENT_COUNT": 6,
+    "DETENT_PITCH": 36.0,
+    "DETENT_RELAX_GAP": 0.2,
+    "GLUE_TAPER_L": 5.0,
+    "COLLAR_CUT_Y": -17.0,
+    "FOOT_BOTTOM_Y": -34.8,
+    "FOOT_SIDE_SLOPE": 0.0,
+    "FOOT_WALL": 2.6,
+    "DETENT_INTERFERENCE": 0.2,
+    "FOOT_HALF_BASE": 8.0,
+    "FOOT_TOP_Y": -32.8,
+    "FOOT_ROUND": 0.5,
+    "CAM_FACE_Y": -34.0,
+    "REAR_START": 222.0,
+    "REAR_LAP": 10.0,
+    "REAR_MALE_R": 31.8,
+    "REAR_INNER_R": 29.2,
+    "SEAM_WAVE_A": 0.8,
+    "CAM_NORMAL_R": 1.8,
+    "CAM_TANGENT_R": 0.6,
+    "CAM_AXIAL_R": 3.0,
+    "OUTER_PERIMETER": 257.252485177888,
+    "PATTERN_PITCH": 25.7252485177888,
+    "END_BLEND_L": 23.019809639368816,
+    "END_TIP_R": 144.85281374238573,
+    "END_FINAL_BRIDGE_D": 4.0,
+    "END_TERMINAL_ANGLE_FROM_BED": 30.0,
+    "END_ROUND_START_Z": 225.5301903606312,
+    "END_ROUND_START_D": 64.0,
+    "END_ACTUAL_ROOF_Z": 248.55,
+    "END_ACTUAL_ROOF_T": 1.25,
+    "END_LAST_CHORD_ANGLE_FROM_BED": 30.03906250000382
+  },
+  "shell_ray_radii_mm": {
+    "0": [
+      34.900001525878906,
+      39.09513110674278
+    ],
+    "1": [
+      34.900001525878906,
+      39.09950287028076
+    ],
+    "2": [
+      34.90000152587891,
+      38.92431676729787
+    ]
+  },
+  "drawer_bottom_radii_mm": [
+    30.0,
+    32.599998474121094
+  ],
+  "measured_body_id_mm": 69.80000305175783,
+  "nominal_open_tray_id_mm": 64.0,
+  "measured_radial_gap_mm": 0.29999999999999716,
+  "capacity_basis": "Full open semicircular64mm chamber restored, centered atY0. Six nested225mm remains an unmeasured brand assumption.",
+  "status": "R15 final geometry and assembly passed; P1S Bambu export; physical print/click/lifetime untested",
+  "end_geometry": {
+    "main_angle_from_bed_deg": 45.0,
+    "terminal_tangent_from_bed_deg": 30.0,
+    "last_mesh_chord_from_bed_deg": 30.03906250000382,
+    "round_start_z_mm": 225.5301903606312,
+    "final_bridge_mm": 4.0,
+    "roof_underside_z_mm": 248.55,
+    "roof_thickness_mm": 1.25,
+    "outside_filled": true,
+    "angle_reference": "Canonical design axis of R9; tray now prints horizontally, these are not bed overhang angles.",
+    "measured_nominal_mesh_chord_from_bed_deg": 30.040117464315387,
+    "measured_nominal_bridge_width_mm": 4.0,
+    "measured_near_tip_angle_deg": 30.567181582218197
+  },
+  "detent": {
+    "stations": 6,
+    "paired_bosses": 12,
+    "pitch_mm": 36.0,
+    "normal_slide_gap_mm": 0.3,
+    "nominal_normal_interference_mm": 0.2,
+    "pocket_normal_offset_mm": 0.2,
+    "force_N": null,
+    "scope": "Solid low cams. Actual deformation/force/wear untested."
+  },
+  "glue_joint": {
+    "radial_gap_mm": 0.15,
+    "diametral_gap_mm": 0.3,
+    "male_od_mm": 74.2,
+    "female_id_mm": 74.5,
+    "key_angle_deg": 45.0,
+    "key_width_mm": 8.0,
+    "key_side_gap_mm": 0.1,
+    "key_radial_projection_mm": 0.8,
+    "overlap_length_mm": 23.790576447902527,
+    "male_wall_mm": 2.2,
+    "minimum_socket_outer_wall_mm": 1.45,
+    "scope": "Straight cylindrical inner fit and45-degree key retained. Outer fourth-arc positive/negative wave joint; stated overlap is the minimum behind the crest.",
+    "measured": {
+      "collar_wall_mm": 2.2000007547093503,
+      "radial_gap_mm": 0.14999962232590747,
+      "key_tip_gap_mm": 0.14999962232590747,
+      "key_side_gap_mm": 0.10000100673303525,
+      "key_width_mm": 7.9999985602222665
+    },
+    "reference_key_span_mm": 22.0,
+    "collar_bottom_z_mm": 107.99604377471296,
+    "collar_length_mm": 35.50395622528704,
+    "key_entry_base_z_mm": 107.84604377471295,
+    "key_lower_ramp_mm": 2.0,
+    "rail_passage": {
+      "x_halfwidth_mm": 10.0,
+      "max_y_mm": -29.0
+    }
+  },
+  "ornament": {
+    "four_arcs_preserved": true,
+    "groove_width_mm": 1.6,
+    "depth_mm": 0.4,
+    "period_mm": 25.7252485177888,
+    "land_between_concentric_arcs_mm": 1.358403579545712,
+    "scope": "Approved R12 preview applied to full outer shell; same dense sampling with sample-checked mesh simplification. Physical print improvement requires output check."
+  },
+  "cap_joint": {
+    "pocket_depth_mm": 4.0,
+    "tongue_length_mm": 3.8,
+    "gap_per_side_mm": 0.2,
+    "floor_gap_mm": 0.2,
+    "primary_pocket_floor_z_mm": 6.0,
+    "minimum_front_wall_mm": 3.0,
+    "square_pocket_side_mm": 30.0,
+    "square_pocket_depth_mm": 3.0,
+    "square_key_side_mm": 29.6,
+    "square_key_length_mm": 3.0,
+    "mode": "Full half-disc socket plus30mm square pocket and protected snap beams. Physical cap retention is not rated.",
+    "actual_solid_overlap_mm3": 0.0,
+    "measured_pocket_depth_mm": 4.0,
+    "measured_solid_tongue_length_mm": 3.8000001907348633,
+    "measured_floor_gap_mm": 0.19999980926513672,
+    "measured_square_pocket_depth_mm": 3.0,
+    "measured_square_pocket_side_mm": 30.0
+  },
+  "print_transforms": {
+    "shell_lower": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.00012574625725392252
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "shell_upper": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        -1.0,
+        -1.2246467991473532e-16,
+        0.0
+      ],
+      [
+        0.0,
+        1.2246467991473532e-16,
+        -1.0,
+        121.5
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "drawer": [
+      [
+        0.7071067811865476,
+        -4.329780281177466e-17,
+        0.7071067811865475,
+        0.0
+      ],
+      [
+        0.7071067811865475,
+        4.329780281177467e-17,
+        -0.7071067811865476,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        6.123233995736766e-17,
+        34.79999923706055
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "cap": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "shell_coupon": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "drawer_coupon": [
+      [
+        0.7071067811865476,
+        -4.329780281177466e-17,
+        0.7071067811865475,
+        0.0
+      ],
+      [
+        0.7071067811865475,
+        4.329780281177467e-17,
+        -0.7071067811865476,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        6.123233995736766e-17,
+        34.79999923706055
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "rear_head": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        -1.0,
+        -1.2246467991473532e-16,
+        0.0
+      ],
+      [
+        0.0,
+        1.2246467991473532e-16,
+        -1.0,
+        249.8000030517578
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  },
+  "print_dimensions_mm": {
+    "shell_lower": [
+      78.20209503173828,
+      78.20398330688477,
+      143.5001220703125
+    ],
+    "shell_upper": [
+      78.20230865478516,
+      78.20289993286133,
+      134.90396118164062
+    ],
+    "drawer": [
+      201.52543449401855,
+      201.52543449401855,
+      34.79999923706055
+    ],
+    "cap": [
+      82.19999694824219,
+      82.19999694824219,
+      10.0
+    ],
+    "shell_coupon": [
+      78.5,
+      78.5,
+      36.0
+    ],
+    "drawer_coupon": [
+      74.2462100982666,
+      74.2462100982666,
+      34.79999923706055
+    ],
+    "rear_head": [
+      69.50003814697266,
+      69.50003814697266,
+      37.80000305175781
+    ]
+  },
+  "measured_open_tray_id_mm": 63.99852952966014,
+  "measured_flat_base_width_mm": 16.0,
+  "rail": {
+    "mode": "Original round C exterior; narrow rounded16mm shoe added only at bottom",
+    "foot_bottom_y_mm": -34.8,
+    "foot_width_mm": 16.0,
+    "normal_gap_mm": 0.3,
+    "scope": "Partial supports accepted by user. No flared trapezoid and no exterior reinforcement.",
+    "measured": {
+      "inner_radius_min_mm": 31.9961916294096,
+      "inner_radius_max_mm": 32.0,
+      "inner_bottom_y_mm": -32.0,
+      "outer_cradle_bottom_y_mm": -34.79999923706055,
+      "bottom_total_mm": 2.799999237060547,
+      "rail_normal_gap_mm": 0.3000001907348828,
+      "flat_base_width_mm": 16.0
+    },
+    "flat_contact_width_mm": 15.0,
+    "overall_foot_width_mm": 16.0
+  },
+  "measured_bottom_total_thickness_mm": 2.799999237060547,
+  "rear_guide": {
+    "outer_diameter_mm": 69.2,
+    "full_round_length_mm": 27.8,
+    "male_overlap_mm": 10.0,
+    "male_od_mm": 63.6,
+    "female_id_mm": 64.0,
+    "glue_gap_per_side_mm": 0.2,
+    "print": "Separate cup, closed end down; glue into tray. Actual wobble and feather protection require physical check."
+  },
+  "seam": {
+    "mode": "Positive scalloped waves on lower body; matching negative wave sockets at bottom of upper body. Actual interlocking edge follows the fourth engraved arc of the existing motif.",
+    "groove_width_mm": 1.6,
+    "groove_depth_mm": 0.4,
+    "wave_rise_mm": 11.663379777384517,
+    "crest_flat_width_mm": 4.0,
+    "wave_base_z_mm": 108.04604377471296,
+    "axial_face_clearance_mm": 0.1,
+    "minimum_collar_engagement_mm": 23.790576447902527,
+    "scope": "A geometric male/female joint, not a decorative line added across a straight seam. Glue and print errors may still show."
+  },
+  "print_triangles": {
+    "shell_lower": 141358,
+    "shell_upper": 177930,
+    "drawer": 13448,
+    "cap": 110014,
+    "shell_coupon": 9538,
+    "drawer_coupon": 3090,
+    "rear_head": 9226
+  },
+  "total_print_triangles": 464604
+}

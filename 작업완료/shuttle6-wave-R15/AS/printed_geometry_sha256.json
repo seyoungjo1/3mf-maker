@@ -1,0 +1,37 @@
+{
+ "shell_lower": {
+  "vertices": "655b10e8fdd9d1f23994b01e51e31796506e53e0e3443140e0a366ccc57223b8",
+  "faces": "357101c7e2bc0982d374c67632c32be08fef8bee178fc5b12734351bd13125e7",
+  "triangles": 141358
+ },
+ "shell_upper": {
+  "vertices": "026afdb2fad8a9aca7771c18f6c40552c20c8e44de6bb986fa6958d7f055e779",
+  "faces": "5fafda6c3d6a384d175602585b6c1a9406df5fcd70fd3e0e016d102783cc2b85",
+  "triangles": 177930
+ },
+ "drawer": {
+  "vertices": "24c4421e981d8e96fdf6c0c7fda4bd45e040c404f81cf64b48a447d845b9004e",
+  "faces": "1651e03b5ae7601ae75b2badbe0c79f958f3817da492118a4225892e05ea2b25",
+  "triangles": 13448
+ },
+ "cap": {
+  "vertices": "631a515bed3a84a40986218c4f300c328314cc96a1db7f242a7571f3d3aa5cf1",
+  "faces": "6abcf85950e6fcd4386211ea6618cc79424e579e2ba9a263fc3d5331894bf93e",
+  "triangles": 110014
+ },
+ "shell_coupon": {
+  "vertices": "8b9944f98878a9cb6b33cc1ba1889f2d457e194366fbe24e1c84a43ab5304a01",
+  "faces": "345f4ca76a44f8772d1682de7037727fe75ba2ca05808e34d9098c75cd850fcf",
+  "triangles": 9538
+ },
+ "drawer_coupon": {
+  "vertices": "aa447b05c11b436ff6d9da5032b99b5f9451c7f6c93c79f4c919761e09dbd410",
+  "faces": "b33f61661e68932d212395c721d4bfa455761c6951c9bf67e3576c2388d98e98",
+  "triangles": 3090
+ },
+ "rear_head": {
+  "vertices": "1000097585e246fdc8d8ccb84dbdcd21223f1f7e9e0ee93729f07dc40efb7dfb",
+  "faces": "ac898c59ff17f3cb66c716868de8e8cd7368371da51fad77517f9d77f9ed5327",
+  "triangles": 9226
+ }
+}

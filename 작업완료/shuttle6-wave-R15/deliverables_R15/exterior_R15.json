@@ -1,0 +1,18 @@
+{
+ "ok": true,
+ "reference": "R13 original C silhouette; no new outside reinforcement",
+ "plain_section_comparisons": [
+  {
+   "body_z_mm": 30.0,
+   "outer_outline_hausdorff_mm": 0.012986136928654678
+  },
+  {
+   "body_z_mm": 210.0,
+   "outer_outline_hausdorff_mm": 0.01750069951546155
+  },
+  {
+   "body_z_mm": 230.0,
+   "outer_outline_hausdorff_mm": 0.02075413632054618
+  }
+ ]
+}
