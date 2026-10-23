@@ -1,0 +1,1056 @@
+{
+  "generic_strict": {
+    "/workspace/shuttle6-r10-build/작업중/shuttle6-wave-R23/models/plates/P01.3mf": {
+      "warnings": 0,
+      "messages": [],
+      "objects": 4
+    },
+    "/workspace/shuttle6-r10-build/작업중/shuttle6-wave-R23/models/plates/P02.3mf": {
+      "warnings": 0,
+      "messages": [],
+      "objects": 2
+    },
+    "/workspace/shuttle6-r10-build/작업중/shuttle6-wave-R23/models/plates/P03.3mf": {
+      "warnings": 0,
+      "messages": [],
+      "objects": 2
+    },
+    "/workspace/shuttle6-r10-build/작업중/shuttle6-wave-R23/models/plates/P04.3mf": {
+      "warnings": 0,
+      "messages": [],
+      "objects": 2
+    },
+    "/workspace/shuttle6-r10-build/작업중/shuttle6-wave-R23/models/plates/P05.3mf": {
+      "warnings": 0,
+      "messages": [],
+      "objects": 2
+    },
+    "/workspace/shuttle6-r10-build/작업중/shuttle6-wave-R23/models/plates/P06.3mf": {
+      "warnings": 0,
+      "messages": [],
+      "objects": 2
+    },
+    "/workspace/shuttle6-r10-build/작업중/shuttle6-wave-R23/models/plates/P07.3mf": {
+      "warnings": 0,
+      "messages": [],
+      "objects": 4
+    }
+  },
+  "bambu_geometry_strict": {
+    "/workspace/shuttle6-r10-build/작업중/shuttle6-wave-R23/models/Shuttle6_C_R23_round_cap_socket_front_hat_bambu.3mf": {
+      "warnings": 0,
+      "messages": [],
+      "objects": 18,
+      "mode": "Bambu original structure + geometry-copy strict",
+      "original_strict_error": "Lib3MFException 5: Unknown Model Metadata.",
+      "removed_template_metadata": [
+        "BambuStudio:3mfVersion",
+        "DesignerCover",
+        "DesignerUserId",
+        "License",
+        "Origin",
+        "ProfileCover",
+        "ProfileDescription",
+        "ProfileTitle"
+      ],
+      "copy_encoding": "3MF Core with original world-space meshes and transforms",
+      "bambu_structure_ok": true
+    }
+  },
+  "bambu_metadata": {
+    "path": "/workspace/shuttle6-r10-build/작업중/shuttle6-wave-R23/models/Shuttle6_C_R23_round_cap_socket_front_hat_bambu.3mf",
+    "settings_changed": {
+      "bottom_shell_layers": "5",
+      "bridge_speed": [
+        "20",
+        "20"
+      ],
+      "brim_type": "outer_only",
+      "brim_width": "10",
+      "default_acceleration": [
+        "1500",
+        "1500"
+      ],
+      "enable_prime_tower": "0",
+      "enable_support": "1",
+      "filament_colour": [
+        "#33383E",
+        "#BD6F53",
+        "#FFB300"
+      ],
+      "gap_infill_speed": [
+        "40",
+        "40"
+      ],
+      "initial_layer_infill_speed": [
+        "30",
+        "30"
+      ],
+      "initial_layer_speed": [
+        "20",
+        "20"
+      ],
+      "initial_layer_travel_acceleration": [
+        "1000",
+        "1000"
+      ],
+      "inner_wall_acceleration": [
+        "1000",
+        "1000"
+      ],
+      "inner_wall_speed": [
+        "60",
+        "60"
+      ],
+      "internal_solid_infill_speed": [
+        "60",
+        "60"
+      ],
+      "outer_wall_acceleration": [
+        "600",
+        "600"
+      ],
+      "outer_wall_speed": [
+        "40",
+        "40"
+      ],
+      "slow_down_layer_time": [
+        "8",
+        "8",
+        "8"
+      ],
+      "sparse_infill_pattern": "gyroid",
+      "sparse_infill_speed": [
+        "80",
+        "80"
+      ],
+      "support_interface_speed": [
+        "30",
+        "30"
+      ],
+      "support_remove_small_overhang": "0",
+      "support_speed": [
+        "60",
+        "60"
+      ],
+      "top_surface_acceleration": [
+        "600",
+        "600"
+      ],
+      "top_surface_speed": [
+        "30",
+        "30"
+      ],
+      "travel_acceleration": [
+        "1500",
+        "1500"
+      ],
+      "travel_speed": [
+        "120",
+        "120"
+      ],
+      "wall_loops": "4"
+    },
+    "application": "BambuStudio-02.08.02.61",
+    "objects": [
+      {
+        "name": "shell_lower",
+        "parts": [
+          [
+            "shell_lower",
+            1,
+            163648.84,
+            true
+          ]
+        ]
+      },
+      {
+        "name": "shell_upper",
+        "parts": [
+          [
+            "shell_upper",
+            1,
+            140880.2,
+            true
+          ]
+        ]
+      },
+      {
+        "name": "drawer",
+        "parts": [
+          [
+            "drawer",
+            2,
+            130762.81,
+            true
+          ]
+        ]
+      },
+      {
+        "name": "cap",
+        "parts": [
+          [
+            "cap",
+            2,
+            39012.29,
+            true
+          ]
+        ]
+      },
+      {
+        "name": "latch",
+        "parts": [
+          [
+            "latch",
+            3,
+            5332.87,
+            true
+          ]
+        ]
+      },
+      {
+        "name": "shell_coupon",
+        "parts": [
+          [
+            "shell_coupon",
+            1,
+            49452.01,
+            true
+          ]
+        ]
+      },
+      {
+        "name": "drawer_coupon",
+        "parts": [
+          [
+            "drawer_coupon",
+            2,
+            18273.45,
+            true
+          ]
+        ]
+      },
+      {
+        "name": "stop_left",
+        "parts": [
+          [
+            "stop_left",
+            1,
+            364.57,
+            true
+          ]
+        ]
+      },
+      {
+        "name": "stop_right",
+        "parts": [
+          [
+            "stop_right",
+            1,
+            364.57,
+            true
+          ]
+        ]
+      }
+    ],
+    "errors": [],
+    "ok": true
+  },
+  "plate_roundtrip_qc": [
+    {
+      "plate": 1,
+      "part": "shell_lower",
+      "max_vertex_error_mm": 4.999999987376214e-07,
+      "bounds_mm": [
+        [
+          32.898952,
+          88.900002,
+          0.0
+        ],
+        [
+          111.101048,
+          167.099998,
+          143.500122
+        ]
+      ],
+      "single_solid": true,
+      "source_qc": {
+        "name": "shell_lower",
+        "faces": 143146,
+        "vertices": 71575,
+        "watertight": true,
+        "is_volume": true,
+        "bodies": 1,
+        "size_mm": [
+          78.2,
+          78.2,
+          143.5
+        ],
+        "min_z": 0.0,
+        "volume_cm3": 163.65,
+        "weight_g_solid": 202.9,
+        "bed_contact_mm2": 4866.2,
+        "first_layer_mm2": 4866.2,
+        "footprint_hull_mm2": 4869.4,
+        "aspect_h_over_w": 1.84,
+        "thin_area_mm2": 5.2,
+        "thin_at_z": 143.2,
+        "thin_bounds": [
+          23.3,
+          23.3,
+          29.4,
+          29.4
+        ],
+        "internal_gaps": 73,
+        "slit_z": [],
+        "overhang_mm2": 0.0,
+        "overhang_top": [],
+        "bridge_mm2": 0.0,
+        "bridge_max_span": 0.0,
+        "bridge_top": [],
+        "wall_steps": [],
+        "flags": [
+          "1.2 mm 보다 얇은 살 5.2 mm² (z=143.2, x/y (23.3, 23.3, 29.4, 29.4))"
+        ]
+      }
+    },
+    {
+      "plate": 1,
+      "part": "shell_upper",
+      "max_vertex_error_mm": 5.00000000069889e-07,
+      "bounds_mm": [
+        [
+          143.270384,
+          85.049971,
+          0.0
+        ],
+        [
+          224.729616,
+          170.950029,
+          134.903961
+        ]
+      ],
+      "single_solid": true,
+      "source_qc": {
+        "name": "shell_upper",
+        "faces": 185702,
+        "vertices": 92839,
+        "watertight": true,
+        "is_volume": true,
+        "bodies": 1,
+        "size_mm": [
+          81.46,
+          85.9,
+          134.9
+        ],
+        "min_z": 0.0,
+        "volume_cm3": 140.88,
+        "weight_g_solid": 174.7,
+        "bed_contact_mm2": 1424.1,
+        "first_layer_mm2": 1424.1,
+        "footprint_hull_mm2": 5543.9,
+        "aspect_h_over_w": 1.66,
+        "thin_area_mm2": 0.0,
+        "thin_at_z": null,
+        "thin_bounds": null,
+        "internal_gaps": 53,
+        "slit_z": [],
+        "overhang_mm2": 68.5,
+        "overhang_top": [
+          [
+            7.71,
+            57.6,
+            [
+              -39.1,
+              -10.6,
+              39.1,
+              10.6
+            ]
+          ],
+          [
+            7.31,
+            10.9,
+            [
+              -39.1,
+              -9.3,
+              39.1,
+              9.3
+            ]
+          ]
+        ],
+        "bridge_mm2": 25.2,
+        "bridge_max_span": 4.9,
+        "bridge_top": [
+          [
+            7.71,
+            23.2,
+            4.9
+          ],
+          [
+            7.31,
+            2.0,
+            4.3
+          ]
+        ],
+        "wall_steps": [],
+        "flags": [
+          "오버행(한쪽 지지) 규칙 위반 68 mm² (서포트 또는 재설계)"
+        ]
+      }
+    },
+    {
+      "plate": 2,
+      "part": "drawer",
+      "max_vertex_error_mm": 4.999389631166196e-07,
+      "bounds_mm": [
+        [
+          17.408502,
+          17.408502,
+          0.0
+        ],
+        [
+          238.591498,
+          238.591498,
+          69.395721
+        ]
+      ],
+      "single_solid": true,
+      "source_qc": {
+        "name": "drawer",
+        "faces": 6832,
+        "vertices": 3418,
+        "watertight": true,
+        "is_volume": true,
+        "bodies": 1,
+        "size_mm": [
+          221.18,
+          221.18,
+          69.4
+        ],
+        "min_z": 0.0,
+        "volume_cm3": 130.76,
+        "weight_g_solid": 162.1,
+        "bed_contact_mm2": 3559.0,
+        "first_layer_mm2": 3645.6,
+        "footprint_hull_mm2": 3745.2,
+        "aspect_h_over_w": 0.31,
+        "thin_area_mm2": 0.0,
+        "thin_at_z": null,
+        "thin_bounds": null,
+        "internal_gaps": 0,
+        "slit_z": [],
+        "overhang_mm2": 6416.2,
+        "overhang_top": [
+          [
+            1.51,
+            296.1,
+            [
+              -2.3,
+              -183.3,
+              183.3,
+              2.3
+            ]
+          ],
+          [
+            1.31,
+            289.2,
+            [
+              -1.8,
+              -182.8,
+              182.8,
+              1.8
+            ]
+          ],
+          [
+            1.71,
+            279.9,
+            [
+              -2.8,
+              -183.8,
+              183.8,
+              2.8
+            ]
+          ],
+          [
+            1.91,
+            247.2,
+            [
+              -3.2,
+              -184.2,
+              184.2,
+              3.2
+            ]
+          ]
+        ],
+        "bridge_mm2": 56.0,
+        "bridge_max_span": 7.1,
+        "bridge_top": [
+          [
+            0.51,
+            17.4,
+            7.1
+          ],
+          [
+            0.71,
+            11.5,
+            6.3
+          ],
+          [
+            0.91,
+            9.3,
+            5.9
+          ],
+          [
+            34.91,
+            8.9,
+            3.4
+          ]
+        ],
+        "wall_steps": [],
+        "flags": [
+          "오버행(한쪽 지지) 규칙 위반 6416 mm² (서포트 또는 재설계)",
+          "브리지 폭 7.1 mm > 5.0 mm"
+        ]
+      }
+    },
+    {
+      "plate": 3,
+      "part": "cap",
+      "max_vertex_error_mm": 4.999999987376214e-07,
+      "bounds_mm": [
+        [
+          86.900002,
+          81.950001,
+          0.0
+        ],
+        [
+          169.099998,
+          174.049999,
+          11.5
+        ]
+      ],
+      "single_solid": true,
+      "source_qc": {
+        "name": "cap",
+        "faces": 86432,
+        "vertices": 43206,
+        "watertight": true,
+        "is_volume": true,
+        "bodies": 1,
+        "size_mm": [
+          82.2,
+          92.1,
+          11.5
+        ],
+        "min_z": 0.0,
+        "volume_cm3": 39.01,
+        "weight_g_solid": 48.4,
+        "bed_contact_mm2": 4277.3,
+        "first_layer_mm2": 4277.3,
+        "footprint_hull_mm2": 6054.9,
+        "aspect_h_over_w": 0.14,
+        "thin_area_mm2": 8.8,
+        "thin_at_z": 11.2,
+        "thin_bounds": [
+          -26.4,
+          41.5,
+          26.4,
+          42.0
+        ],
+        "internal_gaps": 2,
+        "slit_z": [],
+        "overhang_mm2": 0.0,
+        "overhang_top": [],
+        "bridge_mm2": 1480.2,
+        "bridge_max_span": 2.9,
+        "bridge_top": [
+          [
+            0.71,
+            1446.8,
+            1.6
+          ],
+          [
+            7.71,
+            20.9,
+            1.5
+          ],
+          [
+            7.51,
+            6.0,
+            2.1
+          ],
+          [
+            7.31,
+            3.0,
+            2.6
+          ]
+        ],
+        "wall_steps": [],
+        "flags": [
+          "1.2 mm 보다 얇은 살 8.8 mm² (z=11.2, x/y (-26.4, 41.5, 26.4, 42.0))"
+        ]
+      }
+    },
+    {
+      "plate": 4,
+      "part": "latch",
+      "max_vertex_error_mm": 4.997558598063279e-07,
+      "bounds_mm": [
+        [
+          102.350002,
+          111.115055,
+          0.0
+        ],
+        [
+          153.649998,
+          144.884945,
+          10.0
+        ]
+      ],
+      "single_solid": true,
+      "source_qc": {
+        "name": "latch",
+        "faces": 7348,
+        "vertices": 3672,
+        "watertight": true,
+        "is_volume": true,
+        "bodies": 1,
+        "size_mm": [
+          51.3,
+          33.77,
+          10.0
+        ],
+        "min_z": 0.0,
+        "volume_cm3": 5.33,
+        "weight_g_solid": 6.6,
+        "bed_contact_mm2": 846.5,
+        "first_layer_mm2": 853.6,
+        "footprint_hull_mm2": 1620.1,
+        "aspect_h_over_w": 0.3,
+        "thin_area_mm2": 0.0,
+        "thin_at_z": null,
+        "thin_bounds": null,
+        "internal_gaps": 3,
+        "slit_z": [],
+        "overhang_mm2": 0.0,
+        "overhang_top": [],
+        "bridge_mm2": 77.5,
+        "bridge_max_span": 4.1,
+        "bridge_top": [
+          [
+            8.31,
+            47.9,
+            4.1
+          ],
+          [
+            0.31,
+            15.7,
+            1.7
+          ],
+          [
+            0.51,
+            8.7,
+            0.9
+          ],
+          [
+            0.71,
+            5.2,
+            0.4
+          ]
+        ],
+        "wall_steps": [],
+        "flags": []
+      }
+    },
+    {
+      "plate": 5,
+      "part": "shell_coupon",
+      "max_vertex_error_mm": 4.997558598063279e-07,
+      "bounds_mm": [
+        [
+          88.75,
+          88.75,
+          0.0
+        ],
+        [
+          167.25,
+          167.25,
+          36.0
+        ]
+      ],
+      "single_solid": true,
+      "source_qc": {
+        "name": "shell_coupon",
+        "faces": 9538,
+        "vertices": 4769,
+        "watertight": true,
+        "is_volume": true,
+        "bodies": 1,
+        "size_mm": [
+          78.5,
+          78.5,
+          36.0
+        ],
+        "min_z": 0.0,
+        "volume_cm3": 49.45,
+        "weight_g_solid": 61.3,
+        "bed_contact_mm2": 1445.0,
+        "first_layer_mm2": 1445.0,
+        "footprint_hull_mm2": 5246.4,
+        "aspect_h_over_w": 0.46,
+        "thin_area_mm2": 0.0,
+        "thin_at_z": null,
+        "thin_bounds": null,
+        "internal_gaps": 0,
+        "slit_z": [],
+        "overhang_mm2": 0.0,
+        "overhang_top": [],
+        "bridge_mm2": 0.0,
+        "bridge_max_span": 0.0,
+        "bridge_top": [],
+        "wall_steps": [],
+        "flags": []
+      }
+    },
+    {
+      "plate": 6,
+      "part": "drawer_coupon",
+      "max_vertex_error_mm": 4.998779274956178e-07,
+      "bounds_mm": [
+        [
+          90.876895,
+          90.876895,
+          0.0
+        ],
+        [
+          165.123105,
+          165.123105,
+          34.799999
+        ]
+      ],
+      "single_solid": true,
+      "source_qc": {
+        "name": "drawer_coupon",
+        "faces": 3090,
+        "vertices": 1547,
+        "watertight": true,
+        "is_volume": true,
+        "bodies": 1,
+        "size_mm": [
+          74.25,
+          74.25,
+          34.8
+        ],
+        "min_z": 0.0,
+        "volume_cm3": 18.27,
+        "weight_g_solid": 22.7,
+        "bed_contact_mm2": 560.8,
+        "first_layer_mm2": 573.9,
+        "footprint_hull_mm2": 581.5,
+        "aspect_h_over_w": 0.47,
+        "thin_area_mm2": 0.0,
+        "thin_at_z": null,
+        "thin_bounds": null,
+        "internal_gaps": 2,
+        "slit_z": [],
+        "overhang_mm2": 986.1,
+        "overhang_top": [
+          [
+            5.11,
+            101.1,
+            [
+              -8.2,
+              -42.3,
+              42.3,
+              8.2
+            ]
+          ],
+          [
+            1.51,
+            44.2,
+            [
+              -2.3,
+              -36.4,
+              36.4,
+              2.3
+            ]
+          ],
+          [
+            1.71,
+            41.2,
+            [
+              -2.8,
+              -36.9,
+              36.9,
+              2.8
+            ]
+          ],
+          [
+            1.31,
+            40.8,
+            [
+              -1.8,
+              -35.8,
+              35.8,
+              1.8
+            ]
+          ]
+        ],
+        "bridge_mm2": 0.8,
+        "bridge_max_span": 3.3,
+        "bridge_top": [
+          [
+            27.31,
+            0.8,
+            3.3
+          ]
+        ],
+        "wall_steps": [],
+        "flags": [
+          "오버행(한쪽 지지) 규칙 위반 986 mm² (서포트 또는 재설계)"
+        ]
+      }
+    },
+    {
+      "plate": 7,
+      "part": "stop_left",
+      "max_vertex_error_mm": 4.99267577946938e-07,
+      "bounds_mm": [
+        [
+          69.5,
+          117.5,
+          0.0
+        ],
+        [
+          74.5,
+          138.5,
+          4.299999
+        ]
+      ],
+      "single_solid": true,
+      "source_qc": {
+        "name": "stop_left",
+        "faces": 704,
+        "vertices": 354,
+        "watertight": true,
+        "is_volume": true,
+        "bodies": 1,
+        "size_mm": [
+          5.0,
+          21.0,
+          4.3
+        ],
+        "min_z": 0.0,
+        "volume_cm3": 0.36,
+        "weight_g_solid": 0.5,
+        "bed_contact_mm2": 80.4,
+        "first_layer_mm2": 80.4,
+        "footprint_hull_mm2": 81.1,
+        "aspect_h_over_w": 0.86,
+        "thin_area_mm2": 4.3,
+        "thin_at_z": 1.98,
+        "thin_bounds": [
+          235.5,
+          -10.5,
+          240.5,
+          10.5
+        ],
+        "internal_gaps": 1,
+        "slit_z": [],
+        "overhang_mm2": 14.0,
+        "overhang_top": [
+          [
+            2.11,
+            12.8,
+            [
+              235.5,
+              -10.5,
+              240.5,
+              10.5
+            ]
+          ],
+          [
+            2.51,
+            1.1,
+            [
+              235.5,
+              -5.9,
+              240.5,
+              5.9
+            ]
+          ]
+        ],
+        "bridge_mm2": 11.9,
+        "bridge_max_span": 5.7,
+        "bridge_top": [
+          [
+            2.51,
+            8.0,
+            5.7
+          ],
+          [
+            2.31,
+            3.9,
+            2.9
+          ]
+        ],
+        "wall_steps": [
+          [
+            4.25,
+            4,
+            0.142,
+            [
+              [
+                45,
+                240.5,
+                2.5
+              ],
+              [
+                135,
+                235.5,
+                2.5
+              ],
+              [
+                225,
+                235.5,
+                -2.5
+              ],
+              [
+                315,
+                240.5,
+                -2.5
+              ]
+            ]
+          ]
+        ],
+        "flags": [
+          "바깥 벽 단차 0.02~0.3 mm 1개 높이 (z, 방향 수, 최대 mm): [(4.25, 4, 0.142)] — 출력물에 가로줄",
+          "바닥 접지 80.4 mm² < 100 mm² — 브림 필수",
+          "1.2 mm 보다 얇은 살 4.3 mm² (z=1.98, x/y (235.5, -10.5, 240.5, 10.5))",
+          "브리지 폭 5.7 mm > 5.0 mm"
+        ]
+      }
+    },
+    {
+      "plate": 7,
+      "part": "stop_right",
+      "max_vertex_error_mm": 4.99267577946938e-07,
+      "bounds_mm": [
+        [
+          181.5,
+          117.5,
+          0.0
+        ],
+        [
+          186.5,
+          138.5,
+          4.299999
+        ]
+      ],
+      "single_solid": true,
+      "source_qc": {
+        "name": "stop_right",
+        "faces": 704,
+        "vertices": 354,
+        "watertight": true,
+        "is_volume": true,
+        "bodies": 1,
+        "size_mm": [
+          5.0,
+          21.0,
+          4.3
+        ],
+        "min_z": 0.0,
+        "volume_cm3": 0.36,
+        "weight_g_solid": 0.5,
+        "bed_contact_mm2": 80.4,
+        "first_layer_mm2": 80.4,
+        "footprint_hull_mm2": 81.1,
+        "aspect_h_over_w": 0.86,
+        "thin_area_mm2": 4.3,
+        "thin_at_z": 1.98,
+        "thin_bounds": [
+          -240.5,
+          -10.5,
+          -235.5,
+          10.5
+        ],
+        "internal_gaps": 1,
+        "slit_z": [],
+        "overhang_mm2": 14.0,
+        "overhang_top": [
+          [
+            2.11,
+            12.8,
+            [
+              -240.5,
+              -10.5,
+              -235.5,
+              10.5
+            ]
+          ],
+          [
+            2.51,
+            1.1,
+            [
+              -240.5,
+              -5.9,
+              -235.5,
+              5.9
+            ]
+          ]
+        ],
+        "bridge_mm2": 11.9,
+        "bridge_max_span": 5.7,
+        "bridge_top": [
+          [
+            2.51,
+            8.0,
+            5.7
+          ],
+          [
+            2.31,
+            3.9,
+            2.9
+          ]
+        ],
+        "wall_steps": [
+          [
+            4.25,
+            4,
+            0.142,
+            [
+              [
+                45,
+                -235.5,
+                2.5
+              ],
+              [
+                135,
+                -240.5,
+                2.5
+              ],
+              [
+                225,
+                -240.5,
+                -2.5
+              ],
+              [
+                315,
+                -235.5,
+                -2.5
+              ]
+            ]
+          ]
+        ],
+        "flags": [
+          "바깥 벽 단차 0.02~0.3 mm 1개 높이 (z, 방향 수, 최대 mm): [(4.25, 4, 0.142)] — 출력물에 가로줄",
+          "바닥 접지 80.4 mm² < 100 mm² — 브림 필수",
+          "1.2 mm 보다 얇은 살 4.3 mm² (z=1.98, x/y (-240.5, -10.5, -235.5, 10.5))",
+          "브리지 폭 5.7 mm > 5.0 mm"
+        ]
+      }
+    }
+  ],
+  "actual_bambu_studio_slice_observed": false
+}

@@ -1,0 +1,26 @@
+{
+ "backend": "software",
+ "states": [
+  "뚜껑 전체 원형 홈",
+  "원형 끼움부 분리",
+  "원형 뿌리3.8mm 끼움"
+ ],
+ "views": [
+  "view_iso_뚜껑 전체 원형 홈.png",
+  "view_top_뚜껑 전체 원형 홈.png",
+  "view_side_뚜껑 전체 원형 홈.png",
+  "view_bottom_뚜껑 전체 원형 홈.png",
+  "view_front_뚜껑 전체 원형 홈.png",
+  "view_iso_원형 끼움부 분리.png",
+  "view_top_원형 끼움부 분리.png",
+  "view_side_원형 끼움부 분리.png",
+  "view_bottom_원형 끼움부 분리.png",
+  "view_front_원형 끼움부 분리.png",
+  "view_iso_원형 뿌리3.8mm 끼움.png",
+  "view_top_원형 뿌리3.8mm 끼움.png",
+  "view_side_원형 뿌리3.8mm 끼움.png",
+  "view_bottom_원형 뿌리3.8mm 끼움.png",
+  "view_front_원형 뿌리3.8mm 끼움.png"
+ ],
+ "frames": 24
+}

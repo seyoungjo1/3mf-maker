@@ -1,0 +1,26 @@
+{
+ "backend": "software",
+ "states": [
+  "외관 안쪽 반원 홈",
+  "반원 뒤끝 분리",
+  "4.1mm 삽입·여유0.2mm"
+ ],
+ "views": [
+  "view_iso_외관 안쪽 반원 홈.png",
+  "view_top_외관 안쪽 반원 홈.png",
+  "view_side_외관 안쪽 반원 홈.png",
+  "view_bottom_외관 안쪽 반원 홈.png",
+  "view_front_외관 안쪽 반원 홈.png",
+  "view_iso_반원 뒤끝 분리.png",
+  "view_top_반원 뒤끝 분리.png",
+  "view_side_반원 뒤끝 분리.png",
+  "view_bottom_반원 뒤끝 분리.png",
+  "view_front_반원 뒤끝 분리.png",
+  "view_iso_4.1mm 삽입·여유0.2mm.png",
+  "view_top_4.1mm 삽입·여유0.2mm.png",
+  "view_side_4.1mm 삽입·여유0.2mm.png",
+  "view_bottom_4.1mm 삽입·여유0.2mm.png",
+  "view_front_4.1mm 삽입·여유0.2mm.png"
+ ],
+ "frames": 24
+}

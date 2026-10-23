@@ -1,0 +1,6 @@
+{
+  "template_file": "AS/reference_bambu_template.3mf",
+  "sha256": "2577a7ad871bfe9e504ead1772eef68b3a354836855b135ccae0aacc477c177f",
+  "matches_export_input": true,
+  "vendor_verification_file": "qc/settings_finalized.json"
+}

@@ -1,0 +1,20 @@
+{
+ "backend": "software",
+ "states": [
+  "좌우 멈춤·관찰용 윗면 절개",
+  "좌우 블록 외측 장착"
+ ],
+ "views": [
+  "view_iso_좌우 멈춤·관찰용 윗면 절개.png",
+  "view_top_좌우 멈춤·관찰용 윗면 절개.png",
+  "view_side_좌우 멈춤·관찰용 윗면 절개.png",
+  "view_bottom_좌우 멈춤·관찰용 윗면 절개.png",
+  "view_front_좌우 멈춤·관찰용 윗면 절개.png",
+  "view_iso_좌우 블록 외측 장착.png",
+  "view_top_좌우 블록 외측 장착.png",
+  "view_side_좌우 블록 외측 장착.png",
+  "view_bottom_좌우 블록 외측 장착.png",
+  "view_front_좌우 블록 외측 장착.png"
+ ],
+ "frames": 20
+}
