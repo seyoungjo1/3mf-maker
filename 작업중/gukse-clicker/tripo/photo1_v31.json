@@ -1,0 +1,4 @@
+{
+  "task_id": "1c16dc34-4440-474d-b900-053b93638e8d",
+  "_note": "사진 1 4방향 그림(photo1_mv 앞·왼·뒤·오) → multiview_to_model v3.1-20260211 geometry_quality detailed, texture 없음 (세션에서 실행). 받기만 Actions"
+}

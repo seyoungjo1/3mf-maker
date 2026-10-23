@@ -1,0 +1,32 @@
+{
+ "name": "gukse-clicker — 국새 클리커 — 하부 80 정사각(검정, 굴곡 단면+구름무늬) + 국새 몸통(금색 버튼, MX 스위치 2개 대각) + Tripo 거북",
+ "build": [
+  "scripts/build.py"
+ ],
+ "out": "qc/current",
+ "parts_pkl": "parts.pkl",
+ "assembly_parts_pkl": "parts_nominal.pkl",
+ "plates": [
+  "models/gukse-clicker_A.3mf"
+ ],
+ "assembly": "scripts/assembly.py",
+ "colors": {
+  "base": "#37474f",
+  "lid": "#ffb300"
+ },
+ "qc": {
+  "efc": 0.15,
+  "max_bridge": 7,
+  "min_wall": 1.2,
+  "single_wall": []
+ },
+ "support_zones": [],
+ "accepted": [],
+ "min_gap": 0.3,
+ "frames": 24,
+ "bambu": {
+  "enabled": true,
+  "settings": {}
+ },
+ "inputs": []
+}
