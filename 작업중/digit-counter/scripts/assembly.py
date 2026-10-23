@@ -13,7 +13,18 @@ P = G.P; AXP = [0.0, P['Y_C'], P['Z_C']]; PINP = [0.0, G.PIN_C[0], G.PIN_C[1]]
 META = json.load(open(os.path.join(os.path.dirname(HERE), 'meta.json'), encoding='utf-8'))
 
 def rotx(deg, p=AXP): return R(np.radians(deg), [1, 0, 0], p)
-def follower_dz(seg, drum_deg): return G.cam_r(seg, 90.0 - drum_deg) - P['R_LO']
+_FDZ = {}
+def follower_dz(seg, drum_deg):
+    """팔로워 들림: 코(반지름 1.5 원)가 캠 윤곽 밖에 오도록 하는 최소 높이(경사에서는 꼭대기 한 점이 아니라 코 원 전체로 닿는다)."""
+    key = (seg, round(drum_deg, 3))
+    if key not in _FDZ:
+        rn = 1.5; hc = P['R_LO'] + rn
+        for ph in np.arange(60.0, 120.01, 0.25):
+            r = G.cam_r(seg, ph - drum_deg); x, y = r * np.cos(np.radians(ph)), r * np.sin(np.radians(ph))
+            if abs(x) < rn: hc = max(hc, y + np.sqrt(rn * rn - x * x))
+        _FDZ[key] = hc - rn - P['R_LO']
+    return _FDZ[key]
+
 
 # ---------------------------------------------------------------- +1 폴이 R1 을 미는 양(2D): 누름 비율 → 일의 자리 추가 각
 def _pawl_at(dz): return affinity.translate(G.pawl_profile(), 0, dz)
@@ -173,7 +184,7 @@ def define(parts):
         pr(f'pinion_{m}', f'pin_{m}', min_gap=0.2); pr(f'pin_{m}', 'housing', contact=True)
         for o in ('housing', 'mid', 'front', f'r1disc_{m}', f'disc_{m}_tens_b', f'sh_{m}_tens_b', f'sh_{m}_tens_c', f'sh_{m}_ones_e', f'sh_{m}_ones_f'): pr(f'pinion_{m}', o, min_gap=0.3)
         pr(f'core_{m}_tens', f'core_{m}_ones', min_gap=0.3); pr(f'core_{m}_ones', f'lockdisc_{m}', contact=True); pr(f'lockdisc_{m}', f'r1disc_{m}', contact=True)
-        pr(f'r1disc_{m}', f'disc_{m}_ones_f', contact=True); pr(f'core_{m}_tens', f'disc_{m}_tens_b', min_gap=0.3)
+        pr(f'r1disc_{m}', f'disc_{m}_ones_f', contact=True); pr(f'core_{m}_tens', f'disc_{m}_tens_b', contact=True)   # 보스(간격 링)가 디스크 b 에 닿음
         for n in (f'core_{m}_tens', f'core_{m}_ones', f'lockdisc_{m}', f'r1disc_{m}'):
             pr(n, 'mid', min_gap=0.5); pr(n, 'front', min_gap=0.5); pr(n, 'housing', min_gap=0.3)
         pr(f'core_{m}_tens', f'sh_{m}_tens_b', min_gap=0.25); pr(f'core_{m}_tens', f'sh_{m}_tens_c', min_gap=0.25)
@@ -184,7 +195,7 @@ def define(parts):
         pr(f'spring_{m}', 'housing', contact=True); pr(f'spring_{m}', f'r1disc_{m}', min_gap=0.3); pr(f'spring_{m}', f'disc_{m}_ones_f', min_gap=0.3)
         # 멈춤쇠·멈춤
         for dn, last in (('ones', 'b'), ('tens', 'f')):
-            pr(f'leaf_{m}_{dn}', f'star_{m}_{dn}', contact=True); pr(f'star_{m}_{dn}', f'disc_{m}_{dn}_{last}', contact=True); pr(f'leaf_{m}_{dn}', 'housing', contact=True)
+            pr(f'star_{m}_{dn}', f'disc_{m}_{dn}_{last}', contact=True); pr(f'leaf_{m}_{dn}', 'housing', contact=True)
         pr(f'star_{m}_tens', 'mid', min_gap=0.3)
         # 축
         pr(f'shaft_{m}', 'housing', min_gap=0.2); pr(f'shaft_{m}', f'core_{m}_ones', contact=True); pr(f'shaft_{m}', f'core_{m}_tens', min_gap=0.2)
@@ -204,8 +215,17 @@ def define(parts):
         fr[f'B 10 노브 뒤로 {a}°'] = state(names, {'A': (1, 0), 'B': (1, 0)}, knob={'B': float(a)})
     fr['B 09 정지'] = state(names, {'A': (1, 0), 'B': (0, 9)})
     ck = checks()
+    # 휘는 판스프링(별 멈춤쇠)은 강체 쌍에서 빼고, 안 휘는 정지 상태에서만 교집합 0 을 확인한다(돌 때의 휨은 변형률 check)
+    from pipeline import inter, tf
+    for lab, D in (('00:00', D0), ('12:47', {'A': (1, 2), 'B': (4, 7)})):
+        Ms = state(names, D); vs = []
+        for m in G.PAIRS:
+            for dn in ('ones', 'tens'):
+                a_, b_ = f'leaf_{m}_{dn}', f'star_{m}_{dn}'; vs.append(inter(tf(parts[a_], Ms[a_]), tf(parts[b_], Ms[b_])))
+        ck.append({'name': f'{lab} 정지: 별 멈춤쇠 판스프링 혹이 별 홈에 앉음(교집합, 4쌍)', 'value': f'최대 {max(vs):.2f} mm³', 'need': '0', 'ok': max(vs) <= 0.01})
     return {'states': st, 'pairs': pairs, 'checks': ck, 'frames': fr,
-            'notes': ['폴 팔(판스프링)은 공칭 모양이라 누름 끝 상태에서 R1 면과 닿는다(접촉 쌍) — 복귀 때 휨은 checks 로 판정.',
+            'notes': ['별 멈춤쇠 판스프링은 공칭(안 휜) 모양이라 강체 쌍에서 빼고 정지 상태 교집합 0 과 변형률을 checks 로 판정했다(leaf↔star).',
+                      '폴 팔(판스프링)은 공칭 모양이라 누름 끝 상태에서 R1 면과 닿는다(접촉 쌍) — 복귀 때 휨은 checks 로 판정.',
                       '피니언 ↔ 기어·C·L 은 맞물림이라 접촉 쌍 — 겹침 0 은 carry.py 2D 한 바퀴 시뮬레이션과 상태별 교집합으로 확인.',
                       '스프링은 z 방향 균일 압축 근사(실제는 지그재그 줄이 휜다).',
                       '셔터·스템은 무게로 내려온다(스프링 없음) — 팔로워 1 g 안팎이라 끼임 마찰에 민감: 시험편 확인 필요.']}

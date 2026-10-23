@@ -25,7 +25,7 @@ P = dict(
     RT_ROOT=11.8, RT_TIP=15.0, FACE0=14.0, HOOK=5.0,
     # +1 플런저 폴(세로 이동, 축 뒤 y = Y_C + PAWL_R0 선)
     PAWL_R0=13.0, PAWL_REST_H=9.0, PAWL_END_ANG=-22.0,
-    PL_X=(0.0, 6.6), ARM_X=(0.0, 2.6), BAR_X=(1.2, 5.4), SPR_X=(3.0, 6.6),
+    PL_X=(0.0, 6.6), ARM_X=(0.0, 2.6), BAR_X=(0.0, 4.2), SPR_X=(3.0, 6.6),
     # 별(멈춤쇠)·판스프링, 십의 자리 멈춤 돌기(00 에서 더 안 돌아감)
     STAR_TIP=10.0, STAR_ROOT=8.8, STAR_T=2.0, LEAF_T=1.6, LEAF_L=14.0,
     LUG_R=(10.3, 12.5), LUG_HALF=7.0, LUG_ANG0=162.0, TAB_HZ=1.6, TAB_R=10.6,
@@ -248,9 +248,13 @@ def pinion(tens_digit=0):
     long_ = affinity.translate(CR.place(CR.PL_POLY, phi), *PIN_C).difference(hole)
     return U([ext_x(full, *P['PIN_FULL']), ext_x(long_, P['PIN_FULL'][1] - 0.01, P['PIN_LONG'][1])])
 def pin():
-    """피니언 축 핀 Ø3(밑면 0.3 깎은 D — 눕혀 출력), 양쪽 기둥 구멍에 끼움(0.05)."""
-    pr = Point(PIN_C).buffer(P['PIN_R'], 48).difference(sbox(PIN_C[0] - 5, PIN_C[1] - 5, PIN_C[0] + 5, PIN_C[1] - P['PIN_R'] + 0.3))
-    return ext_x(pr, P['POST_X'][0][0], P['POST_X'][1][1])
+    """피니언 축 핀 Ø3(눕혀 출력): 위 = 원호(-30°~210°), 아래 = 원호 접선(수평에서 60°, 층당 0.115) + 바닥 평면 z -1.0.
+    접선 쪽 최대 반경 1.53 < 기둥 구멍 1.55 — 오버행 0(원 그대로 눕히면 아래 반원이 오버행)."""
+    r = P['PIN_R']; cy, cz = PIN_C
+    th = np.radians(np.linspace(-30, 210, 97)); arc = [(cy + r * np.cos(t), cz + r * np.sin(t)) for t in th]
+    tz, ty = -r * 0.5, r * np.cos(np.radians(30)); zb = -1.0; dx = (zb - tz) / np.tan(np.radians(60))
+    pts = arc + [(cy - ty - dx, cz + zb), (cy + ty + dx, cz + zb)]
+    return ext_x(Polygon(pts).buffer(0), P['POST_X'][0][0], P['POST_X'][1][1])
 
 # ---------------------------------------------------------------- +1 버튼: 플런저(세로) + 판스프링 폴, 뚜껑 밑 안내 슬리브, 지그재그 스프링
 def _pt(r, a, c=None):
@@ -418,8 +422,8 @@ def module_parts(m, c):
         out[f'core_{m}_{dn}'] = (moved(core(ones), c), GRAY, (1, 0, 0) if ones else (-1, 0, 0), f'drum:{m}:{dn}')
         out[f'leaf_{m}_{dn}'] = (leaf((c + MOD_LEAF[dn][0], c + MOD_LEAF[dn][1])), GRAY, (1, 0, 0), 'fixed')
     out[f'lockdisc_{m}'] = (moved(lock_disc(), c), GRAY, (1, 0, 0), f'drum:{m}:ones')
-    out[f'r1disc_{m}'] = (moved(r1_disc(), c), GRAY, (-1, 0, 0), f'drum:{m}:ones')
-    out[f'pinion_{m}'] = (moved(pinion(), c), YELLOW, (-1, 0, 0), f'pinion:{m}')
+    out[f'r1disc_{m}'] = (moved(r1_disc(), c), GRAY, (1, 0, 0), f'drum:{m}:ones')
+    out[f'pinion_{m}'] = (moved(pinion(), c), YELLOW, (1, 0, 0), f'pinion:{m}')
     out[f'pin_{m}'] = (moved(pin(), c), GRAY, (0, 0, 1), 'fixed')
     out[f'plunger_{m}'] = (moved(plunger(), c), GRAY, (1, 0, 0), f'button:{m}')
     out[f'cap_{m}'] = (moved(cap(), c), YELLOW, (0, 0, -1), f'button:{m}')
@@ -437,7 +441,7 @@ def all_parts():
     out['colon'] = (colon(), YELLOW, (0, -1, 0), 'fixed')
     for m, c in PAIRS.items(): out.update(module_parts(m, c))
     out['collar_l'] = (collar('l'), GRAY, (1, 0, 0), 'drum:A:ones')
-    out['collar_r'] = (collar('r'), GRAY, (1, 0, 0), 'drum:B:ones')
+    out['collar_r'] = (collar('r'), GRAY, (-1, 0, 0), 'drum:B:ones')
     out['knob_l'] = (knob('l'), YELLOW, (1, 0, 0), 'drum:A:ones')
     out['knob_r'] = (knob('r'), YELLOW, (-1, 0, 0), 'drum:B:ones')
     return out
