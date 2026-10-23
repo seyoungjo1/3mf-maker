@@ -7,6 +7,8 @@
    "model_version": "...",                                 # 선택(없으면 Tripo 기본)
    "extra": {...}}                                         # 선택: task 본문에 그대로 합침
   또는 {"type": "text_to_model", "prompt": "..."}
+  또는 {"task_id": "..."} — 이미 만든 작업의 결과만 받는다(크레딧 0). 세션 프록시가 결과 호스트(tripo-data.*.tripo3d.com)를
+  막을 때 이 파일을 push 해 Actions 에서 받는다.
 결과 = `<프로젝트>/tripo_out/<이름>/`: status.json · task.json(응답 원문) · 받은 파일(glb 등) · log.txt
 API 키는 환경변수 TRIPO_API_KEY (Actions 비밀). 생성 1회 = Tripo 크레딧 사용 — 요청 파일이 바뀐 push 에서만 돈다.
 
@@ -110,11 +112,13 @@ def run(spec_path: str, dry=False):
             log(f"balance: {json.dumps(res, ensure_ascii=False)}")
             status.update(ok=res.get("code") == 0, balance=res.get("data"))
             return status
-        task = build_task(spec, sp.parent, key, log)
-        log("task: " + json.dumps({k: v for k, v in task.items() if k != "file"}, ensure_ascii=False))
-        res = _req("POST", API + "/task", key, json.dumps(task).encode(), "application/json")
-        log(f"create: {json.dumps(res, ensure_ascii=False)}")
-        tid = (res.get("data") or {}).get("task_id")
+        tid = spec.get("task_id")  # 이미 만든 작업 받기만(크레딧 0) — 결과 주소 호스트(tripo3d.com)가 막힌 세션용
+        if not tid:
+            task = build_task(spec, sp.parent, key, log)
+            log("task: " + json.dumps({k: v for k, v in task.items() if k != "file"}, ensure_ascii=False))
+            res = _req("POST", API + "/task", key, json.dumps(task).encode(), "application/json")
+            log(f"create: {json.dumps(res, ensure_ascii=False)}")
+            tid = (res.get("data") or {}).get("task_id")
         if not tid:
             raise RuntimeError("task 생성 실패")
         status["task_id"] = tid
