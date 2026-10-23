@@ -1,0 +1,12 @@
+{
+ "spec": "작업중/gukse-clicker/tripo/photo1_mv.json",
+ "ok": true,
+ "task_id": "3e75bf0d-75c4-4816-98de-099ac9d1a3d1",
+ "status": "success",
+ "files": [
+  "generate_multiview_image_front_view_url.jpeg",
+  "generate_multiview_image_left_view_url.jpeg",
+  "generate_multiview_image_back_view_url.jpeg",
+  "generate_multiview_image_right_view_url.jpeg"
+ ]
+}

@@ -1,0 +1,6 @@
+키: TRIPO_API_KEY (길이 47, 앞 tsk_…)
+    5s success 100
+받음 generate_multiview_image_front_view_url.jpeg 168533 B
+받음 generate_multiview_image_left_view_url.jpeg 129287 B
+받음 generate_multiview_image_back_view_url.jpeg 168922 B
+받음 generate_multiview_image_right_view_url.jpeg 136841 B
