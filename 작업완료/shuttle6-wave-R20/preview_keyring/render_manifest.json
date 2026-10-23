@@ -1,0 +1,20 @@
+{
+ "backend": "software",
+ "states": [
+  "Ø5 고리·출력 바닥면",
+  "닫힌 뚜껑과 고리"
+ ],
+ "views": [
+  "view_iso_Ø5 고리·출력 바닥면.png",
+  "view_top_Ø5 고리·출력 바닥면.png",
+  "view_side_Ø5 고리·출력 바닥면.png",
+  "view_bottom_Ø5 고리·출력 바닥면.png",
+  "view_front_Ø5 고리·출력 바닥면.png",
+  "view_iso_닫힌 뚜껑과 고리.png",
+  "view_top_닫힌 뚜껑과 고리.png",
+  "view_side_닫힌 뚜껑과 고리.png",
+  "view_bottom_닫힌 뚜껑과 고리.png",
+  "view_front_닫힌 뚜껑과 고리.png"
+ ],
+ "frames": 20
+}

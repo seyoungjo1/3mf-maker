@@ -1,0 +1,199 @@
+{
+  "path": "/workspace/shuttle6-r10-build/\uc791\uc5c5\uc911/shuttle6-wave-R20/models/Shuttle6_C_R20_cork_front_side_eyelet_bambu.3mf",
+  "settings_changed": {
+    "bottom_shell_layers": "5",
+    "bridge_speed": [
+      "20",
+      "20"
+    ],
+    "brim_type": "outer_only",
+    "brim_width": "10",
+    "default_acceleration": [
+      "1500",
+      "1500"
+    ],
+    "enable_prime_tower": "0",
+    "enable_support": "1",
+    "filament_colour": [
+      "#33383E",
+      "#BD6F53",
+      "#FFB300"
+    ],
+    "gap_infill_speed": [
+      "40",
+      "40"
+    ],
+    "initial_layer_infill_speed": [
+      "30",
+      "30"
+    ],
+    "initial_layer_speed": [
+      "20",
+      "20"
+    ],
+    "initial_layer_travel_acceleration": [
+      "1000",
+      "1000"
+    ],
+    "inner_wall_acceleration": [
+      "1000",
+      "1000"
+    ],
+    "inner_wall_speed": [
+      "60",
+      "60"
+    ],
+    "internal_solid_infill_speed": [
+      "60",
+      "60"
+    ],
+    "outer_wall_acceleration": [
+      "600",
+      "600"
+    ],
+    "outer_wall_speed": [
+      "40",
+      "40"
+    ],
+    "slow_down_layer_time": [
+      "8",
+      "8",
+      "8"
+    ],
+    "sparse_infill_pattern": "gyroid",
+    "sparse_infill_speed": [
+      "80",
+      "80"
+    ],
+    "support_interface_speed": [
+      "30",
+      "30"
+    ],
+    "support_remove_small_overhang": "0",
+    "support_speed": [
+      "60",
+      "60"
+    ],
+    "top_surface_acceleration": [
+      "600",
+      "600"
+    ],
+    "top_surface_speed": [
+      "30",
+      "30"
+    ],
+    "travel_acceleration": [
+      "1500",
+      "1500"
+    ],
+    "travel_speed": [
+      "120",
+      "120"
+    ],
+    "wall_loops": "4"
+  },
+  "application": "BambuStudio-02.08.02.61",
+  "objects": [
+    {
+      "name": "shell_lower",
+      "parts": [
+        [
+          "shell_lower",
+          1,
+          169913.46,
+          true
+        ]
+      ]
+    },
+    {
+      "name": "shell_upper",
+      "parts": [
+        [
+          "shell_upper",
+          1,
+          151071.78,
+          true
+        ]
+      ]
+    },
+    {
+      "name": "drawer",
+      "parts": [
+        [
+          "drawer",
+          2,
+          110175.74,
+          true
+        ]
+      ]
+    },
+    {
+      "name": "cap",
+      "parts": [
+        [
+          "cap",
+          2,
+          46566.99,
+          true
+        ]
+      ]
+    },
+    {
+      "name": "latch",
+      "parts": [
+        [
+          "latch",
+          3,
+          5332.87,
+          true
+        ]
+      ]
+    },
+    {
+      "name": "shell_coupon",
+      "parts": [
+        [
+          "shell_coupon",
+          1,
+          49452.01,
+          true
+        ]
+      ]
+    },
+    {
+      "name": "drawer_coupon",
+      "parts": [
+        [
+          "drawer_coupon",
+          2,
+          18273.45,
+          true
+        ]
+      ]
+    },
+    {
+      "name": "stop_left",
+      "parts": [
+        [
+          "stop_left",
+          1,
+          364.57,
+          true
+        ]
+      ]
+    },
+    {
+      "name": "stop_right",
+      "parts": [
+        [
+          "stop_right",
+          1,
+          364.57,
+          true
+        ]
+      ]
+    }
+  ],
+  "errors": [],
+  "ok": true
+}

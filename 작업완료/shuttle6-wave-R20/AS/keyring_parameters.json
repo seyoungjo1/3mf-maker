@@ -1,0 +1,18 @@
+{
+  "hole_diameter_mm": 5.0,
+  "hole_center_xy_mm": [
+    35.70889244992065,
+    35.70889244992065
+  ],
+  "hole_center_angle_deg": 45.0,
+  "outer_radius_mm": 6.5,
+  "thickness_mm": 4.0,
+  "root_width_mm": 16.0,
+  "body_z_low_mm": 239.0,
+  "body_z_high_mm": 243.0,
+  "root_corner_radius_mm": 1.0,
+  "rear_cavity_transition_z_mm": 237.0,
+  "rear_feather_rim_z_mm": 235.0,
+  "rear_axial_clearance_mm": 2.0,
+  "roof_z_mm": 248.55
+}
