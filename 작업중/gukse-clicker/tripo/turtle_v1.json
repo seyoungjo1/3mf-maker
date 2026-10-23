@@ -1,0 +1,8 @@
+{
+  "type": "image_to_model",
+  "image": "turtle_side.png",
+  "texture": false,
+  "pbr": false,
+  "face_limit": 150000,
+  "_note": "국새 거북 뉴(손잡이) — 사용자 사진 1(sample/gukse_turtle_ref.jpg)에서 받침을 잘라낸 옆모습. 생성 1/3."
+}

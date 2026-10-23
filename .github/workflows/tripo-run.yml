@@ -1,0 +1,72 @@
+name: tripo-run
+# Tripo3D API 로 모델 생성: `*/tripo/*.json` 요청 파일을 push 하면 tools/tripo_run.py 로 돌리고 결과(glb 등)를 같은 브랜치 `<프로젝트>/tripo_out/<이름>/` 에 커밋한다.
+# 키: 저장소 Settings → Secrets and variables → Actions 의 TRIPO_API_KEY (다른 이름 TRIPO_KEY·TRIPO3D_API_KEY·TRIPO_API·TRIPO 도 찾는다).
+# 생성 1회 = 크레딧 사용 → 이번 push 에서 추가·수정된 요청 파일만 돈다. 키 확인만: workflow_dispatch 에 specs 비우고 dry=true.
+on:
+  push:
+    paths:
+      - '작업중/**/tripo/*.json'
+      - '작업완료/**/tripo/*.json'
+  workflow_dispatch:
+    inputs:
+      specs:
+        description: '돌릴 요청 파일 glob(공백 구분). 비우면 키 확인(dry)만'
+        default: ''
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    env:
+      K_TRIPO_API_KEY: ${{ secrets.TRIPO_API_KEY }}
+      K_TRIPO_KEY: ${{ secrets.TRIPO_KEY }}
+      K_TRIPO3D_API_KEY: ${{ secrets.TRIPO3D_API_KEY }}
+      K_TRIPO_API: ${{ secrets.TRIPO_API }}
+      K_TRIPO: ${{ secrets.TRIPO }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0, ref: '${{ github.ref_name }}' }
+      - name: 키 고르기
+        run: |
+          for n in TRIPO_API_KEY TRIPO_KEY TRIPO3D_API_KEY TRIPO_API TRIPO; do
+            v="K_$n"; if [ -n "${!v}" ]; then echo "TRIPO_KEY_NAME=$n" >> "$GITHUB_ENV"; echo "TRIPO_API_KEY=${!v}" >> "$GITHUB_ENV"; echo "키 비밀: $n"; exit 0; fi
+          done
+          echo "::error::Actions 비밀에 Tripo 키가 없습니다(TRIPO_API_KEY 등)"; exit 1
+      - name: 돌릴 요청 고르기
+        run: |
+          PAT='^(작업중|작업완료)/.*/tripo/[^/]*\.json$'
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            LIST=$(ls ${{ github.event.inputs.specs }} 2>/dev/null || true)
+          elif [ "${{ github.event.before }}" != "0000000000000000000000000000000000000000" ] && git cat-file -e "${{ github.event.before }}" 2>/dev/null; then
+            LIST=$(git -c core.quotepath=off diff --name-only --diff-filter=AM "${{ github.event.before }}" "${{ github.sha }}" | grep -E "$PAT" || true)
+          else
+            LIST=$(git -c core.quotepath=off show --name-only --diff-filter=AM --format= "${{ github.sha }}" | grep -E "$PAT" || true)
+          fi
+          echo "$LIST" | grep . > tripo_list.txt || true; echo "돌릴 요청:"; cat tripo_list.txt
+      - name: Tripo 실행
+        run: |
+          echo "## tripo-run (키 비밀: $TRIPO_KEY_NAME)" >> "$GITHUB_STEP_SUMMARY"
+          FAIL=0
+          if [ ! -s tripo_list.txt ]; then
+            mkdir -p "$RUNNER_TEMP/d/tripo" && echo '{}' > "$RUNNER_TEMP/d/tripo/dry.json"
+            python tools/tripo_run.py "$RUNNER_TEMP/d/tripo/dry.json" --dry | tail -1 | sed 's/^/- dry: /' >> "$GITHUB_STEP_SUMMARY" || FAIL=1
+          fi
+          while read -r S; do
+            [ -z "$S" ] && continue
+            set +e; python tools/tripo_run.py "$S"; RC=$?; set -e
+            echo "- \`$S\` rc=$RC: $(cat "$(dirname "$(dirname "$S")")/tripo_out/$(basename "$S" .json)/status.json" | tr '\n' ' ')" >> "$GITHUB_STEP_SUMMARY"
+            [ $RC -ne 0 ] && FAIL=1
+          done < tripo_list.txt
+          echo "FAIL=$FAIL" >> "$GITHUB_ENV"
+      - name: 결과를 브랜치에 커밋
+        if: always()
+        run: |
+          git config user.name "tripo-run[bot]"; git config user.email "actions@users.noreply.github.com"
+          git add -A -- '*/tripo_out/*' 2>/dev/null || true
+          git diff --cached --quiet && { echo "커밋할 결과 없음"; exit 0; }
+          git commit -q -m "tripo-run: Tripo 결과 (${GITHUB_SHA::7})"
+          for i in 1 2 3; do git pull -q --rebase origin "${{ github.ref_name }}" && git push -q origin "HEAD:${{ github.ref_name }}" && break; sleep 5; done
+      - name: 실패 표시
+        if: env.FAIL == '1'
+        run: exit 1
