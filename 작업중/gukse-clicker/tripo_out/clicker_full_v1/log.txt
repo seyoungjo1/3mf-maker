@@ -1,0 +1,4 @@
+키: TRIPO_API_KEY (길이 47, 앞 tsk_…)
+    5s success 100
+받음 base_model.glb 5915560 B
+받음 rendered_image.webp 125104 B
