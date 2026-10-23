@@ -4,7 +4,9 @@
 요청 파일 = `<프로젝트>/tripo/<이름>.json`:
   {"type": "image_to_model", "image": "turtle.png",      # 요청 파일 기준 상대 경로
    "texture": false, "pbr": false, "face_limit": 120000,  # 선택
-   "model_version": "...",                                 # 선택(없으면 Tripo 기본)
+   "model_version": "v3.1-20260211",                       # 선택 — 없으면 DEFAULT_VERSION(v3.1). 빼면 Tripo 서버 기본 v2.5 가 돌아
+                                                           #   거친 결과가 나온 실패가 있다(국새 클리커 1·2차, 2026-10-23)
+   "geometry_quality": "detailed",                         # 선택 — v3.x 만, 기본 DEFAULT_QUALITY
    "extra": {...}}                                         # 선택: task 본문에 그대로 합침
   또는 {"type": "text_to_model", "prompt": "..."}
   또는 {"task_id": "..."} — 이미 만든 작업의 결과만 받는다(크레딧 0). 세션 프록시가 결과 호스트(tripo-data.*.tripo3d.com)를
@@ -25,6 +27,8 @@ import uuid
 from pathlib import Path
 
 API = "https://api.tripo3d.ai/v2/openapi"
+DEFAULT_VERSION = "v3.1-20260211"   # 2026-10 확인: 서버가 받는 값(v3.0-20250812, P1-20260311 도 있음)
+DEFAULT_QUALITY = "detailed"
 
 
 def _req(method, url, key, body=None, ctype=None, timeout=120):
@@ -73,7 +77,10 @@ def build_task(spec: dict, base: Path, key, log):
             task["negative_prompt"] = spec["negative_prompt"]
     else:
         raise ValueError(f"모르는 type: {t}")
-    for k in ("texture", "pbr", "face_limit", "model_version", "auto_size", "orientation", "quad"):
+    task["model_version"] = spec.get("model_version", DEFAULT_VERSION)
+    if task["model_version"].startswith("v3"):
+        task["geometry_quality"] = spec.get("geometry_quality", DEFAULT_QUALITY)
+    for k in ("texture", "pbr", "face_limit", "auto_size", "orientation", "quad"):
         if k in spec:
             task[k] = spec[k]
     task.update(spec.get("extra") or {})
