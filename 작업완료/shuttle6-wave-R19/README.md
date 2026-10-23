@@ -14,6 +14,8 @@
 
 ## 파일
 
+- 클립 해제·6단계 인출 GIF: `preview_six_steps/opening_six_steps.gif` — 닫힘 포함0/36/72/108/144/180mm의6개 걸림 위치 후225mm 끝 멈춤. 고정 카메라로 각 단계에서 잠시 멈춥니다.
+
 - 출력 프로젝트: `models/Shuttle6_C_R19_keyring5_bambu.3mf`
 - 일반 3MF: `models/plates/P01.3mf`~`P07.3mf`. 색 번호는 전 플레이트 공통으로 몸통1·내관2·클립3입니다.
 - 출력 방향 STL: `models/*_print.stl`
