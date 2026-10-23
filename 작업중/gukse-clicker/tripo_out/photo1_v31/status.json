@@ -1,0 +1,10 @@
+{
+ "spec": "작업중/gukse-clicker/tripo/photo1_v31.json",
+ "ok": true,
+ "task_id": "1c16dc34-4440-474d-b900-053b93638e8d",
+ "status": "success",
+ "files": [
+  "base_model.glb",
+  "rendered_image.webp"
+ ]
+}
