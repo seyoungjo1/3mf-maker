@@ -182,6 +182,11 @@ def svg2d_case():
     ok = abs(x1 - x0 - 100) < 0.01 and abs(y1 - y0 - 20) < 0.1 and len(parts) == 10 and len(txt) == 7 and t_txt > 0.9 * sum(q.area for q in txt)
     print('\n[SVG 로고] 크기', round(x1 - x0, 2), round(y1 - y0, 2), '조각', len(parts), '글자', len(txt), '글자 중 0.8 미만 비율', round(t_txt / sum(q.area for q in txt), 2), '→', ok); return ok
 
+def safe_name_case():
+    """상태 이름에 / : 가 있으면 렌더 파일이 하위 폴더·Windows 불가 이름이 된다 → safe_name."""
+    from render_preview import safe_name
+    a = safe_name('09:10 A 누름 끝 / B 노브'); ok = '/' not in a and ':' not in a and a.startswith('09-10')
+    print(f'[렌더 파일 이름] {a!r} → {ok}'); return ok
 def raster_case():
     """PNG 로고 → 도형(load_raster): 합성 그림(빨간 링 바깥 40 px·안 20 px + 어두운 막대) 200×100 px 를 폭 50 mm 로 — 빨강만 고리 1개(구멍 1)·크기·넓이."""
     import svg2d, numpy as np
@@ -195,7 +200,7 @@ def raster_case():
     print('\n[PNG 로고] 크기', round(x1 - x0, 2), round(y1 - y0, 2), '구멍', len(getattr(g, 'interiors', [])), '넓이 비', round(g.area / area, 3), '→', ok); return ok
 
 if __name__ == '__main__':
-    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = efc_group_case() and efc_stl_roundtrip_case() and extrude_holes_case() and slit_case() and wall_step_case() and wall_step_miss_case() and mm_api_case() and bambu_multi_case() and b3d_case() and svg2d_case() and raster_case()
+    tmp = tempfile.mkdtemp(prefix='selftest_'); ok = efc_group_case() and efc_stl_roundtrip_case() and extrude_holes_case() and slit_case() and wall_step_case() and wall_step_miss_case() and mm_api_case() and bambu_multi_case() and b3d_case() and svg2d_case() and raster_case() and safe_name_case()
     cfg = fixture(os.path.join(tmp, 'good'), 0.3); rc = pipeline.run(cfg); rep = json.load(open(os.path.join(tmp, 'good', 'qc', 'report.json')))
     files = [os.path.join(tmp, 'good', 'qc', f) for f in ('REPORT.md', 'assembly/turntable.gif', 'motion/turntable.gif', 'plate_A/view_iso.png')]
     print('\n[정상 설계] 종료코드', rc, '| 경고', rep['warn'], '| 산출물', [os.path.exists(f) for f in files])

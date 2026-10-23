@@ -91,6 +91,10 @@ def load(paths):
         else: parts[os.path.splitext(os.path.basename(p))[0]] = trimesh.load(p, force='mesh')
     return parts
 
+def safe_name(st):
+    """상태 이름 → 파일 이름 조각: / \\ : * ? " < > | 는 '-' 로(하위 폴더가 생기거나 Windows 에서 체크아웃이 안 되는 이름 방지)."""
+    import re
+    return re.sub(r'[\\/:*?"<>|]', '-', st).strip()
 def render(parts, out, colors=None, states=None, frames=36, size=(1200, 900), gif_size=(640, 480), status=None, bed=256):
     os.makedirs(out, exist_ok=True); colors = colors or {}
     data = {'bed': bed, 'parts': [mesh_json(m, colors.get(n, PALETTE[i % len(PALETTE)]), n) for i, (n, m) in enumerate(parts.items())], 'states': states or {},
@@ -117,7 +121,7 @@ def render(parts, out, colors=None, states=None, frames=36, size=(1200, 900), gi
         for st in state_names:
             pg.evaluate(f'window.setState({json.dumps(st)})')
             for v in ('iso', 'top', 'side', 'bottom', 'front'):
-                pg.evaluate(f'window.setView({json.dumps(v)},0)'); fn = f'view_{v}' + (f'_{st}' if st else '') + '.png'
+                pg.evaluate(f'window.setView({json.dumps(v)},0)'); fn = f'view_{v}' + (f'_{safe_name(st)}' if st else '') + '.png'
                 pg.screenshot(path=os.path.join(out, fn)); pngs[fn] = fn
         pg.close()
         pg = b.new_page(viewport={'width': gif_size[0], 'height': gif_size[1]}); pg.goto(f'http://127.0.0.1:{port}/index_gif.html'); pg.wait_for_function('window.READY===true', timeout=120000)
